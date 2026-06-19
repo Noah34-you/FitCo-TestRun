@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitCo — Find Pants That Fit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F3EE;
+    --bg-white: #FFFFFF;
+    --text: #111111;
+    --text-muted: #6E6E6E;
+    --border: #D9D9D9;
+    --border-light: #E8E6E1;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .nav-center {
+    display: flex;
+    gap: 48px;
+    list-style: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .nav-center a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-center a:hover { color: var(--text); }
+
+  .logo {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .nav-cart {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text);
+  }
+
+  .nav-cart svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    background: var(--text);
+    color: var(--bg);
+    cursor: pointer;
+    transition: opacity 0.15s;
+    text-decoration: none;
+    border-radius: 10px;
+  }
+  .btn:hover { opacity: 0.75; }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { background: var(--text); color: var(--bg); opacity: 1; }
+
+  .btn-text {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    padding: 14px 8px;
+  }
+  .btn-text:hover { color: var(--text); }
+
+  .btn-nav {
+    padding: 10px 24px;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 120px 48px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    overflow: visible;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    min-height: calc(100vh - 64px - 40px);
+  }
+
+  .hero h1 {
+    font-size: clamp(48px, 5vw, 72px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 20px;
+    max-width: 480px;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 360px;
+  }
+
+  .hero-buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .hero-btn-video {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 8px;
+  }
+
+  .hero-btn-video:hover { color: var(--text); }
+
+  .hero-btn-video .play-circle {
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .hero-btn-video .play-circle svg {
+    width: 12px;
+    height: 12px;
+    margin-left: 2px;
+  }
+
+  .hero-image-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-image-bg-circle {
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    background: #EBE8E2;
+    z-index: 0;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .hero-image-wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-image-wrap img {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 24px;
+    display: block;
+  }
+
+  .hero-badge {
+    position: absolute;
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-badge svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .hero-badge-1 {
+    top: 20px;
+    left: -60px;
+  }
+
+  .hero-badge-2 {
+    bottom: 40px;
+    right: -20px;
+  }
+
+  /* Geometric background */
+  .hero-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .hero-bg-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.35;
+  }
+
+  .hero-bg-shape-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%);
+    top: -100px; right: -150px;
+  }
+
+  .hero-bg-shape-2 {
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, rgba(0,0,0,0.025) 0%, transparent 70%);
+    bottom: -80px; left: -100px;
+  }
+
+  .hero-bg-shape-3 {
+    width: 200px; height: 200px;
+    border: 1px solid rgba(0,0,0,0.04);
+    border-radius: 20px;
+    transform: rotate(15deg);
+    top: 80px; right: 60%;
+  }
+
+  /* Feature bar */
+  .feature-bar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+
+  .feature-card-outer {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 20px;
+    padding: 40px 48px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .feature-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .feature-item h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .feature-item p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Sections */
+  .section {
+    padding: 80px 24px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .section-white {
+    background: var(--bg-white);
+  }
+
+  .section-header { margin-bottom: 48px; }
+  .section-header h2 {
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .section-header p {
+    font-size: 16px;
+    color: var(--text-muted);
+  }
+
+  /* Problem cards */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .problem-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+  }
+
+  .problem-card svg {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+  }
+
+  .problem-card h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .problem-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Solution bar */
+  .solution-bar {
+    background: var(--text);
+    color: var(--bg);
+    border-radius: 16px;
+    padding: 24px 32px;
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .solution-bar svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  .solution-bar p {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* How it works */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .step {
+    text-align: center;
+  }
+
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--text);
+    color: var(--bg);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .step h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .step p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Fit viz */
+  .fit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .fit-card-viz {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+  }
+
+  .fit-card-viz svg {
+    margin: 0 auto 20px;
+    display: block;
+  }
+
+  .fit-card-viz h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .fit-card-viz p {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* Quiz */
+  .quiz-wrap {
+    background: var(--bg-white);
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+    padding: 80px 24px;
+  }
+
+  .quiz-inner {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .quiz-header { text-align: center; margin-bottom: 40px; }
+  .quiz-header h2 { margin-bottom: 6px; }
+  .quiz-header p { color: var(--text-muted); font-size: 15px; }
+
+  .progress {
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+    margin-bottom: 40px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--text);
+    border-radius: 1px;
+    transition: width 0.3s ease;
+    min-width: 4px;
+  }
+
+  .question label {
+    display: block;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+
+  .optional-badge {
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+    font-weight: 400;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 8px; }
+
+  .option {
+    display: block;
+    width: 100%;
+    padding: 16px 20px;
+    font-family: inherit;
+    font-size: 15px;
+    text-align: left;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.12s;
+    line-height: 1.4;
+    border-radius: 10px;
+  }
+
+  .option:hover { border-color: var(--text-muted); }
+
+  .option.selected {
+    border-color: var(--text);
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .quiz-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-light);
+    position: relative;
+  }
+
+  #skipBtn {
+    position: absolute;
+    right: 0;
+    top: -36px;
+    font-size: 12px;
+  }
+
+  /* Results */
+  .results {
+    background: var(--bg-white);
+    padding: 80px 24px;
+    display: none;
+  }
+
+  .results.active { display: block; }
+
+  .results-inner { max-width: 640px; margin: 0 auto; }
+
+  .results-header { text-align: center; margin-bottom: 40px; }
+  .results-header h2 { margin-bottom: 4px; }
+  .results-header p { color: var(--text-muted); }
+
+  .result-card {
+    background: var(--bg);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+
+  .result-card.best { border-color: var(--text); }
+
+  .result-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+
+  .tag-best { background: var(--text); color: var(--bg); }
+  .tag-alt { background: var(--bg-white); color: var(--text-muted); border: 1px solid var(--border); }
+  .tag-confidence { background: #E8F5E9; color: #2E7D32; }
+  .tag-strong { background: #E3F2FD; color: #1565C0; }
+
+  .confidence-bar {
+    height: 4px;
+    background: var(--border-light);
+    border-radius: 2px;
+    margin: 12px 0 16px;
+    overflow: hidden;
+  }
+
+  .confidence-fill {
+    height: 100%;
+    background: var(--text);
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+
+  .best-for-list {
+    list-style: none;
+    margin: 0 0 16px;
+    padding: 0;
+  }
+
+  .best-for-list li {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 3px 0;
+    padding-left: 18px;
+    position: relative;
+  }
+
+  .best-for-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .tier-item { text-align: center; }
+  .tier-item .tier-price {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .tier-item .tier-name {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .tier-item .tier-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .result-sil {
+    margin: 16px 0;
+    padding: 20px;
+    background: var(--bg-white);
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .result-sil svg {
+    width: 100px;
+    height: 160px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .result-card h3 {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .result-card .rise {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .result-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+
+  .result-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .rtag {
+    font-size: 11px;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+  }
+
+  /* CTA */
+  .cta {
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .cta h2 {
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .cta p {
+    color: var(--text-muted);
+    margin-bottom: 28px;
+  }
+
+  /* Footer */
+  footer {
+    padding: 32px 24px;
+    text-align: center;
+    border-top: 1px solid var(--border-light);
+  }
+
+  footer p {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .hide { display: none !important; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    /* Nav */
+    .nav-inner { padding: 0 20px; height: 56px; }
+    .nav-center { display: none; }
+    .btn-nav { padding: 8px 14px; font-size: 12px; }
+    .nav-cart { display: none; }
+
+    /* Hero */
+    .hero { padding: 80px 20px 0; }
+    .hero-grid { grid-template-columns: 1fr; gap: 24px; min-height: auto; }
+    .hero h1 { font-size: 30px; line-height: 1.1; margin-bottom: 16px; max-width: 100%; }
+    .hero-sub { font-size: 15px; margin-bottom: 24px; max-width: 100%; }
+    .hero-buttons { gap: 12px; }
+    .hero-image-area { order: -1; }
+    .hero-image-bg-circle { width: 320px; height: 320px; right: 50%; transform: translate(50%,-50%); }
+    .hero-image-wrap img { max-width: 260px; margin: 0 auto; border-radius: 16px; }
+    .hero-badge { font-size: 11px; padding: 8px 12px; border-radius: 8px; }
+    .hero-badge svg { width: 14px; height: 14px; }
+    .hero-badge-1 { top: 10px; left: 10px; }
+    .hero-badge-2 { bottom: 10px; right: 10px; }
+    .hero-bg-shape-1 { width: 250px; height: 250px; top: -50px; right: -80px; }
+    .hero-bg-shape-2 { width: 180px; height: 180px; bottom: -40px; left: -60px; }
+    .hero-bg-shape-3 { display: none; }
+    .hero-btn-video { font-size: 13px; }
+    .hero-btn-video .play-circle { width: 32px; height: 32px; }
+
+    /* Feature bar */
+    .feature-bar { padding: 0 20px 40px; }
+    .feature-card-outer { padding: 24px; border-radius: 14px; }
+    .feature-grid { grid-template-columns: 1fr; gap: 20px; }
+    .feature-item { gap: 12px; }
+    .feature-icon { width: 40px; height: 40px; }
+    .feature-icon svg { width: 18px; height: 18px; }
+    .feature-item h3 { font-size: 14px; }
+    .feature-item p { font-size: 12px; }
+
+    /* Sections */
+    .section { padding: 40px 20px; }
+    .section-header { margin-bottom: 32px; }
+    .section-header h2 { font-size: 26px; }
+    .section-header p { font-size: 15px; }
+
+    /* Problem cards */
+    .problem-grid { grid-template-columns: 1fr; gap: 16px; }
+    .problem-card { padding: 24px; border-radius: 12px; }
+    .problem-card svg { width: 64px; height: 64px; margin-bottom: 16px; }
+    .problem-card h3 { font-size: 15px; }
+    .problem-card p { font-size: 13px; }
+    .solution-bar { flex-direction: column; text-align: center; padding: 20px 24px; margin-top: 24px; }
+
+    /* Steps */
+    .steps { grid-template-columns: 1fr; gap: 20px; }
+    .step-num { width: 32px; height: 32px; font-size: 13px; }
+    .step h3 { font-size: 15px; }
+    .step p { font-size: 13px; }
+
+    /* Fit viz */
+    .fit-grid { grid-template-columns: 1fr; gap: 20px; }
+    .fit-card-viz { padding: 24px; }
+    .fit-card-viz svg { height: 140px; }
+    .fit-card-viz h3 { font-size: 15px; }
+
+    /* Quiz */
+    .quiz-wrap { padding: 40px 20px; }
+    .quiz-header { margin-bottom: 28px; }
+    .quiz-header h2 { font-size: 26px; }
+    .question label { font-size: 18px; }
+    .option { padding: 14px 18px; font-size: 14px; }
+    .quiz-nav { margin-top: 24px; padding-top: 20px; }
+
+    /* Results */
+    .results { padding: 40px 20px; }
+    .results-header { margin-bottom: 32px; }
+    .results-header h2 { font-size: 26px; }
+    .result-card { padding: 20px; border-radius: 12px; }
+    .result-card h3 { font-size: 20px; }
+    .result-card p { font-size: 13px; }
+    .result-card .rise { font-size: 11px; }
+    .best-for-list li { font-size: 12px; }
+    .tier-grid { gap: 8px; margin-top: 16px; padding-top: 16px; }
+    .tier-item .tier-price { font-size: 16px; }
+    .tier-item .tier-name { font-size: 10px; }
+    .tier-item .tier-desc { font-size: 11px; }
+    .result-sil { padding: 16px; margin: 12px 0; }
+    .result-sil svg { width: 80px; height: 130px; }
+
+    /* CTA */
+    .cta { padding: 40px 20px; }
+    .cta h2 { font-size: 26px; }
+    .cta p { font-size: 15px; }
+
+    /* Footer */
+    footer { padding: 24px 20px; }
+
+    /* Global text overflow fix */
+    body { overflow-wrap: break-word; word-wrap: break-word; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">FitCo</div>
+    <ul class="nav-center">
+      <li><a href="#fits">Products</a></li>
+      <li><a href="#works">How It Works</a></li>
+      <li><a href="#fits">Fit Guide</a></li>
+      <li><a href="#quiz">About Us</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn btn-nav" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Find Your Fit</button>
+      <button class="nav-cart" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6h15l-1.5 9h-12z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="9" cy="20" r="1.5" fill="currentColor"/><circle cx="18" cy="20" r="1.5" fill="currentColor"/><path d="M6 6L5 3H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-bg-shape hero-bg-shape-1"></div>
+    <div class="hero-bg-shape hero-bg-shape-2"></div>
+    <div class="hero-bg-shape hero-bg-shape-3"></div>
+  </div>
+  <div class="hero-grid">
+    <div>
+      <h1>Pants That Fit You. Not The Other Way Around.</h1>
+      <p class="hero-sub">Most pants don't fit everyone the same. FitCo helps you find what actually works for your body.</p>
+      <div class="hero-buttons">
+        <button class="btn" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Find Your Fit</button>
+        <button class="hero-btn-video" onclick="document.getElementById('works').scrollIntoView({behavior:'smooth'})">
+          <span class="play-circle"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 2L10 6L3 10V2Z" fill="#111"/></svg></span>
+          How It Works
+        </button>
+      </div>
+    </div>
+    <div class="hero-image-area">
+      <div class="hero-image-bg-circle"></div>
+      <div class="hero-image-wrap">
+        <img src="images/hero-product.jpg" alt="A pair of clean, well-made trousers">
+        <div class="hero-badge hero-badge-1">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="#111" stroke-width="1.2" fill="none"/><path d="M5 8 L7.5 10.5 L11 6" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Built for real bodies
+        </div>
+        <div class="hero-badge hero-badge-2">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="#111" stroke-width="1.2" fill="none"/><path d="M5 8 L7.5 10.5 L11 6" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Thoughtful fits. Every time.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE BAR -->
+<section class="feature-bar">
+  <div class="feature-card-outer">
+    <div class="feature-grid">
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4 L14 10 L20 10 L15 14 L17 20 L12 16 L7 20 L9 14 L4 10 L10 10 Z" stroke="#111" stroke-width="1.2" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <div>
+          <h3>Made for Your Shape</h3>
+          <p>Fits designed around how your body actually moves.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="3" width="16" height="3" rx="1" stroke="#111" stroke-width="1.2" fill="none"/><rect x="6" y="9" width="12" height="2" rx="1" stroke="#111" stroke-width="1.2" fill="none"/><rect x="5" y="14" width="14" height="2" rx="1" stroke="#111" stroke-width="1.2" fill="none"/><rect x="7" y="19" width="10" height="2" rx="1" stroke="#111" stroke-width="1.2" fill="none"/></svg>
+        </div>
+        <div>
+          <h3>Smart Fit Technology</h3>
+          <p>We factor in thigh, seat, and waist so you don't have to.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#111" stroke-width="1.2" fill="none"/></svg>
+        </div>
+        <div>
+          <h3>Comfort You Can Count On</h3>
+          <p>Premium fabrics. Better feel. All-day comfort.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section class="section section-white" id="problem">
+  <div class="section-header">
+    <h2>Three Common Problems</h2>
+    <p>Sound familiar? You're not alone.</p>
+  </div>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="28" y="8" width="24" height="8" rx="2" fill="#111"/>
+        <path d="M30 16 L32 36 L30 72 L38 72 L40 40 L42 72 L50 72 L48 36 L50 16 Z" fill="#D9D9D9" stroke="#111" stroke-width="1.5"/>
+        <path d="M34 28 Q36 32 34 44" stroke="#E85D5D" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="56" y="30" font-size="7" fill="#E85D5D" font-weight="600">Tight</text>
+      </svg>
+      <h3>Tight in the Thighs</h3>
+      <p>Your waist fits but your thighs feel squeezed. You size up and the waist gaps.</p>
+    </div>
+    <div class="problem-card">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="28" y="8" width="24" height="8" rx="2" fill="#111"/>
+        <path d="M30 16 L32 36 L30 72 L38 72 L40 40 L42 72 L50 72 L48 36 L50 16 Z" fill="#D9D9D9" stroke="#111" stroke-width="1.5"/>
+        <path d="M30 18 Q40 24 50 18" stroke="#E85D5D" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="52" y="14" font-size="7" fill="#E85D5D" font-weight="600">Gap</text>
+      </svg>
+      <h3>Waist Gaps</h3>
+      <p>The back of your waistband hangs open. Belts help but they bunch and shift.</p>
+    </div>
+    <div class="problem-card">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="12" y="10" width="18" height="60" rx="2" fill="#D9D9D9" stroke="#111" stroke-width="1.5"/>
+        <rect x="31" y="10" width="18" height="60" rx="2" fill="#D9D9D9" stroke="#111" stroke-width="1.5"/>
+        <rect x="50" y="10" width="18" height="60" rx="2" fill="#D9D9D9" stroke="#111" stroke-width="1.5"/>
+        <text x="16" y="78" font-size="7" fill="#6E6E6E">32</text>
+        <text x="35" y="78" font-size="7" fill="#6E6E6E">34</text>
+        <text x="53" y="78" font-size="7" fill="#6E6E6E">M</text>
+        <text x="16" y="6" font-size="6" fill="#E85D5D" font-weight="600">?</text>
+        <text x="35" y="6" font-size="6" fill="#E85D5D" font-weight="600">?</text>
+        <text x="53" y="6" font-size="6" fill="#E85D5D" font-weight="600">?</text>
+      </svg>
+      <h3>Inconsistent Sizing</h3>
+      <p>You're one size in one brand and a completely different size in another.</p>
+    </div>
+  </div>
+  <div class="solution-bar">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="10" stroke="#F5F3EE" stroke-width="2"/>
+      <path d="M8 12 L11 15 L16 9" stroke="#F5F3EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <p>FitCo solves all three by matching your body type to the right fit.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="works">
+  <div class="section-header" style="text-align:center;">
+    <h2>How It Works</h2>
+    <p>Three steps to pants that fit.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Answer 9 Questions</h3>
+      <p>Tell us about your build, fit issues, and style. Takes about 2 minutes.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Get Your Matches</h3>
+      <p>We analyze your answers and recommend the best fits for your body.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Buy With Confidence</h3>
+      <p>Know your fit before you order. No more guessing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FITS -->
+<section class="section section-white" id="fits">
+  <div class="section-header">
+    <h2>The Three Fits</h2>
+    <p>Most pants fall into one of these categories. Here's how they differ.</p>
+  </div>
+  <div class="fit-grid">
+    <div class="fit-card-viz">
+      <svg width="90" height="180" viewBox="0 0 120 240" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+        <rect x="46" y="4" width="28" height="10" rx="3" fill="#111"/>
+        <path d="M48 14 L50 70 L48 230 L56 230 L58 140 L60 70 L62 140 L64 230 L72 230 L70 70 L72 14 Z" fill="none" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M48 14 L44 70 L42 230" stroke="#D9D9D9" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
+        <path d="M72 14 L76 70 L78 230" stroke="#D9D9D9" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
+        <text x="12" y="80" font-size="8" fill="#6E6E6E" text-anchor="end">Roomy</text>
+        <text x="108" y="200" font-size="8" fill="#6E6E6E">Tapered</text>
+      </svg>
+      <h3>Athletic Taper</h3>
+      <p>More room in the thigh, narrows toward the ankle</p>
+    </div>
+    <div class="fit-card-viz">
+      <svg width="90" height="180" viewBox="0 0 120 240" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+        <rect x="46" y="4" width="28" height="10" rx="3" fill="#111"/>
+        <path d="M48 14 L48 70 L48 230 L56 230 L56 140 L56 70 L56 230 L64 230 L64 70 L64 14 Z" fill="none" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M48 14 L44 70 L44 230" stroke="#D9D9D9" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
+        <path d="M64 14 L68 70 L68 230" stroke="#D9D9D9" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
+        <text x="12" y="130" font-size="8" fill="#6E6E6E" text-anchor="end">Same width</text>
+      </svg>
+      <h3>Straight Fit</h3>
+      <p>Consistent width from hip to ankle. A safe choice for most.</p>
+    </div>
+    <div class="fit-card-viz">
+      <svg width="90" height="180" viewBox="0 0 120 240" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+        <rect x="44" y="4" width="32" height="10" rx="3" fill="#111"/>
+        <path d="M44 14 L46 70 L46 230 L54 230 L56 140 L58 70 L60 140 L62 230 L70 230 L70 70 L74 14 Z" fill="none" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M44 14 L38 70 L38 230" stroke="#D9D9D9" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
+        <path d="M74 14 L80 70 L80 230" stroke="#D9D9D9" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
+        <text x="10" y="130" font-size="8" fill="#6E6E6E" text-anchor="end">Loose throughout</text>
+      </svg>
+      <h3>Relaxed Fit</h3>
+      <p>More room everywhere. Maximum comfort.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="quiz-wrap" id="quiz">
+  <div class="quiz-inner">
+    <div class="quiz-header">
+      <h2>Find Your Fit</h2>
+      <p>Answer a few questions about how pants fit you.</p>
+    </div>
+    <div class="progress">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div id="quizForm">
+      <div class="question" id="q1">
+        <label>Where do your pants fit poorly?</label>
+        <div class="options">
+          <button class="option" onclick="selectOption(this,'fitProblem','tightThighs')">Tight in the thighs</button>
+          <button class="option" onclick="selectOption(this,'fitProblem','waistGap')">Gaps at the waist</button>
+          <button class="option" onclick="selectOption(this,'fitProblem','tooTightLowerLeg')">Tight below the knee</button>
+          <button class="option" onclick="selectOption(this,'fitProblem','lengthIssues')">Length is always off</button>
+          <button class="option" onclick="selectOption(this,'fitProblem','noIssues')">No major issues</button>
+        </div>
+      </div>
+      <div class="question hide" id="q2">
+        <label>How do you like your pants to fit?</label>
+        <div class="options">
+          <button class="option" onclick="selectOption(this,'silhouette','tailored')">Tailored. Clean and sharp.</button>
+          <button class="option" onclick="selectOption(this,'silhouette','balanced')">Balanced. Not too tight, not too loose.</button>
+          <button class="option" onclick="selectOption(this,'silhouette','relaxed')">Relaxed. Easy and comfortable.</button>
+          <button class="option" onclick="selectOption(this,'silhouette','oversized')">Loose and roomy.</button>
+        </div>
+      </div>
+      <div class="question hide" id="q3">
+        <label>What is your body type?</label>
+        <div class="options">
+          <button class="option" onclick="selectOption(this,'build','slim')">Slim. Lean frame.</button>
+          <button class="option" onclick="selectOption(this,'build','proportional')">Average. Balanced proportions.</button>
+          <button class="option" onclick="selectOption(this,'build','muscular')">Athletic. Bigger thighs and shoulders.</button>
+          <button class="option" onclick="selectOption(this,'build','broader')">Broader. Wider hips and midsection.</button>
+        </div>
+      </div>
+      <div class="question hide" id="q4">
+        <label>How tall are you?</label>
+        <div class="options">
+          <button class="option" onclick="selectOption(this,'height','short')">Under 5'8"</button>
+          <button class="option" onclick="selectOption(this,'height','average')">5'8" to 6'0"</button>
+          <button class="option" onclick="selectOption(this,'height','tall')">Over 6'0"</button>
+        </div>
+      </div>
+      <div class="question hide" id="q5">
+        <label>What issues do you have with pant rise?</label>
+        <div class="options">
+          <button class="option" onclick="selectOption(this,'riseComfort','waistbandSlips')">Waistband slips down</button>
+          <button class="option" onclick="selectOption(this,'riseComfort','stomachPressure')">Feels tight on my stomach</button>
+          <button class="option" onclick="selectOption(this,'riseComfort','crotchTight')">Too tight in the crotch</button>
+          <button class="option" onclick="selectOption(this,'riseComfort','comfortableAnywhere')">No issues. Any rise works.</button>
+        </div>
+      </div>
+      <div class="question hide" id="q6">
+        <label>How do you like your pants at the ankle? <span class="optional-badge">Optional</span></label>
+        <div class="options">
+          <button class="option" onclick="selectOption(this,'stackPreference','cleanHem')">Clean hem. No break.</button>
+          <button class="option" onclick="selectOption(this,'stackPreference','slightStack')">Slight stack. Small break.</button>
+          <button class="option" onclick="selectOption(this,'stackPreference','heavyStack')">Heavy stack. Lots of fabric.</button>
+          <button class="option" onclick="selectOption(this,'stackPreference','cropped')">Cropped. Above the ankle.</button>
+        </div>
+      </div>
+      <div class="question hide" id="q7">
+        <label>What shoes do you usually wear? <span class="optional-badge">Optional</span></label>
+        <div class="options">
+          <button class="option" onclick="selectOption(this,'shoeType','sneakers')">Sneakers</button>
+          <button class="option" onclick="selectOption(this,'shoeType','boots')">Boots</button>
+          <button class="option" onclick="selectOption(this,'shoeType','loafers')">Loafers or dress shoes</button>
+          <button class="option" onclick="selectOption(this,'shoeType','chunkyShoes')">Chunky or platform shoes</button>
+        </div>
+      </div>
+      <div class="question hide" id="q8">
+        <label>How much stretch do you like? <span class="optional-badge">Optional</span></label>
+        <div class="options">
+          <button class="option" onclick="selectOption(this,'stretchPreference','rigid')">Rigid. No stretch.</button>
+          <button class="option" onclick="selectOption(this,'stretchPreference','comfortStretch')">Comfort stretch. Moves with me.</button>
+          <button class="option" onclick="selectOption(this,'stretchPreference','performanceStretch')">Performance stretch. Maximum flex.</button>
+        </div>
+      </div>
+      <div class="question hide" id="q9">
+        <label>What's your style vibe? <span class="optional-badge">Optional</span></label>
+        <div class="options">
+          <button class="option" onclick="selectOption(this,'stylePreference','minimal')">Minimal. Clean and simple.</button>
+          <button class="option" onclick="selectOption(this,'stylePreference','streetwear')">Streetwear. Bold and relaxed.</button>
+          <button class="option" onclick="selectOption(this,'stylePreference','smartCasual')">Smart casual. Polished but easy.</button>
+          <button class="option" onclick="selectOption(this,'stylePreference','trendFocused')">Trend focused. Fashion forward.</button>
+        </div>
+      </div>
+      <div class="quiz-nav">
+        <button class="btn-text" onclick="prevQuestion()" id="backBtn" style="visibility:hidden;">Back</button>
+        <button class="btn" onclick="nextQuestion()" id="nextBtn" disabled>Next</button>
+        <button class="btn-text hide" onclick="skipOptional()" id="skipBtn">Skip</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results" id="results">
+  <div class="results-inner">
+    <div class="results-header">
+      <h2>Your Recommendations</h2>
+      <p>Based on your answers, here are your best fits.</p>
+    </div>
+    <div class="result-card best" id="bestCard">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+        <div class="result-tag tag-best">Best Match</div>
+        <div class="result-tag tag-confidence" id="bestConf">92% Match</div>
+      </div>
+      <h3 id="bestName">Slim Taper</h3>
+      <div class="rise" id="bestRise">Mid Rise</div>
+      <div class="confidence-bar"><div class="confidence-fill" id="bestConfBar" style="width:92%"></div></div>
+      <p id="bestDesc">Description</p>
+      <ul class="best-for-list" id="bestFor"></ul>
+      <div class="result-sil" id="bestSil"></div>
+      <div class="tier-grid" id="bestTiers"></div>
+    </div>
+    <div class="result-card" id="altCard">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+        <div class="result-tag tag-alt">Alternative</div>
+        <div class="result-tag tag-strong" id="altConf">78% Match</div>
+      </div>
+      <h3 id="altName">Straight Fit</h3>
+      <div class="rise" id="altRise">Mid Rise</div>
+      <div class="confidence-bar"><div class="confidence-fill" id="altConfBar" style="width:78%"></div></div>
+      <p id="altDesc">Description</p>
+      <ul class="best-for-list" id="altFor"></ul>
+      <div class="result-sil" id="altSil"></div>
+      <div class="tier-grid" id="altTiers"></div>
+    </div>
+    <div class="result-card" id="styleCard">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+        <div class="result-tag tag-alt">Style Pick</div>
+        <div class="result-tag tag-strong" id="styleConf">65% Match</div>
+      </div>
+      <h3 id="styleName">Relaxed Fit</h3>
+      <div class="rise" id="styleRise">Mid-High Rise</div>
+      <div class="confidence-bar"><div class="confidence-fill" id="styleConfBar" style="width:65%"></div></div>
+      <p id="styleDesc">Description</p>
+      <ul class="best-for-list" id="styleFor"></ul>
+      <div class="result-sil" id="styleSil"></div>
+      <div class="tier-grid" id="styleTiers"></div>
+    </div>
+    <div style="text-align:center; margin-top: 32px;">
+      <button class="btn-text" onclick="resetQuiz()">Retake Quiz</button>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>Find pants that fit.</h2>
+  <p>It takes two minutes. No email required.</p>
+  <button class="btn" onclick="resetQuiz()">Start the Quiz</button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>FitCo. Smart fit recommendations.</p>
+</footer>
+
+<script>
+let currentQ = 1;
+const totalQ = 9;
+const answers = {};
+
+const fits = {
+  slimTaper: {
+    name: 'Slim Taper',
+    description: 'Extra room through the upper leg while keeping a clean silhouette below the knee.',
+    rise: 'Mid Rise',
+    bestFor: ['Larger thighs', 'Waist gap issues', 'Cleaner ankle taper'],
+    tiers: [
+      { name: 'Essential', price: '$', desc: 'Polyester blend. Everyday option.' },
+      { name: 'Daily', price: '$$', desc: 'Cotton blend with stretch.' },
+      { name: 'Best', price: '$$$', desc: 'Highest-quality materials.' }
+    ]
+  },
+  athleticTaper: {
+    name: 'Athletic Taper',
+    description: 'More room in the thigh with a gradual taper below the knee. Built for muscular builds.',
+    rise: 'Mid Rise',
+    bestFor: ['Bigger thighs', 'Athletic builds', 'Need thigh room'],
+    tiers: [
+      { name: 'Essential', price: '$', desc: 'Polyester blend. Everyday option.' },
+      { name: 'Daily', price: '$$', desc: 'Cotton blend with stretch.' },
+      { name: 'Best', price: '$$$', desc: 'Highest-quality materials.' }
+    ]
+  },
+  straightFit: {
+    name: 'Straight Fit',
+    description: 'Consistent width from hip to ankle for a cleaner, more versatile fit.',
+    rise: 'Mid Rise',
+    bestFor: ['Balanced proportions', 'Everyday wear', 'Less aggressive taper'],
+    tiers: [
+      { name: 'Essential', price: '$', desc: 'Polyester blend. Everyday option.' },
+      { name: 'Daily', price: '$$', desc: 'Cotton blend with stretch.' },
+      { name: 'Best', price: '$$$', desc: 'Highest-quality materials.' }
+    ]
+  },
+  relaxedFit: {
+    name: 'Relaxed Fit',
+    description: 'More room throughout the leg while maintaining structure and shape.',
+    rise: 'Mid-High Rise',
+    bestFor: ['Maximum comfort', 'Roomier silhouette', 'Wider leg preference'],
+    tiers: [
+      { name: 'Essential', price: '$', desc: 'Polyester blend. Everyday option.' },
+      { name: 'Daily', price: '$$', desc: 'Cotton blend with stretch.' },
+      { name: 'Best', price: '$$$', desc: 'Highest-quality materials.' }
+    ]
+  }
+};
+
+const silPaths = {
+  slimTaper: 'M35 5 L55 5 L52 40 L50 100 L48 160 L46 220 L54 220 L56 160 L58 100 L62 40 L68 5 L88 5 L86 40 L84 100 L82 160 L80 220 L88 220 L90 160 L92 100 L96 40 L102 5 Z',
+  athleticTaper: 'M30 5 L52 5 L50 40 L52 100 L50 160 L48 220 L56 220 L58 160 L60 100 L62 40 L70 5 L90 5 L88 40 L90 100 L88 160 L86 220 L94 220 L96 160 L98 100 L100 40 L108 5 Z',
+  straightFit: 'M35 5 L55 5 L54 40 L54 100 L54 160 L54 220 L62 220 L62 160 L62 100 L62 40 L63 5 L83 5 L82 40 L82 100 L82 160 L82 220 L90 220 L90 160 L90 100 L90 40 L91 5 Z',
+  relaxedFit: 'M28 5 L52 5 L50 40 L52 100 L52 160 L50 220 L58 220 L60 160 L60 100 L62 40 L72 5 L96 5 L94 40 L96 100 L96 160 L94 220 L102 220 L104 160 L104 100 L106 40 L118 5 Z'
+};
+
+function selectOption(btn, key, value) {
+  answers[key] = value;
+  btn.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function showQuestion(n) {
+  for (let i = 1; i <= totalQ; i++) {
+    document.getElementById('q' + i).classList.toggle('hide', i !== n);
+  }
+  document.getElementById('progressFill').style.width = Math.round((n / totalQ) * 100) + '%';
+  document.getElementById('backBtn').style.visibility = n === 1 ? 'hidden' : 'visible';
+  document.getElementById('skipBtn').classList.toggle('hide', n < 6);
+  document.getElementById('nextBtn').disabled = answers[getKey(n)] === undefined;
+  document.getElementById('nextBtn').textContent = n === totalQ ? 'See Results' : 'Next';
+}
+
+function getKey(n) {
+  return ['fitProblem','silhouette','build','height','riseComfort','stackPreference','shoeType','stretchPreference','stylePreference'][n-1];
+}
+
+function nextQuestion() {
+  if (currentQ < totalQ) { currentQ++; showQuestion(currentQ); }
+  else { calculateResults(); }
+}
+
+function prevQuestion() {
+  if (currentQ > 1) { currentQ--; showQuestion(currentQ); }
+}
+
+function skipOptional() { nextQuestion(); }
+
+function calculateResults() {
+  const s = { slimTaper: 0, athleticTaper: 0, straightFit: 0, relaxedFit: 0 };
+
+  switch(answers.fitProblem) {
+    case 'tightThighs': s.athleticTaper += 5; s.straightFit += 3; s.slimTaper -= 2; break;
+    case 'waistGap': s.athleticTaper += 3; s.straightFit += 2; s.slimTaper += 1; break;
+    case 'tooTightLowerLeg': s.straightFit += 4; s.relaxedFit += 3; s.slimTaper -= 1; break;
+    case 'lengthIssues': s.slimTaper += 2; s.straightFit += 2; s.athleticTaper += 2; break;
+    case 'noIssues': s.slimTaper += 3; s.athleticTaper += 2; break;
+  }
+
+  switch(answers.silhouette) {
+    case 'tailored': s.slimTaper += 4; s.athleticTaper += 1; break;
+    case 'balanced': s.straightFit += 4; s.athleticTaper += 2; break;
+    case 'relaxed': s.relaxedFit += 4; s.straightFit += 2; break;
+    case 'oversized': s.relaxedFit += 5; s.straightFit += 1; break;
+  }
+
+  switch(answers.build) {
+    case 'slim': s.slimTaper += 5; s.straightFit += 2; break;
+    case 'proportional': s.straightFit += 4; s.slimTaper += 2; s.athleticTaper += 1; break;
+    case 'muscular': s.athleticTaper += 5; s.straightFit += 3; s.slimTaper -= 2; break;
+    case 'broader': s.relaxedFit += 3; s.straightFit += 3; s.athleticTaper += 2; break;
+  }
+
+  switch(answers.height) {
+    case 'short': s.slimTaper += 2; s.athleticTaper += 1; break;
+    case 'average': s.slimTaper += 1; s.straightFit += 1; s.athleticTaper += 1; break;
+    case 'tall': s.straightFit += 2; s.relaxedFit += 1; break;
+  }
+
+  switch(answers.riseComfort) {
+    case 'waistbandSlips': s.athleticTaper += 2; s.straightFit += 1; break;
+    case 'stomachPressure': s.relaxedFit += 3; s.straightFit += 2; break;
+    case 'crotchTight': s.athleticTaper += 3; s.relaxedFit += 2; break;
+    case 'comfortableAnywhere': s.slimTaper += 2; s.straightFit += 1; break;
+  }
+
+  if (answers.stackPreference) {
+    switch(answers.stackPreference) {
+      case 'cleanHem': s.slimTaper += 2; break;
+      case 'slightStack': s.straightFit += 1; s.athleticTaper += 1; break;
+      case 'heavyStack': s.relaxedFit += 2; s.straightFit += 1; break;
+      case 'cropped': s.slimTaper += 1; s.athleticTaper += 1; break;
+    }
+  }
+
+  if (answers.shoeType) {
+    switch(answers.shoeType) {
+      case 'sneakers': s.slimTaper += 1; s.athleticTaper += 1; break;
+      case 'boots': s.straightFit += 1; s.athleticTaper += 1; break;
+      case 'loafers': s.slimTaper += 1; s.straightFit += 1; break;
+      case 'chunkyShoes': s.relaxedFit += 1; s.straightFit += 1; break;
+    }
+  }
+
+  if (answers.stretchPreference) {
+    switch(answers.stretchPreference) {
+      case 'rigid': s.slimTaper += 1; s.straightFit += 1; break;
+      case 'comfortStretch': s.athleticTaper += 2; s.straightFit += 1; break;
+      case 'performanceStretch': s.athleticTaper += 2; s.relaxedFit += 1; break;
+    }
+  }
+
+  if (answers.stylePreference) {
+    switch(answers.stylePreference) {
+      case 'minimal': s.slimTaper += 2; s.straightFit += 1; break;
+      case 'streetwear': s.relaxedFit += 2; s.athleticTaper += 1; break;
+      case 'smartCasual': s.slimTaper += 1; s.straightFit += 2; break;
+      case 'trendFocused': s.athleticTaper += 2; s.slimTaper += 1; break;
+    }
+  }
+
+  const sorted = Object.entries(s).sort((a, b) => b[1] - a[1]);
+  const bestKey = sorted[0][0];
+  const altKey = sorted[1][0];
+  const styleKey = sorted[2][0];
+  const best = fits[bestKey];
+  const alt = fits[altKey];
+  const style = fits[styleKey];
+
+  // Calculate confidence percentages (normalize against max possible)
+  const maxScore = 24;
+  const bestConf = Math.min(98, Math.round((sorted[0][1] / maxScore) * 100));
+  const altConf = Math.min(85, Math.round((sorted[1][1] / maxScore) * 100));
+  const styleConf = Math.min(75, Math.round((sorted[2][1] / maxScore) * 100));
+
+  // Helper to render a result card
+  function renderCard(prefix, fit, conf, confVal, fitKey) {
+    document.getElementById(prefix + 'Name').textContent = fit.name;
+    document.getElementById(prefix + 'Rise').textContent = fit.rise;
+    document.getElementById(prefix + 'Desc').textContent = fit.description;
+    document.getElementById(prefix + 'Conf').textContent = conf + '% Match';
+    document.getElementById(prefix + 'ConfBar').style.width = conf + '%';
+    document.getElementById(prefix + 'For').innerHTML = fit.bestFor.map(f => '<li>' + f + '</li>').join('');
+    document.getElementById(prefix + 'Sil').innerHTML = '<svg viewBox="0 0 140 240" width="120" height="200" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;"><path d="' + silPaths[fitKey] + '" fill="#E8E6E1" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/></svg>';
+    document.getElementById(prefix + 'Tiers').innerHTML = fit.tiers.map(t =>
+      '<div class="tier-item"><div class="tier-price">' + t.price + '</div><div class="tier-name">' + t.name + '</div><div class="tier-desc">' + t.desc + '</div></div>'
+    ).join('');
+  }
+
+  renderCard('best', best, bestConf, bestConf, bestKey);
+  renderCard('alt', alt, altConf, altConf, altKey);
+  renderCard('style', style, styleConf, styleConf, styleKey);
+
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('results').classList.add('active');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  currentQ = 1;
+  for (const k in answers) delete answers[k];
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  document.getElementById('results').classList.remove('active');
+  document.getElementById('quiz').style.display = 'block';
+  showQuestion(1);
+  document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' });
+}
+
+showQuestion(1);
+</script>
+
+</body>
+</html>
