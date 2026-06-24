@@ -1336,107 +1336,6 @@
     color: var(--text-muted);
   }
 
-  /* Waitlist */
-  .waitlist {
-    background: #111111;
-    color: #fff;
-    padding: 120px 24px;
-    text-align: center;
-  }
-  .waitlist-inner {
-    max-width: 560px;
-    margin: 0 auto;
-  }
-  .waitlist-badge {
-    display: inline-block;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    border: 1px solid rgba(255,255,255,0.15);
-    padding: 6px 14px;
-    border-radius: 100px;
-    margin-bottom: 24px;
-  }
-  .waitlist h2 {
-    font-size: clamp(28px, 3.5vw, 42px);
-    font-weight: 500;
-    letter-spacing: -0.03em;
-    line-height: 1.15;
-    margin-bottom: 16px;
-    color: #fff;
-  }
-  .waitlist-lead {
-    font-size: 17px;
-    color: rgba(255,255,255,0.75);
-    line-height: 1.6;
-    margin-bottom: 12px;
-  }
-  .waitlist-sub {
-    font-size: 15px;
-    color: rgba(255,255,255,0.45);
-    line-height: 1.6;
-    margin-bottom: 36px;
-  }
-  .waitlist-form {
-    display: flex;
-    max-width: 440px;
-    margin: 0 auto;
-    gap: 0;
-  }
-  .waitlist-input {
-    flex: 1;
-    padding: 16px 20px;
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 12px 0 0 12px;
-    background: rgba(255,255,255,0.06);
-    color: #fff;
-    outline: none;
-    transition: border-color 0.3s ease, background 0.3s ease;
-  }
-  .waitlist-input::placeholder {
-    color: rgba(255,255,255,0.3);
-  }
-  .waitlist-input:focus {
-    border-color: rgba(255,255,255,0.4);
-    background: rgba(255,255,255,0.1);
-  }
-  .waitlist-btn {
-    padding: 16px 28px;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    background: #fff;
-    color: #111;
-    border: none;
-    border-radius: 0 12px 12px 0;
-    cursor: pointer;
-    transition: opacity 0.3s ease, transform 0.2s ease;
-    white-space: nowrap;
-  }
-  .waitlist-btn:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-  }
-  .waitlist-btn:active {
-    transform: translateY(0);
-  }
-  .waitlist-success {
-    font-size: 14px;
-    color: rgba(255,255,255,0.6);
-    margin-top: 20px;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  .waitlist-success.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
   .hide { display: none !important; }
 
   /* Responsive */
@@ -1584,16 +1483,6 @@
     /* Footer */
     footer { padding: 24px 20px; }
 
-    /* Waitlist */
-    .waitlist { padding: 80px 24px; }
-    .waitlist-inner { max-width: 520px; margin: 0 auto; }
-    .waitlist h2 { font-size: 24px; margin-bottom: 12px; }
-    .waitlist-lead { font-size: 15px; margin-bottom: 8px; }
-    .waitlist-sub { font-size: 14px; margin-bottom: 24px; }
-    .waitlist-form { flex-direction: column; }
-    .waitlist-input { border-radius: 12px 12px 0 0; border-bottom: none; text-align: center; }
-    .waitlist-btn { border-radius: 0 0 12px 12px; padding: 14px 20px; }
-
     /* Global text overflow fix */
     body { overflow-wrap: break-word; word-wrap: break-word; }
   }
@@ -1628,276 +1517,529 @@
     </div>
   </div>
 </nav>
-<section class="hero">
-  <div class="hero-bg">
-    <div class="hero-bg-shape hero-bg-shape-1"></div>
-    <div class="hero-bg-shape hero-bg-shape-2"></div>
-    <div class="hero-bg-shape hero-bg-shape-3"></div>
-  </div>
-  <div class="hero-grid">
-    <div>
-      <h1>Pants That Fit You. Not The Other Way Around.</h1>
-      <p class="hero-sub">Most pants don't fit everyone the same. FitCo helps you find what actually works for your body.</p>
-      <div class="hero-buttons">
-        <button class="btn" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Find Your Fit</button>
-        <button class="hero-btn-video" onclick="document.getElementById('works').scrollIntoView({behavior:'smooth'})">
-          <span class="play-circle"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 2L10 6L3 10V2Z" fill="#111"/></svg></span>
-          How It Works
-        </button>
-      </div>
-    </div>
-    <div class="hero-image-area">
-      <div class="hero-image-bg-circle"></div>
-      <div class="hero-image-wrap">
-        <img src="images/hero-product.jpg" alt="A pair of clean, well-made trousers">
-        <div class="hero-badge hero-badge-1">
-          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="#111" stroke-width="1.2" fill="none"/><path d="M5 8 L7.5 10.5 L11 6" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Built for real bodies
-        </div>
-        <div class="hero-badge hero-badge-2">
-          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="#111" stroke-width="1.2" fill="none"/><path d="M5 8 L7.5 10.5 L11 6" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Thoughtful fits. Every time.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="feature-bar">
-  <div class="feature-card-outer">
-    <div class="feature-grid">
-      <div class="feature-item">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4 L14 10 L20 10 L15 14 L17 20 L12 16 L7 20 L9 14 L4 10 L10 10 Z" stroke="#111" stroke-width="1.2" stroke-linejoin="round" fill="none"/></svg>
-        </div>
-        <div>
-          <h3>Made for Your Shape</h3>
-          <p>Fits designed around how your body actually moves.</p>
-        </div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="3" width="16" height="3" rx="1" stroke="#111" stroke-width="1.2" fill="none"/><rect x="6" y="9" width="12" height="2" rx="1" stroke="#111" stroke-width="1.2" fill="none"/><rect x="5" y="14" width="14" height="2" rx="1" stroke="#111" stroke-width="1.2" fill="none"/><rect x="7" y="19" width="10" height="2" rx="1" stroke="#111" stroke-width="1.2" fill="none"/></svg>
-        </div>
-        <div>
-          <h3>Smart Fit Technology</h3>
-          <p>We factor in thigh, seat, and waist so you don't have to.</p>
-        </div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#111" stroke-width="1.2" fill="none"/></svg>
-        </div>
-        <div>
-          <h3>Comfort You Can Count On</h3>
-          <p>Premium fabrics. Better feel. All-day comfort.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="section section-white" id="problem">
-  <div class="section-header">
-    <h2>Three Common Problems</h2>
-    <p>Sound familiar? You're not alone.</p>
-  </div>
-  <div class="problem-grid">
-    <div class="problem-card">
-      <div class="problem-illustration">
-        <svg viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="28" y="4" width="24" height="8" rx="2" fill="#111"/>
-          <path d="M30 12 L32 36 L30 88 L38 88 L40 48 L42 88 L50 88 L48 36 L50 12 Z" fill="#F0EFEA" stroke="#111" stroke-width="1.5"/>
-          <path d="M33 30 Q35 38 33 52" stroke="#E85D5D" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <path d="M47 30 Q49 38 47 52" stroke="#E85D5D" stroke-width="2" fill="none" stroke-linecap="round"/>
-        </svg>
-        <div class="problem-x">
-          <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3 L9 9 M9 3 L3 9" stroke="#111" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </div>
-      </div>
-      <div class="problem-text">
-        <h3>Too Tight in the Thighs</h3>
-        <p>Most pants fit your waist, but not your legs.</p>
-        <a href="#quiz" class="problem-link" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'}); return false;">See How We Fix It &rarr;</a>
-      </div>
-    </div>
-    <div class="problem-card">
-      <div class="problem-illustration">
-        <svg viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="28" y="4" width="24" height="8" rx="2" fill="#111"/>
-          <path d="M30 12 L32 36 L30 88 L38 88 L40 48 L42 88 L50 88 L48 36 L50 12 Z" fill="#F0EFEA" stroke="#111" stroke-width="1.5"/>
-          <path d="M30 16 Q40 22 50 16" stroke="#E85D5D" stroke-width="2" fill="none" stroke-linecap="round"/>
-        </svg>
-        <div class="problem-x">
-          <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3 L9 9 M9 3 L3 9" stroke="#111" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </div>
-      </div>
-      <div class="problem-text">
-        <h3>Gaping at the Waist</h3>
-        <p>Loose waistbands lead to adjusting, tugging, and frustration.</p>
-        <a href="#quiz" class="problem-link" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'}); return false;">See How We Fix It &rarr;</a>
-      </div>
-    </div>
-    <div class="problem-card">
-      <div class="problem-illustration">
-        <svg viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="28" y="4" width="24" height="8" rx="2" fill="#111"/>
-          <path d="M30 12 L32 36 L30 88 L38 88 L40 48 L42 88 L50 88 L48 36 L50 12 Z" fill="#F0EFEA" stroke="#111" stroke-width="1.5"/>
-          <line x1="22" y1="85" x2="58" y2="85" stroke="#E85D5D" stroke-width="1.5" stroke-dasharray="3 2"/>
-          <line x1="22" y1="90" x2="58" y2="90" stroke="#E85D5D" stroke-width="1.5" stroke-dasharray="3 2"/>
-        </svg>
-        <div class="problem-x">
-          <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3 L9 9 M9 3 L3 9" stroke="#111" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </div>
-      </div>
-      <div class="problem-text">
-        <h3>Too Long (or Too Short)</h3>
-        <p>Finding the right length shouldn't be a hassle.</p>
-        <a href="#quiz" class="problem-link" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'}); return false;">See How We Fix It &rarr;</a>
-      </div>
-    </div>
-  </div>
-  <div class="solution-bar">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="10" stroke="#F5F3EE" stroke-width="2"/>
-      <path d="M8 12 L11 15 L16 9" stroke="#F5F3EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    <p>FitCo solves all three by matching your body type to the right fit.</p>
-  </div>
-</section>
-<section class="section" id="works">
-  <div class="section-header" style="text-align:center;">
-    <h2>How It Works</h2>
-    <p>Three steps to pants that fit.</p>
-  </div>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <h3>Answer 9 Questions</h3>
-      <p>Tell us about your build, fit issues, and style. Takes about 2 minutes.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <h3>Get Your Matches</h3>
-      <p>We analyze your answers and recommend the best fits for your body.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <h3>Buy With Confidence</h3>
-      <p>Know your fit before you order. No more guessing.</p>
-    </div>
-  </div>
-</section>
-<section class="section fit-section" id="fits">
-  <div class="section-header">
-    <span class="fit-section-badge">Fit Guide</span>
-    <h2>The Three Fits</h2>
-    <p>Most pants fall into one of these categories. Here's how they differ.</p>
-  </div>
-  <div class="fit-grid">
-    <div class="fit-card-viz">
-      <span class="fit-card-num">01</span>
-      <svg width="80" height="160" viewBox="0 0 120 240" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-        <rect x="46" y="4" width="28" height="10" rx="3" fill="#111"/>
-        <path d="M48 14 L50 70 L48 230 L56 230 L58 140 L60 70 L62 140 L64 230 L72 230 L70 70 L72 14 Z" fill="none" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/>
-        <path d="M48 14 L44 70 L42 230" stroke="#D9D9D9" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
-        <path d="M72 14 L76 70 L78 230" stroke="#D9D9D9" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
+<!-- SHOP GATE -->
+<section class="shop-gate" id="shopGate">
+  <div class="shop-gate-inner">
+    <div class="shop-gate-icon">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="12" y="28" width="40" height="28" rx="4" stroke="#111" stroke-width="2" fill="none"/>
+        <path d="M20 28V22C20 14 26 8 32 8C38 8 44 14 44 22V28" stroke="#111" stroke-width="2" fill="none"/>
+        <circle cx="32" cy="42" r="3" stroke="#111" stroke-width="2" fill="none"/>
       </svg>
-      <h3>Athletic Taper</h3>
-      <p>More room in the thigh, narrows toward the ankle.</p>
-      <div class="fit-tags">
+    </div>
+    <h1>Your Fit Profile Unlocks Everything</h1>
+    <p class="shop-gate-lead">Get matched in under 2 minutes to unlock personalized pant recommendations.</p>
+    <p class="shop-gate-sub">We don't recommend generic pants. FitCo matches you to pants based on your body proportions, fit issues, and style preferences.</p>
+    <a href="/quiz/index.html" class="btn" style="margin-top:8px;">Start Fit Quiz</a>
+    <div class="shop-gate-features">
+      <div class="shop-gate-feature">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#111" stroke-width="1.5" fill="none"/></svg>
+        <span>Personalized to your body</span>
+      </div>
+      <div class="shop-gate-feature">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#111" stroke-width="1.5" fill="none"/><path d="M12 7v5l3 3" stroke="#111" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Takes under 2 minutes</span>
+      </div>
+      <div class="shop-gate-feature">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#111" stroke-width="1.5" fill="none"/></svg>
+        <span>No email required</span>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .shop-gate {
+    padding: 140px 24px 80px;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .shop-gate-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .shop-gate-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 32px;
+    opacity: 0.4;
+  }
+  .shop-gate h1 {
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .shop-gate-lead {
+    font-size: 18px;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 12px;
+    max-width: 440px;
+  }
+  .shop-gate-sub {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 440px;
+  }
+  .shop-gate-features {
+    display: flex;
+    gap: 32px;
+    margin-top: 48px;
+    justify-content: center;
+  }
+  .shop-gate-feature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .shop-gate-feature svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+  @media (max-width: 768px) {
+    .shop-gate { padding: 100px 24px 40px; min-height: auto; }
+    .shop-gate h1 { font-size: 28px; }
+    .shop-gate-features { flex-direction: column; gap: 12px; margin-top: 32px; }
+    .shop-gate-icon { width: 48px; height: 48px; margin-bottom: 24px; }
+  }
+</style>
+
+<!-- SHOP RESULTS -->
+<section class="shop-results" id="shopResults" style="display:none;">
+  <div class="shop-results-inner">
+    <!-- Fit Profile Summary -->
+    <div class="fit-profile-summary">
+      <span class="fit-section-badge" style="margin-bottom:16px;">Your Fit Profile</span>
+      <h2 id="shopFitName">Athletic Taper</h2>
+      <p id="shopFitDesc">More room in the thigh with a gradual taper below the knee.</p>
+      <div class="fit-profile-tags" id="shopFitTags">
         <span class="fit-tag">Room in thigh</span>
         <span class="fit-tag">Tapered ankle</span>
       </div>
     </div>
-    <div class="fit-card-viz">
-      <span class="fit-card-num">02</span>
-      <svg width="80" height="160" viewBox="0 0 120 240" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-        <rect x="46" y="4" width="28" height="10" rx="3" fill="#111"/>
-        <path d="M48 14 L48 70 L48 230 L56 230 L56 140 L56 70 L56 230 L64 230 L64 70 L64 14 Z" fill="none" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/>
-        <path d="M48 14 L44 70 L44 230" stroke="#D9D9D9" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
-        <path d="M64 14 L68 70 L68 230" stroke="#D9D9D9" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
-      </svg>
-      <h3>Straight Fit</h3>
-      <p>Consistent width from hip to ankle. A safe choice for most.</p>
-      <div class="fit-tags">
-        <span class="fit-tag">Straight leg</span>
-        <span class="fit-tag">Balanced</span>
+
+    <!-- Product Recommendations -->
+    <div class="shop-section">
+      <h3>Best Overall</h3>
+      <div class="product-grid" id="shopProductsBest">
       </div>
     </div>
-    <div class="fit-card-viz">
-      <span class="fit-card-num">03</span>
-      <svg width="80" height="160" viewBox="0 0 120 240" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-        <rect x="44" y="4" width="32" height="10" rx="3" fill="#111"/>
-        <path d="M44 14 L46 70 L46 230 L54 230 L56 140 L58 70 L60 140 L62 230 L70 230 L70 70 L74 14 Z" fill="none" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/>
-        <path d="M44 14 L38 70 L38 230" stroke="#D9D9D9" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
-        <path d="M74 14 L80 70 L80 230" stroke="#D9D9D9" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
-      </svg>
-      <h3>Relaxed Fit</h3>
-      <p>More room everywhere. Maximum comfort.</p>
-      <div class="fit-tags">
-        <span class="fit-tag">Relaxed fit</span>
-        <span class="fit-tag">Maximum comfort</span>
+
+    <div class="shop-section">
+      <h3>Best Budget Option</h3>
+      <div class="product-grid" id="shopProductsBudget">
       </div>
     </div>
-  </div>
-</section>
-<section class="cta">
-  <div style="max-width:600px; margin:0 auto;">
-    <h2>Stop Guessing. Start Fitting.</h2>
-    <p>It takes two minutes. No email required.</p>
-    <a href="/quiz/index.html" class="btn">Take the Quiz</a>
+
+    <div class="shop-section">
+      <h3>Best Premium Option</h3>
+      <div class="product-grid" id="shopProductsPremium">
+      </div>
+    </div>
+
+    <!-- PERSONALIZED WAITLIST -->
+    <div class="shop-waitlist" id="shopWaitlist">
+      <span class="shop-waitlist-badge">Coming Soon</span>
+      <h3 id="shopWaitlistHeadline">Want pants built exactly for your fit?</h3>
+      <p id="shopWaitlistLead">We're building FitCo's future pant line around real body proportions.</p>
+      <p id="shopWaitlistSub">Based on your fit profile, we'll notify you when styles built for your fit become available.</p>
+      <form class="shop-waitlist-form" id="shopWaitlistForm" onsubmit="return handleShopWaitlistSubmit(event)">
+        <input type="email" class="shop-waitlist-input" placeholder="Enter your email" required id="shopWaitlistEmail">
+        <button type="submit" class="shop-waitlist-btn">Join Early Access</button>
+      </form>
+      <p class="shop-waitlist-success" id="shopWaitlistSuccess">You're on the list. We'll be in touch.</p>
+    </div>
   </div>
 </section>
 
-<!-- WAITLIST -->
-<section class="waitlist" id="waitlist">
-  <div class="waitlist-inner">
-    <span class="waitlist-badge">Early Access</span>
-    <h2>Built for better fit.</h2>
-    <p class="waitlist-lead">FitCo is building a future line of pants designed around real body proportions, not generic sizing.</p>
-    <p class="waitlist-sub">Join the waitlist for early access, launch updates, and exclusive pricing.</p>
-    <form class="waitlist-form" id="waitlistForm" onsubmit="return handleWaitlistSubmit(event)">
-      <input type="email" class="waitlist-input" placeholder="Enter your email" required id="waitlistEmail">
-      <button type="submit" class="waitlist-btn">Join Waitlist</button>
-    </form>
-    <p class="waitlist-success" id="waitlistSuccess">Thanks for joining the waitlist.</p>
-  </div>
-</section>
+<style>
+  .shop-results {
+    padding: 100px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .fit-profile-summary {
+    background: var(--bg);
+    border: 1px solid var(--border-light);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 48px;
+    text-align: center;
+  }
+  .fit-profile-summary h2 {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .fit-profile-summary > p {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .fit-profile-tags {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .shop-section {
+    margin-bottom: 48px;
+  }
+  .shop-section h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .product-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .product-card:hover {
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    transform: translateY(-3px);
+  }
+  .product-card-img {
+    background: #F0EFEA;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .product-card-img svg {
+    width: 80px;
+    height: 120px;
+    opacity: 0.6;
+  }
+  .product-card-body {
+    padding: 20px;
+  }
+  .product-card-body .product-cat {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .product-card-body h4 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .product-card-body p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .product-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .product-price {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .product-card-footer .btn {
+    padding: 8px 20px;
+    font-size: 13px;
+  }
+  /* Shop Waitlist */
+  .shop-waitlist {
+    background: #111111;
+    color: #fff;
+    border-radius: 20px;
+    padding: 56px 48px;
+    text-align: center;
+    margin-top: 64px;
+  }
+  .shop-waitlist-badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+  .shop-waitlist h3 {
+    font-size: clamp(22px, 2.5vw, 30px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    color: #fff;
+  }
+  .shop-waitlist p {
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #shopWaitlistLead {
+    font-size: 16px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  #shopWaitlistSub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+  .shop-waitlist-form {
+    display: flex;
+    max-width: 420px;
+    margin: 0 auto;
+    gap: 0;
+  }
+  .shop-waitlist-input {
+    flex: 1;
+    padding: 15px 18px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px 0 0 12px;
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    outline: none;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  .shop-waitlist-input::placeholder {
+    color: rgba(255,255,255,0.3);
+  }
+  .shop-waitlist-input:focus {
+    border-color: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.1);
+  }
+  .shop-waitlist-btn {
+    padding: 15px 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    background: #fff;
+    color: #111;
+    border: none;
+    border-radius: 0 12px 12px 0;
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+    white-space: nowrap;
+  }
+  .shop-waitlist-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+  .shop-waitlist-btn:active {
+    transform: translateY(0);
+  }
+  .shop-waitlist-success {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .shop-waitlist-success.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .shop-results { padding: 60px 20px; }
+    .fit-profile-summary { padding: 24px; margin-bottom: 32px; }
+    .fit-profile-summary h2 { font-size: 24px; }
+    .product-grid { grid-template-columns: 1fr; gap: 16px; }
+    .product-card-img { height: 180px; }
+    .shop-waitlist { padding: 40px 24px; margin-top: 40px; }
+    .shop-waitlist-form { flex-direction: column; }
+    .shop-waitlist-input { border-radius: 12px 12px 0 0; border-bottom: none; text-align: center; }
+    .shop-waitlist-btn { border-radius: 0 0 12px 12px; padding: 14px 20px; }
+  }
+</style>
 
 <footer>
   <p>FitCo. Smart fit recommendations.</p>
 </footer>
 <script>
-// Track quiz completion state
-function hasCompletedQuiz() {
-  return localStorage.getItem('fitco_quiz_completed') === 'true';
-}
-function getFitResult() {
-  return localStorage.getItem('fitco_fit_result');
-}
-// Update CTA on homepage if quiz completed
-document.addEventListener('DOMContentLoaded', function() {
-  if (hasCompletedQuiz()) {
-    var ctaBtn = document.querySelector('.cta .btn');
-    if (ctaBtn) {
-      ctaBtn.textContent = 'View Your Recommendations';
-      ctaBtn.href = '/shop/index.html';
-    }
+// Product data by fit
+var products = {
+  athleticTaper: {
+    name: 'Athletic Taper',
+    desc: 'More room in the thigh with a gradual taper below the knee. Built for muscular builds.',
+    tags: ['Room in thigh', 'Tapered ankle'],
+    best: [
+      { name: 'Apex Athletic Chino', cat: 'Athletic Taper', desc: 'Cotton stretch blend with extra thigh room.', price: '$128' },
+      { name: 'Flex Taper Jean', cat: 'Athletic Taper', desc: 'Performance denim with 4-way stretch.', price: '$145' }
+    ],
+    budget: [
+      { name: 'Essential Taper Pant', cat: 'Athletic Taper', desc: 'Poly-cotton blend. Everyday durability.', price: '$68' }
+    ],
+    premium: [
+      { name: 'Merino Taper Trouser', cat: 'Athletic Taper', desc: 'Italian wool blend. Premium construction.', price: '$245' }
+    ]
+  },
+  straightFit: {
+    name: 'Straight Fit',
+    desc: 'Consistent width from hip to ankle. Timeless and versatile.',
+    tags: ['Straight leg', 'Balanced'],
+    best: [
+      { name: 'Classic Straight Chino', cat: 'Straight Fit', desc: 'Mid-weight cotton. Clean, versatile silhouette.', price: '$115' },
+      { name: 'Modern Straight Jean', cat: 'Straight Fit', desc: 'Selvedge denim with slight break-in stretch.', price: '$138' }
+    ],
+    budget: [
+      { name: 'Standard Straight Pant', cat: 'Straight Fit', desc: 'Durable everyday option. Easy care.', price: '$58' }
+    ],
+    premium: [
+      { name: 'Tailored Straight Trouser', cat: 'Straight Fit', desc: 'Japanese cotton twill. Hand-finished details.', price: '$225' }
+    ]
+  },
+  relaxedFit: {
+    name: 'Relaxed Fit',
+    desc: 'More room throughout the leg while maintaining structure and shape.',
+    tags: ['Relaxed fit', 'Maximum comfort'],
+    best: [
+      { name: 'Easy Relaxed Chino', cat: 'Relaxed Fit', desc: 'Loose cut with clean drape. All-day comfort.', price: '$108' },
+      { name: 'Weekend Relaxed Jean', cat: 'Relaxed Fit', desc: 'Soft wash denim. Lived-in feel from day one.', price: '$125' }
+    ],
+    budget: [
+      { name: 'Casual Relaxed Pant', cat: 'Relaxed Fit', desc: 'Lightweight blend. Maximum breathability.', price: '$54' }
+    ],
+    premium: [
+      { name: 'Luxe Relaxed Trouser', cat: 'Relaxed Fit', desc: 'Cashmere-cotton blend. Elevated comfort.', price: '$295' }
+    ]
+  },
+  slimTaper: {
+    name: 'Slim Taper',
+    desc: 'Fitted through the thigh with a clean taper to the ankle. Sharp and modern.',
+    tags: ['Fitted thigh', 'Tapered ankle'],
+    best: [
+      { name: 'Slim Taper Chino', cat: 'Slim Taper', desc: 'Clean silhouette with room to move.', price: '$118' },
+      { name: 'Skinny Taper Jean', cat: 'Slim Taper', desc: 'Premium stretch denim. Holds shape all day.', price: '$135' }
+    ],
+    budget: [
+      { name: 'Essential Slim Pant', cat: 'Slim Taper', desc: 'Streamlined fit. Easy-care fabric.', price: '$62' }
+    ],
+    premium: [
+      { name: 'Precision Slim Trouser', cat: 'Slim Taper', desc: 'Made-to-measure feel. Italian fabric.', price: '$235' }
+    ]
   }
-});
+};
 
-// Waitlist signup
-function handleWaitlistSubmit(e) {
+var svgPant = '<svg viewBox="0 0 32 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4h6v2h-6z" fill="#111"/><path d="M12 7l1 18 1 10 2 0 1-10 1 10 2 0 1-18 1-18z" stroke="#111" stroke-width="1.5" fill="#E8E6E1"/></svg>';
+
+function renderProductCard(p) {
+  return '<div class="product-card">' +
+    '<div class="product-card-img">' + svgPant + '</div>' +
+    '<div class="product-card-body">' +
+      '<div class="product-cat">' + p.cat + '</div>' +
+      '<h4>' + p.name + '</h4>' +
+      '<p>' + p.desc + '</p>' +
+      '<div class="product-card-footer">' +
+        '<span class="product-price">' + p.price + '</span>' +
+        '<button class="btn">View</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+function renderProducts(fitKey) {
+  var fit = products[fitKey] || products.straightFit;
+  document.getElementById('shopFitName').textContent = fit.name;
+  document.getElementById('shopFitDesc').textContent = fit.desc;
+  document.getElementById('shopFitTags').innerHTML = fit.tags.map(function(t) {
+    return '<span class="fit-tag">' + t + '</span>';
+  }).join('');
+  document.getElementById('shopProductsBest').innerHTML = fit.best.map(renderProductCard).join('');
+  document.getElementById('shopProductsBudget').innerHTML = fit.budget.map(renderProductCard).join('');
+  document.getElementById('shopProductsPremium').innerHTML = fit.premium.map(renderProductCard).join('');
+}
+
+// Personalized waitlist messaging by fit
+var waitlistMessages = {
+  athleticTaper: {
+    headline: 'Want pants built for athletic builds?',
+    lead: "We're engineering a pant line with extra thigh room and a clean taper.",
+    sub: 'Be the first to know when our Athletic Taper collection launches.'
+  },
+  straightFit: {
+    headline: 'Want pants that balance clean and comfortable?',
+    lead: "We're crafting a straight-leg line designed around real proportions.",
+    sub: 'Get notified when our Straight Fit collection becomes available.'
+  },
+  relaxedFit: {
+    headline: 'Want pants designed for maximum comfort?',
+    lead: "We're building a relaxed-fit line that doesn't sacrifice structure.",
+    sub: 'Join the list for early access to our Relaxed Fit collection.'
+  },
+  slimTaper: {
+    headline: 'Want a sharp silhouette that actually fits?',
+    lead: "We're creating a slim taper line with real fit science behind it.",
+    sub: 'Be first in line when our Slim Taper collection drops.'
+  }
+};
+
+function personalizeWaitlist(fitKey) {
+  var msg = waitlistMessages[fitKey] || waitlistMessages.straightFit;
+  var headlineEl = document.getElementById('shopWaitlistHeadline');
+  var leadEl = document.getElementById('shopWaitlistLead');
+  var subEl = document.getElementById('shopWaitlistSub');
+  if (headlineEl) headlineEl.textContent = msg.headline;
+  if (leadEl) leadEl.textContent = msg.lead;
+  if (subEl) subEl.textContent = msg.sub;
+}
+
+// Shop waitlist signup
+function handleShopWaitlistSubmit(e) {
   e.preventDefault();
-  var email = document.getElementById('waitlistEmail').value.trim();
+  var email = document.getElementById('shopWaitlistEmail').value.trim();
   if (!email) return;
   var existing = JSON.parse(localStorage.getItem('fitco_waitlist') || '[]');
   if (!existing.includes(email)) {
     existing.push(email);
     localStorage.setItem('fitco_waitlist', JSON.stringify(existing));
   }
-  document.getElementById('waitlistForm').style.display = 'none';
-  document.getElementById('waitlistSuccess').classList.add('visible');
+  document.getElementById('shopWaitlistForm').style.display = 'none';
+  document.getElementById('shopWaitlistSuccess').classList.add('visible');
 }
+
+// Check quiz state
+document.addEventListener('DOMContentLoaded', function() {
+  var completed = localStorage.getItem('fitco_quiz_completed') === 'true';
+  if (completed) {
+    var fitResult = localStorage.getItem('fitco_fit_result') || 'straightFit';
+    document.getElementById('shopGate').style.display = 'none';
+    document.getElementById('shopResults').style.display = 'block';
+    renderProducts(fitResult);
+    personalizeWaitlist(fitResult);
+  }
+});
 </script>
 </body>
 </html>
