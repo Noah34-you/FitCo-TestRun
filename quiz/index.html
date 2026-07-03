@@ -1,0 +1,2835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitCo — Find Pants That Fit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F3EE;
+    --bg-white: #FFFFFF;
+    --text: #111111;
+    --text-muted: #6E6E6E;
+    --border: #D9D9D9;
+    --border-light: #E8E6E1;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .nav-center {
+    display: flex;
+    gap: 48px;
+    list-style: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .nav-center a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-center a:hover { color: var(--text); }
+
+  .logo {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .nav-cart {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text);
+  }
+
+  .nav-cart svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    background: var(--text);
+    color: var(--bg);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  }
+  .btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { background: var(--text); color: var(--bg); opacity: 1; }
+
+  .btn-text {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    padding: 14px 8px;
+  }
+  .btn-text:hover { color: var(--text); }
+
+  .btn-nav {
+    padding: 10px 24px;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 120px 48px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    overflow: visible;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    min-height: calc(100vh - 64px - 40px);
+  }
+
+  .hero h1 {
+    font-size: clamp(48px, 5vw, 72px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 20px;
+    max-width: 480px;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 360px;
+  }
+
+  .hero-buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .hero-btn-video {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 8px;
+  }
+
+  .hero-btn-video:hover { color: var(--text); }
+
+  .hero-btn-video .play-circle {
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .hero-btn-video .play-circle svg {
+    width: 12px;
+    height: 12px;
+    margin-left: 2px;
+  }
+
+  .hero-image-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-image-bg-circle {
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    background: #EBE8E2;
+    z-index: 0;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .hero-image-wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-image-wrap img {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 24px;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+  }
+
+  .hero-image-wrap:hover img {
+    transform: scale(1.02);
+  }
+
+  .hero-badge {
+    position: absolute;
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-badge svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .hero-badge-1 {
+    top: 20px;
+    left: -60px;
+  }
+
+  .hero-badge-2 {
+    bottom: 40px;
+    right: -20px;
+  }
+
+  /* Geometric background */
+  .hero-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .hero-bg-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.35;
+  }
+
+  .hero-bg-shape-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%);
+    top: -100px; right: -150px;
+  }
+
+  .hero-bg-shape-2 {
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, rgba(0,0,0,0.025) 0%, transparent 70%);
+    bottom: -80px; left: -100px;
+  }
+
+  .hero-bg-shape-3 {
+    width: 200px; height: 200px;
+    border: 1px solid rgba(0,0,0,0.04);
+    border-radius: 20px;
+    transform: rotate(15deg);
+    top: 80px; right: 60%;
+  }
+
+  /* Feature bar */
+  .feature-bar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+
+  .feature-card-outer {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 20px;
+    padding: 40px 48px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .feature-card-outer:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .feature-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .feature-item h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .feature-item p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Sections */
+  .section {
+    padding: 80px 24px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .section-white {
+    background: var(--bg-white);
+  }
+
+  .section-header { margin-bottom: 48px; }
+  .section-header h2 {
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .section-header p {
+    font-size: 16px;
+    color: var(--text-muted);
+  }
+
+  /* Problem cards */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .problem-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--text);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .problem-card:hover {
+    border-color: var(--border);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+
+  .problem-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .problem-illustration {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .problem-illustration svg {
+    width: 80px;
+    height: 100px;
+  }
+
+  .problem-x {
+    position: absolute;
+    top: -4px;
+    right: -8px;
+    width: 26px;
+    height: 26px;
+    background: var(--bg-white);
+    border: 1.5px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .problem-card:hover .problem-x {
+    border-color: #E85D5D;
+    background: #E85D5D;
+  }
+
+  .problem-card:hover .problem-x svg path {
+    stroke: white;
+  }
+
+  .problem-x svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .problem-text h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .problem-text p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .problem-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s;
+  }
+
+  .problem-link:hover {
+    gap: 8px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Solution bar */
+  .solution-bar {
+    background: var(--text);
+    color: var(--bg);
+    border-radius: 16px;
+    padding: 24px 32px;
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+
+  .solution-bar:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    transform: translateY(-1px);
+  }
+
+  .solution-bar svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  .solution-bar p {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* How it works */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .step {
+    text-align: center;
+  }
+
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--text);
+    color: var(--bg);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .step h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .step p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Fit viz */
+  .fit-section {
+    background: #EBE8E2;
+  }
+
+  .fit-section-badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.6);
+    border: 1px solid var(--border-light);
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  .fit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .fit-card-viz {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 18px;
+    padding: 28px;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fit-card-viz::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--text);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .fit-card-viz:hover {
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    transform: translateY(-3px);
+    border-color: var(--border);
+  }
+
+  .fit-card-viz:hover::before {
+    transform: scaleX(1);
+  }
+
+  .fit-card-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .fit-card-viz svg {
+    margin: 0 auto 16px;
+    display: block;
+  }
+
+  .fit-card-viz h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .fit-card-viz > p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .fit-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .fit-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 5px 10px;
+    background: var(--bg);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    color: var(--text-muted);
+  }
+
+  /* Quiz */
+  .quiz-wrap {
+    background: var(--bg-white);
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+    padding: 100px 24px;
+  }
+
+  .quiz-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* Live fit profile (desktop only) */
+  .fit-profile {
+    position: absolute;
+    right: -280px;
+    top: 0;
+    width: 240px;
+    display: none;
+  }
+
+  .fit-profile-card {
+    background: var(--bg);
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    padding: 20px;
+    position: sticky;
+    top: 100px;
+  }
+
+  .fit-profile h4 {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .fit-profile-item {
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-light);
+    transition: all 0.3s ease;
+  }
+
+  .fit-profile-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .fit-profile-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  .fit-profile-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .fit-profile-value.empty {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .fit-profile-item.active {
+    animation: profilePulse 0.4s ease;
+  }
+
+  @keyframes profilePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+  }
+
+  /* Quiz assistant header */
+  .quiz-assistant {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .quiz-assistant-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--text);
+    color: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .quiz-assistant-info h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .quiz-assistant-info p {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* Category steps */
+  .quiz-categories {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .quiz-cat {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border-light);
+    background: var(--bg);
+    transition: all 0.3s ease;
+  }
+
+  .quiz-cat.active {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .quiz-cat.completed {
+    background: var(--bg);
+    color: var(--text);
+    border-color: var(--text);
+  }
+
+  .quiz-cat-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+
+  .quiz-header { margin-bottom: 36px; }
+  .quiz-header h2 { margin-bottom: 6px; font-size: 28px; }
+  .quiz-header p { color: var(--text-muted); font-size: 15px; }
+
+  .quiz-helper {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    margin-bottom: 8px;
+    font-style: italic;
+    min-height: 20px;
+  }
+
+  .quiz-counter {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    display: block;
+    letter-spacing: 0.04em;
+  }
+
+  .progress {
+    height: 3px;
+    background: var(--border-light);
+    border-radius: 2px;
+    margin-bottom: 36px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--text);
+    border-radius: 2px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 40px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: progressShine 2s ease-in-out infinite;
+  }
+
+  @keyframes progressShine {
+    0%, 100% { transform: translateX(0); opacity: 0; }
+    50% { transform: translateX(-40px); opacity: 1; }
+  }
+
+  .question {
+    animation: questionEnter 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes questionEnter {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .question.question-exit {
+    animation: questionExit 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes questionExit {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-20px); }
+  }
+
+  .question label {
+    display: block;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .question-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    display: block;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 10px; }
+
+  .option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px 20px;
+    font-family: inherit;
+    font-size: 15px;
+    text-align: left;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    line-height: 1.4;
+    border-radius: 12px;
+    position: relative;
+    gap: 14px;
+  }
+
+  .option-illustration {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+  }
+
+  .option-illustration svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .option.selected .option-illustration {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.3);
+  }
+
+  .option-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .option:hover {
+    border-color: var(--text-muted);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transform: translateY(-1px);
+  }
+
+  .option:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  .option.selected {
+    border-color: var(--text);
+    background: var(--text);
+    color: var(--bg);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+    animation: optionSelect 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes optionSelect {
+    0% { transform: translateY(-1px) scale(1); }
+    40% { transform: translateY(-1px) scale(1.015); }
+    100% { transform: translateY(-1px) scale(1); }
+  }
+
+  .option .option-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: 12px;
+    transition: all 0.2s;
+  }
+
+  .option .option-check svg {
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .option:hover .option-check {
+    border-color: var(--text-muted);
+  }
+
+  .option.selected .option-check {
+    background: var(--bg);
+    border-color: var(--bg);
+    color: var(--text);
+  }
+
+  .option.selected .option-check svg {
+    opacity: 1;
+    width: 10px;
+    height: 10px;
+  }
+
+  /* Question feedback */
+  .question-feedback {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: var(--bg);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    font-size: 14px;
+    color: var(--text-muted);
+    display: none;
+    animation: feedbackEnter 0.3s ease;
+  }
+
+  .options:has(.option.selected) + .question-feedback {
+    display: block;
+  }
+
+  @keyframes feedbackEnter {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Multi-select option styles */
+  .option-multi-hint {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  /* Category highlighting based on visible question */
+  .quiz-categories:has(#q2:not(.hide)) .quiz-cat[data-cat="body"],
+  .quiz-categories:has(#q3:not(.hide)) .quiz-cat[data-cat="problem"],
+  .quiz-categories:has(#q4:not(.hide)) .quiz-cat[data-cat="body"],
+  .quiz-categories:has(#q5:not(.hide)) .quiz-cat[data-cat="fit"],
+  .quiz-categories:has(#q6:not(.hide)) .quiz-cat[data-cat="fit"],
+  .quiz-categories:has(#q7:not(.hide)) .quiz-cat[data-cat="style"] {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .quiz-categories:has(#q3:not(.hide)) .quiz-cat[data-cat="body"],
+  .quiz-categories:has(#q4:not(.hide)) .quiz-cat[data-cat="problem"],
+  .quiz-categories:has(#q5:not(.hide)) .quiz-cat[data-cat="body"],
+  .quiz-categories:has(#q6:not(.hide)) .quiz-cat[data-cat="body"],
+  .quiz-categories:has(#q7:not(.hide)) .quiz-cat[data-cat="fit"] {
+    background: var(--bg);
+    color: var(--text);
+    border-color: var(--text);
+  }
+
+  .quiz-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border-light);
+    position: relative;
+  }
+
+  /* Loading State */
+  .loading-state {
+    display: none;
+    background: var(--bg-white);
+    padding: 120px 24px;
+    text-align: center;
+    min-height: 60vh;
+  }
+  .loading-state.active { display: block; }
+  .loading-inner { max-width: 400px; margin: 0 auto; }
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-light);
+    border-top-color: var(--text);
+    border-radius: 50%;
+    margin: 0 auto 24px;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-message {
+    font-size: 15px;
+    color: var(--text-muted);
+    font-style: italic;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Results - Premium Redesign */
+  .results {
+    background: var(--bg);
+    padding: 48px 32px 80px;
+    display: none;
+  }
+  .results.active { display: block; }
+  .results-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Two-column layout */
+  .results-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  /* -- Left Sidebar -- */
+  .results-sidebar {
+    position: sticky;
+    top: 88px;
+  }
+  .quiz-complete-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #5B8C5A;
+    margin-bottom: 16px;
+  }
+  .quiz-complete-label svg {
+    width: 18px;
+    height: 18px;
+  }
+  .results-sidebar h2 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .results-sidebar .sidebar-sub {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .sidebar-character {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto 24px;
+    display: block;
+  }
+  .your-fit-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .your-fit-name {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .your-fit-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .fit-traits {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .fit-traits li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .fit-traits li svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: var(--text-muted);
+  }
+  .btn-save {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    background: var(--bg-white);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .btn-save:hover {
+    border-color: var(--text);
+    background: var(--text);
+    color: var(--bg);
+  }
+  .btn-save svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* -- Main Content -- */
+  .results-main {
+    min-width: 0;
+  }
+
+  /* Diagnosis */
+  .diagnosis {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  .diagnosis p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--text);
+    margin: 0;
+  }
+
+  /* Best Fit Hero Card */
+  .best-hero-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 20px;
+    padding: 0;
+    overflow: hidden;
+    margin-bottom: 24px;
+    transition: box-shadow 0.3s ease;
+  }
+  .best-hero-card:hover {
+    box-shadow: 0 12px 48px rgba(0,0,0,0.06);
+  }
+  .hero-card-header {
+    text-align: center;
+    padding: 32px 32px 0;
+  }
+  .hero-card-header .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .hero-card-header .section-label::before,
+  .hero-card-header .section-label::after {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--border);
+  }
+  .hero-card-header h3 {
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    margin-bottom: 10px;
+    line-height: 1.1;
+  }
+  .badge-recommended {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    background: #6B7B4C;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  .hero-card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    align-items: center;
+  }
+  .hero-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 400px;
+  }
+  .hero-card-details {
+    padding: 32px 36px;
+  }
+  .hero-card-details p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+  .fit-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .fit-checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .fit-checklist li .check-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #E8F0E4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .fit-checklist li .check-icon svg {
+    width: 12px;
+    height: 12px;
+  }
+  .fit-checklist li .check-text {
+    flex: 1;
+  }
+  .fit-checklist li .check-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .fit-checklist li .check-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    display: block;
+  }
+  .btn-shop-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 24px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  .btn-shop-hero:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
+  .btn-shop-hero svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Secondary Cards */
+  .secondary-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .secondary-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .secondary-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+    transform: translateY(-2px);
+  }
+  .secondary-card-header {
+    padding: 20px 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .secondary-card-header .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .secondary-card-header .section-label::before,
+  .secondary-card-header .section-label::after {
+    content: '';
+    width: 12px;
+    height: 1px;
+    background: var(--border);
+  }
+  .badge-match {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: var(--bg);
+    border: 1px solid var(--border-light);
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .secondary-card h4 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    padding: 6px 20px 0;
+    margin: 0;
+  }
+  .secondary-card-img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    display: block;
+  }
+  .secondary-card-body {
+    padding: 16px 20px 20px;
+  }
+  .secondary-card-body p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+  .secondary-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .secondary-checklist li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .secondary-checklist li svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    color: #5B8C5A;
+  }
+  .btn-shop-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 20px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  .btn-shop-secondary:hover {
+    opacity: 0.85;
+  }
+
+  /* Product Recommendations */
+  .product-section {
+    margin-bottom: 48px;
+  }
+  .product-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .product-section-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .product-section-header a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .product-section-header a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .product-section-header a svg {
+    width: 14px;
+    height: 14px;
+  }
+  .product-carousel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .product-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+  .product-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    transform: translateY(-2px);
+  }
+  .product-card-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    display: block;
+  }
+  .product-card-body {
+    padding: 14px 16px 16px;
+  }
+  .product-card-brand {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+  }
+  .product-card-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .product-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .product-card-price {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .product-card-fitline {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+  .product-card-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .product-card-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Trust Bar */
+  .trust-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    padding: 32px;
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+  }
+  .trust-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .trust-item svg {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    color: var(--text);
+  }
+  .trust-item h4 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .trust-item p {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* CTA */
+  .cta {
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .cta h2 {
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .cta p {
+    color: var(--text-muted);
+    margin-bottom: 28px;
+  }
+
+  /* Footer */
+  footer {
+    padding: 32px 24px;
+    text-align: center;
+    border-top: 1px solid var(--border-light);
+  }
+
+  footer p {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .hide { display: none !important; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    /* Nav */
+    .nav-inner { padding: 0 20px; height: 56px; }
+    .nav-center { display: none; }
+    .btn-nav { padding: 8px 14px; font-size: 12px; }
+    .nav-cart { display: none; }
+
+    /* Hero */
+    .hero { padding: 32px 20px 0; }
+    .hero-grid { grid-template-columns: 1fr; gap: 20px; min-height: auto; }
+    .hero h1 { font-size: 36px; line-height: 1.08; margin-bottom: 16px; max-width: 100%; margin-top: 16px; letter-spacing: -0.03em; }
+    .hero-sub { font-size: 16px; margin-bottom: 24px; max-width: 100%; line-height: 1.55; }
+    .hero-buttons { gap: 12px; margin-bottom: 8px; }
+    .hero-image-area { order: -1; margin: 56px 0 0 0; }
+    .hero-image-bg-circle { width: 300px; height: 300px; right: 50%; transform: translate(50%,-48%); }
+    .hero-image-wrap img { max-width: 240px; margin: 0 auto; border-radius: 16px; }
+    .hero-badge { font-size: 12px; padding: 8px 14px; border-radius: 10px; font-weight: 500; }
+    .hero-badge svg { width: 14px; height: 14px; }
+    .hero-badge-1 { top: 12px; left: 16px; }
+    .hero-badge-2 { bottom: 12px; right: 16px; }
+    .hero-bg-shape-1 { width: 250px; height: 250px; top: -40px; right: -80px; }
+    .hero-bg-shape-2 { width: 180px; height: 180px; bottom: -40px; left: -50px; }
+    .hero-bg-shape-3 { display: none; }
+    .hero-btn-video { font-size: 14px; }
+    .hero-btn-video .play-circle { width: 32px; height: 32px; }
+
+    /* Feature bar */
+    .feature-bar { padding: 0 20px 40px; }
+    .feature-card-outer { padding: 24px; border-radius: 14px; }
+    .feature-grid { grid-template-columns: 1fr; gap: 20px; }
+    .feature-item { gap: 12px; }
+    .feature-icon { width: 40px; height: 40px; }
+    .feature-icon svg { width: 18px; height: 18px; }
+    .feature-item h3 { font-size: 14px; }
+    .feature-item p { font-size: 12px; }
+
+    /* Sections */
+    .section { padding: 40px 20px; }
+    .section-header { margin-bottom: 32px; }
+    .section-header h2 { font-size: 26px; }
+    .section-header p { font-size: 15px; }
+
+    /* Problem cards */
+    .problem-grid { grid-template-columns: 1fr; gap: 12px; }
+    .problem-card { padding: 20px; border-radius: 12px; gap: 16px; }
+    .problem-illustration svg { width: 60px; height: 75px; }
+    .problem-x { width: 20px; height: 20px; }
+    .problem-x svg { width: 10px; height: 10px; }
+    .problem-text h3 { font-size: 15px; margin-bottom: 6px; }
+    .problem-text p { font-size: 13px; margin-bottom: 12px; }
+    .problem-link { font-size: 13px; }
+    .solution-bar { flex-direction: column; text-align: center; padding: 20px 24px; margin-top: 24px; }
+
+    /* Steps */
+    .steps { grid-template-columns: 1fr; gap: 20px; }
+    .step-num { width: 32px; height: 32px; font-size: 13px; }
+    .step h3 { font-size: 15px; }
+    .step p { font-size: 13px; }
+
+    /* Fit viz */
+    .fit-grid {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .fit-grid::-webkit-scrollbar { display: none; }
+    .fit-card-viz {
+      flex: 0 0 78vw;
+      max-width: 280px;
+      padding: 20px;
+      scroll-snap-align: start;
+      border-radius: 14px;
+    }
+    .fit-card-num { font-size: 10px; margin-bottom: 12px; }
+    .fit-card-viz svg {
+      height: 100px;
+      width: 50px;
+      margin: 0 auto 12px;
+    }
+    .fit-card-viz h3 {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+    .fit-card-viz > p {
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+    .fit-tag {
+      font-size: 9px;
+      padding: 4px 8px;
+    }
+
+    /* Quiz */
+    .quiz-wrap { padding: 40px 20px; }
+    .quiz-assistant { margin-bottom: 24px; }
+    .quiz-assistant-avatar { width: 36px; height: 36px; font-size: 13px; }
+    .quiz-assistant-info h3 { font-size: 14px; }
+    .quiz-assistant-info p { font-size: 12px; }
+    .quiz-categories { gap: 6px; margin-bottom: 24px; }
+    .quiz-cat { font-size: 11px; padding: 5px 12px; }
+    .quiz-cat-dot { width: 3px; height: 3px; }
+    .quiz-counter { font-size: 11px; margin-bottom: 12px; }
+    .quiz-header { margin-bottom: 24px; }
+    .quiz-header h2 { font-size: 24px; }
+    .progress { margin-bottom: 24px; }
+    .question label { font-size: 18px; }
+    .question-sub { font-size: 13px; margin-bottom: 20px; }
+    .option { padding: 14px 16px; font-size: 14px; border-radius: 10px; gap: 12px; }
+    .option-illustration { width: 38px; height: 38px; border-radius: 8px; }
+    .option-illustration svg { width: 24px; height: 24px; }
+    .option-check { width: 18px; height: 18px; }
+    .option .option-check svg { width: 9px; height: 9px; }
+    .question-feedback { padding: 12px 16px; font-size: 13px; margin-top: 16px; }
+    .quiz-nav { margin-top: 24px; padding-top: 20px; }
+    .fit-profile { display: none !important; }
+
+    /* Results */
+    .results { padding: 32px 20px 48px; }
+    .results-layout { grid-template-columns: 1fr; gap: 32px; }
+    .results-sidebar { position: static; text-align: center; }
+    .results-sidebar h2 { font-size: 28px; }
+    .sidebar-character { max-width: 160px; margin: 0 auto 20px; }
+    .fit-traits { align-items: center; }
+    .hero-card-header { padding: 24px 20px 0; }
+    .hero-card-header h3 { font-size: 28px; }
+    .hero-card-body { grid-template-columns: 1fr; }
+    .hero-card-img { min-height: 280px; }
+    .hero-card-details { padding: 24px 20px; }
+    .secondary-cards { grid-template-columns: 1fr; gap: 16px; margin-bottom: 32px; }
+    .secondary-card-img { height: 200px; }
+    .product-carousel { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .product-section { margin-bottom: 32px; }
+    .trust-bar { grid-template-columns: 1fr 1fr; gap: 16px; padding: 24px; }
+    .quiz-complete-label { justify-content: center; }
+
+    /* CTA */
+    .cta { padding: 40px 20px; }
+    .cta h2 { font-size: 26px; }
+    .cta p { font-size: 15px; }
+
+    /* Footer */
+    footer { padding: 24px 20px; }
+
+    /* Global text overflow fix */
+    body { overflow-wrap: break-word; word-wrap: break-word; }
+  }
+
+  @media (min-width: 1200px) {
+    .hero-image-wrap:hover img {
+      transform: scale(1.02);
+    }
+    .fit-profile {
+      display: block;
+    }
+    .quiz-inner {
+      max-width: 560px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo" style="text-decoration:none;color:inherit;">FitCo</a>
+    <ul class="nav-center">
+      <li><a href="/shop/index.html">Shop Your Fit</a></li>
+      <li><a href="/#works">How It Works</a></li>
+      <li><a href="/#fits">Fit Guide</a></li>
+      <li><a href="/about/index.html">About Us</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="/index.html" class="btn-text" style="font-size:13px;">Exit Quiz</a>
+    </div>
+  </div>
+</nav>
+<!-- QUIZ INTRO -->
+<section class="quiz-intro" id="quizIntro">
+  <div class="quiz-intro-inner">
+    <span class="fit-section-badge" style="margin-bottom:20px;">Fit Quiz</span>
+    <h1 style="font-size:clamp(36px,5vw,56px);font-weight:500;letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px;">Find My Fit</h1>
+    <p style="font-size:17px;color:var(--text-muted);max-width:420px;margin-bottom:32px;line-height:1.6;">Seven quick questions about your build and fit issues. We'll recommend pants that fit better.</p>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;">
+      <div style="text-align:center;">
+        <div style="font-family:Space Grotesk,sans-serif;font-size:28px;font-weight:500;">2m</div>
+        <div style="font-size:13px;color:var(--text-muted);">To complete</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:Space Grotesk,sans-serif;font-size:28px;font-weight:500;">7</div>
+        <div style="font-size:13px;color:var(--text-muted);">Fit questions</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:Space Grotesk,sans-serif;font-size:28px;font-weight:500;">1</div>
+        <div style="font-size:13px;color:var(--text-muted);">Recommendation</div>
+      </div>
+    </div>
+    <button class="btn" style="margin-top:40px;" onclick="document.getElementById('quizIntro').style.display='none';document.getElementById('quiz').scrollIntoView({behavior:'smooth'});">Start Fit Quiz</button>
+  </div>
+</section>
+<style>
+  .quiz-intro {
+    padding: 140px 24px 80px;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .quiz-intro-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    .quiz-intro { padding: 100px 24px 40px; }
+    .quiz-intro h1 { font-size: 32px; }
+  }
+</style>
+
+<section class="quiz-wrap" id="quiz">
+  <div class="quiz-inner">
+    <div class="quiz-assistant">
+      <div class="quiz-assistant-avatar">F</div>
+      <div class="quiz-assistant-info">
+        <h3>Fit Guide</h3>
+        <p>Let's find what fits you</p>
+      </div>
+    </div>
+    <div class="quiz-categories" id="quizCategories">
+      <span class="quiz-cat active" data-cat="problem">Problem</span>
+      <span class="quiz-cat-dot"></span>
+      <span class="quiz-cat" data-cat="body">Body</span>
+      <span class="quiz-cat-dot"></span>
+      <span class="quiz-cat" data-cat="fit">Fit</span>
+      <span class="quiz-cat-dot"></span>
+      <span class="quiz-cat" data-cat="style">Style</span>
+    </div>
+    <span class="quiz-counter" id="questionCounter">Question 1 of 7</span>
+    <div class="progress">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <p class="quiz-helper" id="quizHelper">Finding what fits you...</p>
+    <div class="fit-profile" id="fitProfile">
+      <div class="fit-profile-card">
+        <h4>Your Fit Profile</h4>
+        <div class="fit-profile-item">
+          <div class="fit-profile-label">Build</div>
+          <div class="fit-profile-value empty" id="profile-build">--</div>
+        </div>
+        <div class="fit-profile-item">
+          <div class="fit-profile-label">Height</div>
+          <div class="fit-profile-value empty" id="profile-height">--</div>
+        </div>
+        <div class="fit-profile-item">
+          <div class="fit-profile-label">Fit Issue</div>
+          <div class="fit-profile-value empty" id="profile-fitWrong">--</div>
+        </div>
+        <div class="fit-profile-item">
+          <div class="fit-profile-label">Leg Shape</div>
+          <div class="fit-profile-value empty" id="profile-legShape">--</div>
+        </div>
+        <div class="fit-profile-item">
+          <div class="fit-profile-label">Priority</div>
+          <div class="fit-profile-value empty" id="profile-priority">--</div>
+        </div>
+      </div>
+    </div>
+    <div id="quizForm">
+      <div class="question" id="q1">
+        <label>What are you shopping for?</label>
+        <span class="question-sub">This helps us recommend the right styles and brands.</span>
+        <div class="options">
+          <button class="option" onclick="selectOption(this,'productType','jeans')"><span class="option-text">Jeans</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'productType','chinos')"><span class="option-text">Chinos</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'productType','technical')"><span class="option-text">Technical pants</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'productType','dress')"><span class="option-text">Dress pants</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'productType','any')"><span class="option-text">Surprise me</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        </div>
+        <div class="question-feedback">Got it. We'll keep that in mind.</div>
+      </div>
+      <div class="question hide" id="q2">
+        <label>Which best describes your build?</label>
+        <span class="question-sub">Your body shape is the foundation for finding the right fit.</span>
+        <div class="options">
+          <button class="option" onclick="selectOption(this,'build','slim')"><span class="option-text">Slim</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'build','average')"><span class="option-text">Average</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'build','athletic')"><span class="option-text">Athletic</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'build','broader')"><span class="option-text">Broader</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        </div>
+        <div class="question-feedback">Got it. Your build is the starting point.</div>
+      </div>
+      <div class="question hide" id="q3">
+        <label>Where do pants usually fit wrong? <span style="font-weight:400;color:var(--text-muted);">(Select up to 2)</span></label>
+        <span class="question-sub">This tells us what your current pants don't get right.</span>
+        <div class="options" data-multiselect="true" data-multiselect-max="2">
+          <button class="option" onclick="toggleMultiOption(this,'fitWrong','tightThighsSeat')"><span class="option-text">Tight in thighs or seat</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="toggleMultiOption(this,'fitWrong','waistGap')"><span class="option-text">Waist gaps</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="toggleMultiOption(this,'fitWrong','tooMuchFabric')"><span class="option-text">Too much fabric below the knee</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="toggleMultiOption(this,'fitWrong','lengthOff')"><span class="option-text">Length feels off</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="toggleMultiOption(this,'fitWrong','usuallyFine')"><span class="option-text">Usually fit fine</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        </div>
+        <div class="question-feedback">Got it. We'll look for fits that fix this.</div>
+      </div>
+      <div class="question hide" id="q4">
+        <label>How tall are you?</label>
+        <span class="question-sub">This helps with proportions and length.</span>
+        <div class="options">
+          <button class="option" onclick="selectOption(this,'height','under58')"><span class="option-text">Under 5'8"</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'height','58to511')"><span class="option-text">5'8" – 5'11"</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'height','60to62')"><span class="option-text">6'0" – 6'2"</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'height','63plus')"><span class="option-text">6'3"+</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        </div>
+        <div class="question-feedback">Got it. We'll factor this into length.</div>
+      </div>
+      <div class="question hide" id="q5">
+        <label>Which leg shape looks best to you?</label>
+        <span class="question-sub">What shape do you prefer?</span>
+        <div class="options">
+          <button class="option" onclick="selectOption(this,'legShape','tapered')"><span class="option-text">Tapered</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'legShape','balanced')"><span class="option-text">Balanced</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'legShape','straight')"><span class="option-text">Straight</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'legShape','relaxed')"><span class="option-text">Relaxed</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        </div>
+        <div class="question-feedback">Got it. That shape guides the recommendation.</div>
+      </div>
+      <div class="question hide" id="q6">
+        <label>What matters most?</label>
+        <span class="question-sub">This helps us fine-tune the recommendation.</span>
+        <div class="options">
+          <button class="option" onclick="selectOption(this,'priority','cleanerSilhouette')"><span class="option-text">Cleaner silhouette</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'priority','balancedEveryday')"><span class="option-text">Balanced everyday fit</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'priority','maximumComfort')"><span class="option-text">Maximum comfort</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        </div>
+        <div class="question-feedback">Got it. That helps us prioritize.</div>
+      </div>
+    </div>
+      <div class="quiz-nav">
+        <button class="btn-text" onclick="prevQuestion()" id="backBtn" style="visibility:hidden;">Back</button>
+        <button class="btn" onclick="nextQuestion()" id="nextBtn" disabled>Next</button>
+      </div>
+    </div></div>
+</section>
+
+<!-- Loading State -->
+<section class="loading-state" id="loadingState">
+  <div class="loading-inner">
+    <div class="loading-spinner"></div>
+    <p class="loading-message" id="loadingMessage">Finding the right fit for you...</p>
+  </div>
+</section>
+
+<section class="results" id="results">
+  <div class="results-inner">
+    <div class="results-layout">
+
+      <!-- LEFT SIDEBAR -->
+      <aside class="results-sidebar" id="resultsSidebar">
+        <div class="quiz-complete-label">
+          <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8.5" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 9L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Quiz Complete
+        </div>
+        <h2>Here's<br>What Fits</h2>
+        <img src="../images/profile-character.png" alt="Your fit" class="sidebar-character" id="sidebarCharacter">
+        <div class="your-fit-label">Your best match:</div>
+        <div class="your-fit-name" id="sidebarFitName">Athletic Taper</div>
+        <p class="your-fit-desc" id="sidebarFitDesc" style="margin-bottom:12px;">Roomy in the thigh with a defined taper below the knee.</p>
+        <ul class="fit-traits" id="fitTraits" style="margin-bottom:20px;">
+          <li><svg viewBox="0 0 18 18" fill="none"><path d="M2 14V4C2 2.9 2.9 2 4 2H14C15.1 2 16 2.9 16 4V14C16 15.1 15.1 16 14 16H4C2.9 16 2 15.1 2 14Z" stroke="currentColor" stroke-width="1.3"/><path d="M6 6H12M6 9H12M6 12H9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span id="trait1">Roomy through thigh</span></li>
+          <li><svg viewBox="0 0 18 18" fill="none"><path d="M3 14L7 4L11 10L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="trait2">Tapered below knee</span></li>
+          <li><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.3"/><path d="M6 9H12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span id="trait3">Clean break</span></li>
+          <li><svg viewBox="0 0 18 18" fill="none"><path d="M4.5 9C4.5 9 6 5 9 5C12 5 13.5 9 13.5 9C13.5 9 12 13 9 13C6 13 4.5 9 4.5 9Z" stroke="currentColor" stroke-width="1.3"/><circle cx="9" cy="9" r="1.5" stroke="currentColor" stroke-width="1.3"/></svg><span id="trait4">Athletic cut</span></li>
+        </ul>
+        <button class="btn-save" onclick="saveMyFit()">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 2H13L14 3V14L12 12L10 14L8 12L6 14L4 12L2 14V3L3 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><line x1="5" y1="5" x2="11" y2="5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Save My Fit
+        </button>
+      </aside>
+
+      <!-- RIGHT MAIN -->
+      <div class="results-main">
+
+        <!-- DIAGNOSIS -->
+        <div class="diagnosis" id="diagnosis">
+          <p id="diagnosisText">You told us pants usually feel too tight through the thighs and seat. Most slim-cut pants are designed for narrower legs, so the waist fits but everything above the knee doesn't. That's why Athletic Taper is likely your strongest match — it gives you more room through the thigh while keeping a clean, tapered shape below the knee.</p>
+        </div>
+
+        <!-- Best Fit Hero Card -->
+        <div class="best-hero-card" id="bestCard">
+          <div class="hero-card-header">
+            <div class="section-label">Best Fit</div>
+            <h3 id="bestName">Athletic Taper</h3>
+            <div class="badge-recommended">Recommended</div>
+          </div>
+          <div class="hero-card-body">
+            <img src="../images/fit-athletic-taper.png" alt="" class="hero-card-img" id="bestHeroImg">
+            <div class="hero-card-details">
+              <p id="bestWhy">Roomy in the thigh with a defined taper below the knee. Built for muscular thighs and athletic builds.</p>
+              <ul class="fit-checklist" id="bestChecklist">
+                <li><div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="#5B8C5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><span class="check-title" id="ckTitle1">Roomy through thigh</span><span class="check-sub" id="ckSub1">Comfort where you need it most</span></div></li>
+                <li><div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="#5B8C5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><span class="check-title" id="ckTitle2">Tapered below knee</span><span class="check-sub" id="ckSub2">Clean definition at the ankle</span></div></li>
+                <li><div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="#5B8C5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><span class="check-title" id="ckTitle3">Built for athletic builds</span><span class="check-sub" id="ckSub3">Muscular thighs welcome</span></div></li>
+                <li><div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="#5B8C5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><span class="check-title" id="ckTitle4">Structured stretch</span><span class="check-sub" id="ckSub4">Moves with you, keeps shape</span></div></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Recommendations -->
+        <div class="product-section" id="productSection">
+          <div class="product-section-header">
+            <h3>Recommended for Your Build</h3>
+          </div>
+          <div class="product-carousel" id="productCarousel"></div>
+        </div>
+
+      </div><!-- /results-main -->
+    </div><!-- /results-layout -->
+  </div><!-- /results-inner -->
+</section>
+<footer>
+  <p>FitCo. Recommendations for men who want pants that fit.</p>
+</footer>
+<script>
+let currentQ = 1;
+const totalQ = 6;
+const answers = {};
+
+const fits = {
+  slimTaper: {
+    name: 'Slim Taper',
+    description: 'Narrower through the thigh with a clean taper to the ankle. Best for lean builds that want a sharp silhouette.',
+    rise: 'Mid Rise'
+  },
+  straightFit: {
+    name: 'Straight Fit',
+    description: 'Consistent width from hip to ankle. The most versatile fit that works across most body types.',
+    rise: 'Mid Rise'
+  },
+  athleticTaper: {
+    name: 'Athletic Taper',
+    description: 'Roomy in the thigh with a defined taper below the knee. Built for muscular thighs and athletic builds.',
+    rise: 'Mid Rise'
+  },
+  athleticStraight: {
+    name: 'Athletic Straight',
+    description: 'Generous room through seat and thigh with a straighter leg. For broader builds that need upper body space.',
+    rise: 'Mid Rise'
+  },
+  relaxedTaper: {
+    name: 'Relaxed Taper',
+    description: 'Comfortable room throughout with a slight taper at the ankle. The balance of comfort and shape.',
+    rise: 'Mid-High Rise'
+  },
+  relaxedFit: {
+    name: 'Relaxed Fit',
+    description: 'Maximum room from hip to ankle. The most comfortable option with a straighter, easier leg.',
+    rise: 'Mid-High Rise'
+  }
+};
+
+// Fit images for each type
+const fitImages = {
+  slimTaper: '../images/fit-slim-taper.png',
+  straightFit: '../images/fit-straight.png',
+  athleticTaper: '../images/fit-athletic-taper.png',
+  athleticStraight: '../images/fit-athletic-straight.png',
+  relaxedTaper: '../images/fit-relaxed-taper.png',
+  relaxedFit: '../images/fit-relaxed.png'
+};
+
+// Hero checklist items: title + subtitle for each fit
+const fitChecklists = {
+  slimTaper: [
+    {title: 'Narrow through thigh', sub: 'Clean, tailored silhouette'},
+    {title: 'Tapered to the ankle', sub: 'Sharp, modern line'},
+    {title: 'Clean break at shoe', sub: 'Works with most footwear'},
+    {title: 'Structured drape', sub: 'Holds shape all day'}
+  ],
+  straightFit: [
+    {title: 'Balanced thigh room', sub: 'Not too slim, not too loose'},
+    {title: 'Straight leg opening', sub: 'Consistent width from hip down'},
+    {title: 'Clean hem profile', sub: 'Versatile with any shoe'},
+    {title: 'Everyday versatile', sub: 'Dress up or down easily'}
+  ],
+  athleticTaper: [
+    {title: 'Roomy through thigh', sub: 'Comfort where you need it most'},
+    {title: 'Tapered below knee', sub: 'Clean definition at the ankle'},
+    {title: 'Built for athletic builds', sub: 'Muscular thighs welcome'},
+    {title: 'Structured stretch', sub: 'Moves with you, keeps shape'}
+  ],
+  athleticStraight: [
+    {title: 'Roomy through seat & thigh', sub: 'More comfort where you need it'},
+    {title: 'Straight from knee down', sub: 'Balanced, modern silhouette'},
+    {title: 'Clean break at the shoe', sub: 'Works with most sneakers and shoes'},
+    {title: 'Versatile everyday fit', sub: 'Easy to dress up or down'}
+  ],
+  relaxedTaper: [
+    {title: 'Comfortable through thigh', sub: 'Extra room without excess'},
+    {title: 'Subtle taper at ankle', sub: 'Keeps a clean line'},
+    {title: 'Relaxed drape', sub: 'Soft, easy movement'},
+    {title: 'Comfort-first design', sub: 'All-day wearability'}
+  ],
+  relaxedFit: [
+    {title: 'Maximum room throughout', sub: 'No restrictions anywhere'},
+    {title: 'Straight easy leg', sub: 'Relaxed from hip to ankle'},
+    {title: 'Casual break profile', sub: 'Laid-back, effortless'},
+    {title: 'Most comfortable option', sub: 'Priority on ease and wear'}
+  ]
+};
+
+// Secondary card checklist items (3 per fit)
+const fitSecondaryChecks = {
+  slimTaper: ['Slim silhouette', 'Clean taper', 'Modern look'],
+  straightFit: ['Balanced proportions', 'Versatile style', 'Clean line'],
+  athleticTaper: ['Roomy upper', 'Tapered below knee', 'Athletic build'],
+  athleticStraight: ['Roomy seat & thigh', 'Straight leg', 'Balanced look'],
+  relaxedTaper: ['Comfortable room', 'Subtle taper', 'Relaxed style'],
+  relaxedFit: ['Maximum comfort', 'Easy leg', 'Laid-back fit']
+};
+
+// Sidebar trait badges
+const fitTraitBadges = {
+  slimTaper:    ['Slim through thigh', 'Tapered leg', 'Clean break', 'Structured fit'],
+  straightFit:  ['Balanced thigh room', 'Straight leg', 'Clean hem', 'Versatile silhouette'],
+  athleticTaper: ['Roomy through thigh', 'Tapered below knee', 'Clean break', 'Athletic cut'],
+  athleticStraight: ['Roomy seat and thigh', 'Straighter leg', 'Slight break', 'Balanced structure'],
+  relaxedTaper: ['Comfortable through thigh', 'Subtle taper', 'Casual break', 'Relaxed structure'],
+  relaxedFit:   ['Maximum room', 'Straight leg', 'Easy break', 'Most comfortable']
+};
+
+// Sidebar descriptions
+const fitSidebarDescs = {
+  slimTaper: 'A sharp, tailored silhouette with a clean taper. Best for lean builds.',
+  straightFit: 'The versatile middle ground. Works across most body types.',
+  athleticTaper: 'Roomy thighs with a defined taper. Built for athletic builds.',
+  athleticStraight: 'Generous room with a straight leg. For balanced proportions.',
+  relaxedTaper: 'Comfortable room with a subtle taper. Best of both worlds.',
+  relaxedFit: 'Maximum room and comfort. The easiest, most relaxed option.'
+};
+
+// ─── DIAGNOSIS COPY SYSTEM ───
+// Pain → Problem → Solution. Uses user's actual answers. Human tone.
+
+function generateDiagnosis(build, fitIssues, priority, recommendedFit) {
+  var mainIssue = (fitIssues && fitIssues.length > 0) ? fitIssues[0] : 'usuallyFine';
+  var fitName = fits[recommendedFit] ? fits[recommendedFit].name : recommendedFit;
+  var b = build || 'average';
+  var p = priority || 'balancedEveryday';
+
+  // Tight thighs cases
+  if (mainIssue === 'tightThighsSeat') {
+    if (b === 'slim') {
+      return "You told us pants usually feel too tight through the thighs and seat. Most slim-cut pants are designed for narrower legs, so the waist fits but everything above the knee doesn't. That's why " + fitName + " is likely your strongest match — it gives you more room through the thigh while keeping a clean, tapered shape below the knee.";
+    }
+    if (b === 'athletic') {
+      return "You told us pants usually feel too tight through the thighs and seat. Standard cuts aren't built for muscular legs, which is why the waist fits but the thighs pinch. That's why " + fitName + " is likely your strongest match — it's designed with extra room through the seat and thigh, then tapers cleanly below the knee.";
+    }
+    if (b === 'broader') {
+      return "You told us pants usually feel too tight through the thighs and seat. Most brands cut their pants for average proportions, so broader builds end up with pants that bind in all the wrong places. That's why " + fitName + " is likely your strongest match — it gives you generous room through the seat and thigh with a straighter leg that balances your frame.";
+    }
+    // average + tight thighs
+    return "You told us pants usually feel too tight through the thighs and seat. Standard cuts often don't account for muscular or larger legs, so you end up sizing up and dealing with a loose waist. That's why " + fitName + " is likely your strongest match — it's built with extra room where you need it most.";
+  }
+
+  // Waist gap
+  if (mainIssue === 'waistGap') {
+    return "You told us pants usually gap at the waist. That happens when the waistband is cut for hips that are wider than yours, or when the rise sits too low to stay put. That's why " + fitName + " is likely your strongest match — it's built with a more structured waist and proper rise so it stays put without digging in.";
+  }
+
+  // Too much fabric
+  if (mainIssue === 'tooMuchFabric') {
+    if (b === 'slim') {
+      return "You told us pants usually have too much fabric below the knee. Slim builds end up swimming in relaxed cuts because most brands design for average proportions. That's why " + fitName + " is likely your strongest match — it's cut closer to the leg without being skinny, so you get a clean line without extra material bunching up.";
+    }
+    return "You told us pants usually have too much fabric below the knee. Relaxed and straight cuts often add volume where you don't need it, making pants look baggy even when the waist fits. That's why " + fitName + " is likely your strongest match — it keeps the leg line cleaner without going too slim.";
+  }
+
+  // Length off
+  if (mainIssue === 'lengthOff') {
+    return "You told us the length usually feels off. Inseam varies wildly by brand and cut, which is why the same size can look cropped in one pair and drag in another. The fit we recommend — " + fitName + " — works well with most standard inseams, and we'll point you toward brands with reliable length options.";
+  }
+
+  // Usually fine — use priority
+  if (mainIssue === 'usuallyFine') {
+    if (p === 'cleanerSilhouette') {
+      return "You told us pants usually fit fine. Since you want a cleaner silhouette, we looked for a fit that sits closer to the leg without pinching. That's why " + fitName + " is likely your strongest match — it gives you a sharp, tailored line that's still comfortable enough for everyday wear.";
+    }
+    if (p === 'maximumComfort') {
+      return "You told us pants usually fit fine. Since comfort matters most, we looked for a fit that gives you room to move without looking sloppy. That's why " + fitName + " is likely your strongest match — it's easy through the leg with a shape that still looks intentional.";
+    }
+    // balanced everyday (default)
+    return "You told us pants usually fit fine. Since you want a balanced everyday fit, we looked for something that works across situations without being too slim or too relaxed. That's why " + fitName + " is likely your strongest match — it's the most versatile cut, and it looks right with almost anything.";
+  }
+
+  // Fallback
+  return "Based on what you told us, " + fitName + " is likely your strongest match. It's built for your proportions and should handle your fit needs better than a standard cut.";
+}
+
+// ─── PRODUCT CATALOG (V1: 15 products) ───
+// Flexible fit mapping: primary + optional secondary fits
+
+var productCatalog = [
+  { name: "Stretch Washed Chino", variant: "Slim", brand: "Bonobos", price: 99, category: "chinos", primaryFit: "slimTaper", secondaryFits: ["straightFit"], retailer: "Bonobos", link: "https://bonobos.com" },
+  { name: "484 Slim-Fit Pant", variant: "", brand: "J.Crew", price: 80, category: "chinos", primaryFit: "slimTaper", secondaryFits: [], retailer: "J.Crew", link: "https://jcrew.com" },
+  { name: "Slim Taper Chino", variant: "", brand: "Banana Republic", price: 90, category: "chinos", primaryFit: "slimTaper", secondaryFits: ["straightFit"], retailer: "Banana Republic", link: "https://bananarepublic.com" },
+  { name: "770 Straight-Fit Pant", variant: "", brand: "J.Crew", price: 80, category: "chinos", primaryFit: "straightFit", secondaryFits: ["athleticStraight"], retailer: "J.Crew", link: "https://jcrew.com" },
+  { name: "Stretch Washed Chino", variant: "Straight", brand: "Bonobos", price: 99, category: "chinos", primaryFit: "straightFit", secondaryFits: ["athleticStraight"], retailer: "Bonobos", link: "https://bonobos.com" },
+  { name: "Straight Chino", variant: "", brand: "Banana Republic", price: 90, category: "chinos", primaryFit: "straightFit", secondaryFits: ["slimTaper"], retailer: "Banana Republic", link: "https://bananarepublic.com" },
+  { name: "Stretch Washed Chino", variant: "Athletic", brand: "Bonobos", price: 99, category: "chinos", primaryFit: "athleticTaper", secondaryFits: ["athleticStraight"], retailer: "Bonobos", link: "https://bonobos.com" },
+  { name: "Athletic Tapered Pant", variant: "", brand: "J.Crew", price: 85, category: "chinos", primaryFit: "athleticTaper", secondaryFits: [], retailer: "J.Crew", link: "https://jcrew.com" },
+  { name: "ABC Pant Classic", variant: "", brand: "Lululemon", price: 128, category: "technical", primaryFit: "athleticTaper", secondaryFits: ["straightFit"], retailer: "Lululemon", link: "https://lululemon.com" },
+  { name: "Athletic Taper Chino", variant: "", brand: "Banana Republic", price: 90, category: "chinos", primaryFit: "athleticTaper", secondaryFits: ["athleticStraight"], retailer: "Banana Republic", link: "https://bananarepublic.com" },
+  { name: "Athletic Straight Chino", variant: "", brand: "Bonobos", price: 99, category: "chinos", primaryFit: "athleticStraight", secondaryFits: ["athleticTaper"], retailer: "Bonobos", link: "https://bonobos.com" },
+  { name: "541 Athletic Fit Jean", variant: "", brand: "Levi's", price: 70, category: "jeans", primaryFit: "athleticStraight", secondaryFits: ["athleticTaper"], retailer: "Levi's", link: "https://levi.com" },
+  { name: "Relaxed Taper Chino", variant: "", brand: "Bonobos", price: 99, category: "chinos", primaryFit: "relaxedTaper", secondaryFits: ["athleticStraight"], retailer: "Bonobos", link: "https://bonobos.com" },
+  { name: "502 Taper Fit Jean", variant: "", brand: "Levi's", price: 70, category: "jeans", primaryFit: "relaxedTaper", secondaryFits: ["straightFit"], retailer: "Levi's", link: "https://levi.com" },
+  { name: "Relaxed Fit Chino", variant: "", brand: "Bonobos", price: 99, category: "chinos", primaryFit: "relaxedFit", secondaryFits: ["relaxedTaper"], retailer: "Bonobos", link: "https://bonobos.com" }
+];
+
+// Fit-specific benefits for product cards
+var fitProductBenefits = {
+  slimTaper: "Slim cut with a clean taper — sharp silhouette without excess fabric",
+  straightFit: "Straight leg — consistent width that works with almost anything",
+  athleticTaper: "Room in the thigh with a defined taper below the knee",
+  athleticStraight: "Generous room through seat and thigh with a straighter leg",
+  relaxedTaper: "Comfortable room throughout with a slight taper at the ankle",
+  relaxedFit: "Maximum room from hip to ankle — the most comfortable option"
+};
+
+function renderProducts(recommendedFit, secondaryFits, productType) {
+  var container = document.getElementById('productCarousel');
+  if (!container) return;
+
+  // Filter products: primary match first, then secondary
+  var primaryProducts = productCatalog.filter(function(p) {
+    var typeMatch = !productType || productType === 'any' || p.category === productType;
+    return typeMatch && p.primaryFit === recommendedFit;
+  });
+
+  var secondaryProducts = productCatalog.filter(function(p) {
+    var typeMatch = !productType || productType === 'any' || p.category === productType;
+    return typeMatch && p.secondaryFits.indexOf(recommendedFit) > -1;
+  });
+
+  // Combine: up to 4 primary + 1-2 secondary
+  var displayProducts = primaryProducts.slice(0, 4);
+  if (displayProducts.length < 4) {
+    displayProducts = displayProducts.concat(secondaryProducts.slice(0, 4 - displayProducts.length));
+  }
+  if (displayProducts.length < 3) {
+    // Fill with any products from the same fit family
+    var fallback = productCatalog.filter(function(p) {
+      return p.primaryFit === recommendedFit || p.secondaryFits.indexOf(recommendedFit) > -1;
+    });
+    displayProducts = displayProducts.concat(fallback.slice(0, 4 - displayProducts.length));
+  }
+
+  var html = displayProducts.map(function(p) {
+    var benefit = fitProductBenefits[p.primaryFit] || '';
+    var imgSrc = fitImages[p.primaryFit] || fitImages.straightFit;
+    return '<div class="product-card">' +
+      '<img src="' + imgSrc + '" alt="' + p.name + '" class="product-card-img">' +
+      '<div class="product-card-body">' +
+        '<div class="product-card-brand">' + p.brand + '</div>' +
+        '<div class="product-card-name">' + p.name + (p.variant ? ' (' + p.variant + ')' : '') + '</div>' +
+        '<div class="product-card-fitline">' + benefit + '</div>' +
+        '<div class="product-card-meta">' +
+          '<span class="product-card-price">$' + p.price + '</span>' +
+          '<a href="' + p.link + '" class="product-card-link" target="_blank" rel="noopener">View on ' + p.retailer + ' &rarr;</a>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  container.innerHTML = html;
+}
+
+function renderSidebar(bestKey) {
+  // Update fit name
+  var fit = fits[bestKey];
+  var nameEl = document.getElementById('sidebarFitName');
+  if (nameEl && fit) nameEl.textContent = fit.name;
+  // Update description
+  var descEl = document.getElementById('sidebarFitDesc');
+  if (descEl) descEl.textContent = fitSidebarDescs[bestKey] || fitSidebarDescs.straightFit;
+  // Update traits
+  var traits = fitTraitBadges[bestKey] || fitTraitBadges.straightFit;
+  for (var i = 0; i < 4; i++) {
+    var tEl = document.getElementById('trait' + (i + 1));
+    if (tEl && traits[i]) tEl.textContent = traits[i];
+  }
+}
+
+function renderHeroCard(fitKey) {
+  var fit = fits[fitKey];
+  if (!fit) return;
+  // Name
+  var nameEl = document.getElementById('bestName');
+  if (nameEl) nameEl.textContent = fit.name;
+  // Image
+  var imgEl = document.getElementById('bestHeroImg');
+  if (imgEl) imgEl.src = fitImages[fitKey] || fitImages.straightFit;
+  // Why text
+  var whyEl = document.getElementById('bestWhy');
+  if (whyEl) whyEl.textContent = fit.description;
+  // Checklist
+  var checks = fitChecklists[fitKey] || fitChecklists.straightFit;
+  for (var i = 0; i < 4; i++) {
+    var tEl = document.getElementById('ckTitle' + (i + 1));
+    var sEl = document.getElementById('ckSub' + (i + 1));
+    if (tEl && checks[i]) tEl.textContent = checks[i].title;
+    if (sEl && checks[i]) sEl.textContent = checks[i].sub;
+  }
+  // CTA
+  var ctaEl = document.getElementById('bestCta');
+  if (ctaEl) {
+    var txt = ctaEl.childNodes[0];
+    if (txt && txt.nodeType === 3) txt.textContent = 'Shop ' + fit.name + ' Pants ';
+  }
+}
+
+function getAltExplanation(primaryKey, altKey) {
+  var ex = {
+    'athleticTaper:athleticStraight': 'Same thigh room, but straighter below the knee',
+    'athleticTaper:relaxedTaper': 'More relaxed overall, still tapered at the ankle',
+    'athleticTaper:straightFit': 'Less thigh room, straight leg all the way down',
+    'athleticTaper:slimTaper': 'Slimmer cut with less thigh room',
+    'athleticStraight:athleticTaper': 'Same thigh room, tapered below the knee',
+    'athleticStraight:relaxedFit': 'Maximum room, easiest fit',
+    'athleticStraight:relaxedTaper': 'More room, still tapered at the ankle',
+    'athleticStraight:straightFit': 'Less room, straighter leg',
+    'slimTaper:straightFit': 'More balanced width, less taper',
+    'slimTaper:athleticTaper': 'More thigh room, still tapered',
+    'straightFit:slimTaper': 'Slimmer with a stronger taper',
+    'straightFit:athleticTaper': 'More thigh room, tapered below the knee',
+    'straightFit:athleticStraight': 'More room in the thigh and seat',
+    'relaxedTaper:relaxedFit': 'More room, less taper at the ankle',
+    'relaxedTaper:athleticStraight': 'Less room, straighter leg',
+    'relaxedTaper:athleticTaper': 'Less room, more taper below the knee',
+    'relaxedFit:relaxedTaper': 'Same comfort, tapered for a cleaner finish',
+    'relaxedFit:athleticStraight': 'Less room, straighter leg'
+  };
+  return ex[primaryKey + ':' + altKey] || fits[altKey].description;
+}
+
+function renderSecondaryCard(prefix, fitKey, primaryKey) {
+  var fit = fits[fitKey];
+  if (!fit) return;
+  var nameEl = document.getElementById(prefix + 'Name');
+  if (nameEl) nameEl.textContent = fit.name;
+  var scoreEl = document.getElementById(prefix + 'Match');
+  if (scoreEl) scoreEl.style.display = 'none';
+  var imgEl = document.getElementById(prefix + 'Img');
+  if (imgEl) imgEl.src = fitImages[fitKey] || fitImages.straightFit;
+  var descEl = document.getElementById(prefix + 'Desc');
+  if (descEl) descEl.textContent = getAltExplanation(primaryKey, fitKey);
+  // Checklist
+  var checks = fitSecondaryChecks[fitKey] || fitSecondaryChecks.straightFit;
+  for (var i = 0; i < 3; i++) {
+    var ckEl = document.getElementById(prefix + 'Ck' + (i + 1));
+    if (ckEl && checks[i]) ckEl.textContent = checks[i];
+  }
+  // CTA
+  var ctaEl = document.getElementById(prefix + 'Cta');
+  if (ctaEl) {
+    var txt = ctaEl.childNodes[0];
+    if (txt && txt.nodeType === 3) txt.textContent = 'Shop ' + fit.name + ' Pants ';
+  }
+}
+
+function selectOption(btn, key, value) {
+  answers[key] = value;
+  btn.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('nextBtn').disabled = false;
+  updateFitProfile(key, btn.textContent.trim());
+  // Auto-advance except for multi-select questions
+  var isMulti = btn.closest('.options') && btn.closest('.options').dataset.multiselect === 'true';
+  if (isMulti) return; // Don't auto-advance on multi-select
+  var delay = currentQ <= 5 ? 700 : 500;
+  setTimeout(function() {
+    document.getElementById('q' + currentQ).classList.add('question-exit');
+    setTimeout(function() {
+      if (currentQ < totalQ) { currentQ++; showQuestion(currentQ); }
+    }, 300);
+  }, delay);
+}
+
+function toggleMultiOption(btn, key, value) {
+  var container = btn.closest('.options');
+  var max = parseInt(container.dataset.multiselectMax || '2');
+  if (!answers[key]) answers[key] = [];
+  var arr = answers[key];
+  var idx = arr.indexOf(value);
+
+  if (idx > -1) {
+    // Deselect
+    arr.splice(idx, 1);
+    btn.classList.remove('selected');
+  } else {
+    // Select if under max
+    if (arr.length >= max) return; // At max, ignore
+    arr.push(value);
+    btn.classList.add('selected');
+  }
+
+  // Enable Next if at least 1 selected
+  document.getElementById('nextBtn').disabled = arr.length === 0;
+
+  // Update fit profile (show first 2 selections)
+  var displayText = arr.length > 0 ? arr.join(', ') : '--';
+  updateFitProfile(key, displayText);
+}
+
+function updateFitProfile(key, value) {
+  var labels = {
+    productType: 'Shopping For',
+    build: 'Build',
+    height: 'Height',
+    fitWrong: 'Fit Issue',
+    legShape: 'Leg Shape',
+    priority: 'Priority'
+  };
+  var item = document.getElementById('profile-' + key);
+  if (item) {
+    item.textContent = value;
+    item.classList.remove('empty');
+    item.parentElement.classList.add('active');
+    setTimeout(function() { item.parentElement.classList.remove('active'); }, 400);
+  }
+}
+
+var helperMessages = [
+  'Noting what you are looking for...',
+  'Looking at your build...',
+  'Noting fit issues...',
+  'Factoring in height...',
+  'Noting leg shape...',
+  'Noting what matters most...'
+];
+
+function showQuestion(n) {
+  for (let i = 1; i <= totalQ; i++) {
+    var qEl = document.getElementById('q' + i);
+    qEl.classList.toggle('hide', i !== n);
+    qEl.classList.remove('question-exit');
+  }
+  document.getElementById('progressFill').style.width = Math.round((n / totalQ) * 100) + '%';
+  var counter = document.getElementById('questionCounter');
+  if (counter) counter.textContent = 'Question ' + n + ' of ' + totalQ;
+  document.getElementById('backBtn').style.visibility = n === 1 ? 'hidden' : 'visible';
+  var helperEl = document.getElementById('quizHelper');
+  if (helperEl) helperEl.textContent = helperMessages[n - 1] || '';
+  var hasAnswer = answers[getKey(n)] !== undefined;
+  document.getElementById('nextBtn').disabled = !hasAnswer;
+  document.getElementById('nextBtn').textContent = n === totalQ ? 'See Results' : 'Next';
+}
+
+function getKey(n) {
+  return ['productType','build','fitWrong','height','legShape','priority'][n-1];
+}
+
+function nextQuestion() {
+  if (currentQ < totalQ) { currentQ++; showQuestion(currentQ); }
+  else { showLoadingThenResults(); }
+}
+
+function showLoadingThenResults() {
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('loadingState').classList.add('active');
+  var messages = [
+    'Finding the right fit for you...',
+    'Matching your answers...',
+    'Almost there...'
+  ];
+  var msgEl = document.getElementById('loadingMessage');
+  var step = 0;
+  msgEl.textContent = messages[0];
+  var interval = setInterval(function() {
+    step++;
+    if (step < messages.length) {
+      msgEl.style.opacity = '0';
+      setTimeout(function() {
+        msgEl.textContent = messages[step];
+        msgEl.style.opacity = '1';
+      }, 300);
+    }
+  }, 700);
+  setTimeout(function() {
+    clearInterval(interval);
+    document.getElementById('loadingState').classList.remove('active');
+    calculateResults();
+  }, 2200);
+}
+
+function prevQuestion() {
+  if (currentQ > 1) { currentQ--; showQuestion(currentQ); }
+}
+
+function calculateResults() {
+  try {
+  // ─── TWO-LAYER SCORING ENGINE v2 ───
+  // Layer 1: Objective Fit (build + fitWrong + height) = 80%
+  // Layer 2: Preference Overlay (leg + fall + drape) = 20%
+  // Hard elimination rules prevent obviously wrong recommendations
+  // Final: objectiveScores * 0.8 + preferenceScores * 0.2
+
+  var allFits = ['slimTaper','straightFit','athleticTaper','athleticStraight','relaxedTaper','relaxedFit'];
+  var objectiveScores = {};
+  var preferenceScores = {};
+  allFits.forEach(function(f) { objectiveScores[f] = 50; preferenceScores[f] = 50; });
+
+  // ─── LAYER 1: OBJECTIVE FIT (80%) ───
+
+  // Q2: Build (guides, does not dominate)
+  var buildMap = {
+    slim:      { slimTaper: 80, straightFit: 65, athleticTaper: 50, athleticStraight: 30, relaxedTaper: 20, relaxedFit: 10 },
+    average:   { slimTaper: 55, straightFit: 75, athleticTaper: 65, athleticStraight: 50, relaxedTaper: 40, relaxedFit: 30 },
+    athletic:  { slimTaper: 20, straightFit: 45, athleticTaper: 85, athleticStraight: 80, relaxedTaper: 50, relaxedFit: 35 },
+    broader:   { slimTaper: 10, straightFit: 35, athleticTaper: 45, athleticStraight: 80, relaxedTaper: 85, relaxedFit: 90 }
+  };
+  var b1 = buildMap[answers.build] || buildMap.average;
+  allFits.forEach(function(f) { objectiveScores[f] = b1[f]; });
+
+  // Q3: Fit Wrong (merged fit issue + restrictive, multi-select)
+  // TUNED: tooMuchFabric no longer absurdly favors slimTaper
+  // TUNED: waistGap rebalanced to reduce straightFit dominance
+  var fitWrongMap = {
+    tightThighsSeat: { slimTaper: 15, straightFit: 45, athleticTaper: 95, athleticStraight: 90, relaxedTaper: 70, relaxedFit: 55 },
+    waistGap:        { slimTaper: 80, straightFit: 70, athleticTaper: 60, athleticStraight: 55, relaxedTaper: 45, relaxedFit: 35 },
+    tooMuchFabric:   { slimTaper: 55, straightFit: 70, athleticTaper: 80, athleticStraight: 45, relaxedTaper: 55, relaxedFit: 20 },
+    lengthOff:       { slimTaper: 55, straightFit: 60, athleticTaper: 60, athleticStraight: 60, relaxedTaper: 60, relaxedFit: 55 },
+    usuallyFine:     { slimTaper: 65, straightFit: 70, athleticTaper: 60, athleticStraight: 55, relaxedTaper: 50, relaxedFit: 40 }
+  };
+  var selectedIssues = answers.fitWrong || [];
+  if (selectedIssues.length > 0) {
+    // MINIMUM-based scoring: a fit must handle ALL selected issues well
+    // If a fit scores 10 on "tight thighs" and 90 on "waist gap", it gets 10
+    allFits.forEach(function(f) {
+      var minScore = 100;
+      selectedIssues.forEach(function(issue) {
+        var scores = fitWrongMap[issue];
+        if (scores && scores[f] < minScore) minScore = scores[f];
+      });
+      objectiveScores[f] = (objectiveScores[f] + minScore) / 2;
+    });
+  }
+
+  // Q4: Height (reduced weight — 1:3 ratio instead of 1:1)
+  var heightMap = {
+    under58:   { slimTaper: 75, straightFit: 60, athleticTaper: 55, athleticStraight: 50, relaxedTaper: 45, relaxedFit: 40 },
+    '58to511': { slimTaper: 70, straightFit: 85, athleticTaper: 80, athleticStraight: 75, relaxedTaper: 70, relaxedFit: 60 },
+    '60to62':  { slimTaper: 60, straightFit: 80, athleticTaper: 85, athleticStraight: 80, relaxedTaper: 75, relaxedFit: 65 },
+    '63plus':  { slimTaper: 45, straightFit: 70, athleticTaper: 80, athleticStraight: 85, relaxedTaper: 80, relaxedFit: 75 }
+  };
+  var b2 = heightMap[answers.height] || heightMap['58to511'];
+  allFits.forEach(function(f) { objectiveScores[f] = (objectiveScores[f] * 3 + b2[f]) / 4; });
+
+  // ─── HARD ELIMINATION RULES ───
+  // Prevent obviously wrong recommendations
+
+  // Athletic/Broader + tight thighs/seat → eliminate Slim Taper, cap Straight
+  if ((answers.build === 'athletic' || answers.build === 'broader') &&
+      selectedIssues.indexOf('tightThighsSeat') > -1) {
+    objectiveScores.slimTaper = Math.min(objectiveScores.slimTaper, 15);
+    objectiveScores.straightFit = Math.min(objectiveScores.straightFit, 45);
+  }
+
+  // Slim build + too much fabric → cap Relaxed fits
+  if (answers.build === 'slim' && selectedIssues.indexOf('tooMuchFabric') > -1) {
+    objectiveScores.relaxedFit = Math.min(objectiveScores.relaxedFit, 20);
+    objectiveScores.relaxedTaper = Math.min(objectiveScores.relaxedTaper, 35);
+  }
+
+  // Broader build + seat issues → boost roomier fits
+  if (answers.build === 'broader' && selectedIssues.indexOf('tightThighsSeat') > -1) {
+    objectiveScores.athleticStraight = Math.max(objectiveScores.athleticStraight, 82);
+    objectiveScores.relaxedTaper = Math.max(objectiveScores.relaxedTaper, 78);
+    objectiveScores.relaxedFit = Math.max(objectiveScores.relaxedFit, 75);
+  }
+
+  // Athletic build + tight thighs → boost Athletic Taper
+  if (answers.build === 'athletic' && selectedIssues.indexOf('tightThighsSeat') > -1) {
+    objectiveScores.athleticTaper = Math.max(objectiveScores.athleticTaper, 88);
+  }
+
+  // ─── LAYER 2: PREFERENCE OVERLAY (20%) ───
+  // Q5: Leg Shape (70% of preference)
+  // Q6: Priority (30% of preference)
+
+  var legMap = {
+    tapered: { slimTaper: 90, straightFit: 35, athleticTaper: 85, athleticStraight: 30, relaxedTaper: 60, relaxedFit: 15 },
+    balanced:{ slimTaper: 55, straightFit: 90, athleticTaper: 70, athleticStraight: 65, relaxedTaper: 50, relaxedFit: 35 },
+    straight:{ slimTaper: 30, straightFit: 90, athleticTaper: 35, athleticStraight: 85, relaxedTaper: 55, relaxedFit: 80 },
+    relaxed: { slimTaper: 15, straightFit: 45, athleticTaper: 30, athleticStraight: 60, relaxedTaper: 90, relaxedFit: 95 }
+  };
+  var priorityMap = {
+    cleanerSilhouette: { slimTaper: 90, straightFit: 50, athleticTaper: 80, athleticStraight: 30, relaxedTaper: 50, relaxedFit: 10 },
+    balancedEveryday:  { slimTaper: 45, straightFit: 90, athleticTaper: 60, athleticStraight: 70, relaxedTaper: 45, relaxedFit: 30 },
+    maximumComfort:    { slimTaper: 10, straightFit: 40, athleticTaper: 35, athleticStraight: 65, relaxedTaper: 85, relaxedFit: 95 }
+  };
+
+  var legScores = legMap[answers.legShape] || legMap.balanced;
+  var priorityScores = priorityMap[answers.priority] || priorityMap.balancedEveryday;
+  allFits.forEach(function(f) {
+    preferenceScores[f] = Math.round(legScores[f] * 0.70 + priorityScores[f] * 0.30);
+  });
+
+  // ─── COMBINE: 80% objective + 20% preference ───
+  var finalScores = {};
+  allFits.forEach(function(f) {
+    finalScores[f] = Math.round(objectiveScores[f] * 0.80 + preferenceScores[f] * 0.20);
+  });
+
+  // Sort by final score descending
+  var ranked = allFits.slice().sort(function(a, b) { return finalScores[b] - finalScores[a]; });
+
+  // Pick top 3 unique
+  var bestKey = ranked[0];
+  var alt1Key = ranked[1];
+  var alt2Key = ranked[2];
+
+  // Safety: ensure all different
+  if (alt1Key === bestKey) alt1Key = ranked[2];
+  if (alt2Key === bestKey || alt2Key === alt1Key) {
+    for (var i = 3; i < ranked.length; i++) {
+      if (ranked[i] !== bestKey && ranked[i] !== alt1Key) { alt2Key = ranked[i]; break; }
+    }
+  }
+
+  // ─── Debug ───
+  console.log({
+    objective: objectiveScores,
+    preference: preferenceScores,
+    final: finalScores,
+    ranked: ranked,
+    best: bestKey,
+    alt1: alt1Key,
+    alt2: alt2Key,
+    build: answers.build,
+    fitWrong: answers.fitWrong
+  });
+
+  // ─── RENDER ───
+  var diagnosisText = generateDiagnosis(answers.build, answers.fitWrong, answers.priority, bestKey);
+  var diagEl = document.getElementById('diagnosisText');
+  if (diagEl) diagEl.textContent = diagnosisText;
+  renderSidebar(bestKey);
+  renderHeroCard(bestKey);
+  renderProducts(bestKey, [alt1Key, alt2Key], answers.productType);
+
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('results').classList.add('active');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+
+  window._fitcoBestKey = bestKey;
+  } catch(err) {
+    console.error('FitCo error:', err);
+    document.getElementById('loadingState').classList.remove('active');
+    document.getElementById('results').classList.add('active');
+    document.getElementById('results').innerHTML = '<div style="padding:60px 24px;text-align:center;max-width:480px;margin:0 auto;"><h2 style="margin-bottom:12px;">Something went wrong</h2><p style="color:var(--text-muted);margin-bottom:24px;">We couldn\'t generate your recommendations. Please try again.</p><button class="btn" onclick="resetQuiz()">Retake Quiz</button></div>';
+  }
+}
+
+function saveMyFit() {
+  try {
+    var bestKey = window._fitcoBestKey || 'straightFit';
+    localStorage.setItem('fitco_saved_fit', bestKey);
+    var btn = document.querySelector('.btn-save');
+    if (btn) {
+      btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4.5" stroke="#5B8C5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Saved';
+      btn.style.borderColor = '#5B8C5A';
+      btn.style.color = '#5B8C5A';
+    }
+  } catch(e) {}
+}
+
+function resetQuiz() {
+  currentQ = 1;
+  for (const k in answers) delete answers[k];
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  document.getElementById('results').classList.remove('active');
+  document.getElementById('quiz').style.display = 'block';
+  showQuestion(1);
+  document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' });
+}
+
+showQuestion(1);
+
+// Save quiz completion to localStorage
+var origCalculateResults = calculateResults;
+calculateResults = function() {
+  origCalculateResults();
+  try {
+    localStorage.setItem('fitco_quiz_completed', 'true');
+    localStorage.setItem('fitco_quiz_date', new Date().toISOString());
+    localStorage.setItem('fitco_fit_result', window._fitcoBestKey || 'straightFit');
+  } catch(e) {}
+};
+</script>
+
+
+</body>
+</html>
