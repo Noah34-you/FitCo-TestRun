@@ -6,7 +6,7 @@
 <title>FitCo — Find Pants That Fit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #F5F3EE;
@@ -15,6 +15,12 @@
     --text-muted: #6E6E6E;
     --border: #D9D9D9;
     --border-light: #E8E6E1;
+    --success: #5B8C5A;
+    --error: #B84848;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 20px;
+    --radius-pill: 100px;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -98,6 +104,21 @@
     box-shadow: 0 4px 16px rgba(0,0,0,0.12);
   }
   .btn:active { transform: translateY(0); }
+  .btn:focus-visible,
+  .btn-outline:focus-visible,
+  .nav-center a:focus-visible,
+  .logo:focus-visible,
+  .problem-card-link:focus-visible {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+  }
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+    box-shadow: none;
+  }
 
   .btn-outline {
     background: transparent;
@@ -109,7 +130,7 @@
   .btn-nav {
     padding: 10px 24px;
     font-size: 13px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
   }
 
   .btn-white {
@@ -131,7 +152,7 @@
     color: var(--text-muted);
     border: 1px solid var(--border);
     padding: 7px 14px;
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
     margin-bottom: 20px;
   }
 
@@ -173,34 +194,6 @@
     flex-wrap: wrap;
     margin-bottom: 32px;
   }
-
-  /* Trust row */
-  .trust-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .trust-avatars {
-    display: flex;
-  }
-  .trust-avatars img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 2px solid var(--bg);
-    margin-left: -8px;
-    object-fit: cover;
-    background: var(--border-light);
-  }
-  .trust-avatars img:first-child { margin-left: 0; }
-  .trust-stars {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 13px;
-    font-weight: 500;
-  }
-  .trust-stars svg { width: 14px; height: 14px; }
 
   /* Trust metrics (desktop only) */
   .trust-metrics { display: none; }
@@ -408,7 +401,7 @@
   .feature-strip-inner {
     background: var(--bg-white);
     border: 1px solid var(--border-light);
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     padding: 36px 40px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -478,7 +471,7 @@
   .problem-card {
     background: var(--bg-white);
     border: 1px solid var(--border-light);
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     padding: 28px;
     transition: border-color 0.3s, box-shadow 0.3s;
   }
@@ -563,7 +556,7 @@
     color: var(--text-muted);
     border: 1px solid var(--border);
     padding: 6px 14px;
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
     margin-bottom: 24px;
   }
   .why-fitco h2 {
@@ -604,7 +597,7 @@
     border-color: #D4E4D4;
   }
   .why-card-fitco:hover {
-    border-color: #5B8C5A;
+    border-color: var(--success);
   }
   .why-card h3 {
     font-size: 18px;
@@ -632,7 +625,7 @@
     color: var(--text);
   }
   .x-mark {
-    color: #B84848;
+    color: var(--error);
     font-size: 13px;
     font-weight: 600;
     width: 18px;
@@ -640,7 +633,7 @@
     flex-shrink: 0;
   }
   .check-mark {
-    color: #5B8C5A;
+    color: var(--success);
     font-size: 15px;
     font-weight: 600;
     width: 18px;
@@ -751,7 +744,7 @@
     color: rgba(255,255,255,0.45);
     border: 1px solid rgba(255,255,255,0.15);
     padding: 6px 14px;
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
     margin-bottom: 20px;
   }
   .waitlist h2 {
@@ -797,6 +790,17 @@
     border-color: rgba(255,255,255,0.35);
     background: rgba(255,255,255,0.1);
   }
+  .waitlist-input.error {
+    border-color: #E8837D;
+    background: rgba(232,131,125,0.1);
+  }
+  .waitlist-error {
+    font-size: 13px;
+    color: #E8837D;
+    margin-top: 12px;
+    display: none;
+  }
+  .waitlist-error.visible { display: block; }
   .waitlist-btn {
     padding: 14px 24px;
     font-family: inherit;
@@ -1070,7 +1074,7 @@
     .why-fitco h2 { font-size: 28px; }
     .why-fitco-sub { font-size: 15px; margin-bottom: 32px; }
     .why-fitco-grid { grid-template-columns: 1fr; gap: 12px; }
-    .why-card { padding: 24px; border-radius: 16px; }
+    .why-card { padding: 24px; border-radius: var(--radius-md); }
     .why-card li { font-size: 14px; }
     .why-fitco-statement { margin-top: 36px; padding-top: 28px; }
     .why-fitco-statement h3 { font-size: 18px; }
@@ -1122,6 +1126,25 @@
       <div class="hero-buttons">
         <a href="/quiz/index.html" class="btn">Find My Fit <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="14" height="14"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <a href="/#works" class="btn btn-outline"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="14" height="14"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M6.5 5.5v5l4-2.5-4-2.5z" fill="currentColor"/></svg> How It Works</a>
+      </div>
+      <div class="trust-metrics">
+        <div class="trust-metric">
+          <div class="trust-metric-num">6</div>
+          <div class="trust-metric-label">Fit questions</div>
+          <div class="trust-metric-sub">About your build, not just your waist</div>
+        </div>
+        <div class="trust-metric-divider"></div>
+        <div class="trust-metric">
+          <div class="trust-metric-num">2 min</div>
+          <div class="trust-metric-label">To complete</div>
+          <div class="trust-metric-sub">No account or email required</div>
+        </div>
+        <div class="trust-metric-divider"></div>
+        <div class="trust-metric">
+          <div class="trust-metric-num">3</div>
+          <div class="trust-metric-label">Trusted brands</div>
+          <div class="trust-metric-sub">Bonobos, Levi's, Lululemon &amp; more</div>
+        </div>
       </div>
     </div>
     <div class="hero-right">
@@ -1206,7 +1229,7 @@
       </div>
       <div>
         <h4>Quick Quiz</h4>
-        <p>Seven questions about your build and fit.</p>
+        <p>Six questions about your build and fit.</p>
       </div>
     </div>
     <div class="feature-strip-item">
@@ -1349,10 +1372,11 @@
     <h2>FitCo pants are coming.</h2>
     <p class="waitlist-lead">Right now we recommend the best fits from trusted brands. Soon we will make our own.</p>
     <p class="waitlist-sub">Join the list for early access and launch updates.</p>
-    <form class="waitlist-form" id="waitlistForm" onsubmit="return handleWaitlistSubmit(event)">
-      <input type="email" class="waitlist-input" placeholder="Enter your email" required id="waitlistEmail">
+    <form class="waitlist-form" id="waitlistForm" onsubmit="return handleWaitlistSubmit(event)" novalidate>
+      <input type="email" class="waitlist-input" placeholder="Enter your email" required id="waitlistEmail" oninput="clearWaitlistError()">
       <button type="submit" class="waitlist-btn">Join Waitlist</button>
     </form>
+    <p class="waitlist-error" id="waitlistError">Please enter a valid email address.</p>
     <p class="waitlist-success" id="waitlistSuccess">Thanks for joining the waitlist.</p>
   </div>
 </section>
@@ -1372,10 +1396,21 @@ function getFitResult() {
 }
 
 // Waitlist signup
+function clearWaitlistError() {
+  document.getElementById('waitlistEmail').classList.remove('error');
+  document.getElementById('waitlistError').classList.remove('visible');
+}
 function handleWaitlistSubmit(e) {
   e.preventDefault();
-  var email = document.getElementById('waitlistEmail').value.trim();
-  if (!email) return;
+  var input = document.getElementById('waitlistEmail');
+  var email = input.value.trim();
+  var isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!isValid) {
+    input.classList.add('error');
+    document.getElementById('waitlistError').classList.add('visible');
+    return;
+  }
+  clearWaitlistError();
   var existing = JSON.parse(localStorage.getItem('fitco_waitlist') || '[]');
   if (!existing.includes(email)) {
     existing.push(email);

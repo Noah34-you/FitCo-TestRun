@@ -6,7 +6,7 @@
 <title>About — FitCo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #F5F3EE;
@@ -15,6 +15,12 @@
     --text-muted: #6E6E6E;
     --border: #D9D9D9;
     --border-light: #E8E6E1;
+    --success: #5B8C5A;
+    --error: #B84848;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 20px;
+    --radius-pill: 100px;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,7 +40,9 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    background: var(--bg);
+    background: rgba(245,243,238,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-light);
   }
   .nav-inner {
@@ -102,10 +110,23 @@
     transform: translateY(0);
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
+  .btn:focus-visible,
+  .nav-center a:focus-visible,
+  .logo:focus-visible {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+  }
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+    box-shadow: none;
+  }
   .btn-nav {
     padding: 10px 24px;
     font-size: 13px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
   }
 
   /* Sections */
@@ -203,7 +224,7 @@
   .about-card {
     background: var(--bg-white);
     border: 1px solid var(--border-light);
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     padding: 40px 32px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
@@ -245,7 +266,7 @@
   .solution-card {
     background: var(--bg-white);
     border: 1px solid var(--border-light);
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     padding: 40px 32px;
     text-align: center;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -307,7 +328,7 @@
     color: var(--text-muted);
     border: 1px solid var(--border);
     padding: 6px 14px;
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
     margin-bottom: 28px;
   }
   .vision-section h2 {
@@ -480,7 +501,7 @@
     <div class="solution-card">
       <div class="step-num">1</div>
       <h3>Fit Quiz</h3>
-      <p>Nine questions about your build, fit issues, and style preferences. Takes about two minutes.</p>
+      <p>Six questions about your build, fit issues, and style preferences. Takes about two minutes.</p>
     </div>
     <div class="solution-card">
       <div class="step-num">2</div>

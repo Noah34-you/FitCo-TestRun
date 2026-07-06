@@ -6,7 +6,7 @@
 <title>FitCo — Find Pants That Fit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #F5F3EE;
@@ -15,6 +15,12 @@
     --text-muted: #6E6E6E;
     --border: #D9D9D9;
     --border-light: #E8E6E1;
+    --success: #5B8C5A;
+    --error: #B84848;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 20px;
+    --radius-pill: 100px;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,7 +40,9 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    background: var(--bg);
+    background: rgba(245,243,238,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-light);
   }
 
@@ -131,6 +139,19 @@
     transform: translateY(0);
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
+  .btn:focus-visible,
+  .nav-center a:focus-visible,
+  .logo:focus-visible {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+  }
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+    box-shadow: none;
+  }
 
   .btn-outline {
     background: transparent;
@@ -156,7 +177,7 @@
   .btn-nav {
     padding: 10px 24px;
     font-size: 13px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
   }
 
   /* Hero */
@@ -431,7 +452,7 @@
   .problem-card {
     background: var(--bg-white);
     border: 1px solid var(--border-light);
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     padding: 32px;
     display: flex;
     align-items: flex-start;
@@ -537,7 +558,7 @@
   .solution-bar {
     background: var(--text);
     color: var(--bg);
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     padding: 24px 32px;
     margin-top: 32px;
     display: flex;
@@ -1157,7 +1178,7 @@
   .result-card {
     background: var(--bg);
     border: 1px solid var(--border-light);
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     padding: 28px;
     margin-bottom: 16px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1354,7 +1375,7 @@
     .hero-buttons { gap: 12px; margin-bottom: 8px; }
     .hero-image-area { order: -1; margin: 56px 0 0 0; }
     .hero-image-bg-circle { width: 300px; height: 300px; right: 50%; transform: translate(50%,-48%); }
-    .hero-image-wrap img { max-width: 240px; margin: 0 auto; border-radius: 16px; }
+    .hero-image-wrap img { max-width: 240px; margin: 0 auto; border-radius: var(--radius-md); }
     .hero-badge { font-size: 12px; padding: 8px 14px; border-radius: 10px; font-weight: 500; }
     .hero-badge svg { width: 14px; height: 14px; }
     .hero-badge-1 { top: 12px; left: 16px; }
@@ -1655,10 +1676,11 @@
       <h3 id="shopWaitlistHeadline">Want pants built exactly for your fit?</h3>
       <p id="shopWaitlistLead">We're building FitCo's future pant line around real body proportions.</p>
       <p id="shopWaitlistSub">Based on your fit profile, we'll notify you when styles built for your fit become available.</p>
-      <form class="shop-waitlist-form" id="shopWaitlistForm" onsubmit="return handleShopWaitlistSubmit(event)">
-        <input type="email" class="shop-waitlist-input" placeholder="Enter your email" required id="shopWaitlistEmail">
+      <form class="shop-waitlist-form" id="shopWaitlistForm" onsubmit="return handleShopWaitlistSubmit(event)" novalidate>
+        <input type="email" class="shop-waitlist-input" placeholder="Enter your email" required id="shopWaitlistEmail" oninput="clearShopWaitlistError()">
         <button type="submit" class="shop-waitlist-btn">Join Early Access</button>
       </form>
+      <p class="shop-waitlist-error" id="shopWaitlistError">Please enter a valid email address.</p>
       <p class="shop-waitlist-success" id="shopWaitlistSuccess">You're on the list. We'll be in touch.</p>
     </div>
   </div>
@@ -1711,7 +1733,7 @@
   .product-card {
     background: var(--bg-white);
     border: 1px solid var(--border-light);
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -1722,14 +1744,10 @@
   .product-card-img {
     background: #F0EFEA;
     height: 220px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .product-card-img svg {
-    width: 80px;
-    height: 120px;
-    opacity: 0.6;
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center 20%;
   }
   .product-card-body {
     padding: 20px;
@@ -1785,7 +1803,7 @@
     color: rgba(255,255,255,0.45);
     border: 1px solid rgba(255,255,255,0.15);
     padding: 6px 14px;
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
     margin-bottom: 20px;
   }
   .shop-waitlist h3 {
@@ -1838,6 +1856,17 @@
     border-color: rgba(255,255,255,0.4);
     background: rgba(255,255,255,0.1);
   }
+  .shop-waitlist-input.error {
+    border-color: #E8837D;
+    background: rgba(232,131,125,0.1);
+  }
+  .shop-waitlist-error {
+    font-size: 13px;
+    color: #E8837D;
+    margin-top: 14px;
+    display: none;
+  }
+  .shop-waitlist-error.visible { display: block; }
   .shop-waitlist-btn {
     padding: 15px 24px;
     font-family: 'Inter', sans-serif;
@@ -1888,82 +1917,81 @@
   <p>FitCo. Recommendations for men who want pants that fit.</p>
 </footer>
 <script>
-// Product data by fit
+// Product data by fit — real products, real brands, real retailer links
+// (mirrors the catalog used on the quiz results page, so the two pages agree)
 var products = {
   athleticTaper: {
     name: 'Athletic Taper',
     desc: 'More room in the thigh with a gradual taper below the knee. Built for muscular builds.',
     tags: ['Room in thigh', 'Tapered ankle'],
+    img: '../images/fit-athletic-taper.png',
     best: [
-      { name: 'Apex Athletic Chino', cat: 'Athletic Taper', desc: 'Cotton stretch blend with extra thigh room.', price: '$128' },
-      { name: 'Flex Taper Jean', cat: 'Athletic Taper', desc: 'Performance denim with 4-way stretch.', price: '$145' }
+      { brand: 'Bonobos', name: 'Stretch Washed Chino (Athletic)', desc: 'Extra room in the thigh with a clean taper below the knee.', price: '$99', link: 'https://bonobos.com/products/stretch-washed-chino-1' }
     ],
     budget: [
-      { name: 'Essential Taper Pant', cat: 'Athletic Taper', desc: 'Poly-cotton blend. Everyday durability.', price: '$68' }
+      { brand: "Levi's", name: '541 Athletic Taper Jeans', desc: 'Built for muscular legs. More seat and thigh room than standard taper jeans.', price: '$70', link: 'https://www.levi.com/US/en_US/clothing/men/jeans/541TM-athletic-taper-mens-jeans/p/181810629' }
     ],
     premium: [
-      { name: 'Merino Taper Trouser', cat: 'Athletic Taper', desc: 'Italian wool blend. Premium construction.', price: '$245' }
+      { brand: 'Lululemon', name: 'ABC Classic-Fit 5 Pocket Pant', desc: "Lululemon's classic fit with technical fabric. Office-ready comfort.", price: '$128', link: 'https://shop.lululemon.com/p/men-pants/ABC-Pant-Classic-32/_/prod9000003' }
     ]
   },
   straightFit: {
     name: 'Straight Fit',
     desc: 'Consistent width from hip to ankle. Timeless and versatile.',
     tags: ['Straight leg', 'Balanced'],
+    img: '../images/fit-straight.png',
     best: [
-      { name: 'Classic Straight Chino', cat: 'Straight Fit', desc: 'Mid-weight cotton. Clean, versatile silhouette.', price: '$115' },
-      { name: 'Modern Straight Jean', cat: 'Straight Fit', desc: 'Selvedge denim with slight break-in stretch.', price: '$138' }
+      { brand: 'Bonobos', name: 'Stretch Washed Chino (Straight)', desc: 'The classic straight-leg chino. Works with sneakers or boots.', price: '$99', link: 'https://bonobos.com/products/stretch-washed-chino-1' }
     ],
     budget: [
-      { name: 'Standard Straight Pant', cat: 'Straight Fit', desc: 'Durable everyday option. Easy care.', price: '$58' }
+      { brand: "Levi's", name: '505 Regular Straight Jeans', desc: "Levi's original straight jean. Timeless, reliable, under $70.", price: '$70', link: 'https://www.levi.com/US/en_US/jeans-by-fit-number/men/jeans/505TM/505TM-regular-fit-stretch-mens-jeans/p/005051649' }
     ],
     premium: [
-      { name: 'Tailored Straight Trouser', cat: 'Straight Fit', desc: 'Japanese cotton twill. Hand-finished details.', price: '$225' }
+      { brand: 'J.Crew', name: '770 Straight-Fit Stretch Chino', desc: "J.Crew's most popular chino. Straight fit that flatters most builds.", price: '$90', link: 'https://www.jcrew.com/p/mens/categories/clothing/pants-and-chinos/chino/770trade-straight-fit-stretch-chino-pant/AR886' }
     ]
   },
   relaxedFit: {
     name: 'Relaxed Fit',
     desc: 'More room throughout the leg while maintaining structure and shape.',
     tags: ['Relaxed fit', 'Maximum comfort'],
+    img: '../images/fit-relaxed.png',
     best: [
-      { name: 'Easy Relaxed Chino', cat: 'Relaxed Fit', desc: 'Loose cut with clean drape. All-day comfort.', price: '$108' },
-      { name: 'Weekend Relaxed Jean', cat: 'Relaxed Fit', desc: 'Soft wash denim. Lived-in feel from day one.', price: '$125' }
+      { brand: 'DUER', name: 'No Sweat Pant (Relaxed Taper)', desc: "DUER's signature stretch fabric. Dress pant look with full mobility.", price: '$129', link: 'https://shopduer.com/products/mens-dress-sweatpant-relaxed' }
     ],
     budget: [
-      { name: 'Casual Relaxed Pant', cat: 'Relaxed Fit', desc: 'Lightweight blend. Maximum breathability.', price: '$54' }
+      { brand: "Levi's", name: '555 Relaxed Straight Jeans', desc: "Levi's relaxed straight fit. Most room in the leg with a classic silhouette.", price: '$80', link: 'https://www.levi.com/US/en_US/clothing/men/jeans/relaxed/555TM-relaxed-straight-mens-jeans/p/000LO0001' }
     ],
     premium: [
-      { name: 'Luxe Relaxed Trouser', cat: 'Relaxed Fit', desc: 'Cashmere-cotton blend. Elevated comfort.', price: '$295' }
+      { brand: 'J.Crew', name: 'Giant-Fit Chino Pant', desc: "J.Crew's roomiest chino. Maximum comfort without looking sloppy.", price: '$118', link: 'https://www.jcrew.com/p/mens/categories/clothing/pants-and-chinos/chino/giant-fit-chino-pant/BI521' }
     ]
   },
   slimTaper: {
     name: 'Slim Taper',
     desc: 'Fitted through the thigh with a clean taper to the ankle. Sharp and modern.',
     tags: ['Fitted thigh', 'Tapered ankle'],
+    img: '../images/fit-slim-taper.png',
     best: [
-      { name: 'Slim Taper Chino', cat: 'Slim Taper', desc: 'Clean silhouette with room to move.', price: '$118' },
-      { name: 'Skinny Taper Jean', cat: 'Slim Taper', desc: 'Premium stretch denim. Holds shape all day.', price: '$135' }
+      { brand: 'Bonobos', name: 'Stretch Washed Chino (Slim)', desc: "Bonobos' bestselling chino. Stretch cotton that moves with you.", price: '$99', link: 'https://bonobos.com/products/stretch-washed-chino-1' }
     ],
     budget: [
-      { name: 'Essential Slim Pant', cat: 'Slim Taper', desc: 'Streamlined fit. Easy-care fabric.', price: '$62' }
+      { brand: "Levi's", name: '512 Slim Taper Jeans', desc: "Levi's modern slim taper. Affordable, durable, goes with everything.", price: '$70', link: 'https://www.levi.com/US/en_US/clothing/men/jeans/taper/512TM-slim-taper-fit-mens-jeans/p/288331193' }
     ],
     premium: [
-      { name: 'Precision Slim Trouser', cat: 'Slim Taper', desc: 'Made-to-measure feel. Italian fabric.', price: '$235' }
+      { brand: 'Lululemon', name: 'ABC Slim-Fit 5 Pocket Pant', desc: "Lululemon's Warpstreme fabric. Wrinkle-resistant and travel-ready.", price: '$148', link: 'https://shop.lululemon.com/p/mens-trousers/Abc-Slim-5-Pocket-32/_/prod9390007' }
     ]
   }
 };
 
-var svgPant = '<svg viewBox="0 0 32 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4h6v2h-6z" fill="#111"/><path d="M12 7l1 18 1 10 2 0 1-10 1 10 2 0 1-18 1-18z" stroke="#111" stroke-width="1.5" fill="#E8E6E1"/></svg>';
-
-function renderProductCard(p) {
+function renderProductCard(p, fitImg) {
   return '<div class="product-card">' +
-    '<div class="product-card-img">' + svgPant + '</div>' +
+    '<img src="' + fitImg + '" alt="' + p.name + '" class="product-card-img">' +
     '<div class="product-card-body">' +
-      '<div class="product-cat">' + p.cat + '</div>' +
+      '<div class="product-cat">' + p.brand + '</div>' +
       '<h4>' + p.name + '</h4>' +
       '<p>' + p.desc + '</p>' +
       '<div class="product-card-footer">' +
         '<span class="product-price">' + p.price + '</span>' +
-        '<button class="btn">View</button>' +
+        '<a href="' + p.link + '" class="btn" target="_blank" rel="noopener">View on ' + p.brand + '</a>' +
       '</div>' +
     '</div>' +
   '</div>';
@@ -1976,9 +2004,9 @@ function renderProducts(fitKey) {
   document.getElementById('shopFitTags').innerHTML = fit.tags.map(function(t) {
     return '<span class="fit-tag">' + t + '</span>';
   }).join('');
-  document.getElementById('shopProductsBest').innerHTML = fit.best.map(renderProductCard).join('');
-  document.getElementById('shopProductsBudget').innerHTML = fit.budget.map(renderProductCard).join('');
-  document.getElementById('shopProductsPremium').innerHTML = fit.premium.map(renderProductCard).join('');
+  document.getElementById('shopProductsBest').innerHTML = fit.best.map(function(p) { return renderProductCard(p, fit.img); }).join('');
+  document.getElementById('shopProductsBudget').innerHTML = fit.budget.map(function(p) { return renderProductCard(p, fit.img); }).join('');
+  document.getElementById('shopProductsPremium').innerHTML = fit.premium.map(function(p) { return renderProductCard(p, fit.img); }).join('');
 }
 
 // Personalized waitlist messaging by fit
@@ -2016,10 +2044,21 @@ function personalizeWaitlist(fitKey) {
 }
 
 // Shop waitlist signup
+function clearShopWaitlistError() {
+  document.getElementById('shopWaitlistEmail').classList.remove('error');
+  document.getElementById('shopWaitlistError').classList.remove('visible');
+}
 function handleShopWaitlistSubmit(e) {
   e.preventDefault();
-  var email = document.getElementById('shopWaitlistEmail').value.trim();
-  if (!email) return;
+  var input = document.getElementById('shopWaitlistEmail');
+  var email = input.value.trim();
+  var isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!isValid) {
+    input.classList.add('error');
+    document.getElementById('shopWaitlistError').classList.add('visible');
+    return;
+  }
+  clearShopWaitlistError();
   var existing = JSON.parse(localStorage.getItem('fitco_waitlist') || '[]');
   if (!existing.includes(email)) {
     existing.push(email);
