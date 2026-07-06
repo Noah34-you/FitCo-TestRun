@@ -6,7 +6,7 @@
 <title>FitCo — Find Pants That Fit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #F5F3EE;
@@ -15,6 +15,12 @@
     --text-muted: #6E6E6E;
     --border: #D9D9D9;
     --border-light: #E8E6E1;
+    --success: #5B8C5A;
+    --error: #B84848;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 20px;
+    --radius-pill: 100px;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,7 +40,9 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    background: var(--bg);
+    background: rgba(245,243,238,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-light);
   }
 
@@ -131,6 +139,21 @@
     transform: translateY(0);
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
+  .btn:focus-visible,
+  .option:focus-visible,
+  .nav-center a:focus-visible,
+  .logo:focus-visible,
+  .btn-text:focus-visible {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+  }
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+    box-shadow: none;
+  }
 
   .btn-outline {
     background: transparent;
@@ -156,7 +179,7 @@
   .btn-nav {
     padding: 10px 24px;
     font-size: 13px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
   }
 
   /* Hero */
@@ -1182,7 +1205,7 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #5B8C5A;
+    color: var(--success);
     margin-bottom: 16px;
   }
   .quiz-complete-label svg {
@@ -1283,9 +1306,18 @@
   .diagnosis {
     background: var(--bg-white);
     border: 1px solid var(--border-light);
+    border-left: 3px solid var(--success);
     border-radius: 16px;
     padding: 28px 32px;
-    margin-bottom: 16px;
+    margin-bottom: 32px;
+  }
+  .diagnosis-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--success);
+    margin-bottom: 12px;
   }
   .diagnosis p {
     font-size: 16px;
@@ -1293,19 +1325,25 @@
     color: var(--text);
     margin: 0;
   }
+  .diagnosis p strong,
+  .hero-card-details p strong {
+    font-weight: 600;
+  }
 
   /* Best Fit Hero Card */
   .best-hero-card {
     background: var(--bg-white);
     border: 1px solid var(--border-light);
+    border-top: 3px solid var(--success);
     border-radius: 20px;
     padding: 0;
     overflow: hidden;
     margin-bottom: 48px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
     transition: box-shadow 0.3s ease;
   }
   .best-hero-card:hover {
-    box-shadow: 0 12px 48px rgba(0,0,0,0.06);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.08);
   }
   .hero-card-header {
     text-align: center;
@@ -1345,9 +1383,9 @@
     text-transform: uppercase;
     padding: 6px 16px;
     border-radius: 100px;
-    background: #6B7B4C;
+    background: var(--success);
     color: #fff;
-    margin-bottom: 20px;
+    margin: 4px 0 16px;
   }
   .hero-card-body {
     display: grid;
@@ -1537,7 +1575,7 @@
     width: 14px;
     height: 14px;
     flex-shrink: 0;
-    color: #5B8C5A;
+    color: var(--success);
   }
   .btn-shop-secondary {
     display: flex;
@@ -1914,14 +1952,14 @@
   <div class="quiz-intro-inner">
     <span class="fit-section-badge" style="margin-bottom:20px;">Fit Quiz</span>
     <h1 style="font-size:clamp(36px,5vw,56px);font-weight:500;letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px;">Find My Fit</h1>
-    <p style="font-size:17px;color:var(--text-muted);max-width:420px;margin-bottom:32px;line-height:1.6;">Seven quick questions about your build and fit issues. We'll recommend pants that fit better.</p>
+    <p style="font-size:17px;color:var(--text-muted);max-width:420px;margin-bottom:32px;line-height:1.6;">Six quick questions about your build and fit issues. We'll recommend pants that fit better.</p>
     <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;">
       <div style="text-align:center;">
         <div style="font-family:Space Grotesk,sans-serif;font-size:28px;font-weight:500;">2m</div>
         <div style="font-size:13px;color:var(--text-muted);">To complete</div>
       </div>
       <div style="text-align:center;">
-        <div style="font-family:Space Grotesk,sans-serif;font-size:28px;font-weight:500;">7</div>
+        <div style="font-family:Space Grotesk,sans-serif;font-size:28px;font-weight:500;">6</div>
         <div style="font-size:13px;color:var(--text-muted);">Fit questions</div>
       </div>
       <div style="text-align:center;">
@@ -2113,6 +2151,7 @@
 
         <!-- DIAGNOSIS -->
         <div class="diagnosis" id="diagnosis">
+          <div class="diagnosis-label">Why This Fit</div>
           <p id="diagnosisText">You told us pants usually feel too tight through the thighs and seat. Most slim-cut pants are designed for narrower legs, so the waist fits but everything above the knee doesn't. That's why Athletic Taper is likely your strongest match — it gives you more room through the thigh while keeping a clean, tapered shape below the knee.</p>
         </div>
 
@@ -2120,8 +2159,8 @@
         <div class="best-hero-card" id="bestCard">
           <div class="hero-card-header">
             <div class="section-label">Best Fit</div>
-            <h3 id="bestName">Athletic Taper</h3>
             <div class="badge-recommended">Recommended</div>
+            <h3 id="bestName">Athletic Taper</h3>
           </div>
           <div class="hero-card-body">
             <img src="../images/fit-athletic-taper.png" alt="" class="hero-card-img" id="bestHeroImg">
@@ -2459,9 +2498,16 @@ function renderHeroCard(fitKey) {
   // Image
   var imgEl = document.getElementById('bestHeroImg');
   if (imgEl) imgEl.src = fitImages[fitKey] || fitImages.straightFit;
-  // Why text
+  // Why text — lead sentence bolded for scannability, rest stays regular weight
   var whyEl = document.getElementById('bestWhy');
-  if (whyEl) whyEl.textContent = fit.description;
+  if (whyEl) {
+    var descParts = fit.description.split('. ');
+    if (descParts.length > 1) {
+      whyEl.innerHTML = '<strong>' + descParts[0] + '.</strong> ' + descParts.slice(1).join('. ');
+    } else {
+      whyEl.textContent = fit.description;
+    }
+  }
   // Checklist
   var checks = fitChecklists[fitKey] || fitChecklists.straightFit;
   for (var i = 0; i < 4; i++) {
@@ -2803,7 +2849,11 @@ function calculateResults() {
   // ─── RENDER ───
   var diagnosisText = generateDiagnosis(answers.build, answers.fitWrong, answers.priority, bestKey);
   var diagEl = document.getElementById('diagnosisText');
-  if (diagEl) diagEl.textContent = diagnosisText;
+  if (diagEl) {
+    // Bold the recommended fit name for scannability — copy itself is unchanged
+    var diagFitName = fits[bestKey] ? fits[bestKey].name : bestKey;
+    diagEl.innerHTML = diagnosisText.split(diagFitName).join('<strong>' + diagFitName + '</strong>');
+  }
   renderSidebar(bestKey);
   renderHeroCard(bestKey);
   renderProducts(bestKey, [alt1Key, alt2Key], answers.productType);
