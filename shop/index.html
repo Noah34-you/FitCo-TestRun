@@ -21,6 +21,9 @@
     --radius-md: 16px;
     --radius-lg: 20px;
     --radius-pill: 100px;
+    --utility-bar-h: 32px;
+    --nav-h: 64px;
+    --header-h: calc(var(--utility-bar-h) + var(--nav-h));
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,10 +38,41 @@
     font-size: 16px;
   }
 
+  /* Utility bar */
+  .utility-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 101;
+    height: var(--utility-bar-h);
+    background: #EDEAE3;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .utility-bar-inner {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .utility-bar-item {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
   /* Nav */
   nav {
     position: fixed;
-    top: 0; left: 0; right: 0;
+    top: var(--utility-bar-h); left: 0; right: 0;
     z-index: 100;
     background: rgba(245,243,238,0.92);
     backdrop-filter: blur(12px);
@@ -1361,6 +1395,10 @@
 
   /* Responsive */
   @media (max-width: 768px) {
+    :root { --utility-bar-h: 28px; --nav-h: 56px; }
+    .utility-bar-inner { padding: 0 16px; justify-content: center; }
+    .utility-bar-item { font-size: 9.5px; }
+    .utility-bar-item:first-child, .utility-bar-item:last-child { display: none; }
     /* Nav */
     .nav-inner { padding: 0 20px; height: 56px; }
     .nav-center { display: none; }
@@ -1524,6 +1562,15 @@
 <body>
 
 <!-- NAV -->
+<!-- UTILITY BAR -->
+<div class="utility-bar">
+  <div class="utility-bar-inner">
+    <span class="utility-bar-item">Curated from Bonobos, Levi's &amp; Lululemon</span>
+    <span class="utility-bar-item">Personalized recommendations</span>
+    <span class="utility-bar-item">6 questions &bull; about 2 minutes</span>
+  </div>
+</div>
+
 <nav>
   <div class="nav-inner">
     <a href="/" class="logo" style="text-decoration:none;color:inherit;">FitCo</a>
@@ -1630,7 +1677,7 @@
     flex-shrink: 0;
   }
   @media (max-width: 768px) {
-    .shop-gate { padding: 100px 24px 40px; min-height: auto; }
+    .shop-gate { padding: 128px 24px 40px; min-height: auto; }
     .shop-gate h1 { font-size: 28px; }
     .shop-gate-features { flex-direction: column; gap: 12px; margin-top: 32px; }
     .shop-gate-icon { width: 48px; height: 48px; margin-bottom: 24px; }
