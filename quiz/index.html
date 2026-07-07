@@ -10,6 +10,7 @@
 <style>
   :root {
     --bg: #F5F3EE;
+    --bg-alt: #EFEBE1;
     --bg-white: #FFFFFF;
     --text: #111111;
     --text-muted: #6E6E6E;
@@ -21,10 +22,19 @@
     --radius-md: 16px;
     --radius-lg: 20px;
     --radius-pill: 100px;
+    --shadow-sm: 0 4px 16px rgba(64,44,24,0.06);
+    --shadow-md: 0 10px 32px rgba(64,44,24,0.09);
+    --shadow-lg: 0 24px 64px rgba(64,44,24,0.14);
+    --utility-bar-h: 32px;
+    --nav-h: 64px;
+    --header-h: calc(var(--utility-bar-h) + var(--nav-h));
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
+  #quizIntro, #quiz, #results {
+    scroll-margin-top: calc(var(--header-h) + 20px);
+  }
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -35,10 +45,41 @@
     font-size: 16px;
   }
 
+  /* Utility bar */
+  .utility-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 101;
+    height: var(--utility-bar-h);
+    background: #EDEAE3;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .utility-bar-inner {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .utility-bar-item {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
   /* Nav */
   nav {
     position: fixed;
-    top: 0; left: 0; right: 0;
+    top: var(--utility-bar-h); left: 0; right: 0;
     z-index: 100;
     background: rgba(245,243,238,0.92);
     backdrop-filter: blur(12px);
@@ -733,7 +774,7 @@
     background: var(--bg-white);
     border-top: 1px solid var(--border-light);
     border-bottom: 1px solid var(--border-light);
-    padding: 100px 24px;
+    padding: calc(var(--header-h) + 24px) 24px 100px;
   }
 
   .quiz-inner {
@@ -1174,7 +1215,7 @@
   /* Results - Premium Redesign */
   .results {
     background: var(--bg);
-    padding: 48px 32px 80px;
+    padding: calc(var(--header-h) + 24px) 32px 80px;
     display: none;
   }
   .results.active { display: block; }
@@ -1183,7 +1224,25 @@
     margin: 0 auto;
   }
 
-  /* Two-column layout */
+  /* Results header */
+  .results-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto 32px;
+  }
+  .results-header-left .quiz-complete-label { margin-bottom: 8px; }
+  .results-title {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  /* Results layout */
   .results-layout {
     display: grid;
     grid-template-columns: 1fr;
@@ -1193,10 +1252,6 @@
     margin: 0 auto;
   }
 
-  /* -- Left Sidebar -- */
-  .results-sidebar {
-    display: none;
-  }
   .quiz-complete-label {
     display: inline-flex;
     align-items: center;
@@ -1211,66 +1266,6 @@
   .quiz-complete-label svg {
     width: 18px;
     height: 18px;
-  }
-  .results-sidebar h2 {
-    font-size: 36px;
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    margin-bottom: 12px;
-  }
-  .results-sidebar .sidebar-sub {
-    font-size: 15px;
-    color: var(--text-muted);
-    line-height: 1.5;
-    margin-bottom: 24px;
-  }
-  .sidebar-character {
-    width: 100%;
-    max-width: 200px;
-    margin: 0 auto 24px;
-    display: block;
-  }
-  .your-fit-label {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-muted);
-    margin-bottom: 4px;
-  }
-  .your-fit-name {
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin-bottom: 8px;
-    color: var(--text);
-  }
-  .your-fit-desc {
-    font-size: 14px;
-    color: var(--text-muted);
-    line-height: 1.5;
-    margin-bottom: 20px;
-  }
-  .fit-traits {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .fit-traits li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text);
-  }
-  .fit-traits li svg {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-    color: var(--text-muted);
   }
   .btn-save {
     display: inline-flex;
@@ -1378,10 +1373,10 @@
   .badge-recommended {
     display: inline-block;
     font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 6px 16px;
+    padding: 7px 18px;
     border-radius: 100px;
     background: var(--success);
     color: #fff;
@@ -1766,6 +1761,10 @@
 
   /* Responsive */
   @media (max-width: 768px) {
+    :root { --utility-bar-h: 28px; --nav-h: 56px; }
+    .utility-bar-inner { padding: 0 16px; justify-content: center; }
+    .utility-bar-item { font-size: 9.5px; }
+    .utility-bar-item:first-child, .utility-bar-item:last-child { display: none; }
     /* Nav */
     .nav-inner { padding: 0 20px; height: 56px; }
     .nav-center { display: none; }
@@ -1862,7 +1861,7 @@
     }
 
     /* Quiz */
-    .quiz-wrap { padding: 40px 20px; }
+    .quiz-wrap { padding: calc(var(--header-h) + 16px) 20px 40px; }
     .quiz-assistant { margin-bottom: 24px; }
     .quiz-assistant-avatar { width: 36px; height: 36px; font-size: 13px; }
     .quiz-assistant-info h3 { font-size: 14px; }
@@ -1886,9 +1885,11 @@
     .fit-profile { display: none !important; }
 
     /* Results */
-    .results { padding: 32px 20px 48px; }
+    .results { padding: calc(var(--header-h) + 16px) 20px 48px; }
     .results-layout { max-width: 100%; }
-    .results-sidebar { display: none; }
+    .results-header-row { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+    .results-title { font-size: 26px; }
+    .results-header-row .btn-save { width: 100%; justify-content: center; }
     .hero-card-header { padding: 24px 20px 0; }
     .hero-card-header h3 { font-size: 28px; }
     .hero-card-body { grid-template-columns: 1fr; }
@@ -1896,7 +1897,6 @@
     .hero-card-details { padding: 24px 20px; }
     .product-carousel { grid-template-columns: 1fr; gap: 16px; }
     .product-section { margin-bottom: 32px; }
-    .quiz-complete-label { justify-content: center; }
 
     /* CTA */
     .cta { padding: 40px 20px; }
@@ -1933,6 +1933,15 @@
 <body>
 
 <!-- NAV -->
+<!-- UTILITY BAR -->
+<div class="utility-bar">
+  <div class="utility-bar-inner">
+    <span class="utility-bar-item">Real product picks &mdash; not just a size chart</span>
+    <span class="utility-bar-item">We recommend. We don't sell.</span>
+    <span class="utility-bar-item">Best overall, budget, and premium options</span>
+  </div>
+</div>
+
 <nav>
   <div class="nav-inner">
     <a href="/" class="logo" style="text-decoration:none;color:inherit;">FitCo</a>
@@ -1983,7 +1992,7 @@
     align-items: center;
   }
   @media (max-width: 768px) {
-    .quiz-intro { padding: 100px 24px 40px; }
+    .quiz-intro { padding: 128px 24px 40px; }
     .quiz-intro h1 { font-size: 32px; }
   }
 </style>
@@ -2121,30 +2130,20 @@
 
 <section class="results" id="results">
   <div class="results-inner">
-    <div class="results-layout">
-
-      <!-- LEFT SIDEBAR -->
-      <aside class="results-sidebar" id="resultsSidebar">
+    <div class="results-header-row">
+      <div class="results-header-left">
         <div class="quiz-complete-label">
           <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8.5" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 9L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Quiz Complete
         </div>
-        <h2>Here's<br>What Fits</h2>
-        <img src="../images/profile-character.png" alt="Your fit" class="sidebar-character" id="sidebarCharacter">
-        <div class="your-fit-label">Your best match:</div>
-        <div class="your-fit-name" id="sidebarFitName">Athletic Taper</div>
-        <p class="your-fit-desc" id="sidebarFitDesc" style="margin-bottom:12px;">Roomy in the thigh with a defined taper below the knee.</p>
-        <ul class="fit-traits" id="fitTraits" style="margin-bottom:20px;">
-          <li><svg viewBox="0 0 18 18" fill="none"><path d="M2 14V4C2 2.9 2.9 2 4 2H14C15.1 2 16 2.9 16 4V14C16 15.1 15.1 16 14 16H4C2.9 16 2 15.1 2 14Z" stroke="currentColor" stroke-width="1.3"/><path d="M6 6H12M6 9H12M6 12H9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span id="trait1">Roomy through thigh</span></li>
-          <li><svg viewBox="0 0 18 18" fill="none"><path d="M3 14L7 4L11 10L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="trait2">Tapered below knee</span></li>
-          <li><svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.3"/><path d="M6 9H12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span id="trait3">Clean break</span></li>
-          <li><svg viewBox="0 0 18 18" fill="none"><path d="M4.5 9C4.5 9 6 5 9 5C12 5 13.5 9 13.5 9C13.5 9 12 13 9 13C6 13 4.5 9 4.5 9Z" stroke="currentColor" stroke-width="1.3"/><circle cx="9" cy="9" r="1.5" stroke="currentColor" stroke-width="1.3"/></svg><span id="trait4">Athletic cut</span></li>
-        </ul>
-        <button class="btn-save" onclick="saveMyFit()">
-          <svg viewBox="0 0 16 16" fill="none"><path d="M3 2H13L14 3V14L12 12L10 14L8 12L6 14L4 12L2 14V3L3 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><line x1="5" y1="5" x2="11" y2="5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-          Save My Fit
-        </button>
-      </aside>
+        <h2 class="results-title">Your Fit Profile</h2>
+      </div>
+      <button class="btn-save" onclick="saveMyFit()">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 2H13L14 3V14L12 12L10 14L8 12L6 14L4 12L2 14V3L3 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><line x1="5" y1="5" x2="11" y2="5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Save My Fit
+      </button>
+    </div>
+    <div class="results-layout">
 
       <!-- RIGHT MAIN -->
       <div class="results-main">
@@ -2287,26 +2286,6 @@ const fitSecondaryChecks = {
   athleticStraight: ['Roomy seat & thigh', 'Straight leg', 'Balanced look'],
   relaxedTaper: ['Comfortable room', 'Subtle taper', 'Relaxed style'],
   relaxedFit: ['Maximum comfort', 'Easy leg', 'Laid-back fit']
-};
-
-// Sidebar trait badges
-const fitTraitBadges = {
-  slimTaper:    ['Slim through thigh', 'Tapered leg', 'Clean break', 'Structured fit'],
-  straightFit:  ['Balanced thigh room', 'Straight leg', 'Clean hem', 'Versatile silhouette'],
-  athleticTaper: ['Roomy through thigh', 'Tapered below knee', 'Clean break', 'Athletic cut'],
-  athleticStraight: ['Roomy seat and thigh', 'Straighter leg', 'Slight break', 'Balanced structure'],
-  relaxedTaper: ['Comfortable through thigh', 'Subtle taper', 'Casual break', 'Relaxed structure'],
-  relaxedFit:   ['Maximum room', 'Straight leg', 'Easy break', 'Most comfortable']
-};
-
-// Sidebar descriptions
-const fitSidebarDescs = {
-  slimTaper: 'A sharp, tailored silhouette with a clean taper. Best for lean builds.',
-  straightFit: 'The versatile middle ground. Works across most body types.',
-  athleticTaper: 'Roomy thighs with a defined taper. Built for athletic builds.',
-  athleticStraight: 'Generous room with a straight leg. For balanced proportions.',
-  relaxedTaper: 'Comfortable room with a subtle taper. Best of both worlds.',
-  relaxedFit: 'Maximum room and comfort. The easiest, most relaxed option.'
 };
 
 // ─── DIAGNOSIS COPY SYSTEM ───
@@ -2471,22 +2450,6 @@ function renderProducts(recommendedFit, secondaryFits, productType) {
   }).join('');
 
   container.innerHTML = html;
-}
-
-function renderSidebar(bestKey) {
-  // Update fit name
-  var fit = fits[bestKey];
-  var nameEl = document.getElementById('sidebarFitName');
-  if (nameEl && fit) nameEl.textContent = fit.name;
-  // Update description
-  var descEl = document.getElementById('sidebarFitDesc');
-  if (descEl) descEl.textContent = fitSidebarDescs[bestKey] || fitSidebarDescs.straightFit;
-  // Update traits
-  var traits = fitTraitBadges[bestKey] || fitTraitBadges.straightFit;
-  for (var i = 0; i < 4; i++) {
-    var tEl = document.getElementById('trait' + (i + 1));
-    if (tEl && traits[i]) tEl.textContent = traits[i];
-  }
 }
 
 function renderHeroCard(fitKey) {
@@ -2854,7 +2817,6 @@ function calculateResults() {
     var diagFitName = fits[bestKey] ? fits[bestKey].name : bestKey;
     diagEl.innerHTML = diagnosisText.split(diagFitName).join('<strong>' + diagFitName + '</strong>');
   }
-  renderSidebar(bestKey);
   renderHeroCard(bestKey);
   renderProducts(bestKey, [alt1Key, alt2Key], answers.productType);
 

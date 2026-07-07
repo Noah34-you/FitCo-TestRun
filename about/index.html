@@ -21,6 +21,9 @@
     --radius-md: 16px;
     --radius-lg: 20px;
     --radius-pill: 100px;
+    --utility-bar-h: 32px;
+    --nav-h: 64px;
+    --header-h: calc(var(--utility-bar-h) + var(--nav-h));
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,10 +38,41 @@
     font-size: 16px;
   }
 
+  /* Utility bar */
+  .utility-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 101;
+    height: var(--utility-bar-h);
+    background: #EDEAE3;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .utility-bar-inner {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .utility-bar-item {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
   /* Nav */
   nav {
     position: fixed;
-    top: 0; left: 0; right: 0;
+    top: var(--utility-bar-h); left: 0; right: 0;
     z-index: 100;
     background: rgba(245,243,238,0.92);
     backdrop-filter: blur(12px);
@@ -387,10 +421,14 @@
 
   /* Responsive */
   @media (max-width: 768px) {
+    :root { --utility-bar-h: 28px; --nav-h: 56px; }
+    .utility-bar-inner { padding: 0 16px; justify-content: center; }
+    .utility-bar-item { font-size: 9.5px; }
+    .utility-bar-item:first-child, .utility-bar-item:last-child { display: none; }
     .nav-inner { padding: 0 20px; height: 56px; }
     .nav-center { display: none; }
 
-    .about-hero { padding: 100px 20px 60px; }
+    .about-hero { padding: 128px 20px 60px; }
     .about-hero h1 { font-size: 32px; }
     .about-hero p { font-size: 15px; }
 
@@ -416,6 +454,15 @@
 <body>
 
 <!-- NAV -->
+<!-- UTILITY BAR -->
+<div class="utility-bar">
+  <div class="utility-bar-inner">
+    <span class="utility-bar-item">Real product picks &mdash; not just a size chart</span>
+    <span class="utility-bar-item">We recommend. We don't sell.</span>
+    <span class="utility-bar-item">Best overall, budget, and premium options</span>
+  </div>
+</div>
+
 <nav>
   <div class="nav-inner">
     <a href="/" class="logo">FitCo</a>
