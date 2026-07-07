@@ -687,6 +687,31 @@
     filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
   }
 
+  /* WHY FITCO EXISTS (founder note) */
+  .founder-note {
+    background: var(--bg);
+    padding: 96px 24px;
+  }
+  .founder-note-inner {
+    max-width: 560px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .founder-note h2 {
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 18px 0 16px;
+    text-align: center;
+  }
+  .founder-note p {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.75;
+  }
+
   /* WAITLIST */
   .waitlist {
     background: #111111;
@@ -1022,6 +1047,7 @@
     .quiz-preview-left { padding-right: 0; }
     .quiz-preview-right img { max-width: 180px; }
 
+    .founder-note { padding: 64px 20px; }
     .waitlist { padding: 72px 20px; }
     .waitlist-form { flex-direction: column; }
     .waitlist-input { border-radius: 10px 10px 0 0; text-align: center; border-bottom: none; }
@@ -1076,7 +1102,7 @@
         </span>
       </div>
       <h1>Pants That Fit <span class="text-accent">You.</span> Not The Other Way Around.</h1>
-      <p class="hero-sub">Tell us about your build, measurements, and fit issues. We'll recommend pants that fit your body better.</p>
+      <p class="hero-sub">Tell us your build, your height, and where pants always go wrong for you. We'll point you to the few that actually fit.</p>
       <div class="hero-fitpoints">
         <span class="fc-microlabel">What we look at</span>
         <div class="fc-chip-row">
@@ -1125,9 +1151,9 @@
               <svg aria-hidden="true"><use href="#fc-ic-shop"/></svg>
             </div>
             <div class="trust-metric-copy">
-              <div class="trust-metric-num">3</div>
-              <div class="trust-metric-label">Trusted brands</div>
-              <div class="trust-metric-sub">Bonobos, Levi's, Lululemon &amp; more</div>
+              <div class="trust-metric-num">15</div>
+              <div class="trust-metric-label">Pants. That's the whole catalog.</div>
+              <div class="trust-metric-sub">Hand-picked from 6 brands we trust &mdash; not thousands we don't</div>
             </div>
           </div>
         </div>
@@ -1360,8 +1386,8 @@
         <ul>
           <li><span class="check-mark">&#10003;</span> Based on your build</li>
           <li><span class="check-mark">&#10003;</span> Accounts for fit issues</li>
-          <li><span class="check-mark">&#10003;</span> Personalized recommendations</li>
-          <li><span class="check-mark">&#10003;</span> Curated selections</li>
+          <li><span class="check-mark">&#10003;</span> A short list, not a haystack</li>
+          <li><span class="check-mark">&#10003;</span> Picks we'd tell a friend to buy</li>
           <li><span class="check-mark">&#10003;</span> Less guesswork</li>
         </ul>
         <p class="why-card-desc">FitCo recommends fits based on how your body is shaped and what you need.</p>
@@ -1392,7 +1418,7 @@
         Take the quiz
       </div>
       <h3>Find your fit in under 2 minutes.</h3>
-      <p>Tell us about your build, measurements, and fit issues. We'll recommend pants that fit your body better.</p>
+      <p>No guessing in fitting rooms. Answer a few questions and get the short list of pants that match how you're actually built.</p>
       <div class="quiz-preview-steps">
         <div class="quiz-preview-step">
           <span class="quiz-preview-step-num">01</span>
@@ -1437,6 +1463,15 @@
         <div><span class="fc-microlabel">Fit profile</span><strong>Builds as you answer</strong></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- WHY FITCO EXISTS -->
+<section class="founder-note">
+  <div class="founder-note-inner">
+    <span class="fc-avatar">F</span>
+    <h2>Why FitCo exists</h2>
+    <p>I've spent years buying pants that technically fit and still looked wrong &mdash; tight through the thighs, no room in the seat, or a waist I could fit a fist behind. Sizing up fixed one problem and created another. Eventually I realized the sizing system just wasn't built for how bodies actually vary. FitCo is the shortcut I wish I'd had: the handful of pants I'd genuinely tell a friend to buy, instead of hundreds that probably won't fit.</p>
   </div>
 </section>
 
