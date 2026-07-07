@@ -2481,6 +2481,21 @@ const fitImages = {
   relaxedFit: '../images/fit-relaxed.png'
 };
 
+// Product photography (official retailer images, cached locally)
+const productImages = {
+  bonobos_swc_slim: '../images/products/bonobos_stretch_washed_chino.jpg',
+  bonobos_swc_straight: '../images/products/bonobos_stretch_washed_chino.jpg',
+  bonobos_swc_athletic: '../images/products/bonobos_stretch_washed_chino.jpg',
+  levis_512: '../images/products/levis_512.jpg',
+  levis_505: '../images/products/levis_505.jpg',
+  levis_541: '../images/products/levis_541.jpg',
+  levis_550: '../images/products/levis_550.jpg',
+  levis_555: '../images/products/levis_555.jpg',
+  bonobos_ww_athletic: '../images/products/bonobos_ww_athletic.jpg',
+  vuori_meta_relaxed: '../images/products/vuori_meta_relaxed.webp',
+  duer_nosweat_relaxed_taper: '../images/products/duer_nosweat_relaxed_taper.webp'
+};
+
 // Hero checklist items: title + subtitle for each fit
 const fitChecklists = {
   slimTaper: [
@@ -3055,7 +3070,7 @@ function renderProducts(recommendedFit, secondaryFits, productType) {
 
   var html = displayProducts.map(function(p) {
     var benefit = fitProductBenefits[p.id] || '';
-    var imgSrc = fitImages[p.primaryFit] || fitImages.straightFit;
+    var imgSrc = productImages[p.id] || fitImages[p.primaryFit] || fitImages.straightFit;
     return '<div class="product-card">' +
       '<img src="' + imgSrc + '" alt="' + p.name + '" class="product-card-img">' +
       '<div class="product-card-body">' +
