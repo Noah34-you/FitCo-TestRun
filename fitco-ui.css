@@ -1,0 +1,1548 @@
+/* ==========================================================================
+   FitCo UI — shared component system (Phase 1: UI skeleton)
+   --------------------------------------------------------------------------
+   Reusable primitives used across the homepage, quiz, and results page.
+   Every class is prefixed `fc-` (plus a few page-pattern classes at the
+   bottom) so nothing collides with existing page styles.
+
+   Palette note: all values are tints/shades of existing FitCo hues
+   (cream, sage, gold, ink). No new brand colors.
+   ========================================================================== */
+
+:root {
+  --fc-ink: #111111;
+  --fc-ink-soft: #3A3A3A;
+  --fc-muted: #6E6E6E;
+
+  --fc-cream: #F5F3EE;
+  --fc-cream-deep: #EFEBE1;
+  --fc-cream-panel: #FAF8F3;
+
+  --fc-sage: #5B8C5A;
+  --fc-sage-deep: #3C6B3C;
+  --fc-sage-soft: #E8F0E4;
+  --fc-sage-tint: #F0F4EC;
+  --fc-sage-line: #D4E4D4;
+
+  --fc-gold: #C4913A;
+  --fc-gold-deep: #8F6A2A;
+  --fc-gold-soft: #F4EBDB;
+  --fc-gold-line: #E5D3B0;
+
+  --fc-red: #B84848;
+  --fc-red-soft: #F3E2E0;
+
+  --fc-line: #E8E6E1;
+  --fc-line-strong: #D9D9D9;
+
+  --fc-shadow-sm: 0 4px 16px rgba(64, 44, 24, 0.06);
+  --fc-shadow-md: 0 10px 32px rgba(64, 44, 24, 0.09);
+  --fc-shadow-lg: 0 24px 64px rgba(64, 44, 24, 0.14);
+
+  --fc-mono: 'IBM Plex Mono', monospace;
+  --fc-display: 'Space Grotesk', sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   1. Kickers, microlabels & section heads
+   -------------------------------------------------------------------------- */
+
+.fc-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--fc-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fc-sage-deep);
+}
+.fc-kicker::before {
+  content: '';
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--fc-sage);
+}
+.fc-kicker-gold { color: var(--fc-gold-deep); }
+.fc-kicker-gold::before { background: var(--fc-gold); }
+.fc-kicker-plain { color: var(--fc-muted); }
+.fc-kicker-plain::before { background: var(--fc-line-strong); }
+
+.fc-microlabel {
+  display: block;
+  font-family: var(--fc-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fc-muted);
+}
+
+/* --------------------------------------------------------------------------
+   2. Badges, pills, chips & tags
+   -------------------------------------------------------------------------- */
+
+/* Badge: prominent pill with icon, used near headings */
+.fc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--fc-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--fc-line-strong);
+  color: var(--fc-muted);
+  background: transparent;
+  white-space: nowrap;
+}
+.fc-badge svg { width: 14px; height: 14px; flex-shrink: 0; }
+.fc-badge-sage {
+  background: var(--fc-sage-soft);
+  border-color: var(--fc-sage-line);
+  color: var(--fc-sage-deep);
+}
+.fc-badge-gold {
+  background: var(--fc-gold-soft);
+  border-color: var(--fc-gold-line);
+  color: var(--fc-gold-deep);
+}
+.fc-badge-cream {
+  background: var(--fc-cream-deep);
+  border-color: var(--fc-line);
+  color: var(--fc-ink-soft);
+}
+.fc-badge-dark {
+  background: var(--fc-ink);
+  border-color: var(--fc-ink);
+  color: var(--fc-cream);
+}
+
+/* Status pill: smaller, sentence case, with optional leading dot */
+.fc-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  padding: 5px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--fc-line);
+  background: var(--fc-cream-panel);
+  color: var(--fc-ink-soft);
+  white-space: nowrap;
+}
+.fc-pill svg { width: 13px; height: 13px; flex-shrink: 0; }
+.fc-pill i.fc-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--fc-muted);
+  flex-shrink: 0;
+}
+.fc-pill-sage { background: var(--fc-sage-soft); border-color: var(--fc-sage-line); color: var(--fc-sage-deep); }
+.fc-pill-sage i.fc-dot { background: var(--fc-sage); }
+.fc-pill-gold { background: var(--fc-gold-soft); border-color: var(--fc-gold-line); color: var(--fc-gold-deep); }
+.fc-pill-gold i.fc-dot { background: var(--fc-gold); }
+.fc-pill-red { background: var(--fc-red-soft); border-color: #E4C6C2; color: var(--fc-red); }
+.fc-pill-red i.fc-dot { background: var(--fc-red); }
+.fc-pill-plain { background: transparent; }
+
+/* Chip: compact mono spec chip, used in rows */
+.fc-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.fc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--fc-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 6px 11px;
+  border-radius: 8px;
+  background: var(--fc-cream-panel);
+  border: 1px solid var(--fc-line);
+  color: var(--fc-ink-soft);
+  white-space: nowrap;
+}
+.fc-chip svg { width: 12px; height: 12px; flex-shrink: 0; color: var(--fc-sage); }
+.fc-chip-sage { background: var(--fc-sage-tint); border-color: var(--fc-sage-line); color: var(--fc-sage-deep); }
+.fc-chip-gold { background: var(--fc-gold-soft); border-color: var(--fc-gold-line); color: var(--fc-gold-deep); }
+.fc-chip-gold svg { color: var(--fc-gold); }
+.fc-chip-overlay {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Tag: tiniest label, used inside cards */
+.fc-tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.fc-tag {
+  font-family: var(--fc-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: var(--fc-cream);
+  border: 1px solid var(--fc-line);
+  color: var(--fc-muted);
+}
+
+/* --------------------------------------------------------------------------
+   3. Icon tiles
+   -------------------------------------------------------------------------- */
+
+.fc-icon-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--fc-cream-deep);
+  color: var(--fc-ink-soft);
+  flex-shrink: 0;
+}
+.fc-icon-tile svg { width: 19px; height: 19px; }
+.fc-icon-tile-sm { width: 32px; height: 32px; border-radius: 8px; }
+.fc-icon-tile-sm svg { width: 15px; height: 15px; }
+.fc-icon-tile-lg { width: 52px; height: 52px; border-radius: 14px; }
+.fc-icon-tile-lg svg { width: 24px; height: 24px; }
+.fc-tile-sage { background: var(--fc-sage-soft); color: var(--fc-sage-deep); }
+.fc-tile-gold { background: var(--fc-gold-soft); color: var(--fc-gold-deep); }
+.fc-tile-red { background: var(--fc-red-soft); color: var(--fc-red); }
+.fc-tile-dark { background: var(--fc-ink); color: var(--fc-cream); }
+.fc-tile-outline { background: transparent; border: 1.5px solid var(--fc-line-strong); }
+
+/* --------------------------------------------------------------------------
+   4. Cards, panels, callouts, notes & dividers
+   -------------------------------------------------------------------------- */
+
+.fc-card {
+  background: #FFFFFF;
+  border: 1px solid var(--fc-line);
+  border-radius: 16px;
+  box-shadow: var(--fc-shadow-sm);
+}
+.fc-card-hover { transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease; }
+.fc-card-hover:hover {
+  box-shadow: var(--fc-shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--fc-line-strong);
+}
+
+.fc-panel {
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid var(--fc-line);
+  background: var(--fc-cream-panel);
+}
+.fc-panel-sage { background: var(--fc-sage-tint); border-color: var(--fc-sage-line); }
+.fc-panel-gold { background: var(--fc-gold-soft); border-color: var(--fc-gold-line); }
+.fc-panel-cream { background: var(--fc-cream-deep); border-color: var(--fc-line); }
+
+/* Callout: left-accented informational panel */
+.fc-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: var(--fc-cream-panel);
+  border: 1px solid var(--fc-line);
+  border-left: 3px solid var(--fc-line-strong);
+}
+.fc-callout-sage { background: var(--fc-sage-tint); border-color: var(--fc-sage-line); border-left-color: var(--fc-sage); }
+.fc-callout-gold { background: var(--fc-gold-soft); border-color: var(--fc-gold-line); border-left-color: var(--fc-gold); }
+.fc-callout-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.fc-callout-icon svg { width: 15px; height: 15px; }
+.fc-callout-sage .fc-callout-icon { color: var(--fc-sage-deep); }
+.fc-callout-gold .fc-callout-icon { color: var(--fc-gold-deep); }
+.fc-callout-body { min-width: 0; }
+.fc-callout-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fc-ink);
+  margin: 0 0 3px;
+  letter-spacing: -0.01em;
+}
+.fc-callout-text {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--fc-ink-soft);
+  margin: 0;
+}
+
+/* Note: fine print with icon */
+.fc-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--fc-muted);
+  line-height: 1.5;
+}
+.fc-note svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* Divider with centered mono label */
+.fc-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--fc-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fc-muted);
+}
+.fc-divider::before,
+.fc-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--fc-line);
+}
+
+/* --------------------------------------------------------------------------
+   5. Meters & specification rows
+   -------------------------------------------------------------------------- */
+
+/* Dot meter: 5-step fit indicator */
+.fc-meter { display: inline-flex; gap: 4px; align-items: center; }
+.fc-meter i {
+  width: 14px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--fc-cream-deep);
+  border: 1px solid var(--fc-line);
+}
+.fc-meter i.on { background: var(--fc-sage); border-color: var(--fc-sage); }
+.fc-meter-gold i.on { background: var(--fc-gold); border-color: var(--fc-gold); }
+
+/* Spec row: icon + label + meter + value */
+.fc-spec-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--fc-line);
+}
+.fc-spec-row:last-child { border-bottom: none; }
+.fc-spec-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--fc-ink);
+}
+.fc-spec-label .fc-icon-tile-sm { color: var(--fc-sage-deep); background: var(--fc-sage-tint); }
+.fc-spec-value {
+  font-family: var(--fc-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fc-muted);
+  min-width: 72px;
+  text-align: right;
+}
+.fc-spec-sub {
+  display: block;
+  font-size: 10px;
+  color: var(--fc-ink);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   6. Facts & lists
+   -------------------------------------------------------------------------- */
+
+.fc-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.fc-fact-value {
+  font-family: var(--fc-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fc-ink);
+  line-height: 1.15;
+}
+.fc-fact-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fc-ink-soft);
+}
+.fc-fact-sub {
+  font-size: 11.5px;
+  color: var(--fc-muted);
+  line-height: 1.45;
+}
+
+/* Check / cross lists */
+.fc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.fc-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--fc-ink-soft);
+}
+.fc-list li .fc-li-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.fc-list li .fc-li-icon svg { width: 10px; height: 10px; }
+.fc-list-check li .fc-li-icon { background: var(--fc-sage-soft); color: var(--fc-sage-deep); }
+.fc-list-x li .fc-li-icon { background: var(--fc-red-soft); color: var(--fc-red); }
+
+/* --------------------------------------------------------------------------
+   7. Placeholder containers (swap for real assets later)
+   -------------------------------------------------------------------------- */
+
+.fc-ph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1.5px dashed var(--fc-line-strong);
+  border-radius: 14px;
+  background:
+    repeating-linear-gradient(-45deg, transparent 0 10px, rgba(64, 44, 24, 0.018) 10px 20px),
+    var(--fc-cream-panel);
+  color: var(--fc-muted);
+  min-height: 120px;
+  text-align: center;
+  padding: 18px;
+}
+.fc-ph svg { width: 26px; height: 26px; opacity: 0.55; }
+.fc-ph-label {
+  font-family: var(--fc-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.fc-ph-square { aspect-ratio: 1; min-height: 0; }
+.fc-ph-wide { aspect-ratio: 16 / 9; min-height: 0; }
+.fc-ph-tall { aspect-ratio: 3 / 4; min-height: 0; }
+
+/* Avatar monogram */
+.fc-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--fc-ink);
+  color: var(--fc-cream);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.fc-avatar svg { width: 16px; height: 16px; }
+
+/* ==========================================================================
+   PAGE PATTERNS — HOMEPAGE
+   ========================================================================== */
+
+/* Hero: badge row */
+.hero-badge-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.hero-badge-row .badge-pill { margin-bottom: 0; }
+
+/* Hero: fit-point chips under the subtitle */
+.hero-fitpoints { margin: -14px 0 36px; }
+.hero-fitpoints .fc-microlabel { margin-bottom: 9px; }
+
+/* Hero: trust metrics wrapped in a panel */
+.hero-trust-panel {
+  background: #FFFFFF;
+  border: 1px solid var(--fc-line);
+  border-radius: 16px;
+  padding: 18px 22px 20px;
+  box-shadow: var(--fc-shadow-sm);
+  max-width: 560px;
+}
+.hero-trust-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--fc-line);
+}
+.hero-trust-panel .trust-metrics { max-width: none; margin-top: 0; }
+
+/* Hero: comparison frame around the 3-panel graphic */
+.hero-compare-frame {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.hero-compare-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+.hero-compare-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+.hero-compare-legend .legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--fc-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fc-muted);
+}
+.hero-compare-legend .legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.legend-dot-red { background: #B84848; }
+.legend-dot-gold { background: #C4913A; }
+.legend-dot-sage { background: #3C8C5A; }
+
+/* Why-us: five fit points band */
+.fitpoints-band {
+  max-width: 1280px;
+  margin: 0 auto 64px;
+  background: #FFFFFF;
+  border: 1px solid var(--fc-line);
+  border-radius: 20px;
+  padding: 32px 36px;
+  box-shadow: var(--fc-shadow-sm);
+}
+.fitpoints-band-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 26px;
+}
+.fitpoints-band-head h3 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fc-ink);
+  margin: 10px 0 0;
+}
+.fitpoints-band-head p {
+  font-size: 14px;
+  color: var(--fc-muted);
+  margin: 6px 0 0;
+}
+.fitpoints-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+.fitpoint {
+  position: relative;
+  background: var(--fc-cream-panel);
+  border: 1px solid var(--fc-line);
+  border-radius: 14px;
+  padding: 18px 16px 16px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+.fitpoint:hover {
+  border-color: var(--fc-sage-line);
+  box-shadow: var(--fc-shadow-sm);
+  transform: translateY(-2px);
+}
+.fitpoint-num {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-family: var(--fc-mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--fc-line-strong);
+  letter-spacing: 0.08em;
+}
+.fitpoint .fc-icon-tile { margin-bottom: 12px; }
+.fitpoint h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+  color: var(--fc-ink);
+}
+.fitpoint p {
+  font-size: 12px;
+  color: var(--fc-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Why-us: problem card additions */
+.problem-card-num {
+  font-family: var(--fc-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--fc-line-strong);
+  margin-left: auto;
+  align-self: flex-start;
+  padding-top: 4px;
+}
+.problem-card .fc-tag-row { margin-bottom: 16px; }
+
+/* Why-us: comparison card heads */
+.why-card-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.why-card-head h3 { margin-bottom: 2px !important; }
+.why-card-tagline {
+  display: block;
+  font-family: var(--fc-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fc-muted);
+}
+.why-card-pill-row { margin-top: 18px; }
+
+/* Why-us: closing statement as gold callout */
+.why-fitco-statement .fc-callout {
+  text-align: left;
+  max-width: 620px;
+  margin: 18px auto 0;
+}
+
+/* Quiz preview: step list + chips */
+.quiz-preview-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 26px 0 28px;
+  max-width: 400px;
+}
+.quiz-preview-step {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.quiz-preview-step:last-child { border-bottom: none; }
+.quiz-preview-step-num {
+  font-family: var(--fc-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.35);
+  width: 22px;
+  flex-shrink: 0;
+}
+.quiz-preview-step-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.75);
+  flex-shrink: 0;
+}
+.quiz-preview-step-icon svg { width: 16px; height: 16px; }
+.quiz-preview-step-copy h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 1px;
+  letter-spacing: -0.01em;
+}
+.quiz-preview-step-copy p {
+  font-size: 12.5px !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  margin: 0 !important;
+  line-height: 1.45 !important;
+}
+.quiz-preview-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 28px; }
+.quiz-preview-chips .fc-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.65);
+}
+.quiz-preview-chips .fc-chip svg { color: rgba(255, 255, 255, 0.45); }
+
+/* Quiz preview: floating sample cards over phone image */
+.quiz-preview-right { position: relative; }
+.quiz-preview-float {
+  position: absolute;
+  background: #FFFFFF;
+  border: 1px solid var(--fc-line);
+  border-radius: 12px;
+  padding: 10px 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+}
+.quiz-preview-float .fc-microlabel { margin-bottom: 1px; }
+.quiz-preview-float strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fc-ink);
+  letter-spacing: -0.01em;
+}
+.quiz-preview-float-1 { top: 8%; right: 4%; }
+.quiz-preview-float-2 { bottom: 10%; left: 0; }
+
+/* Waitlist: roadmap pills */
+.waitlist-roadmap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+.waitlist-roadmap .fc-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.75);
+}
+.waitlist-roadmap .fc-pill i.fc-dot { background: #5B8C5A; }
+.waitlist-roadmap .fc-pill.roadmap-next i.fc-dot { background: #C4913A; }
+.waitlist-roadmap .roadmap-arrow { color: rgba(255, 255, 255, 0.25); font-size: 12px; }
+
+/* Footer: enriched */
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  text-align: left;
+}
+.footer-brand .logo { font-size: 16px; }
+.footer-brand p { margin-top: 4px; }
+.footer-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.footer-links a {
+  font-size: 13px;
+  color: var(--fc-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--fc-ink); }
+.footer-meta {
+  font-family: var(--fc-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fc-muted);
+}
+
+/* ==========================================================================
+   PAGE PATTERNS — QUIZ
+   ========================================================================== */
+
+/* Intro: fact cards + chips */
+.quiz-intro-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+  max-width: 460px;
+  margin: 8px 0 26px;
+}
+.quiz-intro-fact {
+  background: #FFFFFF;
+  border: 1px solid var(--fc-line);
+  border-radius: 14px;
+  padding: 16px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  box-shadow: var(--fc-shadow-sm);
+}
+.quiz-intro-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 440px;
+  margin-bottom: 6px;
+}
+.quiz-intro-note-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+/* Assistant row: status pill on the right */
+.quiz-assistant { position: relative; }
+.quiz-assistant .quiz-assistant-status { margin-left: auto; }
+
+/* Progress row */
+.quiz-progress-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.quiz-progress-row .quiz-counter { margin-bottom: 0; }
+.quiz-progress-meta {
+  font-family: var(--fc-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fc-muted);
+}
+
+/* Helper line as a live callout */
+.quiz-helper {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 9px;
+  font-style: normal !important;
+  font-size: 12.5px !important;
+  color: var(--fc-sage-deep) !important;
+  background: var(--fc-sage-tint);
+  border: 1px solid var(--fc-sage-line);
+  border-radius: 100px;
+  padding: 7px 14px;
+  margin-bottom: 24px !important;
+  min-height: 0 !important;
+}
+.quiz-helper::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--fc-sage);
+  flex-shrink: 0;
+  animation: fcPulse 1.6s ease-in-out infinite;
+}
+@keyframes fcPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.82); }
+}
+
+/* Answer option illustrations (placeholder icons) */
+.option-illustration { color: var(--fc-ink-soft); }
+.option.selected .option-illustration {
+  background: #FFFFFF;
+  border-color: var(--fc-sage-line);
+  color: var(--fc-sage-deep);
+}
+.option-sub {
+  display: block;
+  font-size: 12.5px;
+  color: var(--fc-muted);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+.option.selected .option-sub { color: var(--fc-muted); }
+.option-text strong {
+  display: block;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.option .option-meta { flex-shrink: 0; }
+.option.selected .option-meta {
+  background: #FFFFFF;
+  border-color: var(--fc-sage-line);
+  color: var(--fc-sage-deep);
+}
+
+/* Fit profile panel enrichments */
+.fit-profile-card {
+  background: #FFFFFF !important;
+  border-radius: 16px !important;
+  box-shadow: var(--fc-shadow-sm);
+  border-top: 3px solid var(--fc-sage) !important;
+  padding: 20px !important;
+}
+.fit-profile-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--fc-line);
+}
+.fit-profile-head .fc-avatar { width: 32px; height: 32px; font-size: 12px; }
+.fit-profile-head h4 { margin-bottom: 0 !important; }
+.fit-profile-head .fit-profile-live {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--fc-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fc-sage-deep);
+}
+.fit-profile-head .fit-profile-live::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--fc-sage);
+  animation: fcPulse 1.6s ease-in-out infinite;
+}
+.fit-profile-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.fit-profile-item .fc-icon-tile-sm {
+  background: var(--fc-cream);
+  color: var(--fc-muted);
+  border: 1px solid var(--fc-line);
+}
+.fit-profile-item-copy { min-width: 0; flex: 1; }
+.profile-meter-wrap {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--fc-line);
+}
+.profile-meter { display: flex; gap: 4px; margin-bottom: 7px; }
+.profile-meter i {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--fc-cream-deep);
+  transition: background 0.3s ease;
+}
+.profile-meter i.on { background: var(--fc-sage); }
+.profile-meter-label {
+  font-family: var(--fc-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fc-muted);
+}
+
+/* ==========================================================================
+   PAGE PATTERNS — RESULTS
+   ========================================================================== */
+
+.results-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* Generic results content block */
+.results-block {
+  padding: 28px 32px;
+  margin-bottom: 32px;
+}
+.results-block-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.results-block-head h3 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 8px 0 0;
+  color: var(--fc-ink);
+}
+
+/* Hero card: image wrap + spec strip */
+.hero-card-imgwrap { position: relative; height: 100%; min-height: 400px; }
+.hero-card-imgwrap .hero-card-img { position: absolute; inset: 0; height: 100%; }
+.hero-card-imgwrap .fc-chip-overlay { position: absolute; left: 14px; bottom: 14px; z-index: 2; }
+.hero-card-specstrip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 18px 20px;
+  background: var(--fc-cream-panel);
+  border: 1px solid var(--fc-line);
+  border-radius: 12px;
+}
+.hero-card-specstrip .fc-fact-value { font-size: 15px; }
+.hero-card-specstrip .fc-microlabel { margin-bottom: 3px; }
+
+/* Specification grid */
+.spec-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 40px;
+}
+.spec-grid + .fc-note { margin-top: 18px; }
+@media (min-width: 769px) {
+  .spec-grid .fc-spec-row:nth-last-child(-n+2) { border-bottom: none; }
+}
+
+/* Best for / avoid grid */
+.fitfor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+.fitfor-grid h4 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--fc-ink);
+  margin: 0 0 16px;
+}
+.fitfor-grid h4 .fc-icon-tile-sm { border-radius: 50%; }
+
+/* Styling panel */
+.style-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+.style-col .fc-microlabel { margin-bottom: 10px; }
+
+/* Comparison rows */
+.compare-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 1.2fr) 1fr 1fr 1.6fr;
+  gap: 16px;
+  align-items: center;
+  padding: 15px 16px;
+  border: 1px solid var(--fc-line);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  background: #FFFFFF;
+}
+.compare-row:last-child { margin-bottom: 0; }
+.compare-row.compare-best {
+  background: var(--fc-sage-tint);
+  border-color: var(--fc-sage-line);
+}
+.compare-name { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.compare-name strong {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--fc-ink);
+}
+.compare-metric { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.compare-metric .fc-microlabel { font-size: 9px; }
+.compare-diff {
+  font-size: 12.5px;
+  color: var(--fc-muted);
+  line-height: 1.45;
+}
+.compare-head-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 1.2fr) 1fr 1fr 1.6fr;
+  gap: 16px;
+  padding: 0 16px 10px;
+}
+
+/* Results sidebar */
+.results-aside { min-width: 0; }
+.results-aside-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.aside-card { padding: 20px; }
+.aside-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.aside-card-head h4 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--fc-ink);
+  margin: 0;
+}
+.aside-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--fc-line);
+}
+.aside-row:last-child { border-bottom: none; padding-bottom: 0; }
+.aside-row-label {
+  font-size: 12px;
+  color: var(--fc-muted);
+  flex-shrink: 0;
+}
+.aside-row-value {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--fc-ink);
+  text-align: right;
+  min-width: 0;
+}
+.results-retake-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+  text-align: center;
+}
+.results-retake-wrap .fc-note { justify-content: center; }
+
+/* Desktop: widen results into main + sidebar
+   (double-class selectors so this wins over the page-level rules
+   regardless of stylesheet order) */
+@media (min-width: 1024px) {
+  .results-inner .results-header-row { max-width: 1200px; }
+  .results-inner .results-layout {
+    max-width: 1200px;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 36px;
+  }
+  .results-aside .results-aside-stack {
+    position: sticky;
+    top: calc(var(--header-h, 96px) + 24px);
+  }
+}
+
+/* ==========================================================================
+   PHASE 2 — FIT VISUAL SYSTEM
+   ========================================================================== */
+
+/* --- Measurement bar (block style: ██████░░░░) --- */
+.fc-bar {
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+  flex-shrink: 0;
+}
+.fc-bar i {
+  width: 9px;
+  height: 11px;
+  border-radius: 2.5px;
+  background: var(--fc-cream-deep);
+  border: 1px solid var(--fc-line);
+}
+.fc-bar i.on { background: var(--fc-sage); border-color: var(--fc-sage); }
+.fc-bar-gold i.on { background: var(--fc-gold); border-color: var(--fc-gold); }
+.fc-bar-sm i { width: 7px; height: 9px; border-radius: 2px; }
+
+/* --- Measurement reference cards (educational mini-diagrams) --- */
+.fc-ref-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 20px;
+}
+.fc-ref-card {
+  background: var(--fc-cream-panel);
+  border: 1px solid var(--fc-line);
+  border-radius: 12px;
+  padding: 14px 14px 12px;
+  min-width: 0;
+}
+.fc-ref-card svg {
+  width: 100%;
+  height: 50px;
+  display: block;
+  color: var(--fc-ink-soft);
+  margin-bottom: 8px;
+}
+.fc-ref-title {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--fc-ink);
+  margin-bottom: 2px;
+  letter-spacing: -0.01em;
+}
+.fc-ref-card p {
+  font-size: 11.5px;
+  color: var(--fc-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* --- Blueprint / diagram panels (tinted grid paper) --- */
+.fc-diagram-panel {
+  background:
+    repeating-linear-gradient(0deg, rgba(91, 140, 90, 0.08) 0 1px, transparent 1px 16px),
+    repeating-linear-gradient(90deg, rgba(91, 140, 90, 0.08) 0 1px, transparent 1px 16px),
+    var(--fc-sage-tint);
+  border: 1px solid var(--fc-sage-line);
+  border-radius: 14px;
+  padding: 18px 18px 12px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.fc-diagram-panel > svg {
+  width: 100%;
+  height: auto;
+  flex: 1;
+  display: block;
+  color: var(--fc-ink);
+}
+.fc-diagram-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--fc-sage-line);
+}
+
+/* SVG text styles used inside blueprint/anatomy diagrams */
+.bp-label {
+  font-family: var(--fc-mono);
+  font-size: 6px;
+  letter-spacing: 0.12em;
+  fill: var(--fc-muted);
+}
+.bp-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 7.5px;
+  font-weight: 600;
+  fill: var(--fc-ink);
+}
+.bp-line { stroke: var(--fc-gold); stroke-width: 1; stroke-dasharray: 3 3; fill: none; }
+.bp-tick { stroke: var(--fc-gold); stroke-width: 1; fill: none; }
+.bp-dot { fill: var(--fc-gold); stroke: none; }
+.bp-num-circle { fill: #FFFFFF; stroke: var(--fc-sage); stroke-width: 1.2; }
+.bp-num {
+  font-family: var(--fc-mono);
+  font-size: 6.5px;
+  font-weight: 600;
+  fill: var(--fc-sage-deep);
+}
+.bp-guide { stroke: var(--fc-sage); stroke-width: 1; stroke-dasharray: 2.5 2.5; opacity: 0.55; fill: none; }
+
+/* --- Results: Fit Blueprint card --- */
+.blueprint-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+.blueprint-side { min-width: 0; display: flex; flex-direction: column; }
+.blueprint-side > .fc-microlabel { margin-bottom: 4px; }
+.char-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--fc-line);
+}
+.char-row:last-child { border-bottom: none; }
+.char-label {
+  flex: 1;
+  min-width: 0;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--fc-ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.char-label .fc-icon-tile-sm { background: var(--fc-sage-tint); color: var(--fc-sage-deep); }
+.char-value {
+  font-family: var(--fc-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--fc-muted);
+  min-width: 58px;
+  text-align: right;
+}
+.blueprint-backview {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: auto;
+  padding: 12px 14px;
+  background: var(--fc-cream-panel);
+  border: 1px solid var(--fc-line);
+  border-radius: 12px;
+}
+.blueprint-backview svg {
+  width: 34px;
+  height: 44px;
+  flex-shrink: 0;
+  color: var(--fc-ink-soft);
+}
+.blueprint-backview strong {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--fc-ink);
+}
+.blueprint-backview p {
+  font-size: 11.5px;
+  color: var(--fc-muted);
+  margin: 1px 0 0;
+  line-height: 1.4;
+}
+
+/* --- Hero comparison: measurement callouts over the panels --- */
+.h3p-mark {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  pointer-events: none;
+  opacity: 0;
+  animation: fcFadeIn 0.5s ease 1.25s forwards;
+}
+.h3p-mark i {
+  flex: 1;
+  border-top: 1.5px dashed var(--ann-color, #888);
+  opacity: 0.6;
+}
+.h3p-mark b {
+  font-family: var(--fc-mono);
+  font-size: 8.5px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ann-color, #555);
+  background: rgba(255, 255, 255, 0.93);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  padding: 3px 7px;
+  white-space: nowrap;
+}
+@keyframes fcFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Homepage: fit anatomy layout inside the fitpoints band --- */
+.fitpoints-body {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+.fitpoints-body .fitpoints-grid { grid-template-columns: 1fr 1fr; }
+.fitpoints-body .fitpoint:last-child { grid-column: 1 / -1; }
+
+/* --- Quiz: fitting-report profile panel --- */
+.fit-profile-head-copy { min-width: 0; }
+.fit-profile-sub {
+  display: block;
+  font-family: var(--fc-mono);
+  font-size: 8.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fc-muted);
+  margin-top: 2px;
+}
+.fit-profile-item .fc-icon-tile-sm {
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.fit-profile-item.filled .fc-icon-tile-sm {
+  background: var(--fc-sage-soft);
+  border-color: var(--fc-sage-line);
+  color: var(--fc-sage-deep);
+}
+.fit-profile-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--fc-muted);
+  line-height: 1.45;
+}
+.fit-profile-foot svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  color: var(--fc-sage-deep);
+}
+
+/* --- Results: comparison silhouettes --- */
+.compare-name {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 12px !important;
+}
+.compare-thumb {
+  width: 30px;
+  height: 40px;
+  flex-shrink: 0;
+  color: var(--fc-muted);
+}
+.compare-best .compare-thumb { color: var(--fc-sage-deep); }
+.compare-thumb svg { width: 100%; height: 100%; display: block; }
+.compare-name-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* Check pop when an answer is selected */
+@keyframes fcCheckPop {
+  0% { transform: scale(0.5); }
+  60% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+/* ==========================================================================
+   RESPONSIVE GUARDS (mobile stays functional, not redesigned)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .hero-trust-panel { padding: 14px 16px 16px; }
+  .hero-compare-frame { gap: 10px; }
+  .hero-compare-head { justify-content: center; }
+  .hero-compare-legend { gap: 12px; }
+
+  .fitpoints-band { padding: 22px 20px; margin-bottom: 40px; }
+  .fitpoints-grid { grid-template-columns: 1fr 1fr; }
+  .fitpoint:last-child { grid-column: 1 / -1; }
+
+  .quiz-preview-float { display: none; }
+  .quiz-preview-steps { max-width: none; }
+
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+  .footer-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+
+  .quiz-intro-facts { max-width: none; }
+
+  .results-block { padding: 20px; margin-bottom: 20px; }
+  .spec-grid { grid-template-columns: 1fr; gap: 0; }
+  .fitfor-grid { grid-template-columns: 1fr; gap: 12px; margin-bottom: 20px; }
+  .style-cols { grid-template-columns: 1fr; gap: 18px; }
+
+  .compare-head-row { display: none; }
+  .compare-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .compare-row .compare-name { grid-column: 1 / -1; }
+  .compare-row .compare-diff { grid-column: 1 / -1; }
+
+  .hero-card-imgwrap { min-height: 280px; }
+  .hero-card-specstrip { grid-template-columns: 1fr 1fr; gap: 12px; padding: 14px 16px; }
+
+  .results-meta-row { margin-top: 10px; }
+  .results-aside-stack { margin-top: 8px; }
+
+  /* Phase 2 components on small screens */
+  .h3p-mark { display: none; }
+  .fitpoints-body { grid-template-columns: 1fr; }
+  .fc-diagram-panel { max-width: 340px; margin: 0 auto; width: 100%; }
+  .blueprint-grid { grid-template-columns: 1fr; gap: 18px; }
+  .fc-ref-row { grid-template-columns: 1fr; gap: 10px; }
+  .fc-bar i { width: 8px; height: 10px; }
+  .option .option-meta { display: none; }
+  .compare-thumb { width: 24px; height: 32px; }
+}

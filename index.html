@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fitco-ui.css">
 <style>
   :root {
     --bg: #F5F3EE;
@@ -898,6 +899,7 @@
     .why-fitco-sub { font-size: 17px; }
 
     .problem-cards { max-width: 1440px; gap: 20px; }
+    .fitpoints-band { max-width: 1440px; }
     .problem-card {
       padding: 36px;
       border-radius: 18px;
@@ -1028,6 +1030,7 @@
 </style>
 </head>
 <body>
+<script src="fitco-ui.js"></script>
 
 <!-- UTILITY BAR -->
 <div class="utility-bar">
@@ -1058,52 +1061,84 @@
 <section class="hero">
   <div class="hero-grid">
     <div class="hero-left">
-      <div class="badge-pill">
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="14" height="14"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M5 8L7.5 10.5L11 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Built for real bodies
+      <div class="hero-badge-row">
+        <div class="badge-pill">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="14" height="14"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M5 8L7.5 10.5L11 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Built for real bodies
+        </div>
+        <span class="fc-badge fc-badge-sage">
+          <svg aria-hidden="true"><use href="#fc-ic-tape"/></svg>
+          Fit-first method
+        </span>
+        <span class="fc-badge fc-badge-cream">
+          <svg aria-hidden="true"><use href="#fc-ic-pants"/></svg>
+          Menswear &middot; Pants
+        </span>
       </div>
       <h1>Pants That Fit <span class="text-accent">You.</span> Not The Other Way Around.</h1>
       <p class="hero-sub">Tell us about your build, measurements, and fit issues. We'll recommend pants that fit your body better.</p>
+      <div class="hero-fitpoints">
+        <span class="fc-microlabel">What we look at</span>
+        <div class="fc-chip-row">
+          <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-seat"/></svg>Seat room</span>
+          <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-thigh"/></svg>Thigh room</span>
+          <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-taper"/></svg>Knee taper</span>
+          <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-opening"/></svg>Leg opening</span>
+          <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-rise"/></svg>Rise</span>
+          <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-break"/></svg>Break</span>
+        </div>
+      </div>
       <div class="hero-buttons">
         <a href="/quiz/index.html" class="btn">Find My Fit <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="14" height="14"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <a href="/#works" class="btn btn-outline"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="14" height="14"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M6.5 5.5v5l4-2.5-4-2.5z" fill="currentColor"/></svg> How It Works</a>
       </div>
-      <div class="trust-metrics">
-        <div class="trust-metric">
-          <div class="trust-metric-icon trust-metric-icon-green">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/><path d="M9 11h6M9 15h4"/></svg>
-          </div>
-          <div class="trust-metric-copy">
-            <div class="trust-metric-num">6</div>
-            <div class="trust-metric-label">Fit questions</div>
-            <div class="trust-metric-sub">About your build, not just your waist</div>
-          </div>
+      <div class="hero-trust-panel">
+        <div class="hero-trust-head">
+          <span class="fc-microlabel">What to expect</span>
+          <span class="fc-pill fc-pill-sage"><i class="fc-dot"></i>Free &mdash; no signup</span>
         </div>
-        <div class="trust-metric-divider"></div>
-        <div class="trust-metric">
-          <div class="trust-metric-icon trust-metric-icon-green">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        <div class="trust-metrics">
+          <div class="trust-metric">
+            <div class="trust-metric-icon trust-metric-icon-green">
+              <svg aria-hidden="true"><use href="#fc-ic-profile"/></svg>
+            </div>
+            <div class="trust-metric-copy">
+              <div class="trust-metric-num">6</div>
+              <div class="trust-metric-label">Fit questions</div>
+              <div class="trust-metric-sub">About your build, not just your waist</div>
+            </div>
           </div>
-          <div class="trust-metric-copy">
-            <div class="trust-metric-num">2 min</div>
-            <div class="trust-metric-label">To complete</div>
-            <div class="trust-metric-sub">No account or email required</div>
+          <div class="trust-metric-divider"></div>
+          <div class="trust-metric">
+            <div class="trust-metric-icon trust-metric-icon-green">
+              <svg aria-hidden="true"><use href="#fc-ic-clock"/></svg>
+            </div>
+            <div class="trust-metric-copy">
+              <div class="trust-metric-num">2 min</div>
+              <div class="trust-metric-label">To complete</div>
+              <div class="trust-metric-sub">No account or email required</div>
+            </div>
           </div>
-        </div>
-        <div class="trust-metric-divider"></div>
-        <div class="trust-metric">
-          <div class="trust-metric-icon trust-metric-icon-green">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13.5L7 21l5-3 5 3-2-7.5"/></svg>
-          </div>
-          <div class="trust-metric-copy">
-            <div class="trust-metric-num">3</div>
-            <div class="trust-metric-label">Trusted brands</div>
-            <div class="trust-metric-sub">Bonobos, Levi's, Lululemon &amp; more</div>
+          <div class="trust-metric-divider"></div>
+          <div class="trust-metric">
+            <div class="trust-metric-icon trust-metric-icon-green">
+              <svg aria-hidden="true"><use href="#fc-ic-shop"/></svg>
+            </div>
+            <div class="trust-metric-copy">
+              <div class="trust-metric-num">3</div>
+              <div class="trust-metric-label">Trusted brands</div>
+              <div class="trust-metric-sub">Bonobos, Levi's, Lululemon &amp; more</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="hero-right">
+      <div class="hero-compare-frame">
+      <div class="hero-compare-head">
+        <span class="fc-kicker">Fit comparison</span>
+        <span class="fc-pill fc-pill-plain"><i class="fc-dot"></i>Same waist size &mdash; three different cuts</span>
+      </div>
       <div class="hero-3panel" id="hero3panel">
         <!-- Panel 1: Poor Fit -->
         <div class="h3p-panel h3p-panel-poor" data-panel="poor">
@@ -1112,6 +1147,8 @@
           <div class="h3p-header">
             <span class="h3p-title h3p-title-poor">Poor Fit</span>
           </div>
+          <span class="h3p-mark" style="top: 48%;"><i></i><b>Thigh &mdash; pulls</b></span>
+          <span class="h3p-mark" style="top: 83%;"><i></i><b>Break &mdash; stacks</b></span>
           <div class="h3p-caption">
             <p>Tight in thighs, pulling at fabric, awkward break</p>
           </div>
@@ -1123,6 +1160,8 @@
           <div class="h3p-header">
             <span class="h3p-title h3p-title-relaxed">Relaxed Fit</span>
           </div>
+          <span class="h3p-mark" style="top: 48%;"><i></i><b>Thigh &mdash; roomy</b></span>
+          <span class="h3p-mark" style="top: 83%;"><i></i><b>Break &mdash; casual</b></span>
           <div class="h3p-caption">
             <p>More room in seat &amp; thighs, straight drape, casual break</p>
           </div>
@@ -1134,10 +1173,18 @@
           <div class="h3p-header">
             <span class="h3p-title h3p-title-athletic">Athletic Taper</span>
           </div>
+          <span class="h3p-mark" style="top: 48%;"><i></i><b>Thigh &mdash; room</b></span>
+          <span class="h3p-mark" style="top: 83%;"><i></i><b>Taper &mdash; clean</b></span>
           <div class="h3p-caption">
             <p>Room in thighs, tapered leg, clean break at the shoe</p>
           </div>
         </div>
+      </div>
+      <div class="hero-compare-legend">
+        <span class="legend-item"><span class="legend-dot legend-dot-red"></span>Fights your build</span>
+        <span class="legend-item"><span class="legend-dot legend-dot-gold"></span>Comfort first</span>
+        <span class="legend-item"><span class="legend-dot legend-dot-sage"></span>Built for you</span>
+      </div>
       </div>
     </div>
   </div>
@@ -1156,12 +1203,14 @@
         <div class="problem-card-img">
           <img src="images/problem-thighs.png" alt="Pants too tight in the thighs">
         </div>
+        <span class="problem-card-num">01</span>
         <div class="problem-card-x">
           <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="#E04A3A" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
       </div>
       <h3>Too Tight in the Thighs</h3>
       <p>Most pants fit your waist, but not your legs. Standard cuts don't account for athletic builds.</p>
+      <div class="fc-tag-row"><span class="fc-tag">Thigh</span><span class="fc-tag">Seat</span><span class="fc-tag">Stretch</span></div>
       <a href="/about/index.html" class="problem-card-link">See How We Fix It <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
     <div class="problem-card">
@@ -1169,12 +1218,14 @@
         <div class="problem-card-img">
           <img src="images/problem-waist.png" alt="Pants gaping at the waist">
         </div>
+        <span class="problem-card-num">02</span>
         <div class="problem-card-x">
           <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="#E04A3A" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
       </div>
       <h3>Gaping at the Waist</h3>
       <p>Standard sizing only accounts for waist. It misses how pants fit everywhere else.</p>
+      <div class="fc-tag-row"><span class="fc-tag">Waist</span><span class="fc-tag">Rise</span><span class="fc-tag">Seat</span></div>
       <a href="/about/index.html" class="problem-card-link">See How We Fix It <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
     <div class="problem-card">
@@ -1182,19 +1233,110 @@
         <div class="problem-card-img">
           <img src="images/problem-length.png" alt="Pants wrong length">
         </div>
+        <span class="problem-card-num">03</span>
         <div class="problem-card-x">
           <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="#E04A3A" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
       </div>
       <h3>Too Long (or Too Short)</h3>
       <p>Finding the right length shouldn't be a hassle. Inseam varies by brand, cut, and fabric.</p>
+      <div class="fc-tag-row"><span class="fc-tag">Inseam</span><span class="fc-tag">Break</span><span class="fc-tag">Hem</span></div>
       <a href="/about/index.html" class="problem-card-link">See How We Fix It <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+  <!-- Five fit points band -->
+  <div class="fitpoints-band">
+    <div class="fitpoints-band-head">
+      <div>
+        <span class="fc-kicker">How fit is measured</span>
+        <h3>Five points where fit is won or lost</h3>
+      </div>
+      <span class="fc-badge fc-badge-gold">
+        <svg aria-hidden="true"><use href="#fc-ic-ruler"/></svg>
+        The FitCo framework
+      </span>
+    </div>
+    <div class="fitpoints-body">
+      <!-- Fit anatomy diagram (placeholder line-art, front view) -->
+      <div class="fc-diagram-panel">
+        <svg viewBox="0 0 172 124" aria-hidden="true">
+          <use href="#fc-il-pant-front" x="6" y="2" width="96" height="120"/>
+          <path class="bp-guide" d="M20 120h72"/>
+          <!-- 05 Rise -->
+          <path class="bp-guide" d="M76 14h34"/>
+          <circle class="bp-num-circle" cx="118" cy="14" r="6.5"/>
+          <text class="bp-num" x="118" y="14" text-anchor="middle" dominant-baseline="central">05</text>
+          <text class="bp-label" x="128" y="14" dominant-baseline="central">RISE</text>
+          <!-- 01 Seat -->
+          <path class="bp-guide" d="M72 38h38"/>
+          <circle class="bp-num-circle" cx="118" cy="38" r="6.5"/>
+          <text class="bp-num" x="118" y="38" text-anchor="middle" dominant-baseline="central">01</text>
+          <text class="bp-label" x="128" y="38" dominant-baseline="central">SEAT</text>
+          <!-- 02 Thigh -->
+          <path class="bp-guide" d="M71 56h39"/>
+          <circle class="bp-num-circle" cx="118" cy="56" r="6.5"/>
+          <text class="bp-num" x="118" y="56" text-anchor="middle" dominant-baseline="central">02</text>
+          <text class="bp-label" x="128" y="56" dominant-baseline="central">THIGH</text>
+          <!-- 03 Knee taper -->
+          <path class="bp-guide" d="M70 80h40"/>
+          <circle class="bp-num-circle" cx="118" cy="80" r="6.5"/>
+          <text class="bp-num" x="118" y="80" text-anchor="middle" dominant-baseline="central">03</text>
+          <text class="bp-label" x="128" y="80" dominant-baseline="central">KNEE</text>
+          <!-- 04 Leg opening -->
+          <path class="bp-guide" d="M69 112h41"/>
+          <circle class="bp-num-circle" cx="118" cy="112" r="6.5"/>
+          <text class="bp-num" x="118" y="112" text-anchor="middle" dominant-baseline="central">04</text>
+          <text class="bp-label" x="128" y="112" dominant-baseline="central">OPENING</text>
+        </svg>
+        <div class="fc-diagram-caption">
+          <span class="fc-microlabel">Fit anatomy &mdash; front view</span>
+          <span class="fc-tag">Draft</span>
+        </div>
+      </div>
+      <div class="fitpoints-grid">
+        <div class="fitpoint">
+          <span class="fitpoint-num">01</span>
+          <span class="fc-icon-tile fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-seat"/></svg></span>
+          <h4>Seat</h4>
+          <p>Room through the hips and seat so nothing pulls when you sit.</p>
+        </div>
+        <div class="fitpoint">
+          <span class="fitpoint-num">02</span>
+          <span class="fc-icon-tile fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-thigh"/></svg></span>
+          <h4>Thigh</h4>
+          <p>The most common failure point for athletic and broader builds.</p>
+        </div>
+        <div class="fitpoint">
+          <span class="fitpoint-num">03</span>
+          <span class="fc-icon-tile fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-taper"/></svg></span>
+          <h4>Knee taper</h4>
+          <p>Where the leg starts to narrow &mdash; or doesn't. Sets the silhouette.</p>
+        </div>
+        <div class="fitpoint">
+          <span class="fitpoint-num">04</span>
+          <span class="fc-icon-tile fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-opening"/></svg></span>
+          <h4>Leg opening</h4>
+          <p>The width at the hem decides how pants sit over your shoes.</p>
+        </div>
+        <div class="fitpoint">
+          <span class="fitpoint-num">05</span>
+          <span class="fc-icon-tile fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-rise"/></svg></span>
+          <h4>Rise</h4>
+          <p>How high the waistband sits &mdash; and whether it stays put.</p>
+        </div>
+      </div>
     </div>
   </div>
   <div class="why-fitco-inner">
     <div class="why-fitco-grid">
       <div class="why-card why-card-traditional">
-        <h3>Shopping Alone</h3>
+        <div class="why-card-head">
+          <span class="fc-icon-tile fc-tile-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+          <div>
+            <h3>Shopping Alone</h3>
+            <span class="why-card-tagline">The default experience</span>
+          </div>
+        </div>
         <ul>
           <li><span class="x-mark">&#10005;</span> Waist size only</li>
           <li><span class="x-mark">&#10005;</span> Generic sizing</li>
@@ -1203,9 +1345,18 @@
           <li><span class="x-mark">&#10005;</span> Inconsistent fits</li>
         </ul>
         <p class="why-card-desc">Most brands ignore how your body shape actually affects fit.</p>
+        <div class="why-card-pill-row">
+          <span class="fc-pill fc-pill-red"><i class="fc-dot"></i>One data point: your waist</span>
+        </div>
       </div>
       <div class="why-card why-card-fitco">
-        <h3>Shopping with FitCo</h3>
+        <div class="why-card-head">
+          <span class="fc-icon-tile fc-tile-sage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></span>
+          <div>
+            <h3>Shopping with FitCo</h3>
+            <span class="why-card-tagline">Fit-first recommendations</span>
+          </div>
+        </div>
         <ul>
           <li><span class="check-mark">&#10003;</span> Based on your build</li>
           <li><span class="check-mark">&#10003;</span> Accounts for fit issues</li>
@@ -1214,11 +1365,20 @@
           <li><span class="check-mark">&#10003;</span> Less guesswork</li>
         </ul>
         <p class="why-card-desc">FitCo recommends fits based on how your body is shaped and what you need.</p>
+        <div class="why-card-pill-row">
+          <span class="fc-pill fc-pill-sage"><i class="fc-dot"></i>Five data points: your whole build</span>
+        </div>
       </div>
     </div>
     <div class="why-fitco-statement">
       <h3>Find pants that fit the way they should.</h3>
-      <p>FitCo looks at your thigh, seat, taper, and break. Not just waist size.</p>
+      <div class="fc-callout fc-callout-gold">
+        <span class="fc-callout-icon"><svg aria-hidden="true"><use href="#fc-ic-tape"/></svg></span>
+        <div class="fc-callout-body">
+          <p class="fc-callout-title">Measured beyond the waistband</p>
+          <p class="fc-callout-text">FitCo looks at your thigh, seat, taper, and break. Not just waist size.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1233,10 +1393,49 @@
       </div>
       <h3>Find your fit in under 2 minutes.</h3>
       <p>Tell us about your build, measurements, and fit issues. We'll recommend pants that fit your body better.</p>
+      <div class="quiz-preview-steps">
+        <div class="quiz-preview-step">
+          <span class="quiz-preview-step-num">01</span>
+          <span class="quiz-preview-step-icon"><svg aria-hidden="true"><use href="#fc-ic-body"/></svg></span>
+          <div class="quiz-preview-step-copy">
+            <h4>Tell us your build</h4>
+            <p>Body shape, height, and where pants usually go wrong</p>
+          </div>
+        </div>
+        <div class="quiz-preview-step">
+          <span class="quiz-preview-step-num">02</span>
+          <span class="quiz-preview-step-icon"><svg aria-hidden="true"><use href="#fc-ic-taper"/></svg></span>
+          <div class="quiz-preview-step-copy">
+            <h4>Pick your preferences</h4>
+            <p>Leg shape and what matters most to you</p>
+          </div>
+        </div>
+        <div class="quiz-preview-step">
+          <span class="quiz-preview-step-num">03</span>
+          <span class="quiz-preview-step-icon"><svg aria-hidden="true"><use href="#fc-ic-profile"/></svg></span>
+          <div class="quiz-preview-step-copy">
+            <h4>Get your fit profile</h4>
+            <p>One best-fit cut, plus real product picks</p>
+          </div>
+        </div>
+      </div>
+      <div class="quiz-preview-chips">
+        <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-clock"/></svg>2 minutes</span>
+        <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-checklist"/></svg>6 questions</span>
+        <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-shield"/></svg>No email required</span>
+      </div>
       <a href="/quiz/index.html" class="btn btn-white">Start Fit Quiz <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="14" height="14"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
     <div class="quiz-preview-right">
+      <div class="quiz-preview-float quiz-preview-float-1">
+        <span class="fc-icon-tile fc-icon-tile-sm fc-tile-sage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></span>
+        <div><span class="fc-microlabel">Best match</span><strong>Athletic Taper</strong></div>
+      </div>
       <img src="images/quiz-preview.png" alt="Fit quiz preview on phone">
+      <div class="quiz-preview-float quiz-preview-float-2">
+        <span class="fc-icon-tile fc-icon-tile-sm fc-tile-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/></svg></span>
+        <div><span class="fc-microlabel">Fit profile</span><strong>Builds as you answer</strong></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1248,6 +1447,13 @@
     <h2>FitCo pants are coming.</h2>
     <p class="waitlist-lead">Right now we recommend the best fits from trusted brands. Soon we will make our own.</p>
     <p class="waitlist-sub">Join the list for early access and launch updates.</p>
+    <div class="waitlist-roadmap">
+      <span class="fc-pill"><i class="fc-dot"></i>Fit quiz &mdash; live</span>
+      <span class="roadmap-arrow">&rarr;</span>
+      <span class="fc-pill"><i class="fc-dot"></i>Curated picks &mdash; live</span>
+      <span class="roadmap-arrow">&rarr;</span>
+      <span class="fc-pill roadmap-next"><i class="fc-dot"></i>FitCo pants &mdash; in development</span>
+    </div>
     <form class="waitlist-form" id="waitlistForm" onsubmit="return handleWaitlistSubmit(event)" novalidate>
       <input type="email" class="waitlist-input" placeholder="Enter your email" required id="waitlistEmail" oninput="clearWaitlistError()">
       <button type="submit" class="waitlist-btn">Join Waitlist</button>
@@ -1259,7 +1465,19 @@
 
 <!-- FOOTER -->
 <footer>
-  <p>FitCo. Recommendations for men who want pants that fit.</p>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo">FitCo</a>
+      <p>Recommendations for men who want pants that fit.</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="/quiz/index.html">Find My Fit</a></li>
+      <li><a href="/#works">How It Works</a></li>
+      <li><a href="/#fits">Fit Guide</a></li>
+      <li><a href="/about/index.html">About Us</a></li>
+    </ul>
+    <span class="footer-meta">We recommend &mdash; we don't sell</span>
+  </div>
 </footer>
 
 <script>

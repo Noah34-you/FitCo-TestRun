@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../fitco-ui.css">
 <style>
   :root {
     --bg: #F5F3EE;
@@ -1053,10 +1054,7 @@
     height: 28px;
   }
 
-  .option.selected .option-illustration {
-    background: rgba(255,255,255,0.15);
-    border-color: rgba(255,255,255,0.3);
-  }
+  /* Selected: tinted sage card with strong ink ring (illustration highlights via fitco-ui.css) */
 
   .option-text {
     flex: 1;
@@ -1076,9 +1074,9 @@
 
   .option.selected {
     border-color: var(--text);
-    background: var(--text);
-    color: var(--bg);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    background: #EFF4EB;
+    color: var(--text);
+    box-shadow: inset 0 0 0 1px var(--text), 0 4px 16px rgba(64, 44, 24, 0.1);
     transform: translateY(-1px);
     animation: optionSelect 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
@@ -1112,9 +1110,10 @@
   }
 
   .option.selected .option-check {
-    background: var(--bg);
-    border-color: var(--bg);
-    color: var(--text);
+    background: var(--success);
+    border-color: var(--success);
+    color: #FFFFFF;
+    animation: fcCheckPop 0.3s ease;
   }
 
   .option.selected .option-check svg {
@@ -1924,6 +1923,8 @@
       font-size: 16px;
       border-radius: 14px;
     }
+    .option-illustration { width: 52px; height: 52px; border-radius: 12px; }
+    .option-illustration svg { width: 32px; height: 32px; }
     .question label {
       font-size: 26px;
     }
@@ -1931,6 +1932,7 @@
 </style>
 </head>
 <body>
+<script src="../fitco-ui.js"></script>
 
 <!-- NAV -->
 <!-- UTILITY BAR -->
@@ -1962,21 +1964,42 @@
     <span class="fit-section-badge" style="margin-bottom:20px;">Fit Quiz</span>
     <h1 style="font-size:clamp(36px,5vw,56px);font-weight:500;letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px;">Find My Fit</h1>
     <p style="font-size:17px;color:var(--text-muted);max-width:420px;margin-bottom:32px;line-height:1.6;">Six quick questions about your build and fit issues. We'll recommend pants that fit better.</p>
-    <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;">
-      <div style="text-align:center;">
-        <div style="font-family:Space Grotesk,sans-serif;font-size:28px;font-weight:500;">2m</div>
-        <div style="font-size:13px;color:var(--text-muted);">To complete</div>
+    <div class="quiz-intro-facts">
+      <div class="quiz-intro-fact">
+        <span class="fc-icon-tile fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-clock"/></svg></span>
+        <div class="fc-fact" style="align-items:center;text-align:center;">
+          <span class="fc-fact-value">2m</span>
+          <span class="fc-fact-sub">To complete</span>
+        </div>
       </div>
-      <div style="text-align:center;">
-        <div style="font-family:Space Grotesk,sans-serif;font-size:28px;font-weight:500;">6</div>
-        <div style="font-size:13px;color:var(--text-muted);">Fit questions</div>
+      <div class="quiz-intro-fact">
+        <span class="fc-icon-tile fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-checklist"/></svg></span>
+        <div class="fc-fact" style="align-items:center;text-align:center;">
+          <span class="fc-fact-value">6</span>
+          <span class="fc-fact-sub">Fit questions</span>
+        </div>
       </div>
-      <div style="text-align:center;">
-        <div style="font-family:Space Grotesk,sans-serif;font-size:28px;font-weight:500;">1</div>
-        <div style="font-size:13px;color:var(--text-muted);">Recommendation</div>
+      <div class="quiz-intro-fact">
+        <span class="fc-icon-tile fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-recommend"/></svg></span>
+        <div class="fc-fact" style="align-items:center;text-align:center;">
+          <span class="fc-fact-value">1</span>
+          <span class="fc-fact-sub">Recommendation</span>
+        </div>
       </div>
     </div>
-    <button class="btn" style="margin-top:40px;" onclick="document.getElementById('quizIntro').style.display='none';document.getElementById('quiz').scrollIntoView({behavior:'smooth'});">Start Fit Quiz</button>
+    <span class="fc-microlabel" style="margin-bottom:10px;">What we'll ask about</span>
+    <div class="quiz-intro-chips">
+      <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-body"/></svg>Build</span>
+      <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-height-3"/></svg>Height</span>
+      <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-tight"/></svg>Fit issues</span>
+      <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-taper"/></svg>Leg shape</span>
+      <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-sparkle"/></svg>Priority</span>
+    </div>
+    <button class="btn" style="margin-top:34px;" onclick="document.getElementById('quizIntro').style.display='none';document.getElementById('quiz').scrollIntoView({behavior:'smooth'});">Start Fit Quiz</button>
+    <div class="quiz-intro-note-row">
+      <span class="fc-note"><svg aria-hidden="true"><use href="#fc-ic-shield"/></svg>No account needed</span>
+      <span class="fc-note"><svg aria-hidden="true"><use href="#fc-ic-bookmark"/></svg>Results save to this device</span>
+    </div>
   </div>
 </section>
 <style>
@@ -2005,6 +2028,7 @@
         <h3>Fit Guide</h3>
         <p>Let's find what fits you</p>
       </div>
+      <span class="quiz-assistant-status fc-pill fc-pill-sage"><i class="fc-dot"></i>Profile building</span>
     </div>
     <div class="quiz-categories" id="quizCategories">
       <span class="quiz-cat active" data-cat="problem">Problem</span>
@@ -2015,33 +2039,73 @@
       <span class="quiz-cat-dot"></span>
       <span class="quiz-cat" data-cat="style">Style</span>
     </div>
-    <span class="quiz-counter" id="questionCounter">Question 1 of 7</span>
+    <div class="quiz-progress-row">
+      <span class="quiz-counter" id="questionCounter">Question 1 of 6</span>
+      <span class="quiz-progress-meta">&#8776; 2 min total</span>
+    </div>
     <div class="progress">
       <div class="progress-fill" id="progressFill"></div>
     </div>
     <p class="quiz-helper" id="quizHelper">Finding what fits you...</p>
     <div class="fit-profile" id="fitProfile">
       <div class="fit-profile-card">
-        <h4>Your Fit Profile</h4>
-        <div class="fit-profile-item">
-          <div class="fit-profile-label">Build</div>
-          <div class="fit-profile-value empty" id="profile-build">--</div>
+        <div class="fit-profile-head">
+          <span class="fc-avatar"><svg aria-hidden="true"><use href="#fc-ic-pants"/></svg></span>
+          <div class="fit-profile-head-copy">
+            <h4>Your Fit Profile</h4>
+            <span class="fit-profile-sub">Fitting report &mdash; draft</span>
+          </div>
+          <span class="fit-profile-live">Live</span>
         </div>
         <div class="fit-profile-item">
-          <div class="fit-profile-label">Height</div>
-          <div class="fit-profile-value empty" id="profile-height">--</div>
+          <span class="fc-icon-tile fc-icon-tile-sm" id="profile-icon-productType"><svg aria-hidden="true"><use href="#fc-ic-pants"/></svg></span>
+          <div class="fit-profile-item-copy">
+            <div class="fit-profile-label">Shopping For</div>
+            <div class="fit-profile-value empty" id="profile-productType">--</div>
+          </div>
         </div>
         <div class="fit-profile-item">
-          <div class="fit-profile-label">Fit Issue</div>
-          <div class="fit-profile-value empty" id="profile-fitWrong">--</div>
+          <span class="fc-icon-tile fc-icon-tile-sm" id="profile-icon-build"><svg aria-hidden="true"><use href="#fc-ic-body"/></svg></span>
+          <div class="fit-profile-item-copy">
+            <div class="fit-profile-label">Build</div>
+            <div class="fit-profile-value empty" id="profile-build">--</div>
+          </div>
         </div>
         <div class="fit-profile-item">
-          <div class="fit-profile-label">Leg Shape</div>
-          <div class="fit-profile-value empty" id="profile-legShape">--</div>
+          <span class="fc-icon-tile fc-icon-tile-sm" id="profile-icon-height"><svg aria-hidden="true"><use href="#fc-ic-height-3"/></svg></span>
+          <div class="fit-profile-item-copy">
+            <div class="fit-profile-label">Height</div>
+            <div class="fit-profile-value empty" id="profile-height">--</div>
+          </div>
         </div>
         <div class="fit-profile-item">
-          <div class="fit-profile-label">Priority</div>
-          <div class="fit-profile-value empty" id="profile-priority">--</div>
+          <span class="fc-icon-tile fc-icon-tile-sm" id="profile-icon-fitWrong"><svg aria-hidden="true"><use href="#fc-ic-tight"/></svg></span>
+          <div class="fit-profile-item-copy">
+            <div class="fit-profile-label">Fit Issue</div>
+            <div class="fit-profile-value empty" id="profile-fitWrong">--</div>
+          </div>
+        </div>
+        <div class="fit-profile-item">
+          <span class="fc-icon-tile fc-icon-tile-sm" id="profile-icon-legShape"><svg aria-hidden="true"><use href="#fc-ic-taper"/></svg></span>
+          <div class="fit-profile-item-copy">
+            <div class="fit-profile-label">Leg Shape</div>
+            <div class="fit-profile-value empty" id="profile-legShape">--</div>
+          </div>
+        </div>
+        <div class="fit-profile-item">
+          <span class="fc-icon-tile fc-icon-tile-sm" id="profile-icon-priority"><svg aria-hidden="true"><use href="#fc-ic-sparkle"/></svg></span>
+          <div class="fit-profile-item-copy">
+            <div class="fit-profile-label">Priority</div>
+            <div class="fit-profile-value empty" id="profile-priority">--</div>
+          </div>
+        </div>
+        <div class="profile-meter-wrap">
+          <div class="profile-meter" id="profileMeter"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <span class="profile-meter-label" id="profileMeterLabel">0 of 6 answered</span>
+        </div>
+        <div class="fit-profile-foot">
+          <svg aria-hidden="true"><use href="#fc-ic-arrow"/></svg>
+          <span>Each answer compiles into your recommendation.</span>
         </div>
       </div>
     </div>
@@ -2050,10 +2114,10 @@
         <label>What are you shopping for?</label>
         <span class="question-sub">This helps us recommend the right styles and brands.</span>
         <div class="options">
-          <button class="option" onclick="selectOption(this,'productType','jeans')"><span class="option-text">Jeans</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'productType','chinos')"><span class="option-text">Chinos</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'productType','technical')"><span class="option-text">Technical pants</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'productType','any')"><span class="option-text">Surprise me</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'productType','jeans')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-denim"/></svg></span><span class="option-text"><strong class="option-title">Jeans</strong><span class="option-sub">Five-pocket denim</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'productType','chinos')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-crease"/></svg></span><span class="option-text"><strong class="option-title">Chinos</strong><span class="option-sub">Cotton twill, smart-casual</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'productType','technical')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-stretch"/></svg></span><span class="option-text"><strong class="option-title">Technical pants</strong><span class="option-sub">Stretch, performance fabrics</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'productType','any')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-sparkle"/></svg></span><span class="option-text"><strong class="option-title">Surprise me</strong><span class="option-sub">Best fit across categories</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
         <div class="question-feedback">Got it. We'll keep that in mind.</div>
       </div>
@@ -2061,10 +2125,10 @@
         <label>Which best describes your build?</label>
         <span class="question-sub">Your body shape is the foundation for finding the right fit.</span>
         <div class="options">
-          <button class="option" onclick="selectOption(this,'build','slim')"><span class="option-text">Slim</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'build','average')"><span class="option-text">Average</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'build','athletic')"><span class="option-text">Athletic</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'build','broader')"><span class="option-text">Broader</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'build','slim')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-build-slim"/></svg></span><span class="option-text"><strong class="option-title">Slim</strong><span class="option-sub">Leaner through legs and seat</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'build','average')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-build-average"/></svg></span><span class="option-text"><strong class="option-title">Average</strong><span class="option-sub">In-between proportions</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'build','athletic')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-build-athletic"/></svg></span><span class="option-text"><strong class="option-title">Athletic</strong><span class="option-sub">Developed thighs and seat</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'build','broader')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-build-broader"/></svg></span><span class="option-text"><strong class="option-title">Broader</strong><span class="option-sub">Fuller through waist and seat</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
         <div class="question-feedback">Got it. Your build is the starting point.</div>
       </div>
@@ -2072,11 +2136,11 @@
         <label>Where do pants usually fit wrong? <span style="font-weight:400;color:var(--text-muted);">(Select up to 2)</span></label>
         <span class="question-sub">This tells us what your current pants don't get right.</span>
         <div class="options" data-multiselect="true" data-multiselect-max="2">
-          <button class="option" onclick="toggleMultiOption(this,'fitWrong','tightThighsSeat')"><span class="option-text">Tight in thighs or seat</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="toggleMultiOption(this,'fitWrong','waistGap')"><span class="option-text">Waist gaps</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="toggleMultiOption(this,'fitWrong','tooMuchFabric')"><span class="option-text">Too much fabric below the knee</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="toggleMultiOption(this,'fitWrong','lengthOff')"><span class="option-text">Length feels off</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="toggleMultiOption(this,'fitWrong','usuallyFine')"><span class="option-text">Usually fit fine</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="toggleMultiOption(this,'fitWrong','tightThighsSeat')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-tight"/></svg></span><span class="option-text"><strong class="option-title">Tight in thighs or seat</strong><span class="option-sub">Pulling or pinching above the knee</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="toggleMultiOption(this,'fitWrong','waistGap')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-gap"/></svg></span><span class="option-text"><strong class="option-title">Waist gaps</strong><span class="option-sub">Band gaps when the seat fits</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="toggleMultiOption(this,'fitWrong','tooMuchFabric')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-pool"/></svg></span><span class="option-text"><strong class="option-title">Too much fabric below the knee</strong><span class="option-sub">Baggy or bunching at the hem</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="toggleMultiOption(this,'fitWrong','lengthOff')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-length"/></svg></span><span class="option-text"><strong class="option-title">Length feels off</strong><span class="option-sub">Hems stack up or float high</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="toggleMultiOption(this,'fitWrong','usuallyFine')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-check"/></svg></span><span class="option-text"><strong class="option-title">Usually fit fine</strong><span class="option-sub">No consistent problem</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
         <div class="question-feedback">Got it. We'll look for fits that fix this.</div>
       </div>
@@ -2084,10 +2148,10 @@
         <label>How tall are you?</label>
         <span class="question-sub">This helps with proportions and length.</span>
         <div class="options">
-          <button class="option" onclick="selectOption(this,'height','under58')"><span class="option-text">Under 5'8"</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'height','58to511')"><span class="option-text">5'8" – 5'11"</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'height','60to62')"><span class="option-text">6'0" – 6'2"</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'height','63plus')"><span class="option-text">6'3"+</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'height','under58')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-height-1"/></svg></span><span class="option-text"><strong class="option-title">Under 5'8"</strong><span class="option-sub">Shorter inseams work best</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'height','58to511')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-height-2"/></svg></span><span class="option-text"><strong class="option-title">5'8" &ndash; 5'11"</strong><span class="option-sub">The range most brands cut for</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'height','60to62')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-height-3"/></svg></span><span class="option-text"><strong class="option-title">6'0" &ndash; 6'2"</strong><span class="option-sub">Longer inseams needed</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'height','63plus')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-height-4"/></svg></span><span class="option-text"><strong class="option-title">6'3"+</strong><span class="option-sub">Length is the hard part</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
         <div class="question-feedback">Got it. We'll factor this into length.</div>
       </div>
@@ -2095,10 +2159,10 @@
         <label>Which leg shape looks best to you?</label>
         <span class="question-sub">What shape do you prefer?</span>
         <div class="options">
-          <button class="option" onclick="selectOption(this,'legShape','tapered')"><span class="option-text">Tapered</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'legShape','balanced')"><span class="option-text">Balanced</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'legShape','straight')"><span class="option-text">Straight</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'legShape','relaxed')"><span class="option-text">Relaxed</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'legShape','tapered')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-leg-tapered"/></svg></span><span class="option-text"><strong class="option-title">Tapered</strong><span class="option-sub">Narrows from knee to ankle</span></span><span class="fc-tag option-meta">Taper &mdash; high</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'legShape','balanced')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-leg-balanced"/></svg></span><span class="option-text"><strong class="option-title">Balanced</strong><span class="option-sub">Gentle taper, middle ground</span></span><span class="fc-tag option-meta">Taper &mdash; mid</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'legShape','straight')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-leg-straight"/></svg></span><span class="option-text"><strong class="option-title">Straight</strong><span class="option-sub">Same width top to bottom</span></span><span class="fc-tag option-meta">Taper &mdash; low</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'legShape','relaxed')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-leg-relaxed"/></svg></span><span class="option-text"><strong class="option-title">Relaxed</strong><span class="option-sub">Extra room all the way down</span></span><span class="fc-tag option-meta">Room &mdash; max</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
         <div class="question-feedback">Got it. That shape guides the recommendation.</div>
       </div>
@@ -2106,9 +2170,9 @@
         <label>What matters most?</label>
         <span class="question-sub">This helps us fine-tune the recommendation.</span>
         <div class="options">
-          <button class="option" onclick="selectOption(this,'priority','cleanerSilhouette')"><span class="option-text">Cleaner silhouette</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'priority','balancedEveryday')"><span class="option-text">Balanced everyday fit</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'priority','maximumComfort')"><span class="option-text">Maximum comfort</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'priority','cleanerSilhouette')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-scissors"/></svg></span><span class="option-text"><strong class="option-title">Cleaner silhouette</strong><span class="option-sub">Sharper, more tailored lines</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'priority','balancedEveryday')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-balance"/></svg></span><span class="option-text"><strong class="option-title">Balanced everyday fit</strong><span class="option-sub">Versatile for most settings</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'priority','maximumComfort')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-comfort"/></svg></span><span class="option-text"><strong class="option-title">Maximum comfort</strong><span class="option-sub">Room and ease come first</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
         <div class="question-feedback">Got it. That helps us prioritize.</div>
       </div>
@@ -2137,6 +2201,11 @@
           Quiz Complete
         </div>
         <h2 class="results-title">Your Fit Profile</h2>
+        <div class="results-meta-row">
+          <span class="fc-pill fc-pill-sage"><i class="fc-dot"></i>Strong match</span>
+          <span class="fc-pill"><i class="fc-dot"></i>Based on your 6 answers</span>
+          <span class="fc-pill fc-pill-plain" id="resultsMetaBuild" style="display:none;"></span>
+        </div>
       </div>
       <button class="btn-save" onclick="saveMyFit()">
         <svg viewBox="0 0 16 16" fill="none"><path d="M3 2H13L14 3V14L12 12L10 14L8 12L6 14L4 12L2 14V3L3 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><line x1="5" y1="5" x2="11" y2="5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
@@ -2145,7 +2214,7 @@
     </div>
     <div class="results-layout">
 
-      <!-- RIGHT MAIN -->
+      <!-- MAIN COLUMN -->
       <div class="results-main">
 
         <!-- DIAGNOSIS -->
@@ -2162,7 +2231,10 @@
             <h3 id="bestName">Athletic Taper</h3>
           </div>
           <div class="hero-card-body">
-            <img src="../images/fit-athletic-taper.png" alt="" class="hero-card-img" id="bestHeroImg">
+            <div class="hero-card-imgwrap">
+              <img src="../images/fit-athletic-taper.png" alt="" class="hero-card-img" id="bestHeroImg">
+              <span class="fc-chip fc-chip-overlay"><svg aria-hidden="true"><use href="#fc-ic-pants"/></svg>Fit illustration</span>
+            </div>
             <div class="hero-card-details">
               <p id="bestWhy">Roomy in the thigh with a defined taper below the knee. Built for muscular thighs and athletic builds.</p>
               <ul class="fit-checklist" id="bestChecklist">
@@ -2171,19 +2243,197 @@
                 <li><div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="#5B8C5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><span class="check-title" id="ckTitle3">Built for athletic builds</span><span class="check-sub" id="ckSub3">Muscular thighs welcome</span></div></li>
                 <li><div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="#5B8C5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><span class="check-title" id="ckTitle4">Structured stretch</span><span class="check-sub" id="ckSub4">Moves with you, keeps shape</span></div></li>
               </ul>
+              <div class="hero-card-specstrip">
+                <div class="fc-fact"><span class="fc-microlabel">Rise</span><span class="fc-fact-value" id="heroSpecRise">Mid rise</span></div>
+                <div class="fc-fact"><span class="fc-microlabel">Thigh</span><span class="fc-fact-value" id="heroSpecThigh">Roomy</span></div>
+                <div class="fc-fact"><span class="fc-microlabel">Leg opening</span><span class="fc-fact-value" id="heroSpecOpen">Moderate</span></div>
+              </div>
             </div>
           </div>
+        </div>
+
+        <!-- Fit Blueprint -->
+        <div class="fc-card results-block">
+          <div class="results-block-head">
+            <div>
+              <span class="fc-kicker">Fit blueprint</span>
+              <h3>The <span id="bpName">Athletic Taper</span> silhouette</h3>
+            </div>
+            <span class="fc-badge fc-badge-gold"><svg aria-hidden="true"><use href="#fc-ic-ruler"/></svg>Draft blueprint</span>
+          </div>
+          <div class="blueprint-grid">
+            <div class="fc-diagram-panel">
+              <div id="bpDiagram"></div>
+              <div class="fc-diagram-caption">
+                <span class="fc-microlabel">Front view &mdash; to scale of spec</span>
+                <span class="fc-tag">Placeholder</span>
+              </div>
+            </div>
+            <div class="blueprint-side">
+              <span class="fc-microlabel">Fit characteristics</span>
+              <div id="bpChars"></div>
+              <div class="blueprint-backview">
+                <svg viewBox="0 0 96 120" aria-hidden="true"><use href="#fc-il-pant-back"/></svg>
+                <div>
+                  <strong>Back view &mdash; seat &amp; yoke</strong>
+                  <p id="bpBackNote">Seat shaping placeholder note.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Measurements / Specification -->
+        <div class="fc-card results-block">
+          <div class="results-block-head">
+            <div>
+              <span class="fc-kicker">Measurements</span>
+              <h3>How <span id="fitSummaryName">this fit</span> is built</h3>
+            </div>
+            <span class="fc-badge fc-badge-gold"><svg aria-hidden="true"><use href="#fc-ic-tape"/></svg>Draft spec</span>
+          </div>
+          <div class="spec-grid" id="specGrid"></div>
+          <div class="fc-ref-row">
+            <div class="fc-ref-card">
+              <svg viewBox="0 0 96 56" aria-hidden="true"><use href="#fc-il-rise-compare"/></svg>
+              <span class="fc-ref-title">Rise</span>
+              <p>Waistband to crotch seam &mdash; how high pants sit.</p>
+            </div>
+            <div class="fc-ref-card">
+              <svg viewBox="0 0 96 56" aria-hidden="true"><use href="#fc-il-opening-compare"/></svg>
+              <span class="fc-ref-title">Leg opening</span>
+              <p>Hem width &mdash; decides how pants meet your shoes.</p>
+            </div>
+            <div class="fc-ref-card">
+              <svg viewBox="0 0 96 56" aria-hidden="true"><use href="#fc-il-seat-compare"/></svg>
+              <span class="fc-ref-title">Seat room</span>
+              <p>Space through hips and seat &mdash; room to sit and move.</p>
+            </div>
+          </div>
+          <div class="fc-note" style="margin-top:14px;"><svg aria-hidden="true"><use href="#fc-ic-info"/></svg>Placeholder specification &mdash; final measurements land with the FitCo line.</div>
+        </div>
+
+        <!-- Why this fit works -->
+        <div class="fc-card results-block">
+          <div class="results-block-head">
+            <div>
+              <span class="fc-kicker">Why this fit works</span>
+              <h3>Recommendation reasons</h3>
+            </div>
+            <span class="fc-pill fc-pill-sage"><i class="fc-dot"></i>Matched to your answers</span>
+          </div>
+          <ul class="fc-list fc-list-check" id="reasonsList"></ul>
+          <div class="fc-callout" style="margin-top:22px;">
+            <span class="fc-callout-icon"><svg aria-hidden="true"><use href="#fc-ic-shield"/></svg></span>
+            <div class="fc-callout-body">
+              <p class="fc-callout-title">Common mistakes this fit avoids</p>
+              <ul class="fc-list fc-list-x" id="mistakesList" style="margin-top:10px;"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Best for / Avoid if -->
+        <div class="fc-divider" style="margin-bottom:16px;">Body compatibility</div>
+        <div class="fitfor-grid">
+          <div class="fc-panel fc-panel-sage">
+            <h4><span class="fc-icon-tile fc-icon-tile-sm fc-tile-sage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></span>Best for</h4>
+            <ul class="fc-list fc-list-check" id="bestForList"></ul>
+          </div>
+          <div class="fc-panel">
+            <h4><span class="fc-icon-tile fc-icon-tile-sm fc-tile-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Avoid if</h4>
+            <ul class="fc-list fc-list-x" id="avoidIfList"></ul>
+          </div>
+        </div>
+
+        <!-- Styling suggestions -->
+        <div class="fc-card results-block">
+          <div class="results-block-head">
+            <div>
+              <span class="fc-kicker fc-kicker-gold">Styling</span>
+              <h3>Wearing it well</h3>
+            </div>
+            <span class="fc-badge fc-badge-cream"><svg aria-hidden="true"><use href="#fc-ic-hanger"/></svg>Draft notes</span>
+          </div>
+          <div class="style-cols">
+            <div class="style-col">
+              <span class="fc-microlabel">Pairs with</span>
+              <div class="fc-chip-row" id="pairsChips"></div>
+            </div>
+            <div class="style-col">
+              <span class="fc-microlabel">Recommended occasions</span>
+              <div class="fc-chip-row" id="occasionChips"></div>
+            </div>
+          </div>
+          <div class="fc-callout fc-callout-gold">
+            <span class="fc-callout-icon"><svg aria-hidden="true"><use href="#fc-ic-fabric"/></svg></span>
+            <div class="fc-callout-body">
+              <p class="fc-callout-title">Fabric notes</p>
+              <p class="fc-callout-text" id="fabricNote">--</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fit comparison -->
+        <div class="fc-card results-block">
+          <div class="results-block-head">
+            <div>
+              <span class="fc-kicker">Fit comparison</span>
+              <h3>Your match vs. the runners-up</h3>
+            </div>
+            <span class="fc-pill"><i class="fc-dot"></i>Ranked by your answers</span>
+          </div>
+          <div id="compareRows"></div>
+          <div class="fc-note" style="margin-top:14px;"><svg aria-hidden="true"><use href="#fc-ic-info"/></svg>Alternates ranked second and third for your build &mdash; both remain solid options.</div>
         </div>
 
         <!-- Product Recommendations -->
         <div class="product-section" id="productSection">
           <div class="product-section-header">
             <h3>Recommended for Your Build</h3>
+            <span class="fc-pill fc-pill-plain"><i class="fc-dot"></i>Independent picks</span>
           </div>
           <div class="product-carousel" id="productCarousel"></div>
+          <div class="fc-note" style="margin-top:14px;"><svg aria-hidden="true"><use href="#fc-ic-shield"/></svg>FitCo doesn't sell these products &mdash; links go straight to the retailer.</div>
         </div>
 
       </div><!-- /results-main -->
+
+      <!-- SIDEBAR -->
+      <aside class="results-aside">
+        <div class="results-aside-stack">
+
+          <div class="fc-card aside-card">
+            <div class="aside-card-head">
+              <span class="fc-icon-tile fc-icon-tile-sm fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-profile"/></svg></span>
+              <h4>Quick facts &mdash; your answers</h4>
+            </div>
+            <div id="asideAnswers"></div>
+          </div>
+
+          <div class="fc-card aside-card">
+            <div class="aside-card-head">
+              <span class="fc-icon-tile fc-icon-tile-sm fc-tile-gold"><svg aria-hidden="true"><use href="#fc-ic-tape"/></svg></span>
+              <h4>Specification panel</h4>
+            </div>
+            <div id="asideSpec"></div>
+            <div class="fc-note" style="margin-top:12px;"><svg aria-hidden="true"><use href="#fc-ic-info"/></svg>Draft spec &mdash; placeholder values</div>
+          </div>
+
+          <div class="fc-panel fc-panel-sage aside-card">
+            <div class="aside-card-head">
+              <span class="fc-icon-tile fc-icon-tile-sm fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-arrow"/></svg></span>
+              <h4>What's next</h4>
+            </div>
+            <div class="results-retake-wrap">
+              <a class="btn" href="/shop/index.html" style="width:100%;">Shop Your Fit</a>
+              <button class="btn-text" onclick="resetQuiz()">Retake the quiz</button>
+              <span class="fc-note"><svg aria-hidden="true"><use href="#fc-ic-bookmark"/></svg>Results save to this device</span>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
     </div><!-- /results-layout -->
   </div><!-- /results-inner -->
 </section>
@@ -2287,6 +2537,384 @@ const fitSecondaryChecks = {
   relaxedTaper: ['Comfortable room', 'Subtle taper', 'Relaxed style'],
   relaxedFit: ['Maximum comfort', 'Easy leg', 'Laid-back fit']
 };
+
+// ─── FIT DETAIL DATA (placeholder spec content, presentation only) ───
+// Meters are 1–5. Room scale: Trim → Full. Taper scale: None → Sharp.
+var fitDetails = {
+  slimTaper: {
+    meters: { seat: 2, thigh: 2, calf: 2, taper: 4, opening: 2 },
+    stretch: 'Look for 1\u20132% elastane',
+    code: 'FC-SLT', openIn: '6.75"',
+    chars: { structure: 8, flex: 6, move: 4 },
+    backNote: 'Trim seat with minimal excess below the yoke \u2014 placeholder.',
+    reasons: [
+      'Cut closer through the leg so fabric follows your frame instead of hanging off it',
+      'A strong taper keeps the hem clean over slim shoes',
+      'Reads intentional \u2014 no excess fabric at any point'
+    ],
+    avoidsMistakes: [
+      'Swimming in fabric below the knee',
+      'Sizing up just to fix a loose seat',
+      'Hems stacking heavily over the shoe'
+    ],
+    bestFor: ['Lean builds that lose shape in straight cuts', 'Cleaner, tailored silhouettes', 'Slim shoes and low-profile sneakers', 'Little-to-no break at the hem'],
+    avoidIf: ['Thighs or seat ever feel restricted', 'You prioritize comfort over shape', 'You sit for most of the day'],
+    pairsWith: ['Slim sneakers', 'Chelsea boots', 'Tucked knits', 'Cropped jackets'],
+    occasions: ['Office', 'Dinners out', 'Smart casual'],
+    fabric: 'Works best in structured fabrics with a touch of stretch \u2014 fully rigid denim can feel tight through the knee.'
+  },
+  straightFit: {
+    meters: { seat: 3, thigh: 3, calf: 3, taper: 2, opening: 3 },
+    stretch: 'Optional',
+    code: 'FC-STR', openIn: '7.50"',
+    chars: { structure: 6, flex: 4, move: 6 },
+    backNote: 'Standard seat curve with an even drape off the yoke \u2014 placeholder.',
+    reasons: [
+      'Consistent width flatters most builds without any effort',
+      'Balanced proportions dress up or down easily',
+      'The most dependable silhouette across brands and fabrics'
+    ],
+    avoidsMistakes: [
+      'Overly skinny hems that fight your shoes',
+      'Trend-driven cuts that date quickly',
+      'Fabric pooling at the ankle'
+    ],
+    bestFor: ['Average proportions', 'A consistent line from hip to hem', 'Wardrobes built around versatility', 'Most shoe shapes'],
+    avoidIf: ['You want a sharply tapered hem', 'Muscular thighs pull at standard cuts', 'You prefer a roomier, drapier leg'],
+    pairsWith: ['Everyday sneakers', 'Loafers', 'Oxford shirts', 'Crewnecks'],
+    occasions: ['Office', 'Weekend', 'Travel'],
+    fabric: 'The most forgiving cut across fabrics \u2014 cotton twill, denim, and wool all drape cleanly.'
+  },
+  athleticTaper: {
+    meters: { seat: 4, thigh: 5, calf: 3, taper: 4, opening: 2 },
+    stretch: 'Recommended (1\u20133%)',
+    code: 'FC-ATT', openIn: '7.00"',
+    chars: { structure: 7, flex: 9, move: 7 },
+    backNote: 'Deeper seat curve and angled yoke add room to sit \u2014 placeholder.',
+    reasons: [
+      'Extra room through the seat and thigh, exactly where standard cuts pinch',
+      'The taper below the knee keeps the silhouette sharp, not baggy',
+      'Stretch fabrics move with you instead of fighting you'
+    ],
+    avoidsMistakes: [
+      'Sizing up at the waist just to free the thighs',
+      'Pull lines across the thigh and seat pinch when sitting',
+      'Baggy hems that undo an athletic frame'
+    ],
+    bestFor: ['Muscular thighs and developed seats', 'Squat and cycling builds', 'Clean lines without the squeeze', 'Sneakers and trim boots'],
+    avoidIf: ['You prefer a fuller, straighter leg', 'A very relaxed drape is the goal', 'You dislike a defined ankle'],
+    pairsWith: ['Clean sneakers', 'Trim boots', 'Fitted tees', 'Bomber jackets'],
+    occasions: ['Everyday', 'Office casual', 'Nights out'],
+    fabric: 'Prioritize 4-way stretch or 1\u20133% elastane \u2014 rigid fabrics cancel out the extra thigh room.'
+  },
+  athleticStraight: {
+    meters: { seat: 4, thigh: 5, calf: 4, taper: 2, opening: 3 },
+    stretch: 'Recommended',
+    code: 'FC-ATS', openIn: '7.75"',
+    chars: { structure: 6, flex: 7, move: 8 },
+    backNote: 'Generous seat with a relaxed yoke for broader frames \u2014 placeholder.',
+    reasons: [
+      'A generous seat and thigh keep everything comfortable through the day',
+      'The straight leg balances a broader upper frame',
+      'No pinch points from knee to hem'
+    ],
+    avoidsMistakes: [
+      'Tapered hems that cling to bigger calves',
+      'Pulling across the seat when sitting',
+      'The size-up-then-belt-it routine'
+    ],
+    bestFor: ['Broader and athletic builds needing seat room', 'A straighter drape over bigger calves', 'Balanced, unfussy silhouettes', 'Wider shoe profiles'],
+    avoidIf: ['You want visible taper at the ankle', 'A slim, tailored line is the goal', 'You are between sizes and prefer trim cuts'],
+    pairsWith: ['Chunky sneakers', 'Work boots', 'Overshirts', 'Straight hems'],
+    occasions: ['Everyday', 'Casual office', 'Weekend'],
+    fabric: 'Mid-weight twills and denim with 1\u20132% stretch hold the straight line best.'
+  },
+  relaxedTaper: {
+    meters: { seat: 4, thigh: 4, calf: 4, taper: 3, opening: 3 },
+    stretch: 'Optional',
+    code: 'FC-RLT', openIn: '7.75"',
+    chars: { structure: 5, flex: 4, move: 8 },
+    backNote: 'Roomy seat with soft shaping for all-day sitting \u2014 placeholder.',
+    reasons: [
+      'Room everywhere it counts, without ending in a baggy hem',
+      'The soft taper keeps the ankle tidy',
+      'A higher rise anchors the fit through the day'
+    ],
+    avoidsMistakes: [
+      'Comfort cuts that end up looking shapeless',
+      'Excess fabric flapping at the ankle',
+      'Waistbands that slide on relaxed fits'
+    ],
+    bestFor: ['Comfort-first wearers who still want shape', 'Fuller thighs and calves', 'Higher rises that stay put', 'All-day sitting'],
+    avoidIf: ['You want a sharp, tailored line', 'A slim build that drowns in fabric', 'Minimal break is a must'],
+    pairsWith: ['Retro sneakers', 'Loafers', 'Relaxed tees', 'Knit polos'],
+    occasions: ['Weekend', 'Travel', 'Casual office'],
+    fabric: 'Softer twills and washed denim drape better in relaxed cuts than crisp, starchy fabrics.'
+  },
+  relaxedFit: {
+    meters: { seat: 5, thigh: 5, calf: 5, taper: 1, opening: 4 },
+    stretch: 'Not needed',
+    code: 'FC-RLX', openIn: '8.25"',
+    chars: { structure: 3, flex: 2, move: 10 },
+    backNote: 'Fullest seat cut \u2014 the drape does the work. Placeholder.',
+    reasons: [
+      'No restriction at any point of the leg',
+      'A wide opening drapes over any shoe',
+      'The most forgiving cut across body types'
+    ],
+    avoidsMistakes: [
+      'Tightness anywhere, full stop',
+      'Fits that limit movement when bending or sitting',
+      'Constant mid-day waistband adjustments'
+    ],
+    bestFor: ['Maximum room and airflow', 'Broader builds and bigger calves', 'A relaxed drape from hip to hem', 'Comfort over silhouette'],
+    avoidIf: ['You want any visible taper', 'A shorter or slimmer frame \u2014 fabric can overwhelm', 'A sharp office look is the priority'],
+    pairsWith: ['Chunky sneakers', 'Sandals', 'Oversized layers', 'Workwear jackets'],
+    occasions: ['Weekend', 'Casual outings', 'Off-duty days'],
+    fabric: 'Heavier fabrics hang cleaner in wide cuts \u2014 lightweight cloth can look unstructured.'
+  }
+};
+
+// Scale words for meter values (1–5)
+var roomWords = ['', 'Trim', 'Slim', 'Standard', 'Roomy', 'Full'];
+var taperWords = ['', 'None', 'Subtle', 'Soft', 'Defined', 'Sharp'];
+var openWords = ['', 'Narrow', 'Trim', 'Classic', 'Wide', 'Extra wide'];
+
+// Icons come from the shared FitCo sprite (fitco-ui.js)
+var fcUse = (window.FC && FC.use) ? FC.use : function () { return ''; };
+var fcIcons = {
+  seat: fcUse('fc-ic-seat'),
+  thigh: fcUse('fc-ic-thigh'),
+  calf: fcUse('fc-ic-calf'),
+  taper: fcUse('fc-ic-taper'),
+  opening: fcUse('fc-ic-opening'),
+  rise: fcUse('fc-ic-rise')
+};
+var fcCheckSvg = '<svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var fcXSvg = '<svg viewBox="0 0 12 12" fill="none"><path d="M3 3l6 6M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+
+function meterHTML(level, gold) {
+  var html = '<span class="fc-meter' + (gold ? ' fc-meter-gold' : '') + '">';
+  for (var i = 1; i <= 5; i++) html += '<i class="' + (i <= level ? 'on' : '') + '"></i>';
+  return html + '</span>';
+}
+
+// 10-cell measurement bar; meters are 1–5 so values are doubled going in
+function barHTML(value10, opts) {
+  return (window.FC && FC.bar) ? FC.bar(value10, opts) : '';
+}
+var charWords = ['', 'Low', 'Low', 'Low', 'Mid', 'Mid', 'Mid', 'High', 'High', 'High', 'Max'];
+
+function fcListHTML(items, iconSvg) {
+  return (items || []).map(function(t) {
+    return '<li><span class="fc-li-icon">' + iconSvg + '</span><span>' + t + '</span></li>';
+  }).join('');
+}
+
+function fcChipsHTML(items) {
+  return (items || []).map(function(t) { return '<span class="fc-chip">' + t + '</span>'; }).join('');
+}
+
+function specRowHTML(icon, label, meterLevel, valueText, subText) {
+  return '<div class="fc-spec-row">' +
+    '<span class="fc-spec-label"><span class="fc-icon-tile fc-icon-tile-sm">' + icon + '</span>' + label + '</span>' +
+    (meterLevel != null ? barHTML(meterLevel * 2) : '') +
+    '<span class="fc-spec-value">' + valueText +
+      (subText ? '<span class="fc-spec-sub">' + subText + '</span>' : '') +
+    '</span>' +
+  '</div>';
+}
+
+function charRowHTML(iconId, label, value10, valueText) {
+  return '<div class="char-row">' +
+    '<span class="char-label"><span class="fc-icon-tile fc-icon-tile-sm">' + fcUse(iconId) + '</span>' + label + '</span>' +
+    barHTML(value10) +
+    '<span class="char-value">' + valueText + '</span>' +
+  '</div>';
+}
+
+// ─── RESULTS DETAIL RENDERING (presentation only) ───
+function renderFitDetails(fitKey) {
+  var d = fitDetails[fitKey] || fitDetails.straightFit;
+  var fit = fits[fitKey] || fits.straightFit;
+
+  var nameEl = document.getElementById('fitSummaryName');
+  if (nameEl) nameEl.textContent = fit.name;
+
+  // Hero card quick-spec strip
+  var riseEl = document.getElementById('heroSpecRise');
+  if (riseEl) riseEl.textContent = fit.rise;
+  var thighEl = document.getElementById('heroSpecThigh');
+  if (thighEl) thighEl.textContent = roomWords[d.meters.thigh];
+  var openEl = document.getElementById('heroSpecOpen');
+  if (openEl) openEl.textContent = openWords[d.meters.opening];
+
+  // Measurements spec grid (10-cell bars + placeholder values)
+  var grid = document.getElementById('specGrid');
+  if (grid) {
+    var riseLevel = fit.rise.indexOf('High') !== -1 ? 3.5 : 2.5;
+    grid.innerHTML =
+      specRowHTML(fcIcons.seat, 'Seat room', d.meters.seat, roomWords[d.meters.seat]) +
+      specRowHTML(fcIcons.thigh, 'Thigh room', d.meters.thigh, roomWords[d.meters.thigh]) +
+      specRowHTML(fcIcons.calf, 'Calf room', d.meters.calf, roomWords[d.meters.calf]) +
+      specRowHTML(fcIcons.taper, 'Knee taper', d.meters.taper, taperWords[d.meters.taper]) +
+      specRowHTML(fcIcons.opening, 'Leg opening', d.meters.opening, openWords[d.meters.opening], d.openIn) +
+      specRowHTML(fcIcons.rise, 'Rise', riseLevel, fit.rise);
+  }
+
+  // Why it works + mistakes avoided
+  var reasonsEl = document.getElementById('reasonsList');
+  if (reasonsEl) reasonsEl.innerHTML = fcListHTML(d.reasons, fcCheckSvg);
+  var mistakesEl = document.getElementById('mistakesList');
+  if (mistakesEl) mistakesEl.innerHTML = fcListHTML(d.avoidsMistakes, fcXSvg);
+
+  // Best for / avoid if
+  var bestForEl = document.getElementById('bestForList');
+  if (bestForEl) bestForEl.innerHTML = fcListHTML(d.bestFor, fcCheckSvg);
+  var avoidEl = document.getElementById('avoidIfList');
+  if (avoidEl) avoidEl.innerHTML = fcListHTML(d.avoidIf, fcXSvg);
+
+  // Styling
+  var pairsEl = document.getElementById('pairsChips');
+  if (pairsEl) pairsEl.innerHTML = fcChipsHTML(d.pairsWith);
+  var occEl = document.getElementById('occasionChips');
+  if (occEl) occEl.innerHTML = fcChipsHTML(d.occasions);
+  var fabricEl = document.getElementById('fabricNote');
+  if (fabricEl) fabricEl.textContent = d.fabric;
+}
+
+// Fit blueprint: line-art silhouette with measurement callouts + characteristic bars
+function renderBlueprint(fitKey) {
+  var d = fitDetails[fitKey] || fitDetails.straightFit;
+  var fit = fits[fitKey] || fits.straightFit;
+
+  var nameEl = document.getElementById('bpName');
+  if (nameEl) nameEl.textContent = fit.name;
+  var backEl = document.getElementById('bpBackNote');
+  if (backEl) backEl.textContent = d.backNote;
+
+  var host = document.getElementById('bpDiagram');
+  if (host && window.FC && FC.pantGeo) {
+    var geoKey = FC.pantGeo[fitKey] ? fitKey : 'straightFit';
+    var g = FC.pantGeo[geoKey];
+    var px = 60;                       // pant x offset inside the diagram
+    var thighX = px + 50 + g.t;        // outer right edge at thigh (y 52)
+    var kneeX = px + 50.5 + g.k;       // y 80
+    var hemX = px + 50.5 + g.h;        // y 114
+    var lx = 170, lineEnd = 166;
+    var riseWord = fit.rise.replace(' Rise', '').toUpperCase();
+    host.innerHTML =
+      '<svg viewBox="0 0 260 128" aria-hidden="true" style="width:100%;height:auto;display:block;color:var(--text);">' +
+        '<use href="#fc-il-fit-' + geoKey + '" x="' + px + '" y="4" width="96" height="120"/>' +
+        // rise guide (waistband to crotch, left side)
+        '<path class="bp-tick" d="M50 12h8M50 47h8"/>' +
+        '<path class="bp-line" d="M54 12v35"/>' +
+        '<text class="bp-label" x="4" y="26">RISE</text>' +
+        '<text class="bp-value" x="4" y="36">' + riseWord + '</text>' +
+        // thigh callout
+        '<circle class="bp-dot" cx="' + thighX + '" cy="54" r="1.8"/>' +
+        '<path class="bp-line" d="M' + (thighX + 3) + ' 54H' + lineEnd + '"/>' +
+        '<text class="bp-label" x="' + lx + '" y="51">THIGH</text>' +
+        '<text class="bp-value" x="' + lx + '" y="60">' + roomWords[d.meters.thigh] + '</text>' +
+        // knee taper callout
+        '<circle class="bp-dot" cx="' + kneeX + '" cy="82" r="1.8"/>' +
+        '<path class="bp-line" d="M' + (kneeX + 3) + ' 82H' + lineEnd + '"/>' +
+        '<text class="bp-label" x="' + lx + '" y="79">KNEE TAPER</text>' +
+        '<text class="bp-value" x="' + lx + '" y="88">' + taperWords[d.meters.taper] + '</text>' +
+        // leg opening callout
+        '<circle class="bp-dot" cx="' + hemX + '" cy="114" r="1.8"/>' +
+        '<path class="bp-line" d="M' + (hemX + 3) + ' 114H' + lineEnd + '"/>' +
+        '<text class="bp-label" x="' + lx + '" y="111">LEG OPENING</text>' +
+        '<text class="bp-value" x="' + lx + '" y="120">' + d.openIn + ' \u00b7 ' + openWords[d.meters.opening].toUpperCase() + '</text>' +
+        // floor reference
+        '<path class="bp-guide" d="M' + px + ' 126h96"/>' +
+      '</svg>';
+  }
+
+  var chars = document.getElementById('bpChars');
+  if (chars) {
+    chars.innerHTML =
+      charRowHTML('fc-ic-pin', 'Structure', d.chars.structure, charWords[d.chars.structure]) +
+      charRowHTML('fc-ic-stretch', 'Flexibility', d.chars.flex, charWords[d.chars.flex]) +
+      charRowHTML('fc-ic-taper', 'Taper', d.meters.taper * 2, charWords[d.meters.taper * 2]) +
+      charRowHTML('fc-ic-comfort', 'Movement', d.chars.move, charWords[d.chars.move]);
+  }
+}
+
+function renderCompare(bestKey, altKeys) {
+  var container = document.getElementById('compareRows');
+  if (!container) return;
+  var rows = [bestKey].concat(altKeys || []);
+  container.innerHTML = rows.map(function(k, idx) {
+    var d = fitDetails[k] || fitDetails.straightFit;
+    var fit = fits[k];
+    if (!fit) return '';
+    var isBest = idx === 0;
+    var pill = isBest
+      ? '<span class="fc-pill fc-pill-sage" style="align-self:flex-start;"><i class="fc-dot"></i>Your match</span>'
+      : '<span class="fc-pill fc-pill-plain" style="align-self:flex-start;"><i class="fc-dot"></i>Alternate ' + idx + '</span>';
+    var diff = isBest ? fit.description : getAltExplanation(bestKey, k);
+    var thumb = window.FC ? '<span class="compare-thumb">' + FC.pantSvg(k) + '</span>' : '';
+    return '<div class="compare-row' + (isBest ? ' compare-best' : '') + '">' +
+      '<div class="compare-name">' + thumb +
+        '<div class="compare-name-copy">' + pill + '<strong>' + fit.name + '</strong></div>' +
+      '</div>' +
+      '<div class="compare-metric"><span class="fc-microlabel">Thigh room</span>' + barHTML(d.meters.thigh * 2, { sm: true }) + '</div>' +
+      '<div class="compare-metric"><span class="fc-microlabel">Taper</span>' + barHTML(d.meters.taper * 2, { sm: true }) + '</div>' +
+      '<div class="compare-diff">' + diff + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function renderAnswerSummary() {
+  var container = document.getElementById('asideAnswers');
+  if (!container) return;
+  var productLabels = { jeans: 'Jeans', chinos: 'Chinos', technical: 'Technical pants', any: 'Open to anything' };
+  var buildLabels = { slim: 'Slim', average: 'Average', athletic: 'Athletic', broader: 'Broader' };
+  var heightLabels = { under58: 'Under 5\'8"', '58to511': '5\'8" \u2013 5\'11"', '60to62': '6\'0" \u2013 6\'2"', '63plus': '6\'3"+' };
+  var legLabels = { tapered: 'Tapered', balanced: 'Balanced', straight: 'Straight', relaxed: 'Relaxed' };
+  var priorityLabels = { cleanerSilhouette: 'Cleaner silhouette', balancedEveryday: 'Balanced everyday', maximumComfort: 'Maximum comfort' };
+  var issueLabels = { tightThighsSeat: 'Tight thigh/seat', waistGap: 'Waist gap', tooMuchFabric: 'Excess fabric', lengthOff: 'Length off', usuallyFine: 'Usually fine' };
+  var issues = (answers.fitWrong || []).map(function(v) { return issueLabels[v] || v; }).join(', ');
+
+  var rows = [
+    ['Shopping for', productLabels[answers.productType]],
+    ['Build', buildLabels[answers.build]],
+    ['Height', heightLabels[answers.height]],
+    ['Fit issues', issues],
+    ['Leg shape', legLabels[answers.legShape]],
+    ['Priority', priorityLabels[answers.priority]]
+  ];
+  container.innerHTML = rows.map(function(r) {
+    return '<div class="aside-row"><span class="aside-row-label">' + r[0] + '</span><span class="aside-row-value">' + (r[1] || '\u2014') + '</span></div>';
+  }).join('');
+
+  // Header meta pill
+  var metaEl = document.getElementById('resultsMetaBuild');
+  if (metaEl && buildLabels[answers.build]) {
+    metaEl.innerHTML = '<i class="fc-dot"></i>' + buildLabels[answers.build] + ' build \u00b7 ' + (heightLabels[answers.height] || '');
+    metaEl.style.display = 'inline-flex';
+  }
+}
+
+function renderAsideSpec(fitKey) {
+  var container = document.getElementById('asideSpec');
+  if (!container) return;
+  var d = fitDetails[fitKey] || fitDetails.straightFit;
+  var fit = fits[fitKey] || fits.straightFit;
+  var rows = [
+    ['Fit', fit.name],
+    ['Spec code', d.code],
+    ['Rise', fit.rise],
+    ['Thigh', roomWords[d.meters.thigh]],
+    ['Knee taper', taperWords[d.meters.taper]],
+    ['Leg opening', d.openIn + ' \u00b7 ' + openWords[d.meters.opening]],
+    ['Stretch', d.stretch]
+  ];
+  container.innerHTML = rows.map(function(r) {
+    return '<div class="aside-row"><span class="aside-row-label">' + r[0] + '</span><span class="aside-row-value">' + r[1] + '</span></div>';
+  }).join('');
+}
 
 // ─── DIAGNOSIS COPY SYSTEM ───
 // Pain → Problem → Solution. Uses user's actual answers. Human tone.
@@ -2541,7 +3169,8 @@ function selectOption(btn, key, value) {
   btn.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
   btn.classList.add('selected');
   document.getElementById('nextBtn').disabled = false;
-  updateFitProfile(key, btn.textContent.trim());
+  var titleEl = btn.querySelector('.option-title');
+  updateFitProfile(key, (titleEl ? titleEl.textContent : btn.textContent).trim());
   // Auto-advance except for multi-select questions
   var isMulti = btn.closest('.options') && btn.closest('.options').dataset.multiselect === 'true';
   if (isMulti) return; // Don't auto-advance on multi-select
@@ -2575,10 +3204,34 @@ function toggleMultiOption(btn, key, value) {
   // Enable Next if at least 1 selected
   document.getElementById('nextBtn').disabled = arr.length === 0;
 
-  // Update fit profile (show first 2 selections)
-  var displayText = arr.length > 0 ? arr.join(', ') : '--';
+  // Update fit profile (show first 2 selections, human-readable)
+  var shortLabels = {
+    tightThighsSeat: 'Tight thigh/seat',
+    waistGap: 'Waist gap',
+    tooMuchFabric: 'Excess fabric',
+    lengthOff: 'Length off',
+    usuallyFine: 'Usually fine'
+  };
+  var displayText = arr.length > 0 ? arr.map(function(v) { return shortLabels[v] || v; }).join(', ') : '--';
   updateFitProfile(key, displayText);
 }
+
+// Profile row icons follow the selected answer (presentation only)
+var profileIconMap = {
+  productType: { jeans: 'fc-ic-denim', chinos: 'fc-ic-crease', technical: 'fc-ic-stretch', any: 'fc-ic-sparkle' },
+  build: { slim: 'fc-ic-build-slim', average: 'fc-ic-build-average', athletic: 'fc-ic-build-athletic', broader: 'fc-ic-build-broader' },
+  height: { under58: 'fc-ic-height-1', '58to511': 'fc-ic-height-2', '60to62': 'fc-ic-height-3', '63plus': 'fc-ic-height-4' },
+  legShape: { tapered: 'fc-ic-leg-tapered', balanced: 'fc-ic-leg-balanced', straight: 'fc-ic-leg-straight', relaxed: 'fc-ic-leg-relaxed' },
+  priority: { cleanerSilhouette: 'fc-ic-scissors', balancedEveryday: 'fc-ic-balance', maximumComfort: 'fc-ic-comfort' }
+};
+var profileIconDefaults = {
+  productType: 'fc-ic-pants',
+  build: 'fc-ic-body',
+  height: 'fc-ic-height-3',
+  fitWrong: 'fc-ic-tight',
+  legShape: 'fc-ic-taper',
+  priority: 'fc-ic-sparkle'
+};
 
 function updateFitProfile(key, value) {
   var labels = {
@@ -2591,11 +3244,42 @@ function updateFitProfile(key, value) {
   };
   var item = document.getElementById('profile-' + key);
   if (item) {
+    var isEmpty = value === '--';
     item.textContent = value;
-    item.classList.remove('empty');
-    item.parentElement.classList.add('active');
-    setTimeout(function() { item.parentElement.classList.remove('active'); }, 400);
+    item.classList.toggle('empty', isEmpty);
+    var row = item.closest('.fit-profile-item') || item.parentElement;
+    row.classList.toggle('filled', !isEmpty);
+    row.classList.add('active');
+    setTimeout(function() { row.classList.remove('active'); }, 400);
+
+    // Swap the row icon to match the recorded answer
+    var tile = document.getElementById('profile-icon-' + key);
+    if (tile && window.FC) {
+      var raw = answers[key];
+      var iconId = (!isEmpty && profileIconMap[key] && typeof raw === 'string') ? profileIconMap[key][raw] : null;
+      tile.innerHTML = fcUse(iconId || profileIconDefaults[key]);
+    }
   }
+  updateProfileMeter();
+}
+
+// Profile completeness meter (presentation only)
+function updateProfileMeter() {
+  var keys = ['productType', 'build', 'fitWrong', 'height', 'legShape', 'priority'];
+  var filled = 0;
+  keys.forEach(function(k) {
+    var v = answers[k];
+    if (v !== undefined && (!Array.isArray(v) || v.length > 0)) filled++;
+  });
+  var meter = document.getElementById('profileMeter');
+  if (meter) {
+    var segs = meter.querySelectorAll('i');
+    for (var i = 0; i < segs.length; i++) {
+      segs[i].classList.toggle('on', i < filled);
+    }
+  }
+  var label = document.getElementById('profileMeterLabel');
+  if (label) label.textContent = filled + ' of ' + keys.length + ' answered';
 }
 
 var helperMessages = [
@@ -2818,6 +3502,11 @@ function calculateResults() {
     diagEl.innerHTML = diagnosisText.split(diagFitName).join('<strong>' + diagFitName + '</strong>');
   }
   renderHeroCard(bestKey);
+  renderFitDetails(bestKey);
+  renderBlueprint(bestKey);
+  renderCompare(bestKey, [alt1Key, alt2Key]);
+  renderAnswerSummary();
+  renderAsideSpec(bestKey);
   renderProducts(bestKey, [alt1Key, alt2Key], answers.productType);
 
   document.getElementById('quiz').style.display = 'none';
@@ -2849,6 +3538,17 @@ function saveMyFit() {
 function resetQuiz() {
   currentQ = 1;
   for (const k in answers) delete answers[k];
+  updateProfileMeter();
+  // Reset the fitting-report panel to its empty state
+  document.querySelectorAll('.fit-profile-value').forEach(function(v) {
+    v.textContent = '--';
+    v.classList.add('empty');
+  });
+  document.querySelectorAll('.fit-profile-item').forEach(function(r) { r.classList.remove('filled'); });
+  Object.keys(profileIconDefaults).forEach(function(k) {
+    var tile = document.getElementById('profile-icon-' + k);
+    if (tile && window.FC) tile.innerHTML = fcUse(profileIconDefaults[k]);
+  });
   document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
   document.getElementById('results').classList.remove('active');
   document.getElementById('quiz').style.display = 'block';
