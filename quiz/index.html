@@ -36,6 +36,8 @@
   #quizIntro, #quiz, #results {
     scroll-margin-top: calc(var(--header-h) + 20px);
   }
+  /* Quiz stays hidden until the intro's Start button reveals it */
+  #quiz { display: none; }
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -929,14 +931,6 @@
   .quiz-header h2 { margin-bottom: 6px; font-size: 28px; }
   .quiz-header p { color: var(--text-muted); font-size: 15px; }
 
-  .quiz-helper {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-top: 4px;
-    margin-bottom: 8px;
-    font-style: italic;
-    min-height: 20px;
-  }
 
   .quiz-counter {
     font-family: 'IBM Plex Mono', monospace;
@@ -1995,7 +1989,7 @@
       <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-taper"/></svg>Leg shape</span>
       <span class="fc-chip"><svg aria-hidden="true"><use href="#fc-ic-sparkle"/></svg>Priority</span>
     </div>
-    <button class="btn" style="margin-top:34px;" onclick="document.getElementById('quizIntro').style.display='none';document.getElementById('quiz').scrollIntoView({behavior:'smooth'});">Start Fit Quiz</button>
+    <button class="btn" style="margin-top:34px;" onclick="document.getElementById('quizIntro').style.display='none';document.getElementById('quiz').style.display='block';document.getElementById('quiz').scrollIntoView({behavior:'smooth'});">Start Fit Quiz</button>
     <div class="quiz-intro-note-row">
       <span class="fc-note"><svg aria-hidden="true"><use href="#fc-ic-shield"/></svg>No account needed</span>
       <span class="fc-note"><svg aria-hidden="true"><use href="#fc-ic-bookmark"/></svg>Results save to this device</span>
@@ -2046,7 +2040,6 @@
     <div class="progress">
       <div class="progress-fill" id="progressFill"></div>
     </div>
-    <p class="quiz-helper" id="quizHelper">Finding what fits you...</p>
     <div class="fit-profile" id="fitProfile">
       <div class="fit-profile-card">
         <div class="fit-profile-head">
@@ -2188,7 +2181,7 @@
 <section class="loading-state" id="loadingState">
   <div class="loading-inner">
     <div class="loading-spinner"></div>
-    <p class="loading-message" id="loadingMessage">Finding the right fit for you...</p>
+    <p class="loading-message" id="loadingMessage">Building your Fit Profile...</p>
   </div>
 </section>
 
@@ -3282,15 +3275,6 @@ function updateProfileMeter() {
   if (label) label.textContent = filled + ' of ' + keys.length + ' answered';
 }
 
-var helperMessages = [
-  'Noting what you are looking for...',
-  'Looking at your build...',
-  'Noting fit issues...',
-  'Factoring in height...',
-  'Noting leg shape...',
-  'Noting what matters most...'
-];
-
 function showQuestion(n) {
   for (let i = 1; i <= totalQ; i++) {
     var qEl = document.getElementById('q' + i);
@@ -3301,8 +3285,6 @@ function showQuestion(n) {
   var counter = document.getElementById('questionCounter');
   if (counter) counter.textContent = 'Question ' + n + ' of ' + totalQ;
   document.getElementById('backBtn').style.visibility = n === 1 ? 'hidden' : 'visible';
-  var helperEl = document.getElementById('quizHelper');
-  if (helperEl) helperEl.textContent = helperMessages[n - 1] || '';
   var hasAnswer = answers[getKey(n)] !== undefined;
   document.getElementById('nextBtn').disabled = !hasAnswer;
   document.getElementById('nextBtn').textContent = n === totalQ ? 'See Results' : 'Next';
@@ -3320,29 +3302,11 @@ function nextQuestion() {
 function showLoadingThenResults() {
   document.getElementById('quiz').style.display = 'none';
   document.getElementById('loadingState').classList.add('active');
-  var messages = [
-    'Finding the right fit for you...',
-    'Matching your answers...',
-    'Almost there...'
-  ];
-  var msgEl = document.getElementById('loadingMessage');
-  var step = 0;
-  msgEl.textContent = messages[0];
-  var interval = setInterval(function() {
-    step++;
-    if (step < messages.length) {
-      msgEl.style.opacity = '0';
-      setTimeout(function() {
-        msgEl.textContent = messages[step];
-        msgEl.style.opacity = '1';
-      }, 300);
-    }
-  }, 700);
+  document.getElementById('loadingMessage').textContent = 'Building your Fit Profile...';
   setTimeout(function() {
-    clearInterval(interval);
     document.getElementById('loadingState').classList.remove('active');
     calculateResults();
-  }, 2200);
+  }, 400);
 }
 
 function prevQuestion() {
