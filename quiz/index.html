@@ -2481,6 +2481,26 @@ const fitImages = {
   relaxedFit: '../images/fit-relaxed.png'
 };
 
+// Product-specific images (populated as real product photos become available)
+// Falls back to fitImages[primaryFit] if no product-specific image exists
+const productImages = {
+  bonobos_swc_slim: null,
+  levis_512: null,
+  lulu_abc_slim: null,
+  bonobos_swc_straight: null,
+  jcrew_770: null,
+  levis_505: null,
+  bonobos_swc_athletic: null,
+  levis_541: null,
+  lulu_abc_classic: null,
+  vuori_meta_relaxed: null,
+  bonobos_ww_athletic: null,
+  levis_550: null,
+  duer_nosweat_relaxed_taper: null,
+  jcrew_giant: null,
+  levis_555: null
+};
+
 // Hero checklist items: title + subtitle for each fit
 const fitChecklists = {
   slimTaper: [
@@ -3055,7 +3075,7 @@ function renderProducts(recommendedFit, secondaryFits, productType) {
 
   var html = displayProducts.map(function(p) {
     var benefit = fitProductBenefits[p.id] || '';
-    var imgSrc = fitImages[p.primaryFit] || fitImages.straightFit;
+    var imgSrc = (productImages[p.id]) || fitImages[p.primaryFit] || fitImages.straightFit;
     return '<div class="product-card">' +
       '<img src="' + imgSrc + '" alt="' + p.name + '" class="product-card-img">' +
       '<div class="product-card-body">' +
