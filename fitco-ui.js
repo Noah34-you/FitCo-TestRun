@@ -25,16 +25,27 @@
   };
 
   function pantBodyPath(g) {
-    var iL = 45.5, iR = 50.5;             // inner hem x (left/right leg)
     var t = g.t, k = g.k, h = g.h;
+    var oLt = 46 - t, oLk = 45.5 - k, oLh = 45.5 - h;   // outer left x at thigh/knee/hem
+    var oRt = 50 + t, oRk = 50.5 + k, oRh = 50.5 + h;   // outer right x at thigh/knee/hem
     return [
-      'M30 16', 'L' + (46 - t) + ' 50', 'L' + (iL - k) + ' 78', 'L' + (iL - h) + ' 112',
-      'L' + iL + ' 112', 'L46.8 46', 'L48 41', 'L49.2 46', 'L' + iR + ' 112',
-      'L' + (iR + h) + ' 112', 'L' + (iR + k) + ' 78', 'L' + (50 + t) + ' 50', 'L66 16', 'Z'
+      'M30 16',
+      'C29.2 27 ' + oLt + ' 39 ' + oLt + ' 50',          // hip flare into thigh
+      'C' + oLt + ' 61 ' + oLk + ' 68 ' + oLk + ' 78',   // thigh eases into knee
+      'L' + oLh + ' 112',                                 // straight taper to hem
+      'L45.5 112',
+      'C45.9 90 46.4 62 46.9 49',                         // inseam rises with gentle bow
+      'Q48 44.5 49.1 49',                                 // rounded crotch (no V-notch)
+      'C49.6 62 50.1 90 50.5 112',
+      'L' + oRh + ' 112',
+      'L' + oRk + ' 78',
+      'C' + oRk + ' 68 ' + oRt + ' 61 ' + oRt + ' 50',
+      'C' + oRt + ' 39 66.8 27 66 16',
+      'Z'
     ].join(' ');
   }
 
-  var PANT_BAND = '<path d="M28 8h40v8H28z"/><path d="M34 8v3M48 8v3M62 8v3"/>';
+  var PANT_BAND = '<path d="M28 8h40v8H28z"/><path d="M34 8v3M48 8v3M62 8v3"/><circle cx="48" cy="12" r="1.2"/>';
   var PANT_FLY = '<path d="M47.5 16c-1.2 5-1.2 10-.4 16"/>';
 
   function pantSymbolContent(g, extras) {
@@ -65,12 +76,12 @@
   S += icon('fc-ic-crease', '<path d="M7 3h10l1.5 18h-4.5L12 11.5 10 21H5.5L7 3z"/><path d="M7.4 6.5h9.2"/><path d="M8.9 11.5l-.7 7M15.1 11.5l.7 7" stroke-dasharray="2 2.2"/>');
   S += icon('fc-ic-stretch', '<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M4.5 12h-2M2.5 12l1.4-1.4M2.5 12l1.4 1.4M19.5 12h2M21.5 12l-1.4-1.4M21.5 12l1.4 1.4"/>');
   S += icon('fc-ic-waist', '<path d="M4 9h16v6H4z"/><path d="M8.5 9v2.2M15.5 9v2.2"/><circle cx="12" cy="12" r="1.1"/>');
-  S += icon('fc-ic-seat', '<path d="M6 14a6 6 0 0 1 12 0v4H6v-4z"/><path d="M12 14v4"/>');
-  S += icon('fc-ic-thigh', '<path d="M8 4v16M16 4v16"/><path d="M8 10h8M9.5 8.5 8 10l1.5 1.5M14.5 8.5 16 10l-1.5 1.5"/>');
+  S += icon('fc-ic-seat', '<path d="M4.5 7h15"/><path d="M5.5 7v3c0 4 2.8 7 6.5 7s6.5-3 6.5-7V7"/>');
+  S += icon('fc-ic-thigh', '<path d="M9 4l-1.6 16M15 4l1.6 16"/><path d="M7.8 9.5h8.4M9.4 7.8 7.8 9.5l1.6 1.7M14.6 7.8l1.6 1.7-1.6 1.7"/>');
   S += icon('fc-ic-calf', '<path d="M9.2 4c-.4 6 .4 10-.9 16M14.8 4c.4 6-.4 10 .9 16"/><path d="M9 16h6"/>');
-  S += icon('fc-ic-taper', '<path d="M8 4l2.5 16M16 4l-2.5 16"/><path d="M9.8 20h4.4"/>');
-  S += icon('fc-ic-opening', '<path d="M8 4v13M16 4v13"/><path d="M8 20h8M9.5 18.5 8 20l1.5 1.5M14.5 18.5 16 20l-1.5 1.5"/>');
-  S += icon('fc-ic-rise', '<path d="M5 5h14"/><path d="M12 5v9M10.5 12.5 12 14l1.5-1.5"/><path d="M8 19.5c1.5-2.6 6.5-2.6 8 0"/>');
+  S += icon('fc-ic-taper', '<path d="M8 4v7l2.4 9M16 4v7l-2.4 9"/><path d="M10.6 20h2.8"/>');
+  S += icon('fc-ic-opening', '<path d="M9 4v12M15 4v12"/><path d="M9 16h6"/><path d="M7 20h10M7 18.6v2.8M17 18.6v2.8"/>');
+  S += icon('fc-ic-rise', '<path d="M5 5h14"/><path d="M12 7.5v8M10.6 8.9 12 7.5l1.4 1.4M10.6 14.1 12 15.5l1.4-1.4"/><path d="M8 19.5c1.6-2.4 6.4-2.4 8 0"/>');
   S += icon('fc-ic-inseam', '<path d="M7 3h10l1.5 18h-4.5L12 11.5 10 21H5.5L7 3z"/><path d="M12 12.5V21" stroke-dasharray="2 2"/>');
   S += icon('fc-ic-length', '<path d="M12 3v12M9.5 12.5 12 15l2.5-2.5"/><path d="M5 19h14"/>');
   S += icon('fc-ic-gap', '<path d="M5 8h14"/><path d="M7 8v2.5a5 5 0 0 0 10 0V8"/><path d="M9.8 15.5h4.4M11 14l-1.2 1.5L11 17M13 14l1.2 1.5L13 17"/>');
@@ -117,7 +128,8 @@
   S += icon('fc-ic-arrow', '<path d="M4 12h16M13 5l7 7-7 7"/>');
 
   /* --- pant illustrations (front / back / six fits) --- */
-  S += illo('fc-il-pant-front', pantSymbolContent(pantGeo.straightFit, PANT_POCKETS));
+  var PANT_FRONT_HEMS = '<path d="M34.8 107h9.4M51.8 107h9.4"/>';
+  S += illo('fc-il-pant-front', pantSymbolContent(pantGeo.straightFit, PANT_POCKETS + PANT_FRONT_HEMS));
   S += illo('fc-il-pant-back', PANT_BAND + '<path d="' + pantBodyPath(pantGeo.straightFit) + '"/>' + PANT_BACK_DETAILS);
   Object.keys(pantGeo).forEach(function (key) {
     S += illo('fc-il-fit-' + key, pantSymbolContent(pantGeo[key]));
