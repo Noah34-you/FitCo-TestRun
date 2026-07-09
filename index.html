@@ -330,16 +330,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background:
-      repeating-linear-gradient(0deg, rgba(91,140,90,0.07) 0 1px, transparent 1px 16px),
-      repeating-linear-gradient(90deg, rgba(91,140,90,0.07) 0 1px, transparent 1px 16px),
-      #FAF8F3;
+    background: #FBF9F6;
     transition: transform 0.3s ease;
   }
-  .h3p-panel-fig svg {
-    width: 72%;
-    max-height: 78%;
-    color: #3A3A34;
+  .h3p-panel-fig img {
+    max-width: 88%;
+    max-height: 82%;
+    object-fit: contain;
   }
 
   .h3p-glow {
@@ -1179,12 +1176,10 @@
         <!-- Panel 1: Poor Fit -->
         <div class="h3p-panel h3p-panel-poor" data-panel="poor">
           <div class="h3p-glow"></div>
-          <div class="h3p-panel-fig"><svg viewBox="0 0 96 120" aria-hidden="true"><use href="#fc-il-prob-thighs"/></svg></div>
+          <div class="h3p-panel-fig"><img src="images/hero-fit-poor.png" alt="Pants too tight in the thighs with fabric pulling"></div>
           <div class="h3p-header">
             <span class="h3p-title h3p-title-poor">Poor Fit</span>
           </div>
-          <span class="h3p-mark" style="top: 44%;"><i></i><b>Thigh &mdash; pulls</b></span>
-          <span class="h3p-mark" style="top: 83%;"><i></i><b>Break &mdash; stacks</b></span>
           <div class="h3p-caption">
             <p>Tight in thighs, pulling at fabric, awkward break</p>
           </div>
@@ -1192,12 +1187,10 @@
         <!-- Panel 2: Relaxed Fit -->
         <div class="h3p-panel h3p-panel-relaxed" data-panel="relaxed">
           <div class="h3p-glow"></div>
-          <div class="h3p-panel-fig"><svg viewBox="0 0 96 120" aria-hidden="true"><use href="#fc-il-fit-relaxedFit"/></svg></div>
+          <div class="h3p-panel-fig"><img src="images/hero-fit-relaxed.png" alt="Relaxed fit pants with straight drape"></div>
           <div class="h3p-header">
             <span class="h3p-title h3p-title-relaxed">Relaxed Fit</span>
           </div>
-          <span class="h3p-mark" style="top: 44%;"><i></i><b>Thigh &mdash; roomy</b></span>
-          <span class="h3p-mark" style="top: 83%;"><i></i><b>Break &mdash; casual</b></span>
           <div class="h3p-caption">
             <p>More room in seat &amp; thighs, straight drape, casual break</p>
           </div>
@@ -1205,12 +1198,10 @@
         <!-- Panel 3: Athletic Taper -->
         <div class="h3p-panel h3p-panel-athletic" data-panel="athletic">
           <div class="h3p-glow"></div>
-          <div class="h3p-panel-fig"><svg viewBox="0 0 96 120" aria-hidden="true"><use href="#fc-il-fit-athleticTaper"/></svg></div>
+          <div class="h3p-panel-fig"><img src="images/hero-fit-athletic.png" alt="Athletic taper pants with room in the thighs"></div>
           <div class="h3p-header">
             <span class="h3p-title h3p-title-athletic">Athletic Taper</span>
           </div>
-          <span class="h3p-mark" style="top: 44%;"><i></i><b>Thigh &mdash; room</b></span>
-          <span class="h3p-mark" style="top: 83%;"><i></i><b>Taper &mdash; clean</b></span>
           <div class="h3p-caption">
             <p>Room in thighs, tapered leg, clean break at the shoe</p>
           </div>
