@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FitCo — Find Pants That Fit</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5.5' fill='%233C6B3C'/%3E%3Cg fill='%23FFFFFF'%3E%3Crect x='5' y='5.2' width='14' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='10' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='3.7' height='9.2' rx='.9'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
@@ -323,12 +324,19 @@
   .h3p-panel-athletic { --ann-color: #3C8C5A; }
   .h3p-panel:last-child { border-right: none; }
 
-  .h3p-panel-img {
+  .h3p-panel-fig {
     position: absolute;
     inset: 0;
-    background: url('images/hero-3panel.jpg') no-repeat;
-    background-size: 300% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FBF9F6;
     transition: transform 0.3s ease;
+  }
+  .h3p-panel-fig img {
+    max-width: 88%;
+    max-height: 82%;
+    object-fit: contain;
   }
 
   .h3p-glow {
@@ -356,7 +364,7 @@
     transform: translateY(-4px);
     z-index: 2;
   }
-  .h3p-panel:hover .h3p-panel-img {
+  .h3p-panel:hover .h3p-panel-fig {
     transform: scale(1.03);
   }
   .h3p-panel:hover .h3p-glow {
@@ -401,14 +409,13 @@
     left: 0; right: 0; bottom: 0;
     z-index: 3;
     padding: 14px 16px 16px;
-    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.28) 60%, transparent 100%);
+    background: linear-gradient(to top, rgba(250,248,243,0.97) 0%, rgba(250,248,243,0.78) 60%, transparent 100%);
   }
   .h3p-caption p {
-    color: #fff;
+    color: #4A4A42;
     font-size: 12px;
     font-weight: 500;
     line-height: 1.4;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
   }
 
   /* WHY US */
@@ -1070,7 +1077,7 @@
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a href="/" class="logo">FitCo</a>
+    <a href="/" class="logo"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
     <ul class="nav-center">
       <li><a href="/quiz/index.html">Find My Fit</a></li>
       <li><a href="/#works">How It Works</a></li>
@@ -1169,12 +1176,10 @@
         <!-- Panel 1: Poor Fit -->
         <div class="h3p-panel h3p-panel-poor" data-panel="poor">
           <div class="h3p-glow"></div>
-          <div class="h3p-panel-img" style="background-position: 0% center;"></div>
+          <div class="h3p-panel-fig"><img src="images/hero-fit-poor.png" alt="Pants too tight in the thighs with fabric pulling"></div>
           <div class="h3p-header">
             <span class="h3p-title h3p-title-poor">Poor Fit</span>
           </div>
-          <span class="h3p-mark" style="top: 48%;"><i></i><b>Thigh &mdash; pulls</b></span>
-          <span class="h3p-mark" style="top: 83%;"><i></i><b>Break &mdash; stacks</b></span>
           <div class="h3p-caption">
             <p>Tight in thighs, pulling at fabric, awkward break</p>
           </div>
@@ -1182,12 +1187,10 @@
         <!-- Panel 2: Relaxed Fit -->
         <div class="h3p-panel h3p-panel-relaxed" data-panel="relaxed">
           <div class="h3p-glow"></div>
-          <div class="h3p-panel-img" style="background-position: 50% center;"></div>
+          <div class="h3p-panel-fig"><img src="images/hero-fit-relaxed.png" alt="Relaxed fit pants with straight drape"></div>
           <div class="h3p-header">
             <span class="h3p-title h3p-title-relaxed">Relaxed Fit</span>
           </div>
-          <span class="h3p-mark" style="top: 48%;"><i></i><b>Thigh &mdash; roomy</b></span>
-          <span class="h3p-mark" style="top: 83%;"><i></i><b>Break &mdash; casual</b></span>
           <div class="h3p-caption">
             <p>More room in seat &amp; thighs, straight drape, casual break</p>
           </div>
@@ -1195,12 +1198,10 @@
         <!-- Panel 3: Athletic Taper -->
         <div class="h3p-panel h3p-panel-athletic" data-panel="athletic">
           <div class="h3p-glow"></div>
-          <div class="h3p-panel-img" style="background-position: 100% center;"></div>
+          <div class="h3p-panel-fig"><img src="images/hero-fit-athletic.png" alt="Athletic taper pants with room in the thighs"></div>
           <div class="h3p-header">
             <span class="h3p-title h3p-title-athletic">Athletic Taper</span>
           </div>
-          <span class="h3p-mark" style="top: 48%;"><i></i><b>Thigh &mdash; room</b></span>
-          <span class="h3p-mark" style="top: 83%;"><i></i><b>Taper &mdash; clean</b></span>
           <div class="h3p-caption">
             <p>Room in thighs, tapered leg, clean break at the shoe</p>
           </div>
@@ -1502,7 +1503,7 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="/" class="logo">FitCo</a>
+      <a href="/" class="logo"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
       <p>Recommendations for men who want pants that fit.</p>
     </div>
     <ul class="footer-links">
