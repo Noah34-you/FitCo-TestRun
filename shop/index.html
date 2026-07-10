@@ -1967,6 +1967,20 @@
 <script>
 // Product data by fit — real products, real brands, real retailer links
 // (mirrors the catalog used on the quiz results page, so the two pages agree)
+var productImages = {
+  bonobos_swc_slim: '../images/products/bonobos_stretch_washed_chino.jpg',
+  bonobos_swc_straight: '../images/products/bonobos_stretch_washed_chino.jpg',
+  bonobos_swc_athletic: '../images/products/bonobos_stretch_washed_chino.jpg',
+  levis_512: '../images/products/levis_512.jpg',
+  levis_505: '../images/products/levis_505.jpg',
+  levis_541: '../images/products/levis_541.jpg',
+  levis_550: '../images/products/levis_550.jpg',
+  levis_555: '../images/products/levis_555.jpg',
+  bonobos_ww_athletic: '../images/products/bonobos_ww_athletic.jpg',
+  vuori_meta_relaxed: '../images/products/vuori_meta_relaxed.webp',
+  duer_nosweat_relaxed_taper: '../images/products/duer_nosweat_relaxed_taper.webp'
+};
+
 var products = {
   athleticTaper: {
     name: 'Athletic Taper',
@@ -1974,13 +1988,13 @@ var products = {
     tags: ['Room in thigh', 'Tapered ankle'],
     img: '../images/fit-athletic-taper.png',
     best: [
-      { brand: 'Bonobos', name: 'Stretch Washed Chino (Athletic)', desc: 'Extra room in the thigh with a clean taper below the knee.', price: '$99', link: 'https://bonobos.com/products/stretch-washed-chino-1' }
+      { id: 'bonobos_swc_athletic', brand: 'Bonobos', name: 'Stretch Washed Chino (Athletic)', desc: 'Extra room in the thigh with a clean taper below the knee.', price: '$99', link: 'https://bonobos.com/products/stretch-washed-chino-1', img: productImages.bonobos_swc_athletic }
     ],
     budget: [
-      { brand: "Levi's", name: '541 Athletic Taper Jeans', desc: 'Cut for muscular legs. More seat and thigh room than standard taper jeans.', price: '$70', link: 'https://www.levi.com/US/en_US/clothing/men/jeans/541TM-athletic-taper-mens-jeans/p/181810629' }
+      { id: 'levis_541', brand: "Levi's", name: '541 Athletic Taper Jeans', desc: 'Cut for muscular legs. More seat and thigh room than standard taper jeans.', price: '$70', link: 'https://www.levi.com/US/en_US/clothing/men/jeans/541TM-athletic-taper-mens-jeans/p/181810629', img: productImages.levis_541 }
     ],
     premium: [
-      { brand: 'Lululemon', name: 'ABC Classic-Fit 5 Pocket Pant', desc: "Lululemon's classic fit with technical fabric. Office-ready comfort.", price: '$128', link: 'https://shop.lululemon.com/p/men-pants/ABC-Pant-Classic-32/_/prod9000003' }
+      { id: 'lulu_abc_classic', brand: 'Lululemon', name: 'ABC Classic-Fit 5 Pocket Pant', desc: "Lululemon's classic fit with technical fabric. Office-ready comfort.", price: '$128', link: 'https://shop.lululemon.com/p/men-pants/ABC-Pant-Classic-32/_/prod9000003' }
     ]
   },
   straightFit: {
@@ -1989,13 +2003,13 @@ var products = {
     tags: ['Straight leg', 'Balanced'],
     img: '../images/fit-straight.png',
     best: [
-      { brand: 'Bonobos', name: 'Stretch Washed Chino (Straight)', desc: 'The classic straight-leg chino. Works with sneakers or boots.', price: '$99', link: 'https://bonobos.com/products/stretch-washed-chino-1' }
+      { id: 'bonobos_swc_straight', brand: 'Bonobos', name: 'Stretch Washed Chino (Straight)', desc: 'The classic straight-leg chino. Works with sneakers or boots.', price: '$99', link: 'https://bonobos.com/products/stretch-washed-chino-1', img: productImages.bonobos_swc_straight }
     ],
     budget: [
-      { brand: "Levi's", name: '505 Regular Straight Jeans', desc: "Levi's original straight jean. Timeless, reliable, under $70.", price: '$70', link: 'https://www.levi.com/US/en_US/jeans-by-fit-number/men/jeans/505TM/505TM-regular-fit-stretch-mens-jeans/p/005051649' }
+      { id: 'levis_505', brand: "Levi's", name: '505 Regular Straight Jeans', desc: "Levi's original straight jean. Timeless, reliable, under $70.", price: '$70', link: 'https://www.levi.com/US/en_US/jeans-by-fit-number/men/jeans/505TM/505TM-regular-fit-stretch-mens-jeans/p/005051649', img: productImages.levis_505 }
     ],
     premium: [
-      { brand: 'J.Crew', name: '770 Straight-Fit Stretch Chino', desc: "J.Crew's most popular chino. Straight fit that flatters most builds.", price: '$90', link: 'https://www.jcrew.com/p/mens/categories/clothing/pants-and-chinos/chino/770trade-straight-fit-stretch-chino-pant/AR886' }
+      { id: 'jcrew_770', brand: 'J.Crew', name: '770 Straight-Fit Stretch Chino', desc: "J.Crew's most popular chino. Straight fit that flatters most builds.", price: '$90', link: 'https://www.jcrew.com/p/mens/categories/clothing/pants-and-chinos/chino/770trade-straight-fit-stretch-chino-pant/AR886' }
     ]
   },
   relaxedFit: {
@@ -2004,13 +2018,13 @@ var products = {
     tags: ['Relaxed fit', 'Maximum comfort'],
     img: '../images/fit-relaxed.png',
     best: [
-      { brand: 'DUER', name: 'No Sweat Pant (Relaxed Taper)', desc: "DUER's signature stretch fabric. Dress pant look with full mobility.", price: '$129', link: 'https://shopduer.com/products/mens-dress-sweatpant-relaxed' }
+      { id: 'duer_nosweat_relaxed_taper', brand: 'DUER', name: 'No Sweat Pant (Relaxed Taper)', desc: "DUER's signature stretch fabric. Dress pant look with full mobility.", price: '$129', link: 'https://shopduer.com/products/mens-dress-sweatpant-relaxed', img: productImages.duer_nosweat_relaxed_taper }
     ],
     budget: [
-      { brand: "Levi's", name: '555 Relaxed Straight Jeans', desc: "Levi's relaxed straight fit. Most room in the leg with a classic silhouette.", price: '$80', link: 'https://www.levi.com/US/en_US/clothing/men/jeans/relaxed/555TM-relaxed-straight-mens-jeans/p/000LO0001' }
+      { id: 'levis_555', brand: "Levi's", name: '555 Relaxed Straight Jeans', desc: "Levi's relaxed straight fit. Most room in the leg with a classic silhouette.", price: '$80', link: 'https://www.levi.com/US/en_US/clothing/men/jeans/relaxed/555TM-relaxed-straight-mens-jeans/p/000LO0001', img: productImages.levis_555 }
     ],
     premium: [
-      { brand: 'J.Crew', name: 'Giant-Fit Chino Pant', desc: "J.Crew's roomiest chino. Maximum comfort without looking sloppy.", price: '$118', link: 'https://www.jcrew.com/p/mens/categories/clothing/pants-and-chinos/chino/giant-fit-chino-pant/BI521' }
+      { id: 'jcrew_giant', brand: 'J.Crew', name: 'Giant-Fit Chino Pant', desc: "J.Crew's roomiest chino. Maximum comfort without looking sloppy.", price: '$118', link: 'https://www.jcrew.com/p/mens/categories/clothing/pants-and-chinos/chino/giant-fit-chino-pant/BI521' }
     ]
   },
   slimTaper: {
@@ -2019,20 +2033,21 @@ var products = {
     tags: ['Fitted thigh', 'Tapered ankle'],
     img: '../images/fit-slim-taper.png',
     best: [
-      { brand: 'Bonobos', name: 'Stretch Washed Chino (Slim)', desc: "Bonobos' bestselling chino. Stretch cotton that moves with you.", price: '$99', link: 'https://bonobos.com/products/stretch-washed-chino-1' }
+      { id: 'bonobos_swc_slim', brand: 'Bonobos', name: 'Stretch Washed Chino (Slim)', desc: "Bonobos' bestselling chino. Stretch cotton that moves with you.", price: '$99', link: 'https://bonobos.com/products/stretch-washed-chino-1', img: productImages.bonobos_swc_slim }
     ],
     budget: [
-      { brand: "Levi's", name: '512 Slim Taper Jeans', desc: "Levi's modern slim taper. Affordable, durable, goes with everything.", price: '$70', link: 'https://www.levi.com/US/en_US/clothing/men/jeans/taper/512TM-slim-taper-fit-mens-jeans/p/288331193' }
+      { id: 'levis_512', brand: "Levi's", name: '512 Slim Taper Jeans', desc: "Levi's modern slim taper. Affordable, durable, goes with everything.", price: '$70', link: 'https://www.levi.com/US/en_US/clothing/men/jeans/taper/512TM-slim-taper-fit-mens-jeans/p/288331193', img: productImages.levis_512 }
     ],
     premium: [
-      { brand: 'Lululemon', name: 'ABC Slim-Fit 5 Pocket Pant', desc: "Lululemon's Warpstreme fabric. Wrinkle-resistant and travel-ready.", price: '$148', link: 'https://shop.lululemon.com/p/mens-trousers/Abc-Slim-5-Pocket-32/_/prod9390007' }
+      { id: 'lulu_abc_slim', brand: 'Lululemon', name: 'ABC Slim-Fit 5 Pocket Pant', desc: "Lululemon's Warpstreme fabric. Wrinkle-resistant and travel-ready.", price: '$148', link: 'https://shop.lululemon.com/p/mens-trousers/Abc-Slim-5-Pocket-32/_/prod9390007' }
     ]
   }
 };
 
 function renderProductCard(p, fitImg) {
+  var imgSrc = p.img || fitImg;
   return '<div class="product-card">' +
-    '<img src="' + fitImg + '" alt="' + p.name + '" class="product-card-img">' +
+    '<img src="' + imgSrc + '" alt="' + p.name + '" class="product-card-img">' +
     '<div class="product-card-body">' +
       '<div class="product-cat">' + p.brand + '</div>' +
       '<h4>' + p.name + '</h4>' +
