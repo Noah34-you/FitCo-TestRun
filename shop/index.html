@@ -1566,7 +1566,7 @@
 <!-- UTILITY BAR -->
 <div class="utility-bar">
   <div class="utility-bar-inner">
-    <span class="utility-bar-item">Real product picks &mdash; not just a size chart</span>
+    <span class="utility-bar-item">Real product picks, not a size chart</span>
     <span class="utility-bar-item">We recommend. We don't sell.</span>
     <span class="utility-bar-item">Best overall, budget, and premium options</span>
   </div>
@@ -1597,7 +1597,7 @@
       </svg>
     </div>
     <h1>Take the quiz to see your recommendations</h1>
-    <p class="shop-gate-lead">Take the quiz. We'll recommend pants that fit your build.</p>
+    <p class="shop-gate-lead">Six questions about your build and where pants go wrong for you.</p>
     <p class="shop-gate-sub">We match you to fits based on your build and preferences. Not just waist size.</p>
     <a href="/quiz/index.html" class="btn" style="margin-top:8px;">Start Fit Quiz</a>
     <div class="shop-gate-features">
@@ -1607,7 +1607,7 @@
       </div>
       <div class="shop-gate-feature">
         <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#111" stroke-width="1.5" fill="none"/><path d="M12 7v5l3 3" stroke="#111" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <span>Takes under 2 minutes</span>
+        <span>Takes under a minute</span>
       </div>
       <div class="shop-gate-feature">
         <svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#111" stroke-width="1.5" fill="none"/></svg>
@@ -1721,12 +1721,12 @@
     <!-- PERSONALIZED WAITLIST -->
     <div class="shop-waitlist" id="shopWaitlist">
       <span class="shop-waitlist-badge">Coming Soon</span>
-      <h3 id="shopWaitlistHeadline">Want pants built exactly for your fit?</h3>
-      <p id="shopWaitlistLead">We're building FitCo's future pant line around real body proportions.</p>
-      <p id="shopWaitlistSub">Based on your fit profile, we'll notify you when styles built for your fit become available.</p>
+      <h3 id="shopWaitlistHeadline">We're making our own pants next.</h3>
+      <p id="shopWaitlistLead">Cut around real proportions, not decades-old sizing blocks.</p>
+      <p id="shopWaitlistSub">Leave your email. We'll tell you when yours is ready.</p>
       <form class="shop-waitlist-form" id="shopWaitlistForm" onsubmit="return handleShopWaitlistSubmit(event)" novalidate>
         <input type="email" class="shop-waitlist-input" placeholder="Enter your email" required id="shopWaitlistEmail" oninput="clearShopWaitlistError()">
-        <button type="submit" class="shop-waitlist-btn">Join Early Access</button>
+        <button type="submit" class="shop-waitlist-btn">Join the Waitlist</button>
       </form>
       <p class="shop-waitlist-error" id="shopWaitlistError">Please enter a valid email address.</p>
       <p class="shop-waitlist-success" id="shopWaitlistSuccess">You're on the list. We'll be in touch.</p>
@@ -1984,14 +1984,14 @@ var productImages = {
 var products = {
   athleticTaper: {
     name: 'Athletic Taper',
-    desc: 'More room in the thigh with a gradual taper below the knee. Built for muscular builds.',
+    desc: 'More room in the thigh with a gradual taper below the knee. Cut for muscular builds.',
     tags: ['Room in thigh', 'Tapered ankle'],
     img: '../images/fit-athletic-taper.png',
     best: [
       { id: 'bonobos_swc_athletic', brand: 'Bonobos', name: 'Stretch Washed Chino (Athletic)', desc: 'Extra room in the thigh with a clean taper below the knee.', price: '$99', link: 'https://bonobos.com/products/stretch-washed-chino-1', img: productImages.bonobos_swc_athletic }
     ],
     budget: [
-      { id: 'levis_541', brand: "Levi's", name: '541 Athletic Taper Jeans', desc: 'Built for muscular legs. More seat and thigh room than standard taper jeans.', price: '$70', link: 'https://www.levi.com/US/en_US/clothing/men/jeans/541TM-athletic-taper-mens-jeans/p/181810629', img: productImages.levis_541 }
+      { id: 'levis_541', brand: "Levi's", name: '541 Athletic Taper Jeans', desc: 'Cut for muscular legs. More seat and thigh room than standard taper jeans.', price: '$70', link: 'https://www.levi.com/US/en_US/clothing/men/jeans/541TM-athletic-taper-mens-jeans/p/181810629', img: productImages.levis_541 }
     ],
     premium: [
       { id: 'lulu_abc_classic', brand: 'Lululemon', name: 'ABC Classic-Fit 5 Pocket Pant', desc: "Lululemon's classic fit with technical fabric. Office-ready comfort.", price: '$128', link: 'https://shop.lululemon.com/p/men-pants/ABC-Pant-Classic-32/_/prod9000003' }
@@ -1999,7 +1999,7 @@ var products = {
   },
   straightFit: {
     name: 'Straight Fit',
-    desc: 'Consistent width from hip to ankle. Timeless and versatile.',
+    desc: 'Consistent width from hip to ankle. Hard to get wrong.',
     tags: ['Straight leg', 'Balanced'],
     img: '../images/fit-straight.png',
     best: [
@@ -2014,7 +2014,7 @@ var products = {
   },
   relaxedFit: {
     name: 'Relaxed Fit',
-    desc: 'More room throughout the leg while maintaining structure and shape.',
+    desc: 'More room throughout the leg without going shapeless.',
     tags: ['Relaxed fit', 'Maximum comfort'],
     img: '../images/fit-relaxed.png',
     best: [
@@ -2075,24 +2075,24 @@ function renderProducts(fitKey) {
 // Personalized waitlist messaging by fit
 var waitlistMessages = {
   athleticTaper: {
-    headline: 'Want pants built for athletic builds?',
-    lead: "We're engineering a pant line with extra thigh room and a clean taper.",
-    sub: 'Be the first to know when our Athletic Taper collection launches.'
+    headline: "We're making an athletic taper of our own.",
+    lead: 'More thigh room, a clean taper, and a waist that fits without sizing up.',
+    sub: "Leave your email. We'll tell you when it's ready."
   },
   straightFit: {
-    headline: 'Want pants that balance clean and comfortable?',
-    lead: "We're crafting a straight-leg line designed around real proportions.",
-    sub: 'Get notified when our Straight Fit collection becomes available.'
+    headline: "We're making a straight fit of our own.",
+    lead: 'One clean line from hip to hem, cut for real proportions.',
+    sub: "Leave your email. We'll tell you when it's ready."
   },
   relaxedFit: {
-    headline: 'Want pants designed for maximum comfort?',
-    lead: "We're building a relaxed-fit line that doesn't sacrifice structure.",
-    sub: 'Join the list for early access to our Relaxed Fit collection.'
+    headline: "We're making a relaxed fit of our own.",
+    lead: 'Room through the leg without the shapeless drape.',
+    sub: "Leave your email. We'll tell you when it's ready."
   },
   slimTaper: {
-    headline: 'Want a sharp silhouette that actually fits?',
-    lead: "We're creating a slim taper line with real fit science behind it.",
-    sub: 'Be first in line when our Slim Taper collection drops.'
+    headline: "We're making a slim taper of our own.",
+    lead: 'A sharp line that still lets you move.',
+    sub: "Leave your email. We'll tell you when it's ready."
   }
 };
 

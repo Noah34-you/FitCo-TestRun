@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../fitco-ui.css">
 <style>
   :root {
     --bg: #F5F3EE;
@@ -420,6 +421,96 @@
     color: var(--text-muted);
   }
 
+  /* ---- About enrichment (design-system components) ---- */
+  .about-hero { min-height: 0; padding: 150px 48px 20px; }
+  .about-hero .fc-kicker { justify-content: center; margin-bottom: 18px; }
+  .about-hero-stats {
+    display: flex; justify-content: center; flex-wrap: wrap;
+    gap: 10px; margin-top: 26px;
+  }
+  .about-section { padding: 70px 48px; }
+  .about-section-header .fc-kicker { margin-bottom: 14px; }
+
+  /* Founder story card */
+  .founder-block { max-width: 760px; margin: 0 auto; padding: 40px; }
+  .founder-head {
+    display: flex; align-items: center; gap: 12px;
+    padding-bottom: 20px; margin-bottom: 22px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .founder-head strong { display: block; font-size: 14px; font-weight: 600; }
+  .founder-head span { font-size: 12px; color: var(--text-muted); }
+  .founder-lead { font-size: 19px; line-height: 1.55; letter-spacing: -0.01em; margin-bottom: 24px; }
+  .founder-issues {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 12px; margin-bottom: 26px;
+  }
+  .founder-issue {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 16px; border: 1px solid var(--border-light);
+    border-radius: var(--radius-md); background: var(--bg);
+  }
+  .founder-issue span { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .founder-quote { margin-bottom: 22px; }
+  .founder-quote p {
+    font-family: var(--fc-display, 'Space Grotesk'), sans-serif;
+    font-size: 19px; font-weight: 500; line-height: 1.45;
+    letter-spacing: -0.01em; color: var(--fc-sage-deep, #3C6B3C); margin: 0;
+  }
+  .founder-close { font-size: 16px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+
+  /* Same waist, different fit */
+  .waist-compare {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    gap: 20px; align-items: center; max-width: 620px; margin: 0 auto;
+  }
+  .waist-col {
+    text-align: center; padding: 24px 20px;
+    border: 1px solid var(--border-light); border-radius: var(--radius-lg);
+    background: var(--bg-white);
+  }
+  .waist-flat { width: 96px; height: 120px; margin: 0 auto 12px; color: var(--fc-ink, #111); }
+  .waist-flat svg { width: 100%; height: 100%; display: block; }
+  .waist-col .waist-cut { display: block; font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .waist-col .waist-size {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .waist-vs {
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+    color: var(--text-muted); font-weight: 500;
+  }
+
+  /* Why only 15 pants */
+  .fifteen-block {
+    display: grid; grid-template-columns: 280px 1fr; gap: 28px;
+    align-items: stretch; max-width: 960px; margin: 0 auto;
+  }
+  .fifteen-stat {
+    display: flex; flex-direction: column; justify-content: center;
+    text-align: center; padding: 32px; border-radius: var(--radius-lg);
+    background: var(--fc-sage-tint, #F0F4EC); border: 1px solid var(--fc-sage-line, #D4E4D4);
+  }
+  .fifteen-stat .fifteen-num {
+    font-family: var(--fc-display, 'Space Grotesk'), sans-serif;
+    font-size: 72px; font-weight: 600; line-height: 1;
+    color: var(--fc-sage-deep, #3C6B3C); letter-spacing: -0.03em;
+  }
+  .fifteen-stat .fifteen-cap { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+  .fifteen-stat strong { display: block; margin-top: 16px; font-size: 15px; color: var(--text); }
+  .fifteen-body { display: flex; flex-direction: column; gap: 18px; justify-content: center; }
+  .fifteen-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .fifteen-compare .fc-panel { display: flex; flex-direction: column; gap: 4px; }
+  .fifteen-compare .fifteen-big { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+  .fifteen-compare .fifteen-lbl { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
+
+  /* What happens next roadmap */
+  .roadmap {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 12px; margin-top: 8px;
+  }
+  .roadmap .roadmap-arrow { color: var(--border); font-size: 13px; }
+
   /* Responsive */
   @media (max-width: 768px) {
     :root { --utility-bar-h: 28px; --nav-h: 56px; }
@@ -449,16 +540,28 @@
     .about-cta { padding: 60px 20px; }
 
     .problem-list { max-width: 100%; }
+
+    .about-hero { padding: 120px 20px 32px; min-height: 0; }
+    .founder-block { padding: 26px 22px; }
+    .founder-lead { font-size: 17px; }
+    .founder-issues { grid-template-columns: 1fr; gap: 10px; }
+    .founder-issue { flex-direction: row; align-items: center; }
+    .founder-quote p { font-size: 17px; }
+    .waist-compare { grid-template-columns: 1fr; gap: 14px; }
+    .waist-vs { display: none; }
+    .fifteen-block { grid-template-columns: 1fr; gap: 16px; }
+    .fifteen-compare { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
+<script src="../fitco-ui.js"></script>
 
 <!-- NAV -->
 <!-- UTILITY BAR -->
 <div class="utility-bar">
   <div class="utility-bar-inner">
-    <span class="utility-bar-item">Real product picks &mdash; not just a size chart</span>
+    <span class="utility-bar-item">Real product picks, not a size chart</span>
     <span class="utility-bar-item">We recommend. We don't sell.</span>
     <span class="utility-bar-item">Best overall, budget, and premium options</span>
   </div>
@@ -481,9 +584,42 @@
 
 <!-- HERO -->
 <section class="about-hero">
+  <span class="fc-kicker">Our story</span>
   <h1>Why FitCo Exists</h1>
-  <p>Most men don't struggle because their bodies are hard to fit. They struggle because most pants were never designed around real body proportions.</p>
-  <p class="lead">FitCo exists to fix that.</p>
+  <p>Your body isn't hard to fit. Most pants just weren't cut for it.</p>
+  <div class="about-hero-stats">
+    <span class="fc-pill"><i class="fc-dot"></i>6 fits</span>
+    <span class="fc-pill"><i class="fc-dot"></i>15 pants</span>
+    <span class="fc-pill"><i class="fc-dot"></i>6 brands we trust</span>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-inner"></div></div>
+
+<!-- FOUNDER STORY -->
+<section class="about-section">
+  <div class="founder-block fc-card">
+    <div class="founder-head">
+      <span class="fc-avatar">F</span>
+      <div>
+        <strong>From the founder</strong>
+        <span>Why I started FitCo</span>
+      </div>
+    </div>
+    <p class="founder-lead">I used to buy pants by waist size, because that's what everyone does. They fit my waist, but everything else looked off.</p>
+    <div class="founder-issues">
+      <div class="founder-issue"><span class="fc-icon-tile fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-thigh"/></svg></span><span>Some squeezed my thighs</span></div>
+      <div class="founder-issue"><span class="fc-icon-tile fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-seat"/></svg></span><span>Some had too much room in the seat</span></div>
+      <div class="founder-issue"><span class="fc-icon-tile fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-length"/></svg></span><span>Others made my legs look shorter</span></div>
+    </div>
+    <div class="fc-callout fc-callout-sage founder-quote">
+      <span class="fc-callout-icon"><svg aria-hidden="true"><use href="#fc-ic-tape"/></svg></span>
+      <div class="fc-callout-body">
+        <p>I stopped asking "What size am I?" and started asking "What cut was this pair actually made for?"</p>
+      </div>
+    </div>
+    <p class="founder-close">That changed how I bought pants. FitCo is my way of making it easier for everyone else.</p>
+  </div>
 </section>
 
 <div class="divider"><div class="divider-inner"></div></div>
@@ -491,87 +627,138 @@
 <!-- THE PROBLEM -->
 <section class="about-section">
   <div class="about-section-header">
+    <span class="fc-kicker">The problem</span>
     <h2>Why pants fit so badly</h2>
-    <p>Most men buy pants by waist size. That's the problem. Waist size doesn't tell you how pants fit everywhere else.</p>
-    <ul class="problem-list">
-      <li>thigh size</li>
-      <li>taper preference</li>
-      <li>inseam</li>
-      <li>body proportions</li>
-    </ul>
-    <p style="margin-top: 20px; font-size: 15px; color: var(--text-muted);">Two men can wear the same waist size and need completely different fits.</p>
+    <p>Most men buy pants by waist size. It doesn't tell you how they fit everywhere else.</p>
+    <div class="fc-chip-row" style="margin-top:20px;">
+      <span class="fc-chip">Thigh</span>
+      <span class="fc-chip">Taper</span>
+      <span class="fc-chip">Inseam</span>
+      <span class="fc-chip">Proportions</span>
+    </div>
   </div>
   <div class="about-cards">
     <div class="about-card">
-      <div class="about-card-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5" stroke-linecap="round"><path d="M12 2v20M2 12h20"/></svg>
-      </div>
+      <span class="fc-icon-tile fc-tile-sage" style="margin-bottom:20px;"><svg aria-hidden="true"><use href="#fc-ic-thigh"/></svg></span>
       <h3>Tight in the thighs</h3>
-      <p>Your waist fits but your thighs don't. Common for men with athletic builds.</p>
+      <p>Your waist fits but your thighs don't. Common for athletic builds.</p>
     </div>
     <div class="about-card">
-      <div class="about-card-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/></svg>
-      </div>
+      <span class="fc-icon-tile fc-tile-sage" style="margin-bottom:20px;"><svg aria-hidden="true"><use href="#fc-ic-gap"/></svg></span>
       <h3>Waist gaps</h3>
       <p>Your hips fit but the back gapes open. Most brands don't account for this.</p>
     </div>
     <div class="about-card">
-      <div class="about-card-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5" stroke-linecap="round"><path d="M4 20h16M6 16l4-8 4 4 4-8"/></svg>
-      </div>
+      <span class="fc-icon-tile fc-tile-sage" style="margin-bottom:20px;"><svg aria-hidden="true"><use href="#fc-ic-length"/></svg></span>
       <h3>Wrong length</h3>
-      <p>Inseam varies by brand, cut, and even fabric. Most men settle for hemming pants that should have fit from the start.</p>
+      <p>Inseam varies by brand, cut, and fabric. Most men settle for hemming what should have fit.</p>
     </div>
   </div>
 </section>
 
 <div class="divider"><div class="divider-inner"></div></div>
 
-<!-- THE INDUSTRY PROBLEM -->
+<!-- SAME WAIST, DIFFERENT FIT -->
 <section class="about-section">
-  <div class="about-section-header">
-    <h2>Sizing was never built for everyone</h2>
-    <p>Most brands still use sizing from decades ago. That creates constant frustration. One brand fits well. Another fits terribly. Same waist size, completely different fit.</p>
-    <p style="margin-top: 16px;">The reality is simple: a 32 waist does not mean the same thing across brands, cuts, or countries. Men are left guessing, ordering multiple sizes, and returning what does not work.</p>
+  <div class="about-section-header" style="text-align:center;max-width:600px;margin-left:auto;margin-right:auto;">
+    <span class="fc-kicker" style="justify-content:center;">Why sizing fails</span>
+    <h2>Same waist, different fit</h2>
+  </div>
+  <div class="waist-compare">
+    <div class="waist-col">
+      <div class="waist-flat"><svg viewBox="0 0 96 120" aria-hidden="true"><use href="#fc-il-fit-athleticTaper"/></svg></div>
+      <span class="waist-cut">Athletic Taper</span>
+      <span class="waist-size">32 waist</span>
+    </div>
+    <div class="waist-vs">vs</div>
+    <div class="waist-col">
+      <div class="waist-flat"><svg viewBox="0 0 96 120" aria-hidden="true"><use href="#fc-il-fit-slimTaper"/></svg></div>
+      <span class="waist-cut">Slim Taper</span>
+      <span class="waist-size">32 waist</span>
+    </div>
+  </div>
+  <div class="fc-callout" style="max-width:600px;margin:24px auto 0;">
+    <span class="fc-callout-icon"><svg aria-hidden="true"><use href="#fc-ic-ruler"/></svg></span>
+    <div class="fc-callout-body">
+      <p class="fc-callout-text">A 32 waist doesn't mean the same thing across brands, cuts, or countries. So you guess, order two sizes, and return one.</p>
+    </div>
   </div>
 </section>
 
 <div class="divider"><div class="divider-inner"></div></div>
 
-<!-- THE FITCO SOLUTION -->
+<!-- HOW FITCO WORKS -->
 <section class="about-section">
   <div class="about-section-header">
+    <span class="fc-kicker">How it works</span>
     <h2>A better way to find pants that fit</h2>
-    <p>FitCo helps men understand what actually affects fit. We look beyond waist size and focus on the factors that determine how pants feel and look on your body.</p>
+    <p>We look past waist size at the things that actually change how pants fit.</p>
   </div>
   <div class="solution-cards">
     <div class="solution-card">
       <div class="step-num">1</div>
       <h3>Fit Quiz</h3>
-      <p>Six questions about your build, fit issues, and style preferences. Takes about two minutes.</p>
+      <p>Six questions about your build, fit issues, and style. Takes about a minute.</p>
     </div>
     <div class="solution-card">
       <div class="step-num">2</div>
-      <h3>Fit Analysis</h3>
+      <h3>Your Match</h3>
       <p>We match your answers to fits that work for your build.</p>
     </div>
     <div class="solution-card">
       <div class="step-num">3</div>
-      <h3>Personalized Recommendations</h3>
-      <p>See specific fits at every price. Best overall, best value, best premium.</p>
+      <h3>Your Picks</h3>
+      <p>Specific pants at three prices. Best overall, best budget, best premium.</p>
     </div>
   </div>
 </section>
 
 <div class="divider"><div class="divider-inner"></div></div>
 
-<!-- FUTURE VISION -->
-<section class="vision-section">
-  <span class="vision-badge">Future</span>
-  <h2>What's next</h2>
-  <p>Today we help men find better-fitting pants. In the future, we'll build our own.</p>
-  <p>Better fit should be the standard.</p>
+<!-- WHY ONLY 15 PANTS -->
+<section class="about-section">
+  <div class="about-section-header" style="max-width:720px;">
+    <span class="fc-kicker">The catalog</span>
+    <h2>Why only 15 pants?</h2>
+  </div>
+  <div class="fifteen-block">
+    <div class="fifteen-stat">
+      <span class="fifteen-num">15</span>
+      <span class="fifteen-cap">pants in the whole catalog</span>
+      <strong>This is a strength, not a limit.</strong>
+    </div>
+    <div class="fifteen-body">
+      <p style="font-size:16px;color:var(--text-muted);line-height:1.6;margin:0;">There are thousands of pants online. Most aren't worth recommending.</p>
+      <div class="fifteen-compare">
+        <div class="fc-panel fc-panel-sage">
+          <span class="fifteen-big">15 pairs</span>
+          <span class="fifteen-lbl">I'd buy myself</span>
+        </div>
+        <div class="fc-panel">
+          <span class="fifteen-big">500 pairs</span>
+          <span class="fifteen-lbl">that are just average</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-inner"></div></div>
+
+<!-- WHAT HAPPENS NEXT -->
+<section class="about-section" style="text-align:center;">
+  <div class="about-section-header" style="max-width:640px;margin:0 auto 32px;">
+    <span class="fc-kicker" style="justify-content:center;">What happens next</span>
+    <h2>Today we recommend. Next, we make.</h2>
+    <p>Right now we point you to the best fits from brands we trust. Next, we'll make our own.</p>
+  </div>
+  <div class="roadmap">
+    <span class="fc-pill fc-pill-sage"><i class="fc-dot"></i>Fit quiz &middot; live</span>
+    <span class="roadmap-arrow">&rarr;</span>
+    <span class="fc-pill fc-pill-sage"><i class="fc-dot"></i>Product picks &middot; live</span>
+    <span class="roadmap-arrow">&rarr;</span>
+    <span class="fc-pill fc-pill-gold"><i class="fc-dot"></i>FitCo pants &middot; in development</span>
+  </div>
 </section>
 
 <div class="divider"><div class="divider-inner"></div></div>
