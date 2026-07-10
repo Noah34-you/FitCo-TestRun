@@ -32,64 +32,68 @@
   };
 
   // Outer silhouette: outseam down each side, hem, inseam back up, soft crotch.
+  // Knee-to-hem is curved (not a straight line) so the leg drapes naturally.
   function pantBodyPath(g) {
     var t = g.t, k = g.k, h = g.h;
     var oLt = 46 - t,   oLk = 45.6 - k,   oLh = 45.6 - h;   // outer-left x at thigh/knee/hem
     var oRt = 50 + t,   oRk = 50.4 + k,   oRh = 50.4 + h;   // outer-right x (0.2px asymmetry)
     return [
       'M30 15',
-      'C29.4 26 ' + oLt + ' 36 ' + oLt + ' 50',            // seat eases into thigh
-      'C' + oLt + ' 61 ' + oLk + ' 68 ' + oLk + ' 78',     // thigh into knee
-      'L' + oLh + ' 111',                                   // knee tapers to hem (outer-left)
+      'C29.2 25 ' + oLt + ' 34 ' + oLt + ' 50',            // seat eases into thigh
+      'C' + oLt + ' 61 ' + oLk + ' 69 ' + oLk + ' 78',     // thigh into knee
+      'C' + oLk + ' 89 ' + oLh + ' 100 ' + oLh + ' 111',   // knee drapes to hem (curved)
       'L45.6 111',                                          // hem across the left leg
       'C46 92 46.4 63 46.8 49.5',                           // inseam rises (inner-left)
-      'Q48 45.4 49.2 49.5',                                 // soft crotch, no V-notch
+      'Q48 45.2 49.2 49.5',                                 // soft crotch, no V-notch
       'C49.6 63 50 92 50.4 111',                            // inseam falls (inner-right)
       'L' + oRh + ' 111',                                   // hem across the right leg
-      'L' + oRk + ' 78',
-      'C' + oRk + ' 68 ' + oRt + ' 61 ' + oRt + ' 50',     // knee into thigh
-      'C' + oRt + ' 36 66.6 26 66 15',                      // thigh/seat into waist (right)
+      'C' + oRh + ' 100 ' + oRk + ' 89 ' + oRk + ' 78',    // hem drapes up to knee
+      'C' + oRk + ' 69 ' + oRt + ' 61 ' + oRt + ' 50',     // knee into thigh
+      'C' + oRt + ' 34 66.8 25 66 15',                      // thigh/seat into waist (right)
       'Z'
     ].join(' ');
   }
 
   // Waistband + belt loops (shared by front & back); button is front-only.
+  // Belt loops are small rounded straps that sit ON the band, not comb ticks.
   var PANT_BAND =
-    '<path stroke-width="1.35" d="M30 15 V8.4 Q30 6 32.4 6 L63.6 6 Q66 6 66 8.4 V15"/>' +   // waistband U
-    '<path stroke-width="0.95" d="M30.4 15.2 H65.6"/>' +                                     // waistband seam
-    '<path stroke-width="1.05" d="M33 4.8 V8.8 M40.4 4.6 V8.9 M48 4.5 V9 M55.6 4.7 V8.8 M63 4.9 V8.7"/>'; // 5 belt loops
-  var PANT_BUTTON = '<circle stroke-width="0.95" cx="47.7" cy="18.3" r="1.3"/>';
+    '<path stroke-width="1.3" d="M30 15 V8.4 Q30 6 32.4 6 L63.6 6 Q66 6 66 8.4 V15"/>' +     // waistband
+    '<path stroke-width="0.9" d="M30.4 15.2 H65.6"/>' +                                       // waistband seam
+    '<rect stroke-width="0.85" x="32.3" y="4.9" width="1.7" height="4.7" rx="0.8"/>' +        // belt loops (5,
+    '<rect stroke-width="0.85" x="39.6" y="4.8" width="1.7" height="4.8" rx="0.8"/>' +        // slightly uneven
+    '<rect stroke-width="0.85" x="47.2" y="4.8" width="1.7" height="4.8" rx="0.8"/>' +        // heights for a
+    '<rect stroke-width="0.85" x="54.8" y="4.9" width="1.7" height="4.7" rx="0.8"/>' +        // hand-drawn feel)
+    '<rect stroke-width="0.85" x="62" y="5" width="1.7" height="4.6" rx="0.8"/>';
+  var PANT_BUTTON = '<circle stroke-width="0.9" cx="47.7" cy="18.2" r="1.3"/>';
 
-  // Fly J-topstitch — a clean hook to the right, no cartoon curl.
+  // Fly J-topstitch — a clean hook to the right (no crotch folds: they read as a smile).
   var PANT_FLY =
-    '<path stroke-width="0.95" d="M47.7 18.3 C46.5 25 46.3 34 47.2 41.4 C47.5 43 48.5 43.6 49.9 43.2"/>';
+    '<path stroke-width="0.95" d="M47.7 18.2 C46.5 25 46.3 34 47.2 41.2 C47.5 42.8 48.5 43.4 49.9 43"/>';
 
-  // Angled front-pocket openings + coin pocket (5-pocket styling).
+  // Curved scoop front-pocket mouths + corner rivets + coin pocket (5-pocket styling).
   var PANT_POCKETS =
-    '<path stroke-width="1.05" d="M40.6 16 C37 18.4 32.8 20.8 30.7 27"/>' +
-    '<path stroke-width="1.05" d="M55.4 16 C59 18.4 63.2 20.8 65.3 27"/>' +
-    '<path stroke-width="0.85" d="M55.9 20.4 H60.5"/>';
+    '<path stroke-width="1" d="M40.8 15.6 C37 18.2 33 20.8 30.9 26.8"/>' +
+    '<path stroke-width="1" d="M55.2 15.6 C59 18.2 63 20.8 65.1 26.8"/>' +
+    '<circle stroke-width="0.55" cx="40.8" cy="15.9" r="0.5"/>' +
+    '<circle stroke-width="0.55" cx="55.2" cy="15.9" r="0.5"/>' +
+    '<path stroke-width="0.8" d="M55.7 19.6 C57.1 21.4 59.3 21.4 60.6 19.9"/>';
 
-  // Front crease + hem cuff, both following each leg's centreline for this geo.
-  function pantFrontLines(g) {
-    var lcT = ((46 - g.t) + 45.6) / 2, lcK = ((45.6 - g.k) + 45.6) / 2, lcH = ((45.6 - g.h) + 45.6) / 2;
-    var rcT = ((50 + g.t) + 50.4) / 2, rcK = ((50.4 + g.k) + 50.4) / 2, rcH = ((50.4 + g.h) + 50.4) / 2;
+  // Hem cuff only (no full-length leg creases — keeps it a casual chino/jean).
+  function pantHem(g) {
     var oLh = 45.6 - g.h, oRh = 50.4 + g.h;
-    return '<path stroke-width="0.8" d="M' + lcT.toFixed(1) + ' 31 C' + lcK.toFixed(1) + ' 56 ' + lcK.toFixed(1) + ' 82 ' + lcH.toFixed(1) + ' 105"/>' +
-      '<path stroke-width="0.8" d="M' + rcT.toFixed(1) + ' 31 C' + rcK.toFixed(1) + ' 56 ' + rcK.toFixed(1) + ' 82 ' + rcH.toFixed(1) + ' 105"/>' +
-      '<path stroke-width="1" d="M' + oLh.toFixed(1) + ' 106 H45.6 M50.4 106 H' + oRh.toFixed(1) + '"/>';
+    return '<path stroke-width="1" d="M' + oLh.toFixed(1) + ' 106 H45.6 M50.4 106 H' + oRh.toFixed(1) + '"/>';
   }
 
   // Full front-view flat for a geo (outline + all construction).
   function pantSymbolContent(g, extras) {
-    return '<path stroke-width="1.35" d="' + pantBodyPath(g) + '"/>' +
-      PANT_BAND + PANT_BUTTON + PANT_POCKETS + PANT_FLY + pantFrontLines(g) + (extras || '');
+    return '<path stroke-width="1.3" d="' + pantBodyPath(g) + '"/>' +
+      PANT_BAND + PANT_BUTTON + PANT_POCKETS + PANT_FLY + pantHem(g) + (extras || '');
   }
 
   // Back view: yoke seam, patch pockets, centre-back seam (no fly/button).
   var PANT_BACK_DETAILS =
-    '<path stroke-width="0.95" d="M30 22 C40 25.5 56 25.5 66 22"/>' +          // yoke seam
-    '<path stroke-width="0.95" d="M35 28 h9 v7.5 h-9 z M52 28 h9 v7.5 h-9 z"/>' + // patch pockets
+    '<path stroke-width="0.9" d="M30 22 C40 25.5 56 25.5 66 22"/>' +           // yoke seam
+    '<path stroke-width="0.9" d="M35 28 h9 v7.5 h-9 z M52 28 h9 v7.5 h-9 z"/>' + // patch pockets
     '<path stroke-width="0.8" d="M47.8 15.4 V44"/>';                           // centre-back seam
 
   /* ---------- sprite ----------------------------------------------------- */
@@ -164,7 +168,7 @@
   /* --- pant illustrations (front / back / six fits) --- */
   S += illo('fc-il-pant-front', pantSymbolContent(pantGeo.straightFit));
   S += illo('fc-il-pant-back',
-    '<path stroke-width="1.35" d="' + pantBodyPath(pantGeo.straightFit) + '"/>' + PANT_BAND + PANT_BACK_DETAILS);
+    '<path stroke-width="1.3" d="' + pantBodyPath(pantGeo.straightFit) + '"/>' + PANT_BAND + PANT_BACK_DETAILS);
   Object.keys(pantGeo).forEach(function (key) {
     S += illo('fc-il-fit-' + key, pantSymbolContent(pantGeo[key]));
   });
