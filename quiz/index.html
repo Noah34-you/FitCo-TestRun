@@ -1002,6 +1002,16 @@
     letter-spacing: -0.01em;
   }
 
+  /* Subtle green helper line beneath the question (e.g. "Select up to 2") */
+  .question-helper {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--fc-sage-deep, #3C6B3C);
+    letter-spacing: -0.01em;
+    margin: -2px 0 6px;
+  }
+
   .question-sub {
     font-size: 14px;
     color: var(--text-muted);
@@ -1069,6 +1079,35 @@
   .option-illustration-photo img {
     object-fit: contain;
     padding: 3px;
+  }
+  /* Q3 fit-problem illustrations: framed artwork on a larger square tile with
+     no default card frame (each asset carries its own rounded frame). */
+  .option-illustration.option-illustration-q3 {
+    width: 58px;
+    height: 58px;
+    background: transparent;
+    border: none;
+    overflow: visible;
+    padding: 0;
+  }
+  .option-illustration-q3 img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* Q3 only: a stronger, greener selected state (scoped so other questions
+     keep their existing selection style). */
+  #q3 .option.selected {
+    border-color: var(--success);
+    box-shadow: inset 0 0 0 2px var(--success), 0 6px 18px rgba(64, 44, 24, 0.12);
+  }
+  #q3 .option.selected .option-illustration-q3 {
+    transform: scale(1.06);
+  }
+  #q3 .option.selected .option-illustration-q3 img {
+    filter: drop-shadow(0 2px 6px rgba(60, 107, 60, 0.42));
   }
 
   /* Selected: tinted sage card with strong ink ring (illustration highlights via fitco-ui.css) */
@@ -2151,13 +2190,14 @@
         <div class="question-feedback">Your build is the starting point.</div>
       </div>
       <div class="question hide" id="q3">
-        <label>Where do pants usually fit wrong? <span style="font-weight:400;color:var(--text-muted);">(Select up to 2)</span></label>
+        <label>Where do pants usually fit wrong?</label>
+        <span class="question-helper">(Select up to 2)</span>
         <span class="question-sub">This tells us what your current pants don't get right.</span>
         <div class="options" data-multiselect="true" data-multiselect-max="2">
-          <button class="option" onclick="toggleMultiOption(this,'fitWrong','tightThighsSeat')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-tight"/></svg></span><span class="option-text"><strong class="option-title">Tight in thighs or seat</strong><span class="option-sub">Pulling or pinching above the knee</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="toggleMultiOption(this,'fitWrong','waistGap')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-gap"/></svg></span><span class="option-text"><strong class="option-title">Waist gaps</strong><span class="option-sub">Band gaps when the seat fits</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="toggleMultiOption(this,'fitWrong','tooMuchFabric')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-pool"/></svg></span><span class="option-text"><strong class="option-title">Too much fabric below the knee</strong><span class="option-sub">Baggy or bunching at the hem</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="toggleMultiOption(this,'fitWrong','lengthOff')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-length"/></svg></span><span class="option-text"><strong class="option-title">Length feels off</strong><span class="option-sub">Hems stack up or float high</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="toggleMultiOption(this,'fitWrong','tightThighsSeat')"><span class="option-illustration option-illustration-q3"><img src="../images/quiz-q3-tight.png" alt="Tight in thighs or seat"></span><span class="option-text"><strong class="option-title">Tight in thighs or seat</strong><span class="option-sub">Pulling or pinching above the knee</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="toggleMultiOption(this,'fitWrong','waistGap')"><span class="option-illustration option-illustration-q3"><img src="../images/quiz-q3-waistgap.png" alt="Waist gaps"></span><span class="option-text"><strong class="option-title">Waist gaps</strong><span class="option-sub">Band gaps when the seat fits</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="toggleMultiOption(this,'fitWrong','tooMuchFabric')"><span class="option-illustration option-illustration-q3"><img src="../images/quiz-q3-fabric.png" alt="Too much fabric below the knee"></span><span class="option-text"><strong class="option-title">Too much fabric below the knee</strong><span class="option-sub">Baggy or bunching at the hem</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="toggleMultiOption(this,'fitWrong','lengthOff')"><span class="option-illustration option-illustration-q3"><img src="../images/quiz-q3-length.png" alt="Length feels off"></span><span class="option-text"><strong class="option-title">Length feels off</strong><span class="option-sub">Hems stack up or float high</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
           <button class="option" onclick="toggleMultiOption(this,'fitWrong','usuallyFine')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-check"/></svg></span><span class="option-text"><strong class="option-title">Usually fit fine</strong><span class="option-sub">No consistent problem</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
         <div class="question-feedback">We'll look for fits that fix this.</div>
