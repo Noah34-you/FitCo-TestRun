@@ -1062,6 +1062,14 @@
     border-radius: inherit;
     display: block;
   }
+  /* Product photos (Q1): show the whole garment on white, don't crop it */
+  .option-illustration.option-illustration-photo {
+    background: #FFFFFF;
+  }
+  .option-illustration-photo img {
+    object-fit: contain;
+    padding: 3px;
+  }
 
   /* Selected: tinted sage card with strong ink ring (illustration highlights via fitco-ui.css) */
 
@@ -2124,10 +2132,10 @@
         <label>What are you shopping for?</label>
         <span class="question-sub">This helps us recommend the right styles and brands.</span>
         <div class="options">
-          <button class="option" onclick="selectOption(this,'productType','jeans')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-denim"/></svg></span><span class="option-text"><strong class="option-title">Jeans</strong><span class="option-sub">Five-pocket denim</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'productType','chinos')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-crease"/></svg></span><span class="option-text"><strong class="option-title">Chinos</strong><span class="option-sub">Cotton twill, smart-casual</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'productType','technical')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-stretch"/></svg></span><span class="option-text"><strong class="option-title">Technical pants</strong><span class="option-sub">Stretch, performance fabrics</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'productType','any')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-sparkle"/></svg></span><span class="option-text"><strong class="option-title">Surprise me</strong><span class="option-sub">Best fit across categories</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'productType','jeans')"><span class="option-illustration option-illustration-img option-illustration-photo"><img src="../images/quiz-q1-jeans.png" alt="Jeans"></span><span class="option-text"><strong class="option-title">Jeans</strong><span class="option-sub">Five-pocket denim</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'productType','chinos')"><span class="option-illustration option-illustration-img option-illustration-photo"><img src="../images/quiz-q1-chinos.png" alt="Chinos"></span><span class="option-text"><strong class="option-title">Chinos</strong><span class="option-sub">Cotton twill, smart-casual</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'productType','technical')"><span class="option-illustration option-illustration-img option-illustration-photo"><img src="../images/quiz-q1-technical.png" alt="Technical pants"></span><span class="option-text"><strong class="option-title">Technical pants</strong><span class="option-sub">Stretch, performance fabrics</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" onclick="selectOption(this,'productType','any')"><span class="option-illustration option-illustration-img option-illustration-photo"><img src="../images/quiz-q1-surprise.png" alt="Surprise me"></span><span class="option-text"><strong class="option-title">Surprise me</strong><span class="option-sub">Best fit across categories</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
         <div class="question-feedback">Noted.</div>
       </div>
