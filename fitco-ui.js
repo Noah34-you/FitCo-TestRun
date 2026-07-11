@@ -22,13 +22,16 @@
      per path and the left/right edges are intentionally a touch asymmetric
      so it reads hand-drawn, not mirrored.
      t/k/h = leg width (px) at thigh (y50), knee (y78), hem (y111).       */
+  // Thigh (t) is kept <= ~16 so the outer thigh never gets wider than the hip
+  // flare in pantBodyPath (~x29) — otherwise the leg reads as a "drumstick".
+  // Hems (h) stay generous so ankles don't pinch. Natural top-down taper.
   var pantGeo = {
-    slimTaper:        { t: 12,   k: 9.5,  h: 7 },
-    straightFit:      { t: 14,   k: 13,   h: 12.5 },
-    athleticTaper:    { t: 17,   k: 12,   h: 8 },
-    athleticStraight: { t: 17,   k: 15,   h: 14 },
-    relaxedTaper:     { t: 16.5, k: 13.5, h: 10.5 },
-    relaxedFit:       { t: 18,   k: 16,   h: 15 }
+    slimTaper:        { t: 13,   k: 10.5, h: 8.5 },
+    straightFit:      { t: 14.5, k: 13.5, h: 13 },
+    athleticTaper:    { t: 15.5, k: 13,   h: 10.5 },
+    athleticStraight: { t: 16,   k: 14.5, h: 14 },
+    relaxedTaper:     { t: 15.5, k: 14,   h: 12.5 },
+    relaxedFit:       { t: 16,   k: 15.5, h: 15 }
   };
 
   // Outer silhouette: outseam down each side, hem, inseam back up, soft crotch.
