@@ -1213,8 +1213,7 @@
   .quiz-categories:has(#q3:not(.hide)) .quiz-cat[data-cat="problem"],
   .quiz-categories:has(#q4:not(.hide)) .quiz-cat[data-cat="body"],
   .quiz-categories:has(#q5:not(.hide)) .quiz-cat[data-cat="fit"],
-  .quiz-categories:has(#q6:not(.hide)) .quiz-cat[data-cat="fit"],
-  .quiz-categories:has(#q7:not(.hide)) .quiz-cat[data-cat="style"] {
+  .quiz-categories:has(#q6:not(.hide)) .quiz-cat[data-cat="style"] {
     background: var(--text);
     color: var(--bg);
     border-color: var(--text);
@@ -1223,8 +1222,7 @@
   .quiz-categories:has(#q3:not(.hide)) .quiz-cat[data-cat="body"],
   .quiz-categories:has(#q4:not(.hide)) .quiz-cat[data-cat="problem"],
   .quiz-categories:has(#q5:not(.hide)) .quiz-cat[data-cat="body"],
-  .quiz-categories:has(#q6:not(.hide)) .quiz-cat[data-cat="body"],
-  .quiz-categories:has(#q7:not(.hide)) .quiz-cat[data-cat="fit"] {
+  .quiz-categories:has(#q6:not(.hide)) .quiz-cat[data-cat="fit"] {
     background: var(--bg);
     color: var(--text);
     border-color: var(--text);
@@ -1704,6 +1702,15 @@
     object-fit: cover;
     display: block;
   }
+  .product-card-img-placeholder {
+    background: #F0EFEA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
   .product-card-body {
     padding: 14px 16px 16px;
   }
@@ -1997,7 +2004,7 @@
 <div class="utility-bar">
   <div class="utility-bar-inner">
     <span class="utility-bar-item">Real product picks, not a size chart</span>
-    <span class="utility-bar-item">We recommend. We don't sell.</span>
+    <span class="utility-bar-item">Independent recommendations. We don't sell pants today.</span>
     <span class="utility-bar-item">Best overall, budget, and premium options</span>
   </div>
 </div>
@@ -2006,7 +2013,7 @@
   <div class="nav-inner">
     <a href="/" class="logo" style="text-decoration:none;color:inherit;"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
     <ul class="nav-center">
-      <li><a href="/shop/index.html">Shop Your Fit</a></li>
+      <li><a href="/shop/index.html">Your Picks</a></li>
       <li><a href="/#works">How It Works</a></li>
       <li><a href="/#fits">Fit Guide</a></li>
       <li><a href="/about/index.html">About Us</a></li>
@@ -2260,14 +2267,14 @@
         </div>
         <h2 class="results-title">Your Fit Profile</h2>
         <div class="results-meta-row">
-          <span class="fc-pill fc-pill-sage"><i class="fc-dot"></i>Strong match</span>
+          <span class="fc-pill fc-pill-sage"><i class="fc-dot"></i>Best Match</span>
           <span class="fc-pill"><i class="fc-dot"></i>Based on your 6 answers</span>
           <span class="fc-pill fc-pill-plain" id="resultsMetaBuild" style="display:none;"></span>
         </div>
       </div>
       <button class="btn-save" onclick="saveMyFit()">
         <svg viewBox="0 0 16 16" fill="none"><path d="M3 2H13L14 3V14L12 12L10 14L8 12L6 14L4 12L2 14V3L3 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><line x1="5" y1="5" x2="11" y2="5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-        Save My Fit
+        Save on this device
       </button>
     </div>
     <div class="results-layout">
@@ -2291,7 +2298,7 @@
           <div class="hero-card-body">
             <div class="hero-card-imgwrap">
               <img src="../images/products/levis_541.jpg" alt="" class="hero-card-img" id="bestHeroImg">
-              <span class="fc-chip fc-chip-overlay"><svg aria-hidden="true"><use href="#fc-ic-pants"/></svg>Fit illustration</span>
+              <span class="fc-chip fc-chip-overlay"><svg aria-hidden="true"><use href="#fc-ic-pants"/></svg>Example of this cut</span>
             </div>
             <div class="hero-card-details">
               <p id="bestWhy">Roomy in the thigh with a defined taper below the knee. Cut for muscular thighs and athletic builds.</p>
@@ -2368,7 +2375,7 @@
               <p>Space through hips and seat, room to sit and move.</p>
             </div>
           </div>
-          <div class="fc-note" style="margin-top:14px;"><svg aria-hidden="true"><use href="#fc-ic-info"/></svg>Placeholder specification. Final measurements land with the FitCo line.</div>
+          <div class="fc-note" style="margin-top:14px;"><svg aria-hidden="true"><use href="#fc-ic-info"/></svg>Placeholder specification for this fit archetype.</div>
         </div>
 
         <!-- Why this fit works -->
@@ -2438,7 +2445,7 @@
               <span class="fc-kicker">Fit comparison</span>
               <h3>Your match vs. the runners-up</h3>
             </div>
-            <span class="fc-pill"><i class="fc-dot"></i>Ranked by your answers</span>
+            <span class="fc-pill"><i class="fc-dot"></i>Qualitative ranking</span>
           </div>
           <div id="compareRows"></div>
           <div class="fc-note" style="margin-top:14px;"><svg aria-hidden="true"><use href="#fc-ic-info"/></svg>Alternates ranked second and third for your build. Both remain solid options.</div>
@@ -2483,7 +2490,7 @@
               <h4>What's next</h4>
             </div>
             <div class="results-retake-wrap">
-              <a class="btn" href="/shop/index.html" style="width:100%;">Shop Your Fit</a>
+              <a class="btn" href="/shop/index.html" style="width:100%;">Your Picks</a>
               <button class="btn-text" onclick="resetQuiz()">Retake the quiz</button>
               <span class="fc-note"><svg aria-hidden="true"><use href="#fc-ic-bookmark"/></svg>Results save to this device</span>
             </div>
@@ -2940,9 +2947,10 @@ function renderCompare(bestKey, altKeys) {
     var fit = fits[k];
     if (!fit) return '';
     var isBest = idx === 0;
+    var rankLabels = ['Best Match', 'Strong Match', 'Style Alternative'];
     var pill = isBest
-      ? '<span class="fc-pill fc-pill-sage" style="align-self:flex-start;"><i class="fc-dot"></i>Your match</span>'
-      : '<span class="fc-pill fc-pill-plain" style="align-self:flex-start;"><i class="fc-dot"></i>Alternate ' + idx + '</span>';
+      ? '<span class="fc-pill fc-pill-sage" style="align-self:flex-start;"><i class="fc-dot"></i>' + rankLabels[0] + '</span>'
+      : '<span class="fc-pill fc-pill-plain" style="align-self:flex-start;"><i class="fc-dot"></i>' + (rankLabels[idx] || ('Alternate ' + idx)) + '</span>';
     var diff = isBest ? fit.description : getAltExplanation(bestKey, k);
     var thumb = window.FC ? '<span class="compare-thumb">' + FC.pantSvg(k) + '</span>' : '';
     return '<div class="compare-row' + (isBest ? ' compare-best' : '') + '">' +
@@ -3152,9 +3160,12 @@ function renderProducts(recommendedFit, secondaryFits, productType) {
 
   var html = displayProducts.map(function(p) {
     var benefit = fitProductBenefits[p.id] || '';
-    var imgSrc = productImages[p.id] || fitImages[p.primaryFit] || fitImages.straightFit;
+    var imgSrc = productImages[p.id];
+    var media = imgSrc
+      ? '<img src="' + imgSrc + '" alt="' + p.name + '" class="product-card-img">'
+      : '<div class="product-card-img product-card-img-placeholder" role="img" aria-label="Product photo coming soon"><span>Photo coming soon</span></div>';
     return '<div class="product-card">' +
-      '<img src="' + imgSrc + '" alt="' + p.name + '" class="product-card-img">' +
+      media +
       '<div class="product-card-body">' +
         '<div class="product-card-brand">' + p.brand + '</div>' +
         '<div class="product-card-name">' + p.name + (p.variant ? ' (' + p.variant + ')' : '') + '</div>' +
@@ -3581,6 +3592,7 @@ function calculateResults() {
   document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
 
   window._fitcoBestKey = bestKey;
+  markSaveButtonIfStored();
   } catch(err) {
     console.error('FitCo error:', err);
     document.getElementById('loadingState').classList.remove('active');
@@ -3595,10 +3607,21 @@ function saveMyFit() {
     localStorage.setItem('fitco_saved_fit', bestKey);
     var btn = document.querySelector('.btn-save');
     if (btn) {
-      btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4.5" stroke="#5B8C5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Saved';
+      btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4.5" stroke="#5B8C5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Saved on this device';
       btn.style.borderColor = '#5B8C5A';
       btn.style.color = '#5B8C5A';
     }
+  } catch(e) {}
+}
+
+function markSaveButtonIfStored() {
+  try {
+    if (!localStorage.getItem('fitco_saved_fit')) return;
+    var btn = document.querySelector('.btn-save');
+    if (!btn) return;
+    btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4.5" stroke="#5B8C5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Saved on this device';
+    btn.style.borderColor = '#5B8C5A';
+    btn.style.color = '#5B8C5A';
   } catch(e) {}
 }
 

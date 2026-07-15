@@ -1567,7 +1567,7 @@
 <div class="utility-bar">
   <div class="utility-bar-inner">
     <span class="utility-bar-item">Real product picks, not a size chart</span>
-    <span class="utility-bar-item">We recommend. We don't sell.</span>
+    <span class="utility-bar-item">Independent recommendations. We don't sell pants today.</span>
     <span class="utility-bar-item">Best overall, budget, and premium options</span>
   </div>
 </div>
@@ -1576,7 +1576,7 @@
   <div class="nav-inner">
     <a href="/" class="logo" style="text-decoration:none;color:inherit;"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
     <ul class="nav-center">
-      <li><a href="/shop/index.html">Shop Your Fit</a></li>
+      <li><a href="/shop/index.html">Your Picks</a></li>
       <li><a href="/#works">How It Works</a></li>
       <li><a href="/#fits">Fit Guide</a></li>
       <li><a href="/about/index.html">About Us</a></li>
@@ -1690,7 +1690,7 @@
   <div class="shop-results-inner">
     <!-- Fit Profile Summary -->
     <div class="fit-profile-summary">
-      <span class="fit-section-badge" style="margin-bottom:16px;">Your Fit Profile</span>
+      <span class="fit-section-badge" style="margin-bottom:16px;">Recommended for Your Fit</span>
       <h2 id="shopFitName">Athletic Taper</h2>
       <p id="shopFitDesc">More room in the thigh with a gradual taper below the knee.</p>
       <div class="fit-profile-tags" id="shopFitTags">
@@ -1720,10 +1720,10 @@
 
     <!-- PERSONALIZED WAITLIST -->
     <div class="shop-waitlist" id="shopWaitlist">
-      <span class="shop-waitlist-badge">Coming Soon</span>
-      <h3 id="shopWaitlistHeadline">We're making our own pants next.</h3>
-      <p id="shopWaitlistLead">Cut around real proportions, not decades-old sizing blocks.</p>
-      <p id="shopWaitlistSub">Leave your email. We'll tell you when yours is ready.</p>
+      <span class="shop-waitlist-badge">Updates</span>
+      <h3 id="shopWaitlistHeadline">Independent recommendations today.</h3>
+      <p id="shopWaitlistLead">We point you to pants that match your fit. If FitCo ever creates its own, they'll be held to the same standards.</p>
+      <p id="shopWaitlistSub">Leave your email if you want updates on what we're exploring next.</p>
       <form class="shop-waitlist-form" id="shopWaitlistForm" onsubmit="return handleShopWaitlistSubmit(event)" novalidate>
         <input type="email" class="shop-waitlist-input" placeholder="Enter your email" required id="shopWaitlistEmail" oninput="clearShopWaitlistError()">
         <button type="submit" class="shop-waitlist-btn">Join the Waitlist</button>
@@ -1796,6 +1796,21 @@
     display: block;
     object-fit: cover;
     object-position: center 20%;
+  }
+  .product-card-img-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+  .shop-empty-note {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+    padding: 8px 0;
   }
   .product-card-body {
     padding: 20px;
@@ -1991,7 +2006,6 @@ var products = {
     name: 'Athletic Taper',
     desc: 'More room in the thigh with a gradual taper below the knee. Cut for muscular builds.',
     tags: ['Room in thigh', 'Tapered ankle'],
-    img: '../images/fit-athletic-taper.png',
     best: [
       { id: 'bonobos_swc_athletic', brand: 'Bonobos', name: 'Stretch Washed Chino (Athletic)', desc: 'Extra room in the thigh with a clean taper below the knee.', price: '$99', link: 'https://bonobos.com/products/stretch-washed-chino-1', img: productImages.bonobos_swc_athletic }
     ],
@@ -2002,11 +2016,24 @@ var products = {
       { id: 'lulu_abc_classic', brand: 'Lululemon', name: 'ABC Classic-Fit 5 Pocket Pant', desc: "Lululemon's classic fit with technical fabric. Office-ready comfort.", price: '$128', link: 'https://shop.lululemon.com/p/men-pants/ABC-Pant-Classic-32/_/prod9000003', img: productImages.lulu_abc_classic }
     ]
   },
+  athleticStraight: {
+    name: 'Athletic Straight',
+    desc: 'Generous room through seat and thigh with a straighter leg. For broader builds.',
+    tags: ['Room in seat', 'Straight leg'],
+    best: [
+      { id: 'vuori_meta_relaxed', brand: 'Vuori', name: 'Meta Pant (Relaxed Fit)', desc: "Vuori's performance fabric in a relaxed cut. Feels like a sweatpant, looks polished.", price: '$118', link: 'https://vuoriclothing.com/products/meta-pant-relaxed-fit-32-charcoal', img: productImages.vuori_meta_relaxed }
+    ],
+    budget: [
+      { id: 'levis_541', brand: "Levi's", name: '541 Athletic Taper Jeans', desc: 'Cut for muscular legs. More seat and thigh room than standard taper jeans.', price: '$70', link: 'https://www.levi.com/US/en_US/clothing/men/jeans/541TM-athletic-taper-mens-jeans/p/181810629', img: productImages.levis_541 }
+    ],
+    premium: [
+      { id: 'bonobos_ww_athletic', brand: 'Bonobos', name: 'Stretch Weekday Warrior Dress Pant (Athletic)', desc: 'Dress pant styling with athletic-fit room. Wrinkle-resistant for daily wear.', price: '$129', link: 'https://bonobos.com/products/stretch-weekday-warrior-dress-pants', img: productImages.bonobos_ww_athletic }
+    ]
+  },
   straightFit: {
     name: 'Straight Fit',
     desc: 'Consistent width from hip to ankle. Hard to get wrong.',
     tags: ['Straight leg', 'Balanced'],
-    img: '../images/fit-straight.png',
     best: [
       { id: 'bonobos_swc_straight', brand: 'Bonobos', name: 'Stretch Washed Chino (Straight)', desc: 'The classic straight-leg chino. Works with sneakers or boots.', price: '$99', link: 'https://bonobos.com/products/stretch-washed-chino-1', img: productImages.bonobos_swc_straight }
     ],
@@ -2021,7 +2048,6 @@ var products = {
     name: 'Relaxed Fit',
     desc: 'More room throughout the leg without going shapeless.',
     tags: ['Relaxed fit', 'Maximum comfort'],
-    img: '../images/fit-relaxed.png',
     best: [
       { id: 'duer_nosweat_relaxed_taper', brand: 'DUER', name: 'No Sweat Pant (Relaxed Taper)', desc: "DUER's signature stretch fabric. Dress pant look with full mobility.", price: '$129', link: 'https://shopduer.com/products/mens-dress-sweatpant-relaxed', img: productImages.duer_nosweat_relaxed_taper }
     ],
@@ -2032,11 +2058,24 @@ var products = {
       { id: 'jcrew_giant', brand: 'J.Crew', name: 'Giant-Fit Chino Pant', desc: "J.Crew's roomiest chino. Maximum comfort without looking sloppy.", price: '$118', link: 'https://www.jcrew.com/p/mens/categories/clothing/pants-and-chinos/chino/giant-fit-chino-pant/BI521', img: productImages.jcrew_giant }
     ]
   },
+  relaxedTaper: {
+    name: 'Relaxed Taper',
+    desc: 'Comfortable room throughout with a slight taper at the ankle.',
+    tags: ['Relaxed room', 'Subtle taper'],
+    best: [
+      { id: 'duer_nosweat_relaxed_taper', brand: 'DUER', name: 'No Sweat Pant (Relaxed Taper)', desc: "DUER's signature stretch fabric. Dress pant look with full mobility.", price: '$129', link: 'https://shopduer.com/products/mens-dress-sweatpant-relaxed', img: productImages.duer_nosweat_relaxed_taper }
+    ],
+    budget: [
+      { id: 'levis_550', brand: "Levi's", name: '550 Relaxed Fit Tapered Jeans', desc: 'Relaxed through the thigh with a modern tapered leg. Easy, comfortable fit.', price: '$60', link: 'https://www.levi.com/US/en_US/clothing/men/jeans/550TM/550TM-relaxed-fit-tapered-mens-jeans/p/550501845', img: productImages.levis_550 }
+    ],
+    premium: [
+      { id: 'jcrew_giant', brand: 'J.Crew', name: 'Giant-Fit Chino Pant', desc: "J.Crew's roomiest chino. Maximum comfort without looking sloppy.", price: '$118', link: 'https://www.jcrew.com/p/mens/categories/clothing/pants-and-chinos/chino/giant-fit-chino-pant/BI521', img: productImages.jcrew_giant }
+    ]
+  },
   slimTaper: {
     name: 'Slim Taper',
     desc: 'Fitted through the thigh with a clean taper to the ankle. Sharp and modern.',
     tags: ['Fitted thigh', 'Tapered ankle'],
-    img: '../images/fit-slim-taper.png',
     best: [
       { id: 'bonobos_swc_slim', brand: 'Bonobos', name: 'Stretch Washed Chino (Slim)', desc: "Bonobos' bestselling chino. Stretch cotton that moves with you.", price: '$99', link: 'https://bonobos.com/products/stretch-washed-chino-1', img: productImages.bonobos_swc_slim }
     ],
@@ -2049,10 +2088,13 @@ var products = {
   }
 };
 
-function renderProductCard(p, fitImg) {
-  var imgSrc = p.img || fitImg;
+function renderProductCard(p) {
+  var imgSrc = p.img;
+  var media = imgSrc
+    ? '<img src="' + imgSrc + '" alt="' + p.name + '" class="product-card-img">'
+    : '<div class="product-card-img product-card-img-placeholder" role="img" aria-label="Product photo coming soon"><span>Photo coming soon</span></div>';
   return '<div class="product-card">' +
-    '<img src="' + imgSrc + '" alt="' + p.name + '" class="product-card-img">' +
+    media +
     '<div class="product-card-body">' +
       '<div class="product-cat">' + p.brand + '</div>' +
       '<h4>' + p.name + '</h4>' +
@@ -2065,6 +2107,15 @@ function renderProductCard(p, fitImg) {
   '</div>';
 }
 
+function fillShopSection(el, items) {
+  if (!el) return;
+  if (!items || !items.length) {
+    el.innerHTML = '<p class="shop-empty-note">No picks in this category yet for your fit.</p>';
+    return;
+  }
+  el.innerHTML = items.map(function(p) { return renderProductCard(p); }).join('');
+}
+
 function renderProducts(fitKey) {
   var fit = products[fitKey] || products.straightFit;
   document.getElementById('shopFitName').textContent = fit.name;
@@ -2072,32 +2123,42 @@ function renderProducts(fitKey) {
   document.getElementById('shopFitTags').innerHTML = fit.tags.map(function(t) {
     return '<span class="fit-tag">' + t + '</span>';
   }).join('');
-  document.getElementById('shopProductsBest').innerHTML = fit.best.map(function(p) { return renderProductCard(p, fit.img); }).join('');
-  document.getElementById('shopProductsBudget').innerHTML = fit.budget.map(function(p) { return renderProductCard(p, fit.img); }).join('');
-  document.getElementById('shopProductsPremium').innerHTML = fit.premium.map(function(p) { return renderProductCard(p, fit.img); }).join('');
+  fillShopSection(document.getElementById('shopProductsBest'), fit.best);
+  fillShopSection(document.getElementById('shopProductsBudget'), fit.budget);
+  fillShopSection(document.getElementById('shopProductsPremium'), fit.premium);
 }
 
 // Personalized waitlist messaging by fit
 var waitlistMessages = {
   athleticTaper: {
-    headline: "We're making an athletic taper of our own.",
-    lead: 'More thigh room, a clean taper, and a waist that fits without sizing up.',
-    sub: "Leave your email. We'll tell you when it's ready."
+    headline: 'Independent recommendations today.',
+    lead: 'Your athletic taper picks come from brands we trust. If FitCo ever makes this cut, it will follow the same fit standards.',
+    sub: "Leave your email if you want updates on what we're exploring next."
+  },
+  athleticStraight: {
+    headline: 'Independent recommendations today.',
+    lead: 'Your athletic straight picks come from brands we trust. If FitCo ever makes this cut, it will follow the same fit standards.',
+    sub: "Leave your email if you want updates on what we're exploring next."
   },
   straightFit: {
-    headline: "We're making a straight fit of our own.",
-    lead: 'One clean line from hip to hem, cut for real proportions.',
-    sub: "Leave your email. We'll tell you when it's ready."
+    headline: 'Independent recommendations today.',
+    lead: 'Your straight fit picks come from brands we trust. If FitCo ever makes this cut, it will follow the same fit standards.',
+    sub: "Leave your email if you want updates on what we're exploring next."
   },
   relaxedFit: {
-    headline: "We're making a relaxed fit of our own.",
-    lead: 'Room through the leg without the shapeless drape.',
-    sub: "Leave your email. We'll tell you when it's ready."
+    headline: 'Independent recommendations today.',
+    lead: 'Your relaxed fit picks come from brands we trust. If FitCo ever makes this cut, it will follow the same fit standards.',
+    sub: "Leave your email if you want updates on what we're exploring next."
+  },
+  relaxedTaper: {
+    headline: 'Independent recommendations today.',
+    lead: 'Your relaxed taper picks come from brands we trust. If FitCo ever makes this cut, it will follow the same fit standards.',
+    sub: "Leave your email if you want updates on what we're exploring next."
   },
   slimTaper: {
-    headline: "We're making a slim taper of our own.",
-    lead: 'A sharp line that still lets you move.',
-    sub: "Leave your email. We'll tell you when it's ready."
+    headline: 'Independent recommendations today.',
+    lead: 'Your slim taper picks come from brands we trust. If FitCo ever makes this cut, it will follow the same fit standards.',
+    sub: "Leave your email if you want updates on what we're exploring next."
   }
 };
 
