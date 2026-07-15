@@ -4,6 +4,7 @@ import Home from './screens/Home.jsx';
 import Fitting from './screens/Fitting.jsx';
 import Calibrating from './screens/Calibrating.jsx';
 import Report from './screens/Report.jsx';
+import { QUESTIONS } from './engine.js';
 
 /* View state machine: home → fitting → calibrating → report.
    Hash-synced so refresh / share keeps your place. */
@@ -28,9 +29,15 @@ export default function App() {
   }, []);
 
   /* Start the fitting — optionally seeded with an answer given right
-     in the hero (zero-distance fitting). */
+     in the hero (zero-distance fitting). Only known question keys pass
+     through, so a click event handed in as `onClick={onStart}` seeds
+     nothing instead of poisoning the answers. */
   const startFitting = useCallback((seedAnswers) => {
-    setSeed(seedAnswers && typeof seedAnswers === 'object' ? seedAnswers : {});
+    const clean = {};
+    if (seedAnswers && typeof seedAnswers === 'object') {
+      for (const q of QUESTIONS) if (q.key in seedAnswers) clean[q.key] = seedAnswers[q.key];
+    }
+    setSeed(clean);
     setSession(s => s + 1);
     go('fitting');
   }, [go]);
