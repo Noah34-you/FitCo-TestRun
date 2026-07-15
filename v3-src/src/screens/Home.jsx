@@ -58,7 +58,7 @@ const COORDS = [
 ];
 
 const RULES = [
-  ['No padded catalog', '15 pants measured properly beats 1,500 copied from marketing.'],
+  ['No padded catalog', '15 pants we can vouch for beats 1,500 copied from marketing.'],
   ['No commission rankings', 'If the best pant pays us nothing, it’s still the recommendation.'],
   ['No invented precision', 'You’ll never see a “96% match” here. Tiers, with reasons.'],
   ['No hidden gaps', 'If we haven’t verified a great option, we say so.'],
@@ -103,14 +103,14 @@ export default function Home({ onStart, hasReport, onReport }) {
               ))}
             </h1>
             <motion.p variants={rise} initial="hidden" animate="show" custom={3} className="text-[clamp(16px,1.35vw,19px)] leading-relaxed text-ink-soft max-w-[460px] mb-9">
-              Brands sell you one number. FitCo measures the five points that actually decide fit, and maps your build to the one cut that works — then shows its work.
+              Brands sell you one number. FitCo works from the five points that actually decide fit, and maps your build to the one cut that works — then shows its work.
             </motion.p>
             <motion.div variants={rise} initial="hidden" animate="show" custom={4} className="flex items-center gap-3.5 flex-wrap mb-11">
               <Btn big onClick={onStart}>Find your fit</Btn>
-              <Btn ghost href="/about/index.html">How we measure</Btn>
+              <Btn ghost href="/about/index.html">How it works</Btn>
             </motion.div>
             <motion.div variants={rise} initial="hidden" animate="show" custom={5} className="flex gap-6 flex-wrap">
-              {['60-second fitting', '15 pants measured', 'No sponsored rankings'].map(f => (
+              {['60-second fitting', '15-pant vetted catalog', 'No sponsored rankings'].map(f => (
                 <Mono key={f} className="flex items-center gap-2"><i className="w-[5px] h-[5px] rounded-full bg-chalkline inline-block" />{f}</Mono>
               ))}
             </motion.div>
@@ -121,7 +121,7 @@ export default function Home({ onStart, hasReport, onReport }) {
         </div>
 
         <div className="absolute bottom-5 inset-x-0 flex justify-between px-5 sm:px-10 z-10">
-          <Mono>FIG. 01 — Measured twill, contour-mapped</Mono>
+          <Mono>FIG. 01 — Twill, contour-mapped</Mono>
           <Mono className="hidden sm:inline-block bg-paper/75 backdrop-blur-sm rounded-full px-3 py-1">Reference geometry · 32×32</Mono>
         </div>
       </section>
@@ -150,7 +150,7 @@ export default function Home({ onStart, hasReport, onReport }) {
         <div className="max-w-[1400px] mx-auto px-5 sm:px-10 py-24">
           <motion.div variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .4 }}>
             <Kicker className="mb-4 !text-chalkline">The standard</Kicker>
-            <h2 className="font-disp font-semibold tracking-[-0.03em] text-[clamp(28px,3.4vw,48px)] mb-12 max-w-[720px]">We measure the pants. Not the marketing.</h2>
+            <h2 className="font-disp font-semibold tracking-[-0.03em] text-[clamp(28px,3.4vw,48px)] mb-12 max-w-[720px]">We judge the pants. Not the marketing.</h2>
           </motion.div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-paper/15 border border-paper/15">
             {RULES.map(([t, d], i) => (
@@ -185,7 +185,7 @@ export default function Home({ onStart, hasReport, onReport }) {
           <a className="hover:text-ink transition-colors" href="/privacy/index.html">Privacy</a>
           <a className="hover:text-ink transition-colors" href="/terms/index.html">Terms</a>
         </nav>
-        <Mono>Fit, measured · V3</Mono>
+        <Mono>Fit first. Always.</Mono>
       </footer>
     </main>
   );
