@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — FitCo</title>
+<meta name="description" content="How FitCo collects, uses, and protects your information.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5.5' fill='%233C6B3C'/%3E%3Cg fill='%23FFFFFF'%3E%3Crect x='5' y='5.2' width='14' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='10' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='3.7' height='9.2' rx='.9'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../fitco-ui.css">
+<style>
+  :root {
+    --bg: #F5F3EE;
+    --bg-white: #FFFFFF;
+    --text: #111111;
+    --text-muted: #6E6E6E;
+    --text-body: #333333;
+    --border: #D9D9D9;
+    --border-light: #E8E6E1;
+    --success: #5B8C5A;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-pill: 100px;
+    --utility-bar-h: 32px;
+    --nav-h: 64px;
+    --header-h: calc(var(--utility-bar-h) + var(--nav-h));
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+  }
+
+  /* Utility bar */
+  .utility-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 101;
+    height: var(--utility-bar-h);
+    background: #EDEAE3;
+    border-bottom: 1px solid var(--border-light);
+    display: flex; align-items: center; overflow: hidden;
+  }
+  .utility-bar-inner {
+    width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 48px;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  }
+  .utility-bar-item {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.04em; color: var(--text-muted); white-space: nowrap;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed; top: var(--utility-bar-h); left: 0; right: 0; z-index: 100;
+    background: rgba(245,243,238,0.92);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; max-width: 1280px; margin: 0 auto; padding: 0 48px;
+  }
+  .nav-center {
+    display: flex; gap: 48px; list-style: none;
+    position: absolute; left: 50%; transform: translateX(-50%);
+  }
+  .nav-center a { font-size: 14px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .nav-center a:hover { color: var(--text); }
+  .logo { font-size: 18px; font-weight: 500; letter-spacing: -0.02em; text-decoration: none; color: inherit; }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 10px 24px; font-family: inherit; font-size: 13px; font-weight: 500;
+    border: none; background: var(--text); color: var(--bg); cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4,0,0.2,1); text-decoration: none; border-radius: var(--radius-sm);
+  }
+  .btn:hover { opacity: 0.85; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+  .btn:focus-visible, .nav-center a:focus-visible, .logo:focus-visible,
+  .legal a:focus-visible { outline: 2px solid var(--success); outline-offset: 2px; border-radius: 3px; }
+
+  /* Legal content */
+  .legal {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: calc(var(--header-h) + 56px) 24px 40px;
+  }
+  .legal-kicker {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--fc-sage-deep, #3C6B3C);
+    margin-bottom: 16px;
+  }
+  .legal-kicker::before { content: ''; width: 18px; height: 2px; border-radius: 2px; background: var(--success); }
+  .legal h1 {
+    font-size: clamp(32px, 4.5vw, 46px); font-weight: 600; letter-spacing: -0.03em;
+    line-height: 1.08; margin-bottom: 14px;
+  }
+  .legal-updated {
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em;
+    color: var(--text-muted);
+  }
+  .legal-switch {
+    position: static;
+    display: flex; gap: 10px; flex-wrap: wrap; margin: 26px 0 8px;
+    border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);
+    padding: 18px 0;
+  }
+  .legal-switch a {
+    display: inline-flex; align-items: center;
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    padding: 8px 16px; border-radius: var(--radius-pill);
+    border: 1px solid var(--border); color: var(--text-muted); background: transparent;
+    transition: all 0.2s;
+  }
+  .legal-switch a:hover { border-color: var(--text-muted); color: var(--text); }
+  .legal-switch a[aria-current="page"] {
+    background: var(--fc-sage-soft, #E8F0E4); border-color: var(--fc-sage-line, #D4E4D4);
+    color: var(--fc-sage-deep, #3C6B3C);
+  }
+
+  .legal-body { margin-top: 40px; }
+  .legal-body p, .legal-body li { font-size: 16px; line-height: 1.75; color: var(--text-body); }
+  .legal-body > p:first-of-type { font-size: 17px; }
+  .legal-body p { margin-bottom: 18px; }
+  .legal-body h2 {
+    font-size: 22px; font-weight: 600; letter-spacing: -0.01em; color: var(--text);
+    margin: 48px 0 14px; scroll-margin-top: calc(var(--header-h) + 20px);
+  }
+  .legal-body h3 { font-size: 16px; font-weight: 600; color: var(--text); margin: 26px 0 8px; }
+  .legal-body ul { margin: 0 0 18px; padding-left: 22px; }
+  .legal-body li { margin-bottom: 8px; }
+  .legal-body a { color: var(--fc-sage-deep, #3C6B3C); text-decoration: underline; text-underline-offset: 2px; }
+  .legal-body a:hover { color: var(--success); }
+  .legal-body strong { font-weight: 600; color: var(--text); }
+  .legal-body hr { border: none; border-top: 1px solid var(--border-light); margin: 40px 0; }
+  .legal-note {
+    margin-top: 8px; padding: 18px 20px; border-radius: var(--radius-md);
+    background: var(--bg-white); border: 1px solid var(--border-light);
+    font-size: 14px; color: var(--text-muted); line-height: 1.6;
+  }
+
+  /* Footer */
+  footer {
+    padding: 40px 24px; border-top: 1px solid var(--border-light); background: var(--bg);
+  }
+  .footer-legal {
+    max-width: 780px; margin: 0 auto;
+    display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
+  }
+  .footer-legal .logo { font-size: 16px; }
+  .footer-legal-links { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; list-style: none; }
+  .footer-legal-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-legal-links a:hover { color: var(--text); }
+  .footer-legal-meta {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-muted);
+  }
+
+  @media (max-width: 768px) {
+    :root { --utility-bar-h: 28px; --nav-h: 56px; }
+    .utility-bar-inner { padding: 0 16px; justify-content: center; }
+    .utility-bar-item:first-child, .utility-bar-item:last-child { display: none; }
+    .nav-inner { padding: 0 20px; height: 56px; }
+    .nav-center { display: none; }
+    .legal { padding: calc(var(--header-h) + 36px) 20px 32px; }
+    .legal-body h2 { font-size: 20px; margin-top: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- UTILITY BAR -->
+<div class="utility-bar">
+  <div class="utility-bar-inner">
+    <span class="utility-bar-item">Real product picks, not a size chart</span>
+    <span class="utility-bar-item">We recommend. We don't sell.</span>
+    <span class="utility-bar-item">Best overall, budget, and premium options</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
+    <ul class="nav-center">
+      <li><a href="/quiz/index.html">Find My Fit</a></li>
+      <li><a href="/#works">How It Works</a></li>
+      <li><a href="/#fits">Fit Guide</a></li>
+      <li><a href="/about/index.html">About Us</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="/quiz/index.html" class="btn">Find My Fit</a>
+    </div>
+  </div>
+</nav>
+
+<!-- CONTENT -->
+<main class="legal">
+  <span class="legal-kicker">Legal</span>
+  <h1>Privacy Policy</h1>
+  <p class="legal-updated">Last updated: [DATE]</p>
+
+  <nav class="legal-switch" aria-label="Legal documents">
+    <a href="/privacy/index.html" aria-current="page">Privacy Policy</a>
+    <a href="/terms/index.html">Terms &amp; Conditions</a>
+  </nav>
+
+  <div class="legal-body">
+    <p>FitCo (&ldquo;FitCo,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) is a men&rsquo;s pants fit recommendation platform. We help users discover pants that are likely to fit well based on the information they provide. This Privacy Policy explains what we collect, why, and what you can do about it.</p>
+
+    <p>This policy applies to <strong>fitco.fit</strong> and covers our quiz, recommendations, and emails.</p>
+
+    <p>FitCo doesn&rsquo;t require you to create an account. If you don&rsquo;t voluntarily provide identifying information (like your email), we generally can&rsquo;t identify you personally from your quiz responses alone.</p>
+
+    <p>A quick note on what FitCo is <strong>not</strong>: we&rsquo;re not an online store, a marketplace, or a manufacturer. We don&rsquo;t process payments and we don&rsquo;t sell products directly. Some recommendations link to third-party retailers through affiliate links (more on that below).</p>
+
+    <h2 id="collect">1. Information we collect</h2>
+
+    <h3>Information you give us</h3>
+    <p>When you take the quiz or contact us, you may voluntarily provide:</p>
+    <ul>
+      <li>Height</li>
+      <li>Weight (optional)</li>
+      <li>Waist size</li>
+      <li>Inseam</li>
+      <li>Body type / build</li>
+      <li>Fit preferences and common fit problems</li>
+      <li>Your quiz responses</li>
+      <li>Your email address, if you contact us or subscribe to updates</li>
+    </ul>
+    <p>You don&rsquo;t have to give us any of this. If you skip a field, we simply have less to base a recommendation on. We ask for body measurements only to generate fit recommendations &mdash; not to identify you.</p>
+
+    <h3>Information we collect automatically</h3>
+    <p>Like most websites, we collect some standard technical information when you visit, such as:</p>
+    <ul>
+      <li>Browser type</li>
+      <li>Device type</li>
+      <li>Pages you visit and how you interact with them</li>
+      <li>Approximate location (if provided by our analytics tools &mdash; usually city or region level from your IP address)</li>
+      <li>IP address</li>
+      <li>Cookies and similar technologies</li>
+    </ul>
+
+    <h2 id="use">2. How we use your information</h2>
+    <p>We use the information above to:</p>
+    <ul>
+      <li>Generate and improve your pants fit recommendations</li>
+      <li>Operate, maintain, and improve the website and quiz</li>
+      <li>Understand which pages and features are used (analytics)</li>
+      <li>Respond to your emails and support requests</li>
+      <li>Send you updates <strong>if you&rsquo;ve subscribed</strong> (you can unsubscribe anytime)</li>
+      <li>Detect, prevent, and address technical issues, abuse, or security problems</li>
+      <li>Comply with legal obligations</li>
+    </ul>
+    <p>We do <strong>not</strong> sell your personal information, and we don&rsquo;t use your measurements to serve you third-party advertising.</p>
+
+    <h2 id="cookies">3. Cookies and similar technologies</h2>
+    <p>We use cookies and similar technologies to help the site function and to understand how it&rsquo;s used. You can control cookies through your browser settings &mdash; blocking some cookies may affect how parts of the site work. Where required by law, we&rsquo;ll ask for your consent before setting non-essential cookies.</p>
+
+    <h2 id="analytics">4. Analytics</h2>
+    <p>We use analytics tools to understand how visitors use FitCo so we can improve it. These tools may collect information like the pages you view, your device and browser, and approximate location. Depending on our current setup, we may use services such as <strong>Google Analytics or PostHog</strong> and <strong>Vercel Analytics</strong>. These providers process data on our behalf and have their own privacy policies.</p>
+
+    <h2 id="affiliate">5. Affiliate links</h2>
+    <p>Some recommendations include <strong>affiliate links</strong> to third-party retailers. If you click one and make a purchase, we may earn a small commission at no extra cost to you. To do this, affiliate networks may set cookies or use tracking to attribute a purchase to FitCo. We don&rsquo;t receive your payment details or order information beyond what an affiliate network shares with us for attribution and reporting.</p>
+
+    <h2 id="third-parties">6. Third-party services</h2>
+    <p>We rely on a handful of third-party providers to run FitCo. Depending on our current setup, these may include, as examples:</p>
+    <ul>
+      <li><strong>Analytics</strong> &mdash; e.g., Google Analytics or PostHog, Vercel Analytics</li>
+      <li><strong>Fonts</strong> &mdash; e.g., Google Fonts (which may receive your IP address to serve fonts)</li>
+      <li><strong>Email provider</strong> &mdash; to send updates or respond to your messages</li>
+      <li><strong>Affiliate networks</strong> &mdash; to power affiliate links and commissions</li>
+    </ul>
+    <p>These providers only receive the information they need to perform their service, and they&rsquo;re expected to handle it according to their own privacy policies.</p>
+
+    <h2 id="share">7. How we share information</h2>
+    <p>We don&rsquo;t sell your personal information. We share it only:</p>
+    <ul>
+      <li>With the service providers described above, so they can perform services for us</li>
+      <li>If required by law, legal process, or a valid government request</li>
+      <li>To protect the rights, safety, or property of FitCo, our users, or others</li>
+      <li>In connection with a business transfer (such as a merger or acquisition), in which case we&rsquo;ll let users know</li>
+    </ul>
+
+    <h2 id="retention">8. Data retention</h2>
+    <p>We keep information only as long as we need it for the purposes described in this policy, or as required by law. When we no longer need information, we delete it or de-identify it where we&rsquo;re able to. You can email us to request deletion of information we hold about you (see <a href="#rights">Your rights</a> below).</p>
+
+    <h2 id="rights">9. Your rights and choices</h2>
+    <p>Depending on where you live, you may have some or all of the following rights:</p>
+    <ul>
+      <li><strong>Access</strong> &mdash; ask what personal information we hold about you</li>
+      <li><strong>Correction</strong> &mdash; ask us to fix inaccurate information</li>
+      <li><strong>Deletion</strong> &mdash; ask us to delete information we hold about you</li>
+      <li><strong>Opt out of emails</strong> &mdash; unsubscribe using the link in any email, or email us</li>
+      <li><strong>Cookie controls</strong> &mdash; manage cookies through your browser</li>
+    </ul>
+    <p>To exercise any of these, email us at <a href="mailto:support@fitco.fit">support@fitco.fit</a>. We may need to verify your identity before acting on a request.</p>
+
+    <h2 id="ccpa">10. California privacy rights (CCPA/CPRA)</h2>
+    <p>If you&rsquo;re a California resident, you have the right to:</p>
+    <ul>
+      <li>Know what categories of personal information we collect and how we use it</li>
+      <li>Request access to the specific personal information we&rsquo;ve collected about you</li>
+      <li>Request deletion of your personal information</li>
+      <li>Correct inaccurate personal information</li>
+      <li>Not be discriminated against for exercising your rights</li>
+    </ul>
+    <p><strong>We do not sell or &ldquo;share&rdquo; your personal information</strong> as those terms are defined under California law, and we do not use sensitive personal information to infer characteristics about you for advertising. To make a request, email <a href="mailto:support@fitco.fit">support@fitco.fit</a>. You may also designate an authorized agent to make a request on your behalf.</p>
+
+    <h2 id="gdpr">11. EU / UK visitors (GDPR)</h2>
+    <p>If you&rsquo;re in the European Economic Area or the United Kingdom, you have rights under the GDPR (and UK GDPR), including the right to access, correct, delete, restrict, or object to our processing of your personal data, and the right to data portability.</p>
+    <p>We process your personal data on these legal bases:</p>
+    <ul>
+      <li><strong>Consent</strong> &mdash; for example, when you subscribe to updates or agree to non-essential cookies (you can withdraw consent anytime)</li>
+      <li><strong>Legitimate interests</strong> &mdash; to operate, secure, and improve FitCo, in a way that doesn&rsquo;t override your rights</li>
+      <li><strong>Legal obligation</strong> &mdash; where we&rsquo;re required to process data to comply with the law</li>
+    </ul>
+    <p>If our providers process your data outside your country, we rely on appropriate safeguards (such as standard contractual clauses) where required. You also have the right to lodge a complaint with your local data protection authority. To exercise your rights, email <a href="mailto:support@fitco.fit">support@fitco.fit</a>.</p>
+
+    <h2 id="children">12. Children&rsquo;s privacy</h2>
+    <p>FitCo is intended for users <strong>13 and older</strong> and is not directed to children under 13. We do not knowingly collect personal information from children under 13. If you believe a child under 13 has provided us information, email <a href="mailto:support@fitco.fit">support@fitco.fit</a> and we&rsquo;ll delete it. If you&rsquo;re under 18, please use FitCo only with the involvement of a parent or guardian.</p>
+
+    <h2 id="security">13. Security</h2>
+    <p>We take reasonable steps to protect your information, including using reputable service providers and standard security practices like encryption in transit (HTTPS). No method of transmission or storage is completely secure, so we can&rsquo;t guarantee absolute security &mdash; but we work to protect your information and to address issues promptly if they arise.</p>
+
+    <h2 id="changes">14. Changes to this policy</h2>
+    <p>We may update this Privacy Policy from time to time. When we make material changes, we&rsquo;ll update the &ldquo;Last updated&rdquo; date above and, where appropriate, provide additional notice. Your continued use of FitCo after an update means you accept the revised policy.</p>
+
+    <h2 id="contact">15. Contact us</h2>
+    <p>Questions about this policy or your information? Email us at <a href="mailto:support@fitco.fit">support@fitco.fit</a>.</p>
+
+    <p>See also our <a href="/terms/index.html">Terms &amp; Conditions</a>.</p>
+
+    <hr>
+    <p class="legal-note">This page is provided for general information and isn&rsquo;t legal advice.</p>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-legal">
+    <a href="/" class="logo"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
+    <ul class="footer-legal-links">
+      <li><a href="/quiz/index.html">Find My Fit</a></li>
+      <li><a href="/about/index.html">About</a></li>
+      <li><a href="/privacy/index.html">Privacy Policy</a></li>
+      <li><a href="/terms/index.html">Terms &amp; Conditions</a></li>
+    </ul>
+    <span class="footer-legal-meta">We recommend. We don't sell.</span>
+  </div>
+</footer>
+
+</body>
+</html>

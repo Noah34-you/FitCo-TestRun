@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms &amp; Conditions — FitCo</title>
+<meta name="description" content="The terms that govern your use of FitCo.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5.5' fill='%233C6B3C'/%3E%3Cg fill='%23FFFFFF'%3E%3Crect x='5' y='5.2' width='14' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='10' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='3.7' height='9.2' rx='.9'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../fitco-ui.css">
+<style>
+  :root {
+    --bg: #F5F3EE;
+    --bg-white: #FFFFFF;
+    --text: #111111;
+    --text-muted: #6E6E6E;
+    --text-body: #333333;
+    --border: #D9D9D9;
+    --border-light: #E8E6E1;
+    --success: #5B8C5A;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-pill: 100px;
+    --utility-bar-h: 32px;
+    --nav-h: 64px;
+    --header-h: calc(var(--utility-bar-h) + var(--nav-h));
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+  }
+
+  /* Utility bar */
+  .utility-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 101;
+    height: var(--utility-bar-h);
+    background: #EDEAE3;
+    border-bottom: 1px solid var(--border-light);
+    display: flex; align-items: center; overflow: hidden;
+  }
+  .utility-bar-inner {
+    width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 48px;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  }
+  .utility-bar-item {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.04em; color: var(--text-muted); white-space: nowrap;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed; top: var(--utility-bar-h); left: 0; right: 0; z-index: 100;
+    background: rgba(245,243,238,0.92);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; max-width: 1280px; margin: 0 auto; padding: 0 48px;
+  }
+  .nav-center {
+    display: flex; gap: 48px; list-style: none;
+    position: absolute; left: 50%; transform: translateX(-50%);
+  }
+  .nav-center a { font-size: 14px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .nav-center a:hover { color: var(--text); }
+  .logo { font-size: 18px; font-weight: 500; letter-spacing: -0.02em; text-decoration: none; color: inherit; }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 10px 24px; font-family: inherit; font-size: 13px; font-weight: 500;
+    border: none; background: var(--text); color: var(--bg); cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4,0,0.2,1); text-decoration: none; border-radius: var(--radius-sm);
+  }
+  .btn:hover { opacity: 0.85; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+  .btn:focus-visible, .nav-center a:focus-visible, .logo:focus-visible,
+  .legal a:focus-visible { outline: 2px solid var(--success); outline-offset: 2px; border-radius: 3px; }
+
+  /* Legal content */
+  .legal {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: calc(var(--header-h) + 56px) 24px 40px;
+  }
+  .legal-kicker {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--fc-sage-deep, #3C6B3C);
+    margin-bottom: 16px;
+  }
+  .legal-kicker::before { content: ''; width: 18px; height: 2px; border-radius: 2px; background: var(--success); }
+  .legal h1 {
+    font-size: clamp(32px, 4.5vw, 46px); font-weight: 600; letter-spacing: -0.03em;
+    line-height: 1.08; margin-bottom: 14px;
+  }
+  .legal-updated {
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.04em;
+    color: var(--text-muted);
+  }
+  .legal-switch {
+    position: static;
+    display: flex; gap: 10px; flex-wrap: wrap; margin: 26px 0 8px;
+    border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);
+    padding: 18px 0;
+  }
+  .legal-switch a {
+    display: inline-flex; align-items: center;
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    padding: 8px 16px; border-radius: var(--radius-pill);
+    border: 1px solid var(--border); color: var(--text-muted); background: transparent;
+    transition: all 0.2s;
+  }
+  .legal-switch a:hover { border-color: var(--text-muted); color: var(--text); }
+  .legal-switch a[aria-current="page"] {
+    background: var(--fc-sage-soft, #E8F0E4); border-color: var(--fc-sage-line, #D4E4D4);
+    color: var(--fc-sage-deep, #3C6B3C);
+  }
+
+  .legal-body { margin-top: 40px; }
+  .legal-body p, .legal-body li { font-size: 16px; line-height: 1.75; color: var(--text-body); }
+  .legal-body > p:first-of-type { font-size: 17px; }
+  .legal-body p { margin-bottom: 18px; }
+  .legal-body h2 {
+    font-size: 22px; font-weight: 600; letter-spacing: -0.01em; color: var(--text);
+    margin: 48px 0 14px; scroll-margin-top: calc(var(--header-h) + 20px);
+  }
+  .legal-body h3 { font-size: 16px; font-weight: 600; color: var(--text); margin: 26px 0 8px; }
+  .legal-body ul { margin: 0 0 18px; padding-left: 22px; }
+  .legal-body li { margin-bottom: 8px; }
+  .legal-body a { color: var(--fc-sage-deep, #3C6B3C); text-decoration: underline; text-underline-offset: 2px; }
+  .legal-body a:hover { color: var(--success); }
+  .legal-body strong { font-weight: 600; color: var(--text); }
+  .legal-body hr { border: none; border-top: 1px solid var(--border-light); margin: 40px 0; }
+  .legal-note {
+    margin-top: 8px; padding: 18px 20px; border-radius: var(--radius-md);
+    background: var(--bg-white); border: 1px solid var(--border-light);
+    font-size: 14px; color: var(--text-muted); line-height: 1.6;
+  }
+
+  /* Footer */
+  footer {
+    padding: 40px 24px; border-top: 1px solid var(--border-light); background: var(--bg);
+  }
+  .footer-legal {
+    max-width: 780px; margin: 0 auto;
+    display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
+  }
+  .footer-legal .logo { font-size: 16px; }
+  .footer-legal-links { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; list-style: none; }
+  .footer-legal-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-legal-links a:hover { color: var(--text); }
+  .footer-legal-meta {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-muted);
+  }
+
+  @media (max-width: 768px) {
+    :root { --utility-bar-h: 28px; --nav-h: 56px; }
+    .utility-bar-inner { padding: 0 16px; justify-content: center; }
+    .utility-bar-item:first-child, .utility-bar-item:last-child { display: none; }
+    .nav-inner { padding: 0 20px; height: 56px; }
+    .nav-center { display: none; }
+    .legal { padding: calc(var(--header-h) + 36px) 20px 32px; }
+    .legal-body h2 { font-size: 20px; margin-top: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- UTILITY BAR -->
+<div class="utility-bar">
+  <div class="utility-bar-inner">
+    <span class="utility-bar-item">Real product picks, not a size chart</span>
+    <span class="utility-bar-item">We recommend. We don't sell.</span>
+    <span class="utility-bar-item">Best overall, budget, and premium options</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
+    <ul class="nav-center">
+      <li><a href="/quiz/index.html">Find My Fit</a></li>
+      <li><a href="/#works">How It Works</a></li>
+      <li><a href="/#fits">Fit Guide</a></li>
+      <li><a href="/about/index.html">About Us</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="/quiz/index.html" class="btn">Find My Fit</a>
+    </div>
+  </div>
+</nav>
+
+<!-- CONTENT -->
+<main class="legal">
+  <span class="legal-kicker">Legal</span>
+  <h1>Terms &amp; Conditions</h1>
+  <p class="legal-updated">Last updated: [DATE]</p>
+
+  <nav class="legal-switch" aria-label="Legal documents">
+    <a href="/privacy/index.html">Privacy Policy</a>
+    <a href="/terms/index.html" aria-current="page">Terms &amp; Conditions</a>
+  </nav>
+
+  <div class="legal-body">
+    <p>Welcome to FitCo. These Terms &amp; Conditions (&ldquo;Terms&rdquo;) govern your use of <strong>fitco.fit</strong> and our pants fit recommendation service (the &ldquo;Service&rdquo;). Please read them carefully.</p>
+
+    <h2 id="acceptance">1. Acceptance of these terms</h2>
+    <p>By using FitCo, you agree to these Terms and to our <a href="/privacy/index.html">Privacy Policy</a>. If you don&rsquo;t agree, please don&rsquo;t use the Service. If you&rsquo;re using FitCo on behalf of someone else, you confirm you&rsquo;re authorized to accept these Terms for them.</p>
+
+    <h2 id="what">2. What FitCo is</h2>
+    <p>FitCo is a <strong>men&rsquo;s pants fit recommendation platform</strong>. We help users discover pants that are likely to fit well based on the information they provide. You answer a short quiz about your body build, measurements, fit preferences, and common fit problems, and we suggest pants from a curated catalog.</p>
+    <p>FitCo is <strong>not</strong> an online clothing store, a marketplace, or a manufacturer. We <strong>do not sell products</strong>, <strong>do not process payments</strong>, and <strong>do not fulfill or ship orders</strong>.</p>
+
+    <h2 id="informational">3. Recommendations are informational only</h2>
+    <p>Our recommendations are <strong>suggestions to help you shop</strong>, based on the information you provide and our own judgment about fit. They&rsquo;re informational only and aren&rsquo;t professional, tailoring, medical, or sizing advice. You&rsquo;re responsible for your own purchasing decisions.</p>
+
+    <h2 id="no-guarantee">4. No guarantee of fit</h2>
+    <p>Fit depends on many factors &mdash; your body, the accuracy of the measurements you enter, how a specific brand or style is cut, fabric, and personal preference. <strong>We can&rsquo;t and don&rsquo;t guarantee that any recommended pants will fit, be available, or meet your expectations.</strong> Always check the retailer&rsquo;s own sizing information, product details, and return policy before buying.</p>
+
+    <h2 id="no-sell">5. We don&rsquo;t sell products</h2>
+    <p>FitCo doesn&rsquo;t sell, stock, ship, or handle returns for any products. Any purchase you make happens <strong>directly with a third-party retailer</strong>, under that retailer&rsquo;s own terms, pricing, and policies. We&rsquo;re not a party to that transaction.</p>
+
+    <h2 id="retailers">6. Third-party retailers</h2>
+    <p>When you follow a recommendation, you may leave FitCo and visit a third-party retailer&rsquo;s website. We don&rsquo;t control those websites and aren&rsquo;t responsible for their products, prices, availability, content, terms, or privacy practices. Any issues with an order &mdash; including payment, shipping, sizing, returns, or refunds &mdash; are between you and that retailer.</p>
+
+    <h2 id="affiliate">7. Affiliate disclosure</h2>
+    <p>Some links on FitCo are <strong>affiliate links</strong>. If you click one and make a purchase, we may earn a commission at no additional cost to you. Our goal is to recommend products we believe are a good fit based on the information you provide. Some recommendations may include affiliate links, and those relationships don&rsquo;t change the price you pay. You can read more in our <a href="/privacy/index.html">Privacy Policy</a>.</p>
+
+    <h2 id="ip">8. Intellectual property</h2>
+    <p>FitCo and its content &mdash; including the quiz, recommendation logic, text, illustrations, logos, and design &mdash; are owned by FitCo or our licensors and are protected by intellectual property laws. You may use the Service for your own personal, non-commercial use. You may not copy, reproduce, scrape, modify, distribute, or create derivative works from FitCo without our permission.</p>
+    <p>All trademarks, product names, logos, and brand names belong to their respective owners.</p>
+
+    <h2 id="conduct">9. User conduct</h2>
+    <p>When using FitCo, you agree not to:</p>
+    <ul>
+      <li>Use the Service for any unlawful or fraudulent purpose</li>
+      <li>Scrape, harvest, or copy our catalog, recommendations, or content</li>
+      <li>Interfere with or disrupt the Service, or attempt to gain unauthorized access to it</li>
+      <li>Introduce malware or attempt to compromise the security of the Service</li>
+      <li>Misuse the Service in any way that could harm FitCo or other users</li>
+    </ul>
+    <p>We may suspend or limit access if you violate these Terms.</p>
+
+    <h2 id="warranties">10. Disclaimer of warranties</h2>
+    <p>FitCo is provided <strong>&ldquo;as is&rdquo; and &ldquo;as available,&rdquo; without warranties of any kind</strong>, whether express or implied, including implied warranties of merchantability, fitness for a particular purpose, and non-infringement. We don&rsquo;t warrant that the Service will be uninterrupted, error-free, secure, or that recommendations will be accurate, complete, or suitable for you.</p>
+
+    <h2 id="liability">11. Limitation of liability</h2>
+    <p>To the fullest extent permitted by law, FitCo and its owners, employees, and partners <strong>won&rsquo;t be liable</strong> for any indirect, incidental, special, consequential, or punitive damages, or for any loss arising from your use of (or inability to use) the Service, your reliance on any recommendation, or any purchase you make from a third-party retailer.</p>
+    <p>To the extent we&rsquo;re found liable for anything, our total liability to you is limited to <strong>USD $100</strong>, or the amount you paid us to use the Service (which is typically nothing), whichever is greater. Some jurisdictions don&rsquo;t allow certain limitations, so some of these may not apply to you.</p>
+
+    <h2 id="indemnification">12. Indemnification</h2>
+    <p>You agree to indemnify and hold harmless FitCo and its owners, employees, and partners from any claims, damages, losses, or expenses (including reasonable legal fees) arising out of your use of the Service, your violation of these Terms, or your violation of any law or third-party right.</p>
+
+    <h2 id="termination">13. Termination</h2>
+    <p>You can stop using FitCo at any time. We may suspend or end your access to the Service at any time, with or without notice, if we believe you&rsquo;ve violated these Terms or to protect the Service. Sections that by their nature should survive termination &mdash; such as intellectual property, disclaimers, limitation of liability, and indemnification &mdash; will continue to apply.</p>
+
+    <h2 id="law">14. Governing law</h2>
+    <p>These Terms are governed by the laws of <strong>[STATE / COUNTRY]</strong>, without regard to its conflict-of-laws rules. You agree that any dispute will be resolved in the courts located in <strong>[JURISDICTION]</strong>, unless applicable law requires otherwise.</p>
+
+    <h2 id="changes">15. Changes to these terms</h2>
+    <p>We may update these Terms from time to time. When we make material changes, we&rsquo;ll update the &ldquo;Last updated&rdquo; date above and, where appropriate, provide additional notice. Your continued use of FitCo after an update means you accept the revised Terms.</p>
+
+    <h2 id="contact">16. Contact us</h2>
+    <p>Questions about these Terms? Email us at <a href="mailto:support@fitco.fit">support@fitco.fit</a>.</p>
+
+    <p>See also our <a href="/privacy/index.html">Privacy Policy</a>.</p>
+
+    <hr>
+    <p class="legal-note">This page is provided for general information and isn&rsquo;t legal advice.</p>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-legal">
+    <a href="/" class="logo"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
+    <ul class="footer-legal-links">
+      <li><a href="/quiz/index.html">Find My Fit</a></li>
+      <li><a href="/about/index.html">About</a></li>
+      <li><a href="/privacy/index.html">Privacy Policy</a></li>
+      <li><a href="/terms/index.html">Terms &amp; Conditions</a></li>
+    </ul>
+    <span class="footer-legal-meta">We recommend. We don't sell.</span>
+  </div>
+</footer>
+
+</body>
+</html>
