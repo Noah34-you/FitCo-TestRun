@@ -63,7 +63,14 @@ export function useConvergingGeo(targetKey, reduced) {
       if (!alive) return;
       const dt = Math.min(0.05, (now - last) / 1000); last = now;
       setG(prev => {
-        const t = target.current; const next = {}; let done = true;
+        const t = target.current;
+        /* Already snapped to target: return the same reference so React
+           bails out of re-rendering. The loop keeps ticking cheaply and
+           resumes the moment the target changes. */
+        let atTarget = true;
+        for (const k in t) if (prev[k] !== t[k]) { atTarget = false; break; }
+        if (atTarget) return prev;
+        const next = {}; let done = true;
         for (const k in t) {
           const v = prev[k] + (t[k] - prev[k]) * Math.min(1, dt * 5.2);
           next[k] = v;
