@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Wordmark, Btn, Kicker, Mono, Scanline, rise } from '../ui.jsx';
-import { PantFlat, GEO, useConvergingGeo } from '../geometry.jsx';
+import { PantFlat, useConvergingGeo } from '../geometry.jsx';
 import { FIT_KEYS, FIT_LABEL } from '../engine.js';
 
 const heroImg = `${import.meta.env.BASE_URL}media/hero-fabric.jpg`;
@@ -15,21 +15,35 @@ function useCycler(interval = 2600) {
   return FIT_KEYS[i];
 }
 
-/* Floating instrument card — the product, teased on the front door. */
-function ReadingCard({ reduced }) {
+/* Floating instrument card — not a teaser, the actual first question.
+   Tap your build and you're already inside the fitting, seeded. */
+const BUILDS = [['slim', 'Slim'], ['average', 'Average'], ['athletic', 'Athletic'], ['broader', 'Broader']];
+
+function ReadingCard({ reduced, onStart }) {
   const key = useCycler();
   const g = useConvergingGeo(reduced ? 'athleticTaper' : key, reduced);
   const shown = reduced ? 'athleticTaper' : key;
   return (
-    <div className="relative rounded-2xl border border-hairline bg-paper/78 backdrop-blur-md shadow-[0_24px_70px_rgba(22,21,15,.16)] p-5 w-[240px] sm:w-[270px]">
+    <div className="relative rounded-2xl border border-hairline bg-paper/78 backdrop-blur-md shadow-[0_24px_70px_rgba(22,21,15,.16)] p-5 w-[250px] sm:w-[286px]">
       <div className="flex items-baseline justify-between mb-1">
         <Mono className="!text-sage">Live reading</Mono>
         <Mono>{String(FIT_KEYS.indexOf(shown) + 1).padStart(2, '0')}/06</Mono>
       </div>
       <div className="font-mono text-[13px] font-medium tracking-[.1em] text-ink mb-2">{FIT_LABEL[shown].toUpperCase()}<span className="inline-block w-[7px] h-[13px] bg-sage align-[-2px] ml-1 animate-pulse" /></div>
-      <PantFlat g={g} className="w-full h-[210px]" />
+      <PantFlat g={g} className="w-full h-[196px]" />
       <div className="font-mono text-[10px] tracking-[.08em] text-muted mt-2 flex justify-between">
         <span>THIGH {g.thigh.toFixed(2)}″</span><span>KNEE {g.knee.toFixed(2)}″</span><span>OPEN {g.open.toFixed(2)}″</span>
+      </div>
+      <div className="border-t border-hairline mt-3.5 pt-3">
+        <Mono className="!text-[9.5px] !text-sage block mb-2">Tap your build — the fitting starts here</Mono>
+        <div className="grid grid-cols-2 gap-1.5">
+          {BUILDS.map(([v, t]) => (
+            <button key={v} onClick={() => onStart({ build: v })}
+              className="font-mono text-[11px] tracking-[.05em] uppercase px-2.5 py-2 rounded-lg border border-line bg-white/60 text-ink-soft hover:border-sage hover:text-sage hover:bg-sagesoft transition-all duration-150 cursor-pointer">
+              {t}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -102,7 +116,7 @@ export default function Home({ onStart, hasReport, onReport }) {
             </motion.div>
           </div>
           <motion.div className="hidden lg:flex justify-end pr-4" initial={{ opacity: 0, y: 34 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .55, duration: .8, ease: [0.22, 0.7, 0.3, 1] }}>
-            <ReadingCard reduced={reduced} />
+            <ReadingCard reduced={reduced} onStart={onStart} />
           </motion.div>
         </div>
 
@@ -128,28 +142,6 @@ export default function Home({ onStart, hasReport, onReport }) {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* HOW IT WORKS */}
-      <section className="max-w-[1400px] mx-auto px-5 sm:px-10 py-24">
-        <motion.div variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .4 }}>
-          <Kicker className="mb-4">The engine is the product</Kicker>
-          <h2 className="font-disp font-semibold tracking-[-0.03em] text-[clamp(28px,3.4vw,48px)] mb-4">Watch it converge on you.</h2>
-          <p className="text-ink-soft max-w-[560px] text-[17px] leading-relaxed mb-12">Six questions. As you answer, the instrument reshapes itself toward your geometry in real time — and every recommendation arrives with its reasons attached.</p>
-        </motion.div>
-        <div className="grid md:grid-cols-3 gap-4">
-          {[
-            ['01', 'Answer', 'Build, problem points, proportions. About a minute. No account.'],
-            ['02', 'Converge', 'The silhouette moves with every answer until it becomes your cut.'],
-            ['03', 'Receive the report', 'Real pants ranked inside your geometry — tiers and reasons, never fake percentages.'],
-          ].map(([n, t, d], i) => (
-            <motion.div key={n} className="rounded-2xl border border-hairline bg-white/55 p-7" variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .3 }} custom={i}>
-              <Mono className="!text-chalk">STEP {n}</Mono>
-              <div className="font-disp font-semibold text-2xl mt-3 mb-2">{t}</div>
-              <p className="text-[15px] leading-relaxed text-ink-soft">{d}</p>
-            </motion.div>
-          ))}
         </div>
       </section>
 

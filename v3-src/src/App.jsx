@@ -18,12 +18,22 @@ export default function App() {
   const [answers, setAnswers] = useState(() => {
     try { return JSON.parse(localStorage.getItem('fitco_v3_answers') || '{}'); } catch { return {}; }
   });
+  const [seed, setSeed] = useState({});
+  const [session, setSession] = useState(0);
 
   const go = useCallback((v) => {
     setView(v);
     window.location.hash = v === 'home' ? '/' : `/${v === 'calibrating' ? 'fitting' : v}`;
     window.scrollTo(0, 0);
   }, []);
+
+  /* Start the fitting — optionally seeded with an answer given right
+     in the hero (zero-distance fitting). */
+  const startFitting = useCallback((seedAnswers) => {
+    setSeed(seedAnswers && typeof seedAnswers === 'object' ? seedAnswers : {});
+    setSession(s => s + 1);
+    go('fitting');
+  }, [go]);
 
   useEffect(() => {
     const onHash = () => {
@@ -52,10 +62,10 @@ export default function App() {
     <div className="grain min-h-screen">
       <AnimatePresence mode="wait">
         {view === 'home' && (
-          <motion.div key="home" {...fade}><Home onStart={() => go('fitting')} hasReport={!!answers.build} onReport={() => go('report')} /></motion.div>
+          <motion.div key="home" {...fade}><Home onStart={startFitting} hasReport={!!answers.build} onReport={() => go('report')} /></motion.div>
         )}
         {view === 'fitting' && (
-          <motion.div key="fitting" {...fade}><Fitting onExit={() => go('home')} onComplete={onFittingComplete} /></motion.div>
+          <motion.div key={`fitting-${session}`} {...fade}><Fitting initial={seed} onExit={() => go('home')} onComplete={onFittingComplete} /></motion.div>
         )}
         {view === 'calibrating' && (
           <motion.div key="cal" {...fade}><Calibrating answers={answers} onDone={() => go('report')} /></motion.div>

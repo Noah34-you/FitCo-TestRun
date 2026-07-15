@@ -7,21 +7,28 @@ import { QUESTIONS, computeScores, FIT_LABEL, FIT_KEYS } from '../engine.js';
 /* THE FITTING — a full-screen instrument that converges on you.
    Every answer re-runs the real engine; the silhouette physically
    reshapes toward the current leader. */
-export default function Fitting({ onExit, onComplete }) {
+export default function Fitting({ onExit, onComplete, initial = {} }) {
   const reduced = useReducedMotion();
-  const [qi, setQi] = useState(0);
-  const [answers, setAnswers] = useState({});
+  const firstOpen = Math.max(0, QUESTIONS.findIndex(qq => !(qq.key in initial)));
+  const [qi, setQi] = useState(firstOpen);
+  const [answers, setAnswers] = useState(initial);
   const [multi, setMulti] = useState([]);
   const advancing = useRef(false);
   const q = QUESTIONS[qi];
+
+  /* advance to the next question that hasn't been answered (seeded
+     answers from the hero are skipped, not re-asked) */
+  const advanceFrom = (fromIdx, withAnswers) => {
+    const nextIdx = QUESTIONS.findIndex((qq, i) => i > fromIdx && !(qq.key in withAnswers));
+    if (nextIdx === -1) onComplete(withAnswers);
+    else setQi(nextIdx);
+  };
 
   const partial = useMemo(() => ({ ...answers, ...(q.multi && multi.length ? { [q.key]: multi } : {}) }), [answers, multi, q]);
   const { ranked, best } = useMemo(() => computeScores(partial), [partial]);
   const answeredMeaningful = !!(partial.build || (partial.fitWrong && partial.fitWrong.length) || partial.legShape);
   const leader = answeredMeaningful ? best : 'straightFit';
   const g = useConvergingGeo(leader, reduced);
-
-  const finish = (finalAnswers) => onComplete(finalAnswers);
 
   const pick = (opt) => {
     if (advancing.current) return;
@@ -34,8 +41,7 @@ export default function Fitting({ onExit, onComplete }) {
     setAnswers(next);
     setTimeout(() => {
       advancing.current = false;
-      if (qi + 1 < QUESTIONS.length) setQi(qi + 1);
-      else finish(next);
+      advanceFrom(qi, next);
     }, 420);
   };
 
@@ -43,8 +49,7 @@ export default function Fitting({ onExit, onComplete }) {
     if (!multi.length) return;
     const next = { ...answers, [q.key]: multi };
     setAnswers(next); setMulti([]);
-    if (qi + 1 < QUESTIONS.length) setQi(qi + 1);
-    else finish(next);
+    advanceFrom(qi, next);
   };
 
   const back = () => {
@@ -77,8 +82,8 @@ export default function Fitting({ onExit, onComplete }) {
       <div className="flex items-center justify-between h-16 px-5 sm:px-10 border-b border-hairline bg-paper/85 backdrop-blur-md">
         <Wordmark onClick={onExit} />
         <div className="flex items-center gap-2" aria-label={`Question ${qi + 1} of ${QUESTIONS.length}`}>
-          {QUESTIONS.map((_, i) => (
-            <span key={i} className={`h-[3px] rounded-full transition-all duration-400 ${i < qi ? 'w-6 bg-sage' : i === qi ? 'w-9 bg-ink' : 'w-6 bg-line'}`} />
+          {QUESTIONS.map((qq, i) => (
+            <span key={i} className={`h-[3px] rounded-full transition-all duration-400 ${i === qi ? 'w-9 bg-ink' : (qq.key in answers) ? 'w-6 bg-sage' : 'w-6 bg-line'}`} />
           ))}
         </div>
         <div className="flex items-center gap-5">
