@@ -1582,7 +1582,7 @@
       <li><a href="/about/index.html">About Us</a></li>
     </ul>
     <div class="nav-right">
-      <a href="/quiz/index.html" class="btn btn-nav">Find My Fit</a>
+      <a href="/#/fitting" class="btn btn-nav">Find My Fit</a>
     </div>
   </div>
 </nav>
@@ -1599,7 +1599,7 @@
     <h1>Take the quiz to see your recommendations</h1>
     <p class="shop-gate-lead">Six questions about your build and where pants go wrong for you.</p>
     <p class="shop-gate-sub">We match you to fits based on your build and preferences. Not just waist size.</p>
-    <a href="/quiz/index.html" class="btn" style="margin-top:8px;">Start Fit Quiz</a>
+    <a href="/#/fitting" class="btn" style="margin-top:8px;">Start Fit Quiz</a>
     <div class="shop-gate-features">
       <div class="shop-gate-feature">
         <svg viewBox="0 0 24 24" fill="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#111" stroke-width="1.5" fill="none"/></svg>
@@ -2195,6 +2195,7 @@ function handleShopWaitlistSubmit(e) {
   }
   document.getElementById('shopWaitlistForm').style.display = 'none';
   document.getElementById('shopWaitlistSuccess').classList.add('visible');
+  if (window.phTrack) window.phTrack('Email Submitted', { source: 'shop_waitlist', fit_archetype: localStorage.getItem('fitco_fit_result') || undefined });
 }
 
 // Check quiz state
@@ -2208,6 +2209,71 @@ document.addEventListener('DOMContentLoaded', function() {
     personalizeWaitlist(fitResult);
   }
 });
+</script>
+<script src="/posthog-config.js"></script>
+<script>
+/* FitCo analytics (PostHog) — a no-op unless a key is set in /posthog-config.js.
+   Events are queued until the library loads so none are dropped. */
+(function () {
+  var q = [];
+  window.phTrack = function (name, props) {
+    var log = (window.__fitcoEvents = window.__fitcoEvents || []);
+    log.push(Object.assign({ event: name }, props));
+    if (log.length > 100) log.shift();
+    if (window.posthog && window.posthog.__loaded) { try { window.posthog.capture(name, props); } catch (e) {} }
+    else q.push([name, props]);
+  };
+
+  var cfg = window.__FITCO_PH__ || {};
+  if (cfg.key) {
+    var host = cfg.host || 'https://us.i.posthog.com';
+    var s = document.createElement('script');
+    s.async = true; s.crossOrigin = 'anonymous';
+    s.src = host.replace('.i.posthog.com', '-assets.i.posthog.com') + '/static/array.js';
+    s.onload = function () {
+      window.posthog.init(cfg.key, { api_host: host, autocapture: false, disable_session_recording: true, person_profiles: 'identified_only' });
+      for (var i = 0; i < q.length; i++) { try { window.posthog.capture(q[i][0], q[i][1]); } catch (e) {} }
+      q = [];
+    };
+    document.head.appendChild(s);
+  }
+
+  function fitResult() { return localStorage.getItem('fitco_fit_result') || undefined; }
+
+  /* Retailer link clicks on product cards (event delegation — markup untouched) */
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('.product-card-footer a') : null;
+    if (!a) return;
+    var card = a.closest('.product-card');
+    var section = a.closest('[id^="shopProducts"]');
+    var rank;
+    if (card && section) rank = Array.prototype.indexOf.call(section.querySelectorAll('.product-card'), card) + 1;
+    var retailer;
+    try { retailer = new URL(a.href).hostname.replace(/^www\./, ''); } catch (err) {}
+    window.phTrack('Retailer Link Clicked', {
+      brand: card && card.querySelector('.product-cat') ? card.querySelector('.product-cat').textContent : undefined,
+      product_name: card && card.querySelector('h4') ? card.querySelector('h4').textContent : undefined,
+      section: section ? section.id.replace('shopProducts', '').toLowerCase() : undefined,
+      rank: rank,
+      retailer: retailer,
+      fit_archetype: fitResult(),
+      source: 'shop',
+    });
+  });
+
+  /* Email form viewed — once, when it actually scrolls into view */
+  var form = document.getElementById('shopWaitlistForm');
+  if (form && 'IntersectionObserver' in window) {
+    var seen = false;
+    var io = new IntersectionObserver(function (entries) {
+      if (!seen && entries[0].isIntersecting) {
+        seen = true; io.disconnect();
+        window.phTrack('Email Form Viewed', { source: 'shop_waitlist', fit_archetype: fitResult() });
+      }
+    }, { threshold: 0.4 });
+    io.observe(form);
+  }
+})();
 </script>
 </body>
 </html>

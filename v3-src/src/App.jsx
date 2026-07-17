@@ -1,10 +1,11 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Home from './screens/Home.jsx';
 import Fitting from './screens/Fitting.jsx';
 import Calibrating from './screens/Calibrating.jsx';
 import Report from './screens/Report.jsx';
-import { QUESTIONS } from './engine.js';
+import { QUESTIONS, computeScores } from './engine.js';
+import { track } from './analytics.js';
 
 /* View state machine: home → fitting → calibrating → report.
    Hash-synced so refresh / share keeps your place. */
@@ -21,6 +22,15 @@ export default function App() {
   });
   const [seed, setSeed] = useState({});
   const [session, setSession] = useState(0);
+  const quizStartedAt = useRef(0);
+
+  /* analytics: view-level events. A direct link to /#/fitting (shop, about,
+     legal pages) starts the quiz without passing through startFitting. */
+  useEffect(() => {
+    if (view === 'fitting') { quizStartedAt.current = Date.now(); track('Quiz Started', { entry: 'link' }); }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => { if (view === 'home') track('Homepage Viewed'); }, [view]);
 
   const go = useCallback((v) => {
     setView(v);
@@ -39,6 +49,8 @@ export default function App() {
     }
     setSeed(clean);
     setSession(s => s + 1);
+    quizStartedAt.current = Date.now();
+    track('Quiz Started', { entry: 'home', seeded: Object.keys(clean).length > 0 });
     go('fitting');
   }, [go]);
 
@@ -56,6 +68,11 @@ export default function App() {
   const onFittingComplete = (a) => {
     setAnswers(a);
     localStorage.setItem('fitco_v3_answers', JSON.stringify(a));
+    track('Quiz Completed', {
+      fit_archetype: computeScores(a).best,
+      duration_s: quizStartedAt.current ? Math.round((Date.now() - quizStartedAt.current) / 1000) : undefined,
+      ...Object.fromEntries(Object.entries(a).map(([k, v]) => [`answer_${k}`, Array.isArray(v) ? v.join(',') : v])),
+    });
     setView('calibrating');
   };
 

@@ -15,7 +15,7 @@ export const GEO = {
   relaxedFit:       { wt: 92, wk: 82, wh: 74, thigh: 14.5,  knee: 11.2, open: 8.25 },
 };
 
-const C = 230, WA = 84, BAND_T = 36, BAND_B = 62;
+export const C = 230, WA = 84, BAND_T = 36, BAND_B = 62;
 export const Y_T = 210, Y_K = 340, Y_H = 508;
 
 export function outlinePath(g) {
@@ -36,8 +36,8 @@ export function outlinePath(g) {
     C${oRK},298 ${oRT},262 ${oRT},${Y_T}
     C${C + hip + 1.5},148 ${C + hip + 1.5},96 ${C + WA},${BAND_B} Z`;
 }
-const bandPath = `M${C - WA},${BAND_B} V${BAND_T + 8} Q${C - WA},${BAND_T} ${C - WA + 8},${BAND_T} H${C + WA - 8} Q${C + WA},${BAND_T} ${C + WA},${BAND_T + 8} V${BAND_B}`;
-function detailPaths() {
+export const bandPath = `M${C - WA},${BAND_B} V${BAND_T + 8} Q${C - WA},${BAND_T} ${C - WA + 8},${BAND_T} H${C + WA - 8} Q${C + WA},${BAND_T} ${C + WA},${BAND_T + 8} V${BAND_B}`;
+export function detailPaths() {
   const loops = [C - WA + 12, C - WA * 0.5, C - 2, C + WA * 0.5 - 4, C + WA - 16]
     .map(x => `M${x},${BAND_T - 3} v${BAND_B - BAND_T - 8}`).join(' ');
   return `M${C - WA + 2},${BAND_B + 0.5} H${C + WA - 2} ${loops}
@@ -63,7 +63,14 @@ export function useConvergingGeo(targetKey, reduced) {
       if (!alive) return;
       const dt = Math.min(0.05, (now - last) / 1000); last = now;
       setG(prev => {
-        const t = target.current; const next = {}; let done = true;
+        const t = target.current;
+        /* Already snapped to target: return the same reference so React
+           bails out of re-rendering. The loop keeps ticking cheaply and
+           resumes the moment the target changes. */
+        let atTarget = true;
+        for (const k in t) if (prev[k] !== t[k]) { atTarget = false; break; }
+        if (atTarget) return prev;
+        const next = {}; let done = true;
         for (const k in t) {
           const v = prev[k] + (t[k] - prev[k]) * Math.min(1, dt * 5.2);
           next[k] = v;
@@ -79,7 +86,7 @@ export function useConvergingGeo(targetKey, reduced) {
   return g;
 }
 
-export function PantFlat({ g, dims = false, className = '', stroke = 'var(--color-ink)', fill = 'rgba(255,255,255,.5)', detail = true }) {
+export function PantFlat({ g, dims = false, highlight = null, className = '', stroke = 'var(--color-ink)', fill = 'rgba(255,255,255,.5)', detail = true }) {
   const dimRows = [
     { y: Y_T, x1: C - g.wt, label: 'THIGH', val: g.thigh },
     { y: Y_K, x1: C - g.wk, label: 'KNEE', val: g.knee },
@@ -95,16 +102,21 @@ export function PantFlat({ g, dims = false, className = '', stroke = 'var(--colo
         <path d={detailPaths()} fill="none" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity=".85" />
         <path d={hemPath(g)} fill="none" stroke={stroke} strokeWidth="1.1" strokeLinecap="round" opacity=".6" />
       </>}
-      {dims && dimRows.map(d => (
-        <g key={d.label}>
-          <line x1={d.x1 + 4} y1={d.y} x2={C - 5} y2={d.y} stroke="var(--color-chalkline)" strokeWidth="1.5" />
-          <line x1={d.x1 + 4} y1={d.y - 6} x2={d.x1 + 4} y2={d.y + 6} stroke="var(--color-chalkline)" strokeWidth="1.5" />
-          <line x1={C - 5} y1={d.y - 6} x2={C - 5} y2={d.y + 6} stroke="var(--color-chalkline)" strokeWidth="1.5" />
-          <text x={d.x1 - 14} y={d.y + 4.5} textAnchor="end" fontFamily="var(--font-mono)" fontSize="12.5" fill="var(--color-chalk)" letterSpacing=".06em">
-            {d.label} <tspan fill="var(--color-ink)" fontWeight="500">{d.val.toFixed(2)}″</tspan>
-          </text>
-        </g>
-      ))}
+      {dims && dimRows.map(d => {
+        const active = highlight === d.label;
+        const line = active ? 'var(--color-sage)' : 'var(--color-chalkline)';
+        const lw = active ? 2.4 : 1.5;
+        return (
+          <g key={d.label} opacity={highlight && !active ? .3 : 1} style={{ transition: 'opacity .25s' }}>
+            <line x1={d.x1 + 4} y1={d.y} x2={C - 5} y2={d.y} stroke={line} strokeWidth={lw} />
+            <line x1={d.x1 + 4} y1={d.y - 6} x2={d.x1 + 4} y2={d.y + 6} stroke={line} strokeWidth={lw} />
+            <line x1={C - 5} y1={d.y - 6} x2={C - 5} y2={d.y + 6} stroke={line} strokeWidth={lw} />
+            <text x={d.x1 - 14} y={d.y + 4.5} textAnchor="end" fontFamily="var(--font-mono)" fontSize="12.5" fill={active ? 'var(--color-sage)' : 'var(--color-chalk)'} letterSpacing=".06em">
+              {d.label} <tspan fill={active ? 'var(--color-sage)' : 'var(--color-ink)'} fontWeight="500">{d.val.toFixed(2)}″</tspan>
+            </text>
+          </g>
+        );
+      })}
     </svg>
   );
 }

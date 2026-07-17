@@ -1,15 +1,30 @@
-import { useEffect, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Wordmark, Btn, Kicker, Mono, rise } from '../ui.jsx';
-import { PantFlat, GEO } from '../geometry.jsx';
+import { PantFlat, GEO, useConvergingGeo } from '../geometry.jsx';
 import { computeScores, diagnose, rankProducts, FIT_LABEL, FIT_INFO } from '../engine.js';
+import { track, retailerOf } from '../analytics.js';
+import Heightfield from '../heightfield.jsx';
 
 /* THE FIT REPORT — a dated document, not a sales page.
    Tiers and reasons; caveats in plain sight. */
 export default function Report({ answers, onRetake, onHome }) {
-  const { best, alt1, alt2 } = useMemo(() => computeScores(answers), [answers]);
-  const g = GEO[best];
-  const info = FIT_INFO[best];
+  const { best, alt1, alt2, final } = useMemo(() => computeScores(answers), [answers]);
+  const reduced = useReducedMotion();
+
+  /* interactive instrument: preview any of the top three fits on the
+     drawing. The verdict never changes — this is a comparison view. */
+  const [preview, setPreview] = useState(best);
+  const [highlight, setHighlight] = useState(null);
+  const flatRef = useRef(null);
+  const g = useConvergingGeo(preview, reduced);
+  const info = FIT_INFO[preview];
+  const previewFit = (k, source) => {
+    setPreview(k);
+    if (k !== best) track('Alternate Previewed', { fit_archetype: k, source });
+    if (source === 'alternates' && flatRef.current) flatRef.current.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+  };
+  const SPEC_DIM = { RISE: null, THIGH: 'THIGH', KNEE: 'KNEE', OPENING: 'OPEN' };
   const why = useMemo(() => diagnose(answers, best), [answers, best]);
   const { results, notice } = useMemo(() => rankProducts(answers, best), [answers, best]);
   const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -18,6 +33,14 @@ export default function Report({ answers, onRetake, onHome }) {
   useEffect(() => {
     localStorage.setItem('fitco_quiz_completed', 'true');
     localStorage.setItem('fitco_fit_result', best);
+    track('Report Viewed', {
+      fit_archetype: best,
+      fit_label: FIT_LABEL[best],
+      score: +final[best].toFixed(3),
+      margin_over_next: +(final[best] - final[alt1]).toFixed(3),
+      product_count: results.length,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [best]);
 
   return (
@@ -28,14 +51,37 @@ export default function Report({ answers, onRetake, onHome }) {
         <button onClick={onRetake} className="text-[13.5px] font-medium text-muted hover:text-ink transition-colors cursor-pointer">Retake</button>
       </div>
 
-      {/* verdict */}
-      <section className="grid-paper border-b border-hairline">
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-10 py-14 grid lg:grid-cols-[46fr_54fr] gap-10 items-center">
+      {/* verdict — over the measured terrain */}
+      <section className="grid-paper border-b border-hairline relative overflow-hidden">
+        <Heightfield className="absolute inset-0 w-full h-full text-ink pointer-events-none" />
+        <div className="relative z-10 max-w-[1400px] mx-auto px-5 sm:px-10 py-14 grid lg:grid-cols-[46fr_54fr] gap-10 items-center">
           <motion.div variants={rise} initial="hidden" animate="show" custom={0} className="order-last lg:order-first">
-            <PantFlat g={g} dims className="w-full max-w-[440px] h-[54vh] min-h-[380px] mx-auto lg:mx-0" />
+            <div className="flex items-center gap-2 max-w-[440px] mx-auto lg:mx-0 mb-3" role="group" aria-label="Preview a fit on the drawing">
+              {[[best, 'Your match'], [alt1, 'Alt 02'], [alt2, 'Alt 03']].map(([k, t]) => (
+                <button key={k} onClick={() => previewFit(k, 'chips')} aria-pressed={preview === k}
+                  className={`font-mono text-[10.5px] tracking-[.1em] uppercase px-3 py-1.5 rounded-full border transition-all duration-200 cursor-pointer
+                    ${preview === k ? 'border-sage bg-sagesoft text-sage' : 'border-line text-muted hover:border-ink-soft hover:text-ink'}`}>
+                  {t}
+                </button>
+              ))}
+            </div>
+            <div ref={flatRef} className="relative max-w-[440px] mx-auto lg:mx-0">
+              <PantFlat g={g} dims highlight={highlight} className="w-full h-[54vh] min-h-[380px]" />
+              {!reduced && (
+                <motion.div key={preview} className="absolute top-0 bottom-6 w-px pointer-events-none"
+                  style={{ background: 'linear-gradient(180deg, transparent, var(--color-chalkline) 18%, var(--color-chalkline) 82%, transparent)', boxShadow: '0 0 14px rgba(195,154,69,.5)' }}
+                  initial={{ left: '12%', opacity: 0 }} animate={{ left: ['12%', '88%'], opacity: [0, .75, .75, 0] }}
+                  transition={{ duration: 1.1, times: [0, .15, .85, 1], ease: 'easeInOut' }} />
+              )}
+            </div>
             <div className="flex justify-between max-w-[440px] mt-1 mx-auto lg:mx-0">
-              <Mono>FIG. 02 — Your geometry</Mono>
+              <Mono>{preview === best ? 'FIG. 02 — Your geometry' : `FIG. 02 — ${FIT_LABEL[preview]} · comparison`}</Mono>
               <Mono>REF 32×32</Mono>
+            </div>
+            <div className="max-w-[440px] mx-auto lg:mx-0 h-5 mt-1.5" aria-live="polite">
+              {preview !== best && (
+                <Mono className="!text-sage">Comparison view — your verdict is still {FIT_LABEL[best]}</Mono>
+              )}
             </div>
           </motion.div>
           <div>
@@ -50,10 +96,13 @@ export default function Report({ answers, onRetake, onHome }) {
             <motion.div variants={rise} initial="hidden" animate="show" custom={3}
               className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-hairline border border-hairline max-w-[520px] mb-8">
               {[['RISE', info.rise], ['THIGH', `${g.thigh.toFixed(2)}″`], ['KNEE', `${g.knee.toFixed(2)}″`], ['OPENING', `${g.open.toFixed(2)}″`]].map(([k, v]) => (
-                <div key={k} className="bg-paper px-4 py-3.5">
-                  <Mono className="!text-[9.5px]">{k}</Mono>
+                <button key={k} type="button"
+                  onMouseEnter={() => setHighlight(SPEC_DIM[k])} onMouseLeave={() => setHighlight(null)}
+                  onClick={() => setHighlight(h => h === SPEC_DIM[k] ? null : SPEC_DIM[k])}
+                  className={`bg-paper px-4 py-3.5 text-left transition-colors duration-200 ${SPEC_DIM[k] ? 'cursor-pointer hover:bg-sagesoft/60' : 'cursor-default'} ${highlight && highlight === SPEC_DIM[k] ? 'bg-sagesoft/60' : ''}`}>
+                  <Mono className={`!text-[9.5px] ${highlight && highlight === SPEC_DIM[k] ? '!text-sage' : ''}`}>{k}</Mono>
                   <div className="font-disp font-semibold text-[17px] mt-1">{v}</div>
-                </div>
+                </button>
               ))}
             </motion.div>
             <motion.div variants={rise} initial="hidden" animate="show" custom={4}>
@@ -75,6 +124,10 @@ export default function Report({ answers, onRetake, onHome }) {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
           {results.map((p, i) => (
             <motion.a key={p.id} href={p.link} target="_blank" rel="noopener"
+              onClick={() => track('Recommended Product Clicked', {
+                brand: p.brand, product_name: p.name, category: p.category, price: p.price,
+                tier: p.tier, rank: i + 1, retailer: retailerOf(p.link), fit_archetype: best, source: 'report',
+              })}
               variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .2 }} custom={i}
               className="group rounded-2xl border border-hairline bg-white/60 overflow-hidden hover:-translate-y-1 hover:shadow-[0_18px_48px_rgba(22,21,15,.12)] transition-all duration-300">
               <div className="relative aspect-[4/5] overflow-hidden bg-paper-deep">
@@ -110,15 +163,18 @@ export default function Report({ answers, onRetake, onHome }) {
           </motion.div>
           <div className="grid sm:grid-cols-2 gap-4 max-w-[880px]">
             {[alt1, alt2].map((k, i) => (
-              <motion.div key={k} variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .3 }} custom={i}
-                className="flex gap-5 items-center rounded-2xl border border-hairline bg-white/50 p-5">
+              <motion.button key={k} type="button" onClick={() => previewFit(k, 'alternates')} aria-pressed={preview === k}
+                variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .3 }} custom={i}
+                className={`flex gap-5 items-center text-left rounded-2xl border p-5 transition-all duration-200 cursor-pointer
+                  ${preview === k ? 'border-sage bg-sagesoft/50 shadow-[inset_0_0_0_1px_var(--color-sage)]' : 'border-hairline bg-white/50 hover:border-ink-soft hover:-translate-y-px'}`}>
                 <PantFlat g={GEO[k]} className="w-16 h-24 shrink-0" detail={false} />
                 <div>
                   <Mono className="!text-chalk">ALT {String(i + 2).padStart(2, '0')}</Mono>
                   <div className="font-disp font-semibold text-xl mt-1 mb-1">{FIT_LABEL[k]}</div>
                   <p className="text-[13px] leading-relaxed text-muted">{FIT_INFO[k].desc.split('. ')[0]}.</p>
+                  <Mono className="!text-[9.5px] !text-sage block mt-2">{preview === k ? 'On the instrument above' : 'Tap to preview on the instrument'}</Mono>
                 </div>
-              </motion.div>
+              </motion.button>
             ))}
           </div>
           <motion.p variants={rise} initial="hidden" whileInView="show" viewport={{ once: true }}
