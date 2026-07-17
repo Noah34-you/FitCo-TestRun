@@ -86,7 +86,7 @@ export function useConvergingGeo(targetKey, reduced) {
   return g;
 }
 
-export function PantFlat({ g, dims = false, className = '', stroke = 'var(--color-ink)', fill = 'rgba(255,255,255,.5)', detail = true }) {
+export function PantFlat({ g, dims = false, highlight = null, className = '', stroke = 'var(--color-ink)', fill = 'rgba(255,255,255,.5)', detail = true }) {
   const dimRows = [
     { y: Y_T, x1: C - g.wt, label: 'THIGH', val: g.thigh },
     { y: Y_K, x1: C - g.wk, label: 'KNEE', val: g.knee },
@@ -102,16 +102,21 @@ export function PantFlat({ g, dims = false, className = '', stroke = 'var(--colo
         <path d={detailPaths()} fill="none" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity=".85" />
         <path d={hemPath(g)} fill="none" stroke={stroke} strokeWidth="1.1" strokeLinecap="round" opacity=".6" />
       </>}
-      {dims && dimRows.map(d => (
-        <g key={d.label}>
-          <line x1={d.x1 + 4} y1={d.y} x2={C - 5} y2={d.y} stroke="var(--color-chalkline)" strokeWidth="1.5" />
-          <line x1={d.x1 + 4} y1={d.y - 6} x2={d.x1 + 4} y2={d.y + 6} stroke="var(--color-chalkline)" strokeWidth="1.5" />
-          <line x1={C - 5} y1={d.y - 6} x2={C - 5} y2={d.y + 6} stroke="var(--color-chalkline)" strokeWidth="1.5" />
-          <text x={d.x1 - 14} y={d.y + 4.5} textAnchor="end" fontFamily="var(--font-mono)" fontSize="12.5" fill="var(--color-chalk)" letterSpacing=".06em">
-            {d.label} <tspan fill="var(--color-ink)" fontWeight="500">{d.val.toFixed(2)}″</tspan>
-          </text>
-        </g>
-      ))}
+      {dims && dimRows.map(d => {
+        const active = highlight === d.label;
+        const line = active ? 'var(--color-sage)' : 'var(--color-chalkline)';
+        const lw = active ? 2.4 : 1.5;
+        return (
+          <g key={d.label} opacity={highlight && !active ? .3 : 1} style={{ transition: 'opacity .25s' }}>
+            <line x1={d.x1 + 4} y1={d.y} x2={C - 5} y2={d.y} stroke={line} strokeWidth={lw} />
+            <line x1={d.x1 + 4} y1={d.y - 6} x2={d.x1 + 4} y2={d.y + 6} stroke={line} strokeWidth={lw} />
+            <line x1={C - 5} y1={d.y - 6} x2={C - 5} y2={d.y + 6} stroke={line} strokeWidth={lw} />
+            <text x={d.x1 - 14} y={d.y + 4.5} textAnchor="end" fontFamily="var(--font-mono)" fontSize="12.5" fill={active ? 'var(--color-sage)' : 'var(--color-chalk)'} letterSpacing=".06em">
+              {d.label} <tspan fill={active ? 'var(--color-sage)' : 'var(--color-ink)'} fontWeight="500">{d.val.toFixed(2)}″</tspan>
+            </text>
+          </g>
+        );
+      })}
     </svg>
   );
 }
