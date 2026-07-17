@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Wordmark, Btn, Mono } from '../ui.jsx';
 import { PantFlat, useConvergingGeo } from '../geometry.jsx';
 import { QUESTIONS, computeScores, FIT_LABEL, FIT_KEYS } from '../engine.js';
+import { track } from '../analytics.js';
 
 /* THE FITTING — a full-screen instrument that converges on you.
    Every answer re-runs the real engine; the silhouette physically
@@ -15,6 +16,12 @@ export default function Fitting({ onExit, onComplete, initial = {} }) {
   const [multi, setMulti] = useState([]);
   const advancing = useRef(false);
   const q = QUESTIONS[qi];
+  const viewedAt = useRef(Date.now());
+
+  useEffect(() => {
+    viewedAt.current = Date.now();
+    track('Question Viewed', { question_number: qi + 1, question_id: QUESTIONS[qi].key });
+  }, [qi]);
 
   /* advance to the next question that hasn't been answered (seeded
      answers from the hero are skipped, not re-asked) */
@@ -39,6 +46,7 @@ export default function Fitting({ onExit, onComplete, initial = {} }) {
     advancing.current = true;
     const next = { ...answers, [q.key]: opt.v };
     setAnswers(next);
+    track('Question Answered', { question_number: qi + 1, question_id: q.key, answer: opt.v, elapsed_ms: Date.now() - viewedAt.current });
     setTimeout(() => {
       advancing.current = false;
       advanceFrom(qi, next);
@@ -48,6 +56,7 @@ export default function Fitting({ onExit, onComplete, initial = {} }) {
   const continueMulti = () => {
     if (!multi.length) return;
     const next = { ...answers, [q.key]: multi };
+    track('Question Answered', { question_number: qi + 1, question_id: q.key, answer: multi.join(','), elapsed_ms: Date.now() - viewedAt.current });
     setAnswers(next); setMulti([]);
     advanceFrom(qi, next);
   };

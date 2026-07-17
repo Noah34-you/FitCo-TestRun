@@ -3,11 +3,12 @@ import { motion } from 'framer-motion';
 import { Wordmark, Btn, Kicker, Mono, rise } from '../ui.jsx';
 import { PantFlat, GEO } from '../geometry.jsx';
 import { computeScores, diagnose, rankProducts, FIT_LABEL, FIT_INFO } from '../engine.js';
+import { track, retailerOf } from '../analytics.js';
 
 /* THE FIT REPORT — a dated document, not a sales page.
    Tiers and reasons; caveats in plain sight. */
 export default function Report({ answers, onRetake, onHome }) {
-  const { best, alt1, alt2 } = useMemo(() => computeScores(answers), [answers]);
+  const { best, alt1, alt2, final } = useMemo(() => computeScores(answers), [answers]);
   const g = GEO[best];
   const info = FIT_INFO[best];
   const why = useMemo(() => diagnose(answers, best), [answers, best]);
@@ -18,6 +19,14 @@ export default function Report({ answers, onRetake, onHome }) {
   useEffect(() => {
     localStorage.setItem('fitco_quiz_completed', 'true');
     localStorage.setItem('fitco_fit_result', best);
+    track('Report Viewed', {
+      fit_archetype: best,
+      fit_label: FIT_LABEL[best],
+      score: +final[best].toFixed(3),
+      margin_over_next: +(final[best] - final[alt1]).toFixed(3),
+      product_count: results.length,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [best]);
 
   return (
@@ -75,6 +84,10 @@ export default function Report({ answers, onRetake, onHome }) {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
           {results.map((p, i) => (
             <motion.a key={p.id} href={p.link} target="_blank" rel="noopener"
+              onClick={() => track('Recommended Product Clicked', {
+                brand: p.brand, product_name: p.name, category: p.category, price: p.price,
+                tier: p.tier, rank: i + 1, retailer: retailerOf(p.link), fit_archetype: best, source: 'report',
+              })}
               variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .2 }} custom={i}
               className="group rounded-2xl border border-hairline bg-white/60 overflow-hidden hover:-translate-y-1 hover:shadow-[0_18px_48px_rgba(22,21,15,.12)] transition-all duration-300">
               <div className="relative aspect-[4/5] overflow-hidden bg-paper-deep">
