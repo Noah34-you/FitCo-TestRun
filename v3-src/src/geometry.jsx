@@ -15,7 +15,7 @@ export const GEO = {
   relaxedFit:       { wt: 92, wk: 82, wh: 74, thigh: 14.5,  knee: 11.2, open: 8.25 },
 };
 
-const C = 230, WA = 84, BAND_T = 36, BAND_B = 62;
+export const C = 230, WA = 84, BAND_T = 36, BAND_B = 62;
 export const Y_T = 210, Y_K = 340, Y_H = 508;
 
 export function outlinePath(g) {
@@ -36,8 +36,8 @@ export function outlinePath(g) {
     C${oRK},298 ${oRT},262 ${oRT},${Y_T}
     C${C + hip + 1.5},148 ${C + hip + 1.5},96 ${C + WA},${BAND_B} Z`;
 }
-const bandPath = `M${C - WA},${BAND_B} V${BAND_T + 8} Q${C - WA},${BAND_T} ${C - WA + 8},${BAND_T} H${C + WA - 8} Q${C + WA},${BAND_T} ${C + WA},${BAND_T + 8} V${BAND_B}`;
-function detailPaths() {
+export const bandPath = `M${C - WA},${BAND_B} V${BAND_T + 8} Q${C - WA},${BAND_T} ${C - WA + 8},${BAND_T} H${C + WA - 8} Q${C + WA},${BAND_T} ${C + WA},${BAND_T + 8} V${BAND_B}`;
+export function detailPaths() {
   const loops = [C - WA + 12, C - WA * 0.5, C - 2, C + WA * 0.5 - 4, C + WA - 16]
     .map(x => `M${x},${BAND_T - 3} v${BAND_B - BAND_T - 8}`).join(' ');
   return `M${C - WA + 2},${BAND_B + 0.5} H${C + WA - 2} ${loops}

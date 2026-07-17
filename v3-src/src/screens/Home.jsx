@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Wordmark, Btn, Kicker, Mono, Scanline, rise } from '../ui.jsx';
 import { PantFlat, useConvergingGeo } from '../geometry.jsx';
+import { CoordDiagram, RuleIcon } from '../illustrations.jsx';
 import { FIT_KEYS, FIT_LABEL } from '../engine.js';
 
 const heroImg = `${import.meta.env.BASE_URL}media/hero-fabric.jpg`;
@@ -50,11 +51,11 @@ function ReadingCard({ reduced, onStart }) {
 }
 
 const COORDS = [
-  ['01', 'Thigh', 'Flat, 1″ below the crotch seam — the point brands are least honest about.'],
-  ['02', 'Seat', 'Room through the hips so nothing pulls when you sit.'],
-  ['03', 'Rise', 'Where the waistband actually sits, and whether it stays there.'],
-  ['04', 'Knee', 'Where the taper starts, or doesn’t. Sets the silhouette.'],
-  ['05', 'Opening', 'Hem width — stack, clean break, or swallowed shoes.'],
+  ['01', 'Thigh', 'Flat, 1″ below the crotch seam — the point brands are least honest about.', 'thigh'],
+  ['02', 'Seat', 'Room through the hips so nothing pulls when you sit.', 'seat'],
+  ['03', 'Rise', 'Where the waistband actually sits, and whether it stays there.', 'rise'],
+  ['04', 'Knee', 'Where the taper starts, or doesn’t. Sets the silhouette.', 'knee'],
+  ['05', 'Opening', 'Hem width — stack, clean break, or swallowed shoes.', 'opening'],
 ];
 
 const RULES = [
@@ -134,9 +135,10 @@ export default function Home({ onStart, hasReport, onReport }) {
             <h2 className="font-disp font-semibold tracking-[-0.03em] text-[clamp(28px,3.4vw,48px)] mb-12">Five coordinates. One fit.</h2>
           </motion.div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-px bg-hairline border border-hairline">
-            {COORDS.map(([n, name, d], i) => (
+            {COORDS.map(([n, name, d, zone], i) => (
               <motion.div key={n} className="bg-paper p-6" variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .4 }} custom={i}>
                 <Mono className="!text-chalk">{n}</Mono>
+                <CoordDiagram zone={zone} className="w-full h-[104px] mt-4 text-ink" />
                 <div className="font-disp font-semibold text-xl mt-3 mb-2">{name}</div>
                 <p className="text-[13.5px] leading-relaxed text-muted">{d}</p>
               </motion.div>
@@ -155,8 +157,11 @@ export default function Home({ onStart, hasReport, onReport }) {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-paper/15 border border-paper/15">
             {RULES.map(([t, d], i) => (
               <motion.div key={t} className="bg-ink p-7" variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .3 }} custom={i}>
-                <Mono className="!text-chalkline">RULE {String(i + 1).padStart(2, '0')}</Mono>
-                <div className="font-disp font-semibold text-lg mt-3 mb-2">{t}</div>
+                <div className="flex items-start justify-between mb-4">
+                  <Mono className="!text-chalkline">RULE {String(i + 1).padStart(2, '0')}</Mono>
+                  <RuleIcon n={i} className="w-7 h-7 text-chalkline/80" />
+                </div>
+                <div className="font-disp font-semibold text-lg mb-2">{t}</div>
                 <p className="text-[13.5px] leading-relaxed text-paper/60">{d}</p>
               </motion.div>
             ))}
