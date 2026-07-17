@@ -4,6 +4,7 @@ import { Wordmark, Btn, Mono } from '../ui.jsx';
 import { PantFlat, useConvergingGeo } from '../geometry.jsx';
 import { QUESTIONS, computeScores, FIT_LABEL, FIT_KEYS } from '../engine.js';
 import { track } from '../analytics.js';
+import { OptionIllo } from '../illustrations.jsx';
 
 /* THE FITTING — a full-screen instrument that converges on you.
    Every answer re-runs the real engine; the silhouette physically
@@ -157,6 +158,10 @@ export default function Fitting({ onExit, onComplete, initial = {} }) {
                         ? 'border-sage bg-sagesoft shadow-[inset_0_0_0_1px_var(--color-sage)]'
                         : 'border-line bg-white/55 hover:border-ink-soft hover:-translate-y-px hover:shadow-[0_4px_16px_rgba(22,21,15,.06)]'}`}>
                     <span className={`font-mono text-[11px] w-5 shrink-0 ${selected(opt.v) ? 'text-sage' : 'text-muted/70'}`}>{i + 1}</span>
+                    <span className={`w-11 h-12 shrink-0 rounded-lg border flex items-center justify-center transition-colors duration-200
+                      ${selected(opt.v) ? 'border-sage/60 bg-white/85 text-sage' : 'border-hairline bg-white/70 text-ink'}`}>
+                      <OptionIllo qkey={q.key} v={opt.v} className={q.key === 'legShape' ? 'w-7 h-10' : 'w-9 h-9'} />
+                    </span>
                     <span className="flex-1">
                       <span className="block font-medium text-[15.5px]">{opt.t}</span>
                       <span className="block text-[13px] text-muted mt-0.5">{opt.s}</span>

@@ -4,6 +4,7 @@ import { Wordmark, Btn, Kicker, Mono, rise } from '../ui.jsx';
 import { PantFlat, GEO, useConvergingGeo } from '../geometry.jsx';
 import { computeScores, diagnose, rankProducts, FIT_LABEL, FIT_INFO } from '../engine.js';
 import { track, retailerOf } from '../analytics.js';
+import Heightfield from '../heightfield.jsx';
 
 /* THE FIT REPORT — a dated document, not a sales page.
    Tiers and reasons; caveats in plain sight. */
@@ -50,9 +51,10 @@ export default function Report({ answers, onRetake, onHome }) {
         <button onClick={onRetake} className="text-[13.5px] font-medium text-muted hover:text-ink transition-colors cursor-pointer">Retake</button>
       </div>
 
-      {/* verdict */}
-      <section className="grid-paper border-b border-hairline">
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-10 py-14 grid lg:grid-cols-[46fr_54fr] gap-10 items-center">
+      {/* verdict — over the measured terrain */}
+      <section className="grid-paper border-b border-hairline relative overflow-hidden">
+        <Heightfield className="absolute inset-0 w-full h-full text-ink pointer-events-none" />
+        <div className="relative z-10 max-w-[1400px] mx-auto px-5 sm:px-10 py-14 grid lg:grid-cols-[46fr_54fr] gap-10 items-center">
           <motion.div variants={rise} initial="hidden" animate="show" custom={0} className="order-last lg:order-first">
             <div className="flex items-center gap-2 max-w-[440px] mx-auto lg:mx-0 mb-3" role="group" aria-label="Preview a fit on the drawing">
               {[[best, 'Your match'], [alt1, 'Alt 02'], [alt2, 'Alt 03']].map(([k, t]) => (
