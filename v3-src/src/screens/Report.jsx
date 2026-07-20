@@ -131,7 +131,17 @@ export default function Report({ answers, onRetake, onHome }) {
               variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .2 }} custom={i}
               className="group rounded-2xl border border-hairline bg-white/60 overflow-hidden hover:-translate-y-1 hover:shadow-[0_18px_48px_rgba(22,21,15,.12)] transition-all duration-300">
               <div className="relative aspect-[4/5] overflow-hidden bg-paper-deep">
-                <img src={p.img} alt={`${p.brand} ${p.name}`} className="w-full h-full object-cover object-[center_25%] group-hover:scale-[1.03] transition-transform duration-500" loading="lazy" />
+                {/* drafting placeholder — shown when there's no verified photo,
+                    or if a photo URL fails to load */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-5" aria-hidden="true">
+                  <PantFlat g={GEO[p.primaryFit]} detail={false} className="h-[68%]" fill="rgba(255,255,255,.65)" />
+                  <Mono className="!text-[9px] text-center">{p.brand} · photo pending</Mono>
+                </div>
+                {p.img && (
+                  <img src={p.img} alt={`${p.brand} ${p.name}`}
+                    className="absolute inset-0 w-full h-full object-cover object-[center_25%] group-hover:scale-[1.03] transition-transform duration-500"
+                    loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                )}
                 <span className={`absolute top-3 left-3 font-mono text-[9.5px] tracking-[.12em] uppercase px-2.5 py-1 rounded-full border backdrop-blur-sm
                   ${p.tier === 'Best match' ? 'bg-sage text-white border-sage' : 'bg-paper/90 text-ink-soft border-line'}`}>{p.tier}</span>
               </div>
