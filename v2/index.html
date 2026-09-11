@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FitCo — Fit, measured.</title>
+<meta name="robots" content="noindex, nofollow" />
+  <!-- Concept V2 — superseded by the live homepage -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitCo — Fit, explained.</title>
 <meta name="description" content="FitCo measures pants at the five points that decide fit and matches your build to the one cut that works.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5.5' fill='%233C6B3C'/%3E%3Cg fill='%23FFFFFF'%3E%3Crect x='5' y='5.2' width='14' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='10' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='3.7' height='9.2' rx='.9'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/fonts/fitco-fonts.css" />
+  <link rel="stylesheet" href="/fitco-consent.css" />
 <style>
   /* ============================================================
      FITCO V2 — "THE INSTRUMENT"
@@ -21,12 +22,12 @@
     --paper-deep: #EAE6DB;
     --ink: #16150F;
     --ink-soft: #45423A;
-    --muted: #7B766A;
+    --muted: #6A655B;
     --line: #D9D4C6;
     --hairline: #E4E0D3;
     --sage: #3C6B3C;
     --sage-soft: #E5EDDF;
-    --chalk: #A87F2C;         /* dimension gold, text-safe */
+    --chalk: #806021;         /* dimension gold, AA text-safe on cream (>=4.6:1) */
     --chalk-line: #C39A45;
     --strain: #B23F35;
     --mono: 'IBM Plex Mono', monospace;
@@ -349,9 +350,22 @@
     .rv { opacity: 1 !important; transform: none !important; transition: none; }
     html { scroll-behavior: auto; }
   }
+  .skip-link {
+    position: absolute; left: 8px; top: -60px; z-index: 200;
+    background: var(--text-primary, #111); color: #fff;
+    padding: 10px 16px; border-radius: 8px;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: top .15s ease;
+  }
+  .skip-link:focus { top: 8px; }
 </style>
+  <script src="/posthog-config.js"></script>
+  <script src="/fitco-consent.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<main id="main" tabindex="-1">
 
 <!-- NAV -->
 <header class="nav" id="nav">
@@ -372,19 +386,19 @@
   <div class="hero-copy">
     <span class="eyebrow">Fit intelligence &middot; Men's pants</span>
     <h1>Same waist.<br>Six different<br>pants.</h1>
-    <p class="hero-sub">Brands sell you one number. FitCo measures the five points that actually decide fit, and matches your build to the one cut that works &mdash; in about a minute.</p>
+    <p class="hero-sub">Brands sell you one number. FitCo works from the five points that actually decide fit, and matches your build to the one cut that works &mdash; in about a minute.</p>
     <div class="hero-cta">
       <a class="btn" href="/quiz/index.html">Find your fit <span class="arr">&rarr;</span></a>
       <a class="btn btn-ghost" href="/about/index.html">How we measure</a>
     </div>
     <div class="hero-facts">
-      <span><i></i>15 pants measured</span>
+      <span><i></i>22 pants in the catalog</span>
       <span><i></i>6 fit geometries</span>
       <span><i></i>No sponsored rankings</span>
     </div>
   </div>
 
-  <div class="hero-stage" aria-label="Animated technical drawing of a pant, morphing between six fit geometries while its measurements update">
+  <div class="hero-stage" role="img" aria-label="Animated technical drawing of a pant, morphing between six fit geometries while its measurements update">
     <svg class="instrument" id="instrument" viewBox="0 -18 460 596" aria-hidden="true"></svg>
     <div class="hud" id="hud" aria-hidden="true">
       <div class="hud-idx">GEOMETRY <span id="hudIdx">01</span>/06</div>
@@ -438,7 +452,7 @@
       <span class="sec-idx">02</span>
       <h2 class="sec-title">The five coordinates of fit</h2>
     </div>
-    <p class="sec-sub rv">Fit isn't a feeling &mdash; it's five measurements agreeing with your body at once. We measure every pant in the catalog at the same five points, flat, at a reference size.</p>
+    <p class="sec-sub rv">Fit isn't a feeling &mdash; it's five measurements agreeing with your body at once. We compare every pant in the catalog at the same five points, using the measurements the brand publishes for a reference size.</p>
 
     <div class="coords-grid">
       <div class="coords-stage rv" aria-hidden="true">
@@ -447,7 +461,7 @@
       <div class="rv" id="coordList" role="list">
         <div class="coord-row on" data-c="0" role="listitem" tabindex="0">
           <span class="coord-num">01</span><span class="coord-name">Thigh</span><span class="coord-range">11.0&ndash;15.5&Prime; across catalog</span>
-          <p class="coord-desc">Measured flat, 1&Prime; below the crotch seam. The most common failure point &mdash; and the number brands are least honest about.</p>
+          <p class="coord-desc">Measured flat, 1&Prime; below the crotch seam. The most common failure point &mdash; and the measurement brands publish least often.</p>
         </div>
         <div class="coord-row" data-c="1" role="listitem" tabindex="0">
           <span class="coord-num">02</span><span class="coord-name">Seat</span><span class="coord-range">Curve depth &middot; yoke angle</span>
@@ -503,7 +517,7 @@
       <article class="engine-card rv">
         <span class="step">STEP 03</span>
         <h3>The fit report</h3>
-        <p>Real pants ranked inside your geometry by measured numbers &mdash; with plain-English reasons and honest caveats. Tiers, never fake percentages.</p>
+        <p>Real pants ranked inside your geometry by published spec numbers &mdash; with plain-English reasons and honest caveats. Tiers, never fake percentages.</p>
         <div class="engine-visual report" aria-hidden="true">
           <span class="tier">Strong match</span>
           <div class="rname">Levi's 541 Athletic Taper</div>
@@ -531,12 +545,12 @@
       <div class="tenet">
         <span class="t-idx">RULE 01</span>
         <h3>No padded catalog</h3>
-        <p>Fifteen pants, measured properly, beats fifteen hundred copied from marketing pages. The catalog grows one verified entry at a time.</p>
+        <p>Twenty-two pants we have actually compared beats fifteen hundred copied from marketing pages. The catalog grows one verified entry at a time.</p>
       </div>
       <div class="tenet">
         <span class="t-idx">RULE 02</span>
         <h3>No commission rankings</h3>
-        <p>Affiliate status lives in a separate field from every scoring input. If the best pant for your build pays us nothing, it's still the recommendation.</p>
+        <p>FitCo has no affiliate relationships today, and commission could never be a scoring input. If the best pant for your build pays us nothing, it's still the recommendation.</p>
       </div>
       <div class="tenet">
         <span class="t-idx">RULE 03</span>
@@ -566,6 +580,8 @@
 </section>
 
 <!-- FOOTER -->
+</main>
+
 <footer class="foot">
   <a class="nav-logo" href="/v2/index.html">
     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>
@@ -577,7 +593,7 @@
     <li><a href="/privacy/index.html">Privacy</a></li>
     <li><a href="/terms/index.html">Terms</a></li>
   </ul>
-  <span class="foot-meta">Fit, measured &middot; Concept V2</span>
+  <span class="foot-meta">Fit, explained &middot; Concept V2</span>
 </footer>
 
 <script>

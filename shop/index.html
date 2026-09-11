@@ -5,15 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FitCo — Find Pants That Fit</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5.5' fill='%233C6B3C'/%3E%3Cg fill='%23FFFFFF'%3E%3Crect x='5' y='5.2' width='14' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='10' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='3.7' height='9.2' rx='.9'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/fonts/fitco-fonts.css" />
+  <link rel="stylesheet" href="/fitco-consent.css" />
 <style>
   :root {
     --bg: #F5F3EE;
     --bg-white: #FFFFFF;
     --text: #111111;
-    --text-muted: #6E6E6E;
+    --text-muted: #646464;
     --border: #D9D9D9;
     --border-light: #E8E6E1;
     --success: #5B8C5A;
@@ -1558,9 +1557,18 @@
       max-width: 560px;
     }
   }
+  .skip-link {
+    position: absolute; left: 8px; top: -60px; z-index: 200;
+    background: var(--text-primary, #111); color: #fff;
+    padding: 10px 16px; border-radius: 8px;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: top .15s ease;
+  }
+  .skip-link:focus { top: 8px; }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- NAV -->
 <!-- UTILITY BAR -->
@@ -1577,8 +1585,8 @@
     <a href="/" class="logo" style="text-decoration:none;color:inherit;"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
     <ul class="nav-center">
       <li><a href="/shop/index.html">Your Picks</a></li>
-      <li><a href="/#works">How It Works</a></li>
-      <li><a href="/#fits">Fit Guide</a></li>
+      <li><a href="/about/index.html#how">How It Works</a></li>
+      <li><a href="/about/index.html#fits">Fit Guide</a></li>
       <li><a href="/about/index.html">About Us</a></li>
     </ul>
     <div class="nav-right">
@@ -1586,6 +1594,8 @@
     </div>
   </div>
 </nav>
+
+<main id="main" tabindex="-1">
 <!-- SHOP GATE -->
 <section class="shop-gate" id="shopGate">
   <div class="shop-gate-inner">
@@ -1699,21 +1709,28 @@
       </div>
     </div>
 
+    <p class="shop-basis-note">
+      These are our own picks for this fit from a 22-pant catalog &mdash; not a ranking of the whole market.
+      They are based on the measurements brands publish, which we have not independently verified.
+      FitCo earns no commission on any of them. Prices were checked on 11 September 2026 and change
+      often; the retailer&rsquo;s page is the only accurate price.
+    </p>
+
     <!-- Product Recommendations -->
     <div class="shop-section">
-      <h3>Best Overall</h3>
+      <h3>Our pick overall</h3>
       <div class="product-grid" id="shopProductsBest">
       </div>
     </div>
 
     <div class="shop-section">
-      <h3>Best Budget Option</h3>
+      <h3>Our budget pick</h3>
       <div class="product-grid" id="shopProductsBudget">
       </div>
     </div>
 
     <div class="shop-section">
-      <h3>Best Premium Option</h3>
+      <h3>Our premium pick</h3>
       <div class="product-grid" id="shopProductsPremium">
       </div>
     </div>
@@ -1725,11 +1742,15 @@
       <p id="shopWaitlistLead">We point you to pants that match your fit. If FitCo ever creates its own, they'll be held to the same standards.</p>
       <p id="shopWaitlistSub">Leave your email if you want updates on what we're exploring next.</p>
       <form class="shop-waitlist-form" id="shopWaitlistForm" onsubmit="return handleShopWaitlistSubmit(event)" novalidate>
-        <input type="email" class="shop-waitlist-input" placeholder="Enter your email" required id="shopWaitlistEmail" oninput="clearShopWaitlistError()">
-        <button type="submit" class="shop-waitlist-btn">Join the Waitlist</button>
+        <label class="shop-waitlist-label" for="shopWaitlistEmail">Email address</label>
+        <input type="email" class="shop-waitlist-input" placeholder="you@example.com" required
+               id="shopWaitlistEmail" name="email" autocomplete="email"
+               aria-describedby="shopWaitlistError" oninput="clearShopWaitlistError()">
+        <button type="submit" class="shop-waitlist-btn" id="shopWaitlistBtn">Join the Waitlist</button>
       </form>
-      <p class="shop-waitlist-error" id="shopWaitlistError">Please enter a valid email address.</p>
-      <p class="shop-waitlist-success" id="shopWaitlistSuccess">You're on the list. We'll be in touch.</p>
+      <p class="shop-waitlist-error" id="shopWaitlistError" role="alert">Please enter a valid email address.</p>
+      <p class="shop-waitlist-success" id="shopWaitlistSuccess" role="status">You're on the list. We'll email you when there's something worth sending.</p>
+      <p class="shop-waitlist-unavailable" id="shopWaitlistUnavailable">The waitlist isn't open yet — no address is being collected right now.</p>
     </div>
   </div>
 </section>
@@ -1890,7 +1911,7 @@
   }
   #shopWaitlistSub {
     font-size: 14px;
-    color: rgba(255,255,255,0.45);
+    color: rgba(255,255,255,0.82);
     line-height: 1.6;
     margin-bottom: 32px;
   }
@@ -1923,6 +1944,32 @@
     border-color: #E8837D;
     background: rgba(232,131,125,0.1);
   }
+  .shop-basis-note {
+    max-width: 760px;
+    margin: 0 auto 36px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .shop-waitlist-label {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.88);   /* dark panel */
+    margin-bottom: 8px;
+  }
+  .shop-waitlist-unavailable {
+    display: none;
+    margin-top: 12px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.82);   /* dark panel — muted ink would fail AA */
+  }
+  .shop-waitlist-unavailable.visible { display: block; }
+  .shop-waitlist-input:disabled,
+  .shop-waitlist-btn:disabled { opacity: .55; cursor: not-allowed; }
   .shop-waitlist-error {
     font-size: 13px;
     color: #E8837D;
@@ -1952,14 +1999,16 @@
   }
   .shop-waitlist-success {
     font-size: 14px;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.88);
     margin-top: 18px;
     opacity: 0;
+    visibility: hidden;              /* keep it out of the a11y tree until shown */
     transform: translateY(8px);
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
   .shop-waitlist-success.visible {
     opacity: 1;
+    visibility: visible;
     transform: translateY(0);
   }
 
@@ -1975,6 +2024,8 @@
     .shop-waitlist-btn { border-radius: 0 0 12px 12px; padding: 14px 20px; }
   }
 </style>
+
+</main>
 
 <footer>
   <p>FitCo. Recommendations for men who want pants that fit.</p>
@@ -2172,31 +2223,75 @@ function personalizeWaitlist(fitKey) {
   if (subEl) subEl.textContent = msg.sub;
 }
 
-// Shop waitlist signup
+// Shop waitlist signup.
+// Posts to the hosted email provider configured in /fitco-forms-config.js.
+// The address is NOT stored locally: keeping a list of other people's email
+// addresses in localStorage served no purpose and was never transmitted.
+// With no endpoint configured the form is disabled and says so, so a visitor
+// is never told they subscribed when nothing was sent.
+function waitlistCfg() { return (window.__FITCO_FORMS__ || {}); }
+function waitlistEnabled() { return !!waitlistCfg().waitlistAction; }
+
 function clearShopWaitlistError() {
   document.getElementById('shopWaitlistEmail').classList.remove('error');
   document.getElementById('shopWaitlistError').classList.remove('visible');
 }
+
 function handleShopWaitlistSubmit(e) {
   e.preventDefault();
   var input = document.getElementById('shopWaitlistEmail');
+  var errEl = document.getElementById('shopWaitlistError');
   var email = input.value.trim();
-  var isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  if (!isValid) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     input.classList.add('error');
-    document.getElementById('shopWaitlistError').classList.add('visible');
+    errEl.textContent = 'Please enter a valid email address.';
+    errEl.classList.add('visible');
+    input.focus();
     return;
   }
   clearShopWaitlistError();
-  var existing = JSON.parse(localStorage.getItem('fitco_waitlist') || '[]');
-  if (!existing.includes(email)) {
-    existing.push(email);
-    localStorage.setItem('fitco_waitlist', JSON.stringify(existing));
+
+  var cfg = waitlistCfg();
+  if (!cfg.waitlistAction) {           // not configured — never fake success
+    errEl.textContent = "The waitlist isn't open yet. Nothing was sent.";
+    errEl.classList.add('visible');
+    return;
   }
-  document.getElementById('shopWaitlistForm').style.display = 'none';
-  document.getElementById('shopWaitlistSuccess').classList.add('visible');
-  if (window.phTrack) window.phTrack('Email Submitted', { source: 'shop_waitlist', fit_archetype: localStorage.getItem('fitco_fit_result') || undefined });
+
+  var btn = document.getElementById('shopWaitlistBtn');
+  btn.disabled = true;
+  btn.textContent = 'Joining…';
+
+  // Hosted providers accept a urlencoded POST from the browser. Their
+  // responses are opaque under no-cors, so a resolved request is treated
+  // as accepted and any network failure is reported honestly.
+  var field = cfg.waitlistProvider === 'mailchimp' ? 'EMAIL' : 'email';
+  var body = new URLSearchParams();
+  body.append(field, email);
+
+  fetch(cfg.waitlistAction, { method: 'POST', mode: 'no-cors', body: body })
+    .then(function () {
+      document.getElementById('shopWaitlistForm').style.display = 'none';
+      document.getElementById('shopWaitlistSuccess').classList.add('visible');
+      if (window.phTrack) window.phTrack('Email Submitted', { source: 'shop_waitlist', fit_archetype: localStorage.getItem('fitco_fit_result') || undefined });
+    })
+    .catch(function () {
+      btn.disabled = false;
+      btn.textContent = 'Join the Waitlist';
+      errEl.textContent = "We couldn't reach the signup service. Please try again.";
+      errEl.classList.add('visible');
+    });
 }
+
+// Reflect the unconfigured state in the UI on load.
+document.addEventListener('DOMContentLoaded', function () {
+  if (waitlistEnabled()) return;
+  var form = document.getElementById('shopWaitlistForm');
+  var note = document.getElementById('shopWaitlistUnavailable');
+  if (!form) return;
+  form.querySelectorAll('input, button').forEach(function (el) { el.disabled = true; });
+  if (note) note.classList.add('visible');
+});
 
 // Check quiz state
 document.addEventListener('DOMContentLoaded', function() {
@@ -2210,7 +2305,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+<script src="/fitco-forms-config.js"></script>
 <script src="/posthog-config.js"></script>
+  <script src="/fitco-consent.js"></script>
 <script>
 /* FitCo analytics (PostHog) — a no-op unless a key is set in /posthog-config.js.
    Events are queued until the library loads so none are dropped. */
@@ -2220,23 +2317,44 @@ document.addEventListener('DOMContentLoaded', function() {
     var log = (window.__fitcoEvents = window.__fitcoEvents || []);
     log.push(Object.assign({ event: name }, props));
     if (log.length > 100) log.shift();
+    if (!(window.FitCoConsent && window.FitCoConsent.granted())) return;
     if (window.posthog && window.posthog.__loaded) { try { window.posthog.capture(name, props); } catch (e) {} }
     else q.push([name, props]);
   };
 
   var cfg = window.__FITCO_PH__ || {};
-  if (cfg.key) {
+
+  /* Nothing loads until the visitor has granted consent. The gate also
+     treats Global Privacy Control / Do Not Track as a standing opt-out,
+     so no PostHog script, cookie or request happens without agreement. */
+  function consentOK() {
+    return !!(window.FitCoConsent && window.FitCoConsent.granted());
+  }
+
+  function loadPostHog() {
+    if (!cfg.key || window.posthog || !consentOK()) return;
     var host = cfg.host || 'https://us.i.posthog.com';
     var s = document.createElement('script');
     s.async = true; s.crossOrigin = 'anonymous';
     s.src = host.replace('.i.posthog.com', '-assets.i.posthog.com') + '/static/array.js';
     s.onload = function () {
-      window.posthog.init(cfg.key, { api_host: host, autocapture: false, disable_session_recording: true, person_profiles: 'identified_only' });
+      window.posthog.init(cfg.key, {
+        api_host: host,
+        capture_pageview: false,      /* explicit events only, matching the app */
+        autocapture: false,
+        disable_session_recording: true,
+        person_profiles: 'identified_only',
+        respect_dnt: true,
+        disable_surveys: true
+      });
       for (var i = 0; i < q.length; i++) { try { window.posthog.capture(q[i][0], q[i][1]); } catch (e) {} }
       q = [];
     };
     document.head.appendChild(s);
   }
+
+  loadPostHog();
+  if (window.FitCoConsent) window.FitCoConsent.onChange(function (ok) { if (ok) loadPostHog(); });
 
   function fitResult() { return localStorage.getItem('fitco_fit_result') || undefined; }
 

@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Wordmark, Btn, Kicker, Mono, rise } from '../ui.jsx';
+import { Wordmark, Btn, Kicker, Mono, rise, LegalFooter } from '../ui.jsx';
 import { PantFlat, GEO, useConvergingGeo } from '../geometry.jsx';
-import { computeScores, diagnose, rankProducts, FIT_LABEL, FIT_INFO } from '../engine.js';
+import { computeScores, diagnose, rankProducts, FIT_LABEL, FIT_INFO, PRICES_AS_OF } from '../engine.js';
 import { track, retailerOf } from '../analytics.js';
 import Heightfield from '../heightfield.jsx';
 
@@ -44,7 +44,7 @@ export default function Report({ answers, onRetake, onHome }) {
   }, [best]);
 
   return (
-    <main className="min-h-svh">
+    <main id="main" tabIndex={-1} className="min-h-svh">
       <div className="flex items-center justify-between h-16 px-5 sm:px-10 border-b border-hairline bg-paper/85 backdrop-blur-md sticky top-0 z-40">
         <Wordmark onClick={onHome} />
         <Mono className="hidden sm:block">FIT REPORT — {date}</Mono>
@@ -189,7 +189,7 @@ export default function Report({ answers, onRetake, onHome }) {
           </div>
           <motion.p variants={rise} initial="hidden" whileInView="show" viewport={{ once: true }}
             className="text-[13px] text-muted mt-10 max-w-[560px] leading-relaxed">
-            FitCo doesn't sell these products — links go straight to the retailer, and rankings never touch affiliate status. Spec-based data; hand-verification in progress.
+            FitCo doesn't sell these products — links go straight to the retailer. We have no affiliate relationships and earn no commission, so nothing here is a paid placement. Product data is based on the specs brands publish; we haven't hand-measured these. Prices were checked on {PRICES_AS_OF} and change often — the retailer's page is the only accurate price.
           </motion.p>
           <div className="flex gap-3.5 mt-8 flex-wrap">
             <Btn onClick={onRetake}>Retake the fitting</Btn>
@@ -197,6 +197,8 @@ export default function Report({ answers, onRetake, onHome }) {
           </div>
         </div>
       </section>
+    
+      <LegalFooter note="We recommend. We don't sell." />
     </main>
   );
 }
