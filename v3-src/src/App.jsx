@@ -7,6 +7,13 @@ import Report from './screens/Report.jsx';
 import { QUESTIONS, computeScores } from './engine.js';
 import { track } from './analytics.js';
 
+const TITLES = {
+  home: 'FitCo — Never guess pants again',
+  fitting: 'The fitting — FitCo',
+  calibrating: 'Calibrating your fit — FitCo',
+  report: 'Your fit report — FitCo',
+};
+
 /* View state machine: home → fitting → calibrating → report.
    Hash-synced so refresh / share keeps your place. */
 export default function App() {
@@ -31,6 +38,13 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => { if (view === 'home') track('Homepage Viewed'); }, [view]);
+
+  /* WCAG 2.4.2 Page Titled: each view is a distinct "page" to the user, so
+     the document title has to change with it — otherwise every view of the
+     SPA is announced identically in tab lists, history and screen readers. */
+  useEffect(() => {
+    document.title = TITLES[view] || TITLES.home;
+  }, [view]);
 
   const go = useCallback((v) => {
     setView(v);
@@ -84,6 +98,7 @@ export default function App() {
 
   return (
     <div className="grain min-h-screen">
+      <a className="skip-link" href="#main">Skip to main content</a>
       <AnimatePresence mode="wait">
         {view === 'home' && (
           <motion.div key="home" {...fade}><Home onStart={startFitting} hasReport={!!answers.build} onReport={() => go('report')} /></motion.div>

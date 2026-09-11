@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow" />
+  <!-- Legacy V1 quiz — superseded by the fitting at /#/fitting -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FitCo — Find Pants That Fit</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5.5' fill='%233C6B3C'/%3E%3Cg fill='%23FFFFFF'%3E%3Crect x='5' y='5.2' width='14' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='10' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='3.7' height='9.2' rx='.9'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/fonts/fitco-fonts.css" />
+  <link rel="stylesheet" href="/fitco-consent.css" />
 <link rel="stylesheet" href="../fitco-ui.css">
 <style>
   :root {
@@ -15,7 +16,7 @@
     --bg-alt: #EFEBE1;
     --bg-white: #FFFFFF;
     --text: #111111;
-    --text-muted: #6E6E6E;
+    --text-muted: #646464;
     --border: #D9D9D9;
     --border-light: #E8E6E1;
     --success: #5B8C5A;
@@ -1994,9 +1995,20 @@
       font-size: 26px;
     }
   }
+  .skip-link {
+    position: absolute; left: 8px; top: -60px; z-index: 200;
+    background: var(--text-primary, #111); color: #fff;
+    padding: 10px 16px; border-radius: 8px;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: top .15s ease;
+  }
+  .skip-link:focus { top: 8px; }
 </style>
+  <script src="/posthog-config.js"></script>
+  <script src="/fitco-consent.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <script src="../fitco-ui.js"></script>
 
 <!-- NAV -->
@@ -2014,8 +2026,8 @@
     <a href="/" class="logo" style="text-decoration:none;color:inherit;"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
     <ul class="nav-center">
       <li><a href="/shop/index.html">Your Picks</a></li>
-      <li><a href="/#works">How It Works</a></li>
-      <li><a href="/#fits">Fit Guide</a></li>
+      <li><a href="/about/index.html#how">How It Works</a></li>
+      <li><a href="/about/index.html#fits">Fit Guide</a></li>
       <li><a href="/about/index.html">About Us</a></li>
     </ul>
     <div class="nav-right">
@@ -2023,6 +2035,8 @@
     </div>
   </div>
 </nav>
+
+<main id="main" tabindex="-1">
 <!-- QUIZ INTRO -->
 <section class="quiz-intro" id="quizIntro">
   <div class="quiz-intro-inner">
@@ -2177,22 +2191,22 @@
       <div class="question" id="q1">
         <label>What are you shopping for?</label>
         <span class="question-sub">This helps us recommend the right styles and brands.</span>
-        <div class="options">
-          <button class="option" onclick="selectOption(this,'productType','jeans')"><span class="option-illustration option-illustration-img option-illustration-photo"><img src="../images/quiz-q1-jeans.png" alt="Jeans"></span><span class="option-text"><strong class="option-title">Jeans</strong><span class="option-sub">Five-pocket denim</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'productType','chinos')"><span class="option-illustration option-illustration-img option-illustration-photo"><img src="../images/quiz-q1-chinos.png" alt="Chinos"></span><span class="option-text"><strong class="option-title">Chinos</strong><span class="option-sub">Cotton twill, smart-casual</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'productType','technical')"><span class="option-illustration option-illustration-img option-illustration-photo"><img src="../images/quiz-q1-technical.png" alt="Technical pants"></span><span class="option-text"><strong class="option-title">Technical pants</strong><span class="option-sub">Stretch, performance fabrics</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'productType','any')"><span class="option-illustration option-illustration-img option-illustration-photo"><img src="../images/quiz-q1-surprise.png" alt="Surprise me"></span><span class="option-text"><strong class="option-title">Surprise me</strong><span class="option-sub">Best fit across categories</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <div class="options" role="radiogroup">
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'productType','jeans')"><span class="option-illustration option-illustration-img option-illustration-photo"><img src="../images/quiz-q1-jeans.png" alt="Jeans"></span><span class="option-text"><strong class="option-title">Jeans</strong><span class="option-sub">Five-pocket denim</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'productType','chinos')"><span class="option-illustration option-illustration-img option-illustration-photo"><img src="../images/quiz-q1-chinos.png" alt="Chinos"></span><span class="option-text"><strong class="option-title">Chinos</strong><span class="option-sub">Cotton twill, smart-casual</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'productType','technical')"><span class="option-illustration option-illustration-img option-illustration-photo"><img src="../images/quiz-q1-technical.png" alt="Technical pants"></span><span class="option-text"><strong class="option-title">Technical pants</strong><span class="option-sub">Stretch, performance fabrics</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'productType','any')"><span class="option-illustration option-illustration-img option-illustration-photo"><img src="../images/quiz-q1-surprise.png" alt="Surprise me"></span><span class="option-text"><strong class="option-title">Surprise me</strong><span class="option-sub">Best fit across categories</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
         <div class="question-feedback">Noted.</div>
       </div>
       <div class="question hide" id="q2">
         <label>Which best describes your build?</label>
         <span class="question-sub">Your body shape is the foundation for finding the right fit.</span>
-        <div class="options">
-          <button class="option" onclick="selectOption(this,'build','slim')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-build-slim.png" alt="Slim build figure"></span><span class="option-text"><strong class="option-title">Slim</strong><span class="option-sub">Leaner through legs and seat</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'build','average')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-build-average.png" alt="Average build figure"></span><span class="option-text"><strong class="option-title">Average</strong><span class="option-sub">In-between proportions</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'build','athletic')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-build-athletic.png" alt="Athletic build figure"></span><span class="option-text"><strong class="option-title">Athletic</strong><span class="option-sub">Developed thighs and seat</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'build','broader')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-build-broader.png" alt="Broader build figure"></span><span class="option-text"><strong class="option-title">Broader</strong><span class="option-sub">Fuller through waist and seat</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <div class="options" role="radiogroup">
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'build','slim')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-build-slim.png" alt="Slim build figure"></span><span class="option-text"><strong class="option-title">Slim</strong><span class="option-sub">Leaner through legs and seat</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'build','average')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-build-average.png" alt="Average build figure"></span><span class="option-text"><strong class="option-title">Average</strong><span class="option-sub">In-between proportions</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'build','athletic')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-build-athletic.png" alt="Athletic build figure"></span><span class="option-text"><strong class="option-title">Athletic</strong><span class="option-sub">Developed thighs and seat</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'build','broader')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-build-broader.png" alt="Broader build figure"></span><span class="option-text"><strong class="option-title">Broader</strong><span class="option-sub">Fuller through waist and seat</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
         <div class="question-feedback">Your build is the starting point.</div>
       </div>
@@ -2200,44 +2214,44 @@
         <label>Where do pants usually fit wrong?</label>
         <span class="question-helper">(Select up to 2)</span>
         <span class="question-sub">This tells us what your current pants don't get right.</span>
-        <div class="options" data-multiselect="true" data-multiselect-max="2">
-          <button class="option" onclick="toggleMultiOption(this,'fitWrong','tightThighsSeat')"><span class="option-illustration option-illustration-q3"><img src="../images/quiz-q3-tight.png" alt="Tight in thighs or seat"></span><span class="option-text"><strong class="option-title">Tight in thighs or seat</strong><span class="option-sub">Pulling or pinching above the knee</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="toggleMultiOption(this,'fitWrong','waistGap')"><span class="option-illustration option-illustration-q3"><img src="../images/quiz-q3-waistgap.png" alt="Waist gaps"></span><span class="option-text"><strong class="option-title">Waist gaps</strong><span class="option-sub">Band gaps when the seat fits</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="toggleMultiOption(this,'fitWrong','tooMuchFabric')"><span class="option-illustration option-illustration-q3"><img src="../images/quiz-q3-fabric.png" alt="Too much fabric below the knee"></span><span class="option-text"><strong class="option-title">Too much fabric below the knee</strong><span class="option-sub">Baggy or bunching at the hem</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="toggleMultiOption(this,'fitWrong','lengthOff')"><span class="option-illustration option-illustration-q3"><img src="../images/quiz-q3-length.png" alt="Length feels off"></span><span class="option-text"><strong class="option-title">Length feels off</strong><span class="option-sub">Hems stack up or float high</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="toggleMultiOption(this,'fitWrong','usuallyFine')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-check"/></svg></span><span class="option-text"><strong class="option-title">Usually fit fine</strong><span class="option-sub">No consistent problem</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <div class="options" role="group" data-multiselect="true" data-multiselect-max="2">
+          <button class="option" role="checkbox" aria-checked="false" onclick="toggleMultiOption(this,'fitWrong','tightThighsSeat')"><span class="option-illustration option-illustration-q3"><img src="../images/quiz-q3-tight.png" alt="Tight in thighs or seat"></span><span class="option-text"><strong class="option-title">Tight in thighs or seat</strong><span class="option-sub">Pulling or pinching above the knee</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="checkbox" aria-checked="false" onclick="toggleMultiOption(this,'fitWrong','waistGap')"><span class="option-illustration option-illustration-q3"><img src="../images/quiz-q3-waistgap.png" alt="Waist gaps"></span><span class="option-text"><strong class="option-title">Waist gaps</strong><span class="option-sub">Band gaps when the seat fits</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="checkbox" aria-checked="false" onclick="toggleMultiOption(this,'fitWrong','tooMuchFabric')"><span class="option-illustration option-illustration-q3"><img src="../images/quiz-q3-fabric.png" alt="Too much fabric below the knee"></span><span class="option-text"><strong class="option-title">Too much fabric below the knee</strong><span class="option-sub">Baggy or bunching at the hem</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="checkbox" aria-checked="false" onclick="toggleMultiOption(this,'fitWrong','lengthOff')"><span class="option-illustration option-illustration-q3"><img src="../images/quiz-q3-length.png" alt="Length feels off"></span><span class="option-text"><strong class="option-title">Length feels off</strong><span class="option-sub">Hems stack up or float high</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="checkbox" aria-checked="false" onclick="toggleMultiOption(this,'fitWrong','usuallyFine')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-check"/></svg></span><span class="option-text"><strong class="option-title">Usually fit fine</strong><span class="option-sub">No consistent problem</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
         <div class="question-feedback">We'll look for fits that fix this.</div>
       </div>
       <div class="question hide" id="q4">
         <label>How tall are you?</label>
         <span class="question-sub">This helps with proportions and length.</span>
-        <div class="options">
-          <button class="option" onclick="selectOption(this,'height','under58')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-height-1"/></svg></span><span class="option-text"><strong class="option-title">Under 5'8"</strong><span class="option-sub">Shorter inseams work best</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'height','58to511')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-height-2"/></svg></span><span class="option-text"><strong class="option-title">5'8" &ndash; 5'11"</strong><span class="option-sub">The range most brands cut for</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'height','60to62')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-height-3"/></svg></span><span class="option-text"><strong class="option-title">6'0" &ndash; 6'2"</strong><span class="option-sub">Longer inseams needed</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'height','63plus')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-height-4"/></svg></span><span class="option-text"><strong class="option-title">6'3"+</strong><span class="option-sub">Length is the hard part</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <div class="options" role="radiogroup">
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'height','under58')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-height-1"/></svg></span><span class="option-text"><strong class="option-title">Under 5'8"</strong><span class="option-sub">Shorter inseams work best</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'height','58to511')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-height-2"/></svg></span><span class="option-text"><strong class="option-title">5'8" &ndash; 5'11"</strong><span class="option-sub">The range most brands cut for</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'height','60to62')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-height-3"/></svg></span><span class="option-text"><strong class="option-title">6'0" &ndash; 6'2"</strong><span class="option-sub">Longer inseams needed</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'height','63plus')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-height-4"/></svg></span><span class="option-text"><strong class="option-title">6'3"+</strong><span class="option-sub">Length is the hard part</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
         <div class="question-feedback">That settles length.</div>
       </div>
       <div class="question hide" id="q5">
         <label>Which leg shape looks best to you?</label>
         <span class="question-sub">No wrong answer here.</span>
-        <div class="options">
-          <button class="option" onclick="selectOption(this,'legShape','tapered')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-leg-tapered.png" alt="Tapered leg pants"></span><span class="option-text"><strong class="option-title">Tapered</strong><span class="option-sub">Narrows from knee to ankle</span></span><span class="fc-tag option-meta">Taper &middot; high</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'legShape','balanced')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-leg-balanced.png" alt="Balanced leg pants"></span><span class="option-text"><strong class="option-title">Balanced</strong><span class="option-sub">Gentle taper, middle ground</span></span><span class="fc-tag option-meta">Taper &middot; mid</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'legShape','straight')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-leg-straight.png" alt="Straight leg pants"></span><span class="option-text"><strong class="option-title">Straight</strong><span class="option-sub">Same width top to bottom</span></span><span class="fc-tag option-meta">Taper &middot; low</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'legShape','relaxed')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-leg-relaxed.png" alt="Relaxed leg pants"></span><span class="option-text"><strong class="option-title">Relaxed</strong><span class="option-sub">Extra room all the way down</span></span><span class="fc-tag option-meta">Room &middot; max</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <div class="options" role="radiogroup">
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'legShape','tapered')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-leg-tapered.png" alt="Tapered leg pants"></span><span class="option-text"><strong class="option-title">Tapered</strong><span class="option-sub">Narrows from knee to ankle</span></span><span class="fc-tag option-meta">Taper &middot; high</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'legShape','balanced')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-leg-balanced.png" alt="Balanced leg pants"></span><span class="option-text"><strong class="option-title">Balanced</strong><span class="option-sub">Gentle taper, middle ground</span></span><span class="fc-tag option-meta">Taper &middot; mid</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'legShape','straight')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-leg-straight.png" alt="Straight leg pants"></span><span class="option-text"><strong class="option-title">Straight</strong><span class="option-sub">Same width top to bottom</span></span><span class="fc-tag option-meta">Taper &middot; low</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'legShape','relaxed')"><span class="option-illustration option-illustration-img"><img src="../images/quiz-leg-relaxed.png" alt="Relaxed leg pants"></span><span class="option-text"><strong class="option-title">Relaxed</strong><span class="option-sub">Extra room all the way down</span></span><span class="fc-tag option-meta">Room &middot; max</span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
         <div class="question-feedback">That sets the silhouette.</div>
       </div>
       <div class="question hide" id="q6">
         <label>What matters most?</label>
         <span class="question-sub">This helps us fine-tune the recommendation.</span>
-        <div class="options">
-          <button class="option" onclick="selectOption(this,'priority','cleanerSilhouette')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-scissors"/></svg></span><span class="option-text"><strong class="option-title">Cleaner silhouette</strong><span class="option-sub">Sharper, more tailored lines</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'priority','balancedEveryday')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-balance"/></svg></span><span class="option-text"><strong class="option-title">Balanced everyday fit</strong><span class="option-sub">Versatile for most settings</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-          <button class="option" onclick="selectOption(this,'priority','maximumComfort')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-comfort"/></svg></span><span class="option-text"><strong class="option-title">Maximum comfort</strong><span class="option-sub">Room and ease come first</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <div class="options" role="radiogroup">
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'priority','cleanerSilhouette')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-scissors"/></svg></span><span class="option-text"><strong class="option-title">Cleaner silhouette</strong><span class="option-sub">Sharper, more tailored lines</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'priority','balancedEveryday')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-balance"/></svg></span><span class="option-text"><strong class="option-title">Balanced everyday fit</strong><span class="option-sub">Versatile for most settings</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <button class="option" role="radio" aria-checked="false" onclick="selectOption(this,'priority','maximumComfort')"><span class="option-illustration"><svg aria-hidden="true"><use href="#fc-ic-comfort"/></svg></span><span class="option-text"><strong class="option-title">Maximum comfort</strong><span class="option-sub">Room and ease come first</span></span><span class="option-check"><svg viewBox="0 0 12 12" fill="none"><path d="M3 6L5.5 8.5L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
         </div>
         <div class="question-feedback">That helps us prioritize.</div>
       </div>
@@ -2502,6 +2516,8 @@
     </div><!-- /results-layout -->
   </div><!-- /results-inner -->
 </section>
+</main>
+
 <footer>
   <p>FitCo. Recommendations for men who want pants that fit.</p>
   <p style="margin-top:10px;font-size:12px;"><a href="/privacy/index.html" style="color:inherit;text-decoration:underline;">Privacy Policy</a> &middot; <a href="/terms/index.html" style="color:inherit;text-decoration:underline;">Terms &amp; Conditions</a></p>
@@ -3267,8 +3283,12 @@ function renderSecondaryCard(prefix, fitKey, primaryKey) {
 
 function selectOption(btn, key, value) {
   answers[key] = value;
-  btn.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  btn.parentElement.querySelectorAll('.option').forEach(o => {
+    o.classList.remove('selected');
+    o.setAttribute('aria-checked', 'false');
+  });
   btn.classList.add('selected');
+  btn.setAttribute('aria-checked', 'true');
   document.getElementById('nextBtn').disabled = false;
   var titleEl = btn.querySelector('.option-title');
   updateFitProfile(key, (titleEl ? titleEl.textContent : btn.textContent).trim());
@@ -3298,11 +3318,13 @@ function toggleMultiOption(btn, key, value) {
     // Deselect
     arr.splice(idx, 1);
     btn.classList.remove('selected');
+    btn.setAttribute('aria-checked', 'false');
   } else {
     // Select if under max
     if (arr.length >= max) return; // At max, ignore
     arr.push(value);
     btn.classList.add('selected');
+    btn.setAttribute('aria-checked', 'true');
   }
 
   // Enable Next if at least 1 selected

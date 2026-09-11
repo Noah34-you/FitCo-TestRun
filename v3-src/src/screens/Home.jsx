@@ -51,7 +51,7 @@ function ReadingCard({ reduced, onStart }) {
 }
 
 const COORDS = [
-  ['01', 'Thigh', 'Flat, 1″ below the crotch seam — the point brands are least honest about.', 'thigh'],
+  ['01', 'Thigh', 'Flat, 1″ below the crotch seam — the measurement brands publish least often.', 'thigh'],
   ['02', 'Seat', 'Room through the hips so nothing pulls when you sit.', 'seat'],
   ['03', 'Rise', 'Where the waistband actually sits, and whether it stays there.', 'rise'],
   ['04', 'Knee', 'Where the taper starts, or doesn’t. Sets the silhouette.', 'knee'],
@@ -59,22 +59,22 @@ const COORDS = [
 ];
 
 const RULES = [
-  ['No padded catalog', '15 pants we can vouch for beats 1,500 copied from marketing.'],
+  ['No padded catalog', '22 pants we have actually looked at beats 1,500 copied from marketing.'],
   ['No commission rankings', 'If the best pant pays us nothing, it’s still the recommendation.'],
   ['No invented precision', 'You’ll never see a “96% match” here. Tiers, with reasons.'],
-  ['No hidden gaps', 'If we haven’t verified a great option, we say so.'],
+  ['No hidden gaps', 'Where our data is spec-based rather than hand-checked, we say so on the pick.'],
 ];
 
 export default function Home({ onStart, hasReport, onReport }) {
   const reduced = useReducedMotion();
   return (
-    <main>
+    <main id="main" tabIndex={-1}>
       {/* NAV */}
       <header className="fixed top-0 inset-x-0 z-50 flex items-center justify-between h-16 px-5 sm:px-10 bg-paper/85 backdrop-blur-md border-b border-hairline/70">
         <Wordmark onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} />
         <nav className="hidden md:flex items-center gap-8 text-[13.5px] font-medium text-ink-soft">
-          <a className="hover:text-ink transition-colors" href="/about/index.html">The Method</a>
-          <a className="hover:text-ink transition-colors" href="/shop/index.html">The Catalog</a>
+          <a className="inline-flex items-center min-h-[24px] py-1 hover:text-ink transition-colors" href="/about/index.html">The Method</a>
+          <a className="inline-flex items-center min-h-[24px] py-1 hover:text-ink transition-colors" href="/shop/index.html">The Catalog</a>
           {hasReport && <button className="hover:text-ink transition-colors cursor-pointer" onClick={onReport}>Your Report</button>}
         </nav>
         <Btn onClick={onStart}>Start the fitting</Btn>
@@ -111,7 +111,7 @@ export default function Home({ onStart, hasReport, onReport }) {
               <Btn ghost href="/about/index.html">How it works</Btn>
             </motion.div>
             <motion.div variants={rise} initial="hidden" animate="show" custom={5} className="flex gap-6 flex-wrap">
-              {['60-second fitting', '15-pant vetted catalog', 'No sponsored rankings'].map(f => (
+              {['60-second fitting', '22-pant catalog', 'No sponsored rankings'].map(f => (
                 <Mono key={f} className="flex items-center gap-2"><i className="w-[5px] h-[5px] rounded-full bg-chalkline inline-block" />{f}</Mono>
               ))}
             </motion.div>
@@ -184,11 +184,11 @@ export default function Home({ onStart, hasReport, onReport }) {
       {/* FOOTER */}
       <footer className="border-t border-hairline px-5 sm:px-10 py-7 flex items-center justify-between gap-4 flex-wrap">
         <Wordmark onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} />
-        <nav className="flex gap-6 text-[13px] text-muted">
-          <a className="hover:text-ink transition-colors" href="/about/index.html">Method</a>
-          <a className="hover:text-ink transition-colors" href="/shop/index.html">Catalog</a>
-          <a className="hover:text-ink transition-colors" href="/privacy/index.html">Privacy</a>
-          <a className="hover:text-ink transition-colors" href="/terms/index.html">Terms</a>
+        <nav className="flex gap-5 text-[13px] text-muted">
+          <a className="inline-flex items-center min-h-[24px] py-1 hover:text-ink transition-colors" href="/about/index.html">Method</a>
+          <a className="inline-flex items-center min-h-[24px] py-1 hover:text-ink transition-colors" href="/shop/index.html">Catalog</a>
+          <a className="inline-flex items-center min-h-[24px] py-1 hover:text-ink transition-colors" href="/privacy/index.html">Privacy</a>
+          <a className="inline-flex items-center min-h-[24px] py-1 hover:text-ink transition-colors" href="/terms/index.html">Terms</a>
         </nav>
         <Mono>Fit first. Always.</Mono>
       </footer>

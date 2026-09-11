@@ -19,7 +19,7 @@ export function Wordmark({ onClick, dark = false }) {
   );
 }
 
-export function Btn({ children, onClick, href, ghost = false, big = false, className = '' }) {
+export function Btn({ children, onClick, href, ghost = false, big = false, disabled = false, className = '' }) {
   const cls = `inline-flex items-center gap-2.5 rounded-full font-medium transition-all duration-200 cursor-pointer group
     ${big ? 'px-8 py-4 text-base' : 'px-5.5 py-3 text-sm'}
     ${ghost
@@ -28,7 +28,12 @@ export function Btn({ children, onClick, href, ghost = false, big = false, class
     ${className}`;
   const arrow = <span className="inline-block transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">→</span>;
   if (href) return <a href={href} className={cls}>{children}{!ghost && arrow}</a>;
-  return <button onClick={onClick} className={cls}>{children}{!ghost && arrow}</button>;
+  return (
+    <button onClick={onClick} disabled={disabled} aria-disabled={disabled || undefined}
+      className={`${cls} ${disabled ? 'cursor-not-allowed' : ''}`}>
+      {children}{!ghost && arrow}
+    </button>
+  );
 }
 
 export function Kicker({ children, className = '' }) {
@@ -54,6 +59,20 @@ export function Scanline({ duration = 7, className = '' }) {
       animate={{ left: ['4%', '96%'], opacity: [0, .8, .8, 0] }}
       transition={{ duration, times: [0, .08, .92, 1], repeat: Infinity, ease: 'linear', repeatDelay: 2.2 }}
     />
+  );
+}
+
+/* Legal footer. Every screen that collects or displays personal data must
+   put the privacy notice within reach — not only the homepage. */
+export function LegalFooter({ note }) {
+  return (
+    <footer className="border-t border-hairline px-5 sm:px-10 py-6 flex items-center justify-between gap-4 flex-wrap">
+      <nav aria-label="Legal" className="flex gap-4 text-[13px] text-muted">
+        <a className="inline-flex items-center min-h-[24px] py-1 hover:text-ink transition-colors" href="/privacy/index.html">Privacy Policy</a>
+        <a className="inline-flex items-center min-h-[24px] py-1 hover:text-ink transition-colors" href="/terms/index.html">Terms &amp; Conditions</a>
+      </nav>
+      {note && <Mono>{note}</Mono>}
+    </footer>
   );
 }
 

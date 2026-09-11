@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { Wordmark, Btn, Mono } from '../ui.jsx';
+import { Wordmark, Btn, Mono, LegalFooter } from '../ui.jsx';
 import { PantFlat, useConvergingGeo } from '../geometry.jsx';
 import { QUESTIONS, computeScores, FIT_LABEL, FIT_KEYS } from '../engine.js';
 import { track } from '../analytics.js';
@@ -18,10 +18,23 @@ export default function Fitting({ onExit, onComplete, initial = {} }) {
   const advancing = useRef(false);
   const q = QUESTIONS[qi];
   const viewedAt = useRef(Date.now());
+  /* a11y: the question heading is the landing point for focus after every
+     advance, so keyboard and screen-reader users are never dropped to <body>. */
+  const firstRender = useRef(true);
+  const wantsFocus = useRef(false);
+  /* AnimatePresence mode="wait" mounts the next question only after the
+     previous one finishes exiting, so focus has to be taken at mount time
+     rather than on a timer that races the transition. */
+  const headingRef = useCallback((node) => {
+    if (node && wantsFocus.current) { wantsFocus.current = false; node.focus(); }
+  }, []);
 
   useEffect(() => {
     viewedAt.current = Date.now();
     track('Question Viewed', { question_number: qi + 1, question_id: QUESTIONS[qi].key });
+    /* Skip the very first render so we don't steal focus on page load. */
+    if (firstRender.current) { firstRender.current = false; return; }
+    wantsFocus.current = true;
   }, [qi]);
 
   /* advance to the next question that hasn't been answered (seeded
@@ -69,11 +82,17 @@ export default function Fitting({ onExit, onComplete, initial = {} }) {
     setAnswers(rest); setMulti([]); setQi(qi - 1);
   };
 
-  /* keyboard: 1-5 select, Enter continue (multi), Esc back */
+  /* keyboard: 1-5 select, Enter continue (multi), Esc back.
+     Guarded so the shortcuts never fire while a form control or an
+     editable element has focus, and never swallow browser/OS chords. */
   useEffect(() => {
     const onKey = (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const t = e.target;
+      if (t instanceof HTMLElement &&
+          (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
       const n = parseInt(e.key, 10);
-      if (n >= 1 && n <= q.options.length) pick(q.options[n - 1]);
+      if (n >= 1 && n <= q.options.length) { e.preventDefault(); pick(q.options[n - 1]); }
       else if (e.key === 'Enter' && q.multi) continueMulti();
       else if (e.key === 'Escape') back();
     };
@@ -87,20 +106,28 @@ export default function Fitting({ onExit, onComplete, initial = {} }) {
   const maxScore = Math.max(...top3.map(k => scores[k]), 1);
 
   return (
-    <main className="min-h-svh grid-paper flex flex-col">
+    <main id="main" tabIndex={-1} className="min-h-svh grid-paper flex flex-col">
       {/* top bar */}
-      <div className="flex items-center justify-between h-16 px-5 sm:px-10 border-b border-hairline bg-paper/85 backdrop-blur-md">
+      <div className="flex items-center justify-between gap-3 h-16 px-4 sm:px-10 border-b border-hairline bg-paper/85 backdrop-blur-md">
         <Wordmark onClick={onExit} />
-        <div className="flex items-center gap-2" aria-label={`Question ${qi + 1} of ${QUESTIONS.length}`}>
+        <div className="flex items-center gap-1 sm:gap-2 shrink" role="img"
+             aria-label={`Question ${qi + 1} of ${QUESTIONS.length}`}>
           {QUESTIONS.map((qq, i) => (
-            <span key={i} className={`h-[3px] rounded-full transition-all duration-400 ${i === qi ? 'w-9 bg-ink' : (qq.key in answers) ? 'w-6 bg-sage' : 'w-6 bg-line'}`} />
+            <span key={i} aria-hidden="true" className={`h-[3px] rounded-full transition-all duration-400 ${i === qi ? 'w-5 sm:w-9 bg-ink' : (qq.key in answers) ? 'w-3.5 sm:w-6 bg-sage' : 'w-3.5 sm:w-6 bg-line'}`} />
           ))}
         </div>
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 shrink-0">
           <Mono className="hidden sm:block">CAL {String(qi + 1).padStart(2, '0')}/0{QUESTIONS.length}</Mono>
-          <button onClick={onExit} className="text-[13px] font-medium text-muted hover:text-ink transition-colors cursor-pointer">Exit</button>
+          <button onClick={onExit} className="min-h-[24px] min-w-[24px] px-2 py-1 -mr-1 text-[13px] font-medium text-muted hover:text-ink transition-colors cursor-pointer">Exit</button>
         </div>
       </div>
+
+      {/* a11y: the instrument is a visual read-out; this mirrors it for screen
+          readers so the convergence is perceivable without sight. */}
+      <p className="sr-only" role="status" aria-live="polite">
+        {`Question ${qi + 1} of ${QUESTIONS.length}. ` +
+         (answeredMeaningful ? `Current best match: ${FIT_LABEL[leader]}.` : 'Awaiting your first answer.')}
+      </p>
 
       <div className="flex-1 grid lg:grid-cols-[42fr_58fr] max-w-[1400px] w-full mx-auto items-center gap-6 px-5 sm:px-10 py-8">
         {/* instrument — converges live */}
@@ -144,7 +171,7 @@ export default function Fitting({ onExit, onComplete, initial = {} }) {
               initial={{ opacity: 0, x: 34 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -26 }}
               transition={{ duration: .38, ease: [0.22, 0.7, 0.3, 1] }}>
               <Mono className="!text-chalk">Question {String(qi + 1).padStart(2, '0')} · {q.cat}</Mono>
-              <h1 className="font-disp font-semibold tracking-[-0.03em] leading-[1.05] text-[clamp(28px,3.6vw,44px)] mt-3 mb-2">{q.label}</h1>
+              <h1 ref={headingRef} tabIndex={-1} className="font-disp font-semibold tracking-[-0.03em] leading-[1.05] text-[clamp(28px,3.6vw,44px)] mt-3 mb-2">{q.label}</h1>
               <p className={`text-[15px] mb-7 ${q.multi ? 'text-sage font-medium' : 'text-muted'}`}>{q.sub}</p>
               <div className="space-y-2.5" role={q.multi ? 'group' : 'radiogroup'} aria-label={q.label}>
                 {q.options.map((opt, i) => (
@@ -157,7 +184,7 @@ export default function Fitting({ onExit, onComplete, initial = {} }) {
                       ${selected(opt.v)
                         ? 'border-sage bg-sagesoft shadow-[inset_0_0_0_1px_var(--color-sage)]'
                         : 'border-line bg-white/55 hover:border-ink-soft hover:-translate-y-px hover:shadow-[0_4px_16px_rgba(22,21,15,.06)]'}`}>
-                    <span className={`font-mono text-[11px] w-5 shrink-0 ${selected(opt.v) ? 'text-sage' : 'text-muted/70'}`}>{i + 1}</span>
+                    <span className={`font-mono text-[11px] w-5 shrink-0 ${selected(opt.v) ? 'text-sage' : 'text-muted'}`}>{i + 1}</span>
                     <span className={`w-11 h-12 shrink-0 rounded-lg border flex items-center justify-center transition-colors duration-200
                       ${selected(opt.v) ? 'border-sage/60 bg-white/85 text-sage' : 'border-hairline bg-white/70 text-ink'}`}>
                       <OptionIllo qkey={q.key} v={opt.v} className={q.key === 'legShape' ? 'w-7 h-10' : 'w-9 h-9'} />
@@ -174,13 +201,15 @@ export default function Fitting({ onExit, onComplete, initial = {} }) {
                 ))}
               </div>
               <div className="flex items-center justify-between mt-7">
-                <button onClick={back} className="text-[13.5px] font-medium text-muted hover:text-ink transition-colors cursor-pointer">← Back</button>
-                {q.multi && <Btn onClick={continueMulti} className={multi.length ? '' : 'opacity-35 pointer-events-none'}>Continue</Btn>}
+                <button onClick={back} className="min-h-[24px] px-2 py-1 -ml-2 text-[13.5px] font-medium text-muted hover:text-ink transition-colors cursor-pointer">← Back</button>
+                {q.multi && <Btn onClick={continueMulti} disabled={!multi.length} className={multi.length ? '' : 'opacity-35'}>Continue</Btn>}
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
       </div>
+
+      <LegalFooter note="Your answers stay on this device" />
     </main>
   );
 }
