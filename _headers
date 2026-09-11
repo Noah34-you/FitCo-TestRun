@@ -1,0 +1,29 @@
+# Security headers for static hosting.
+#
+# This file is read by Netlify and Cloudflare Pages as-is. On Vercel the same
+# values go in `vercel.json` under "headers"; on Nginx/Apache they become
+# add_header / Header set directives. See COMPLIANCE-AUDIT.md.
+#
+# The CSP below matches what the site actually loads today: everything is
+# first-party. The two commented lines are the ONLY additions needed if the
+# owner switches PostHog analytics on — nothing else should be added without
+# re-running the audit.
+
+/*
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://buttondown.com https://*.list-manage.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self'
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+
+# If analytics is enabled, extend the CSP with:
+#   script-src  ... https://us-assets.i.posthog.com
+#   connect-src ... https://us.i.posthog.com https://us-assets.i.posthog.com
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
