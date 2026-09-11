@@ -1,5 +1,5 @@
 /* ============================================================
-   FitCo — the report's signature visual. A procedural
+   FitCo report background. A procedural
    heightfield rendered as drifting survey contours (marching
    squares over a sum of plane waves). The pointer raises the
    terrain beneath it, like a scan in progress; scroll advances

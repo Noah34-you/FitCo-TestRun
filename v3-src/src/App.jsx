@@ -8,10 +8,10 @@ import { QUESTIONS, computeScores } from './engine.js';
 import { track } from './analytics.js';
 
 const TITLES = {
-  home: 'FitCo — Never guess pants again',
-  fitting: 'The fitting — FitCo',
-  calibrating: 'Calibrating your fit — FitCo',
-  report: 'Your fit report — FitCo',
+  home: 'FitCo | Never guess pants again',
+  fitting: 'The fitting | FitCo',
+  calibrating: 'Finding your matches | FitCo',
+  report: 'Your fit report | FitCo',
 };
 
 /* View state machine: home → fitting → calibrating → report.
@@ -40,7 +40,7 @@ export default function App() {
   useEffect(() => { if (view === 'home') track('Homepage Viewed'); }, [view]);
 
   /* WCAG 2.4.2 Page Titled: each view is a distinct "page" to the user, so
-     the document title has to change with it — otherwise every view of the
+     the document title has to change with it. Otherwise every view of the
      SPA is announced identically in tab lists, history and screen readers. */
   useEffect(() => {
     document.title = TITLES[view] || TITLES.home;
@@ -52,7 +52,7 @@ export default function App() {
     window.scrollTo(0, 0);
   }, []);
 
-  /* Start the fitting — optionally seeded with an answer given right
+  /* Start the fitting, optionally seeded with an answer given right
      in the hero (zero-distance fitting). Only known question keys pass
      through, so a click event handed in as `onClick={onStart}` seeds
      nothing instead of poisoning the answers. */

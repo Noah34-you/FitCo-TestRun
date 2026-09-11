@@ -1,5 +1,5 @@
 /* ==========================================================================
-   FitCo UI — shared SVG sprite + helpers (Phase 2: visual system)
+   FitCo UI, shared SVG sprite and helpers (Phase 2: visual system)
    --------------------------------------------------------------------------
    Injects one same-document SVG symbol sprite (fit-specific icons and
    pant-silhouette illustrations) and exposes small render helpers on
@@ -23,7 +23,7 @@
      so it reads hand-drawn, not mirrored.
      t/k/h = leg width (px) at thigh (y50), knee (y78), hem (y111).       */
   // Thigh (t) is kept <= ~16 so the outer thigh never gets wider than the hip
-  // flare in pantBodyPath (~x29) — otherwise the leg reads as a "drumstick".
+  // Flare in pantBodyPath (~x29), so the leg does not read as a "drumstick".
   // Hems (h) stay generous so ankles don't pinch. Natural top-down taper.
   var pantGeo = {
     slimTaper:        { t: 13,   k: 10.5, h: 8.5 },
@@ -69,7 +69,7 @@
     '<rect stroke-width="0.85" x="62" y="5" width="1.7" height="4.6" rx="0.8"/>';
   var PANT_BUTTON = '<circle stroke-width="0.9" cx="47.7" cy="18.2" r="1.3"/>';
 
-  // Fly J-topstitch — a clean hook to the right (no crotch folds: they read as a smile).
+  // Fly J-topstitch, a clean hook to the right (crotch folds read as a smile).
   var PANT_FLY =
     '<path stroke-width="0.95" d="M47.7 18.2 C46.5 25 46.3 34 47.2 41.2 C47.5 42.8 48.5 43.4 49.9 43"/>';
 
@@ -81,7 +81,7 @@
     '<circle stroke-width="0.55" cx="55.2" cy="15.9" r="0.5"/>' +
     '<path stroke-width="0.8" d="M55.7 19.6 C57.1 21.4 59.3 21.4 60.6 19.9"/>';
 
-  // Hem cuff only (no full-length leg creases — keeps it a casual chino/jean).
+  // Hem cuff only. Full-length leg creases make it read less like a casual chino or jean.
   function pantHem(g) {
     var oLh = 45.6 - g.h, oRh = 50.4 + g.h;
     return '<path stroke-width="1" d="M' + oLh.toFixed(1) + ' 106 H45.6 M50.4 106 H' + oRh.toFixed(1) + '"/>';

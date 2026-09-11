@@ -1,46 +1,34 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { useReducedMotion } from 'framer-motion';
 import { Mono } from '../ui.jsx';
 import { PantFlat, GEO } from '../geometry.jsx';
-import { computeScores, FIT_LABEL } from '../engine.js';
+import { computeScores } from '../engine.js';
 
-const STEPS = ['READING YOUR ANSWERS', 'COMPARING GEOMETRIES', 'RANKING THE CATALOG', 'BUILDING YOUR REPORT'];
-
-/* Brief, honest theater: the geometry locks, a scan confirms it.
-   (The computation itself is instant — this is the reveal. The step labels
-   describe what the engine actually does; nothing here measures the visitor.) */
+/* A short transition keeps the route change legible without pretending that
+   the site is measuring the visitor or running a lengthy calibration. */
 export default function Calibrating({ answers, onDone }) {
   const reduced = useReducedMotion();
   const best = computeScores(answers).best;
-  const [step, setStep] = useState(0);
   const headingRef = useRef(null);
   useEffect(() => { headingRef.current?.focus(); }, []);
 
   useEffect(() => {
-    if (reduced) { const t = setTimeout(onDone, 350); return () => clearTimeout(t); }
-    const iv = setInterval(() => setStep(s => s + 1), 480);
-    const done = setTimeout(onDone, 480 * STEPS.length + 500);
-    return () => { clearInterval(iv); clearTimeout(done); };
+    const done = setTimeout(onDone, reduced ? 150 : 650);
+    return () => clearTimeout(done);
   }, [reduced, onDone]);
 
   return (
     <main id="main" tabIndex={-1} className="min-h-svh grid-paper flex flex-col items-center justify-center px-6">
       <h1 ref={headingRef} tabIndex={-1} className="sr-only">
-        Calibrating your fit — one moment
+        Finding your matches
       </h1>
-      <div className="relative">
+      <div>
         <PantFlat g={GEO[best]} className="w-[240px] h-[300px]" />
-        {!reduced && (
-          <motion.div className="absolute top-0 bottom-0 w-px pointer-events-none"
-            style={{ background: 'linear-gradient(180deg, transparent, var(--color-chalkline) 15%, var(--color-chalkline) 85%, transparent)', boxShadow: '0 0 16px rgba(195,154,69,.6)' }}
-            initial={{ left: '8%' }} animate={{ left: ['8%', '92%', '8%'] }}
-            transition={{ duration: 1.9, ease: 'easeInOut' }} />
-        )}
       </div>
       <div className="mt-8 h-5" aria-live="polite">
-        <Mono className="!text-sage">{STEPS[Math.min(step, STEPS.length - 1)]}<span className="inline-block w-[6px] h-[11px] bg-sage align-[-1px] ml-1.5 animate-pulse" /></Mono>
+        <Mono className="!text-sage">FINDING YOUR MATCHES</Mono>
       </div>
-      <Mono className="mt-2 !text-muted">LOCKING · {FIT_LABEL[best].toUpperCase()}</Mono>
+      <p className="mt-2 text-sm text-muted">Comparing your answers with the current catalog.</p>
     </main>
   );
 }

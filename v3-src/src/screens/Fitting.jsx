@@ -6,9 +6,7 @@ import { QUESTIONS, computeScores, FIT_LABEL, FIT_KEYS } from '../engine.js';
 import { track } from '../analytics.js';
 import { OptionIllo } from '../illustrations.jsx';
 
-/* THE FITTING — a full-screen instrument that converges on you.
-   Every answer re-runs the real engine; the silhouette physically
-   reshapes toward the current leader. */
+/* The fitting updates the leading match after every answer. */
 export default function Fitting({ onExit, onComplete, initial = {} }) {
   const reduced = useReducedMotion();
   const firstOpen = Math.max(0, QUESTIONS.findIndex(qq => !(qq.key in initial)));
@@ -117,7 +115,7 @@ export default function Fitting({ onExit, onComplete, initial = {} }) {
           ))}
         </div>
         <div className="flex items-center gap-5 shrink-0">
-          <Mono className="hidden sm:block">CAL {String(qi + 1).padStart(2, '0')}/0{QUESTIONS.length}</Mono>
+          <Mono className="hidden sm:block">QUESTION {String(qi + 1).padStart(2, '0')} OF 0{QUESTIONS.length}</Mono>
           <button onClick={onExit} className="min-h-[24px] min-w-[24px] px-2 py-1 -mr-1 text-[13px] font-medium text-muted hover:text-ink transition-colors cursor-pointer">Exit</button>
         </div>
       </div>
@@ -130,18 +128,18 @@ export default function Fitting({ onExit, onComplete, initial = {} }) {
       </p>
 
       <div className="flex-1 grid lg:grid-cols-[42fr_58fr] max-w-[1400px] w-full mx-auto items-center gap-6 px-5 sm:px-10 py-8">
-        {/* instrument — converges live */}
+        {/* visual fit preview */}
         <div className="relative order-first lg:order-none">
           <div className="hidden lg:block">
             <div className="flex items-baseline justify-between mb-1 max-w-[430px]">
-              <Mono className="!text-sage">Current reading</Mono>
-              <Mono>{answeredMeaningful ? 'CONVERGING' : 'AWAITING INPUT'}</Mono>
+              <Mono className="!text-sage">Best match so far</Mono>
+              <Mono>{answeredMeaningful ? 'UPDATED FROM YOUR ANSWERS' : 'START WITH A CATEGORY'}</Mono>
             </div>
             <div className="font-mono text-[14px] font-medium tracking-[.1em] mb-3">
               {FIT_LABEL[leader].toUpperCase()}<span className="inline-block w-[7px] h-[13px] bg-sage align-[-2px] ml-1.5 animate-pulse" />
             </div>
-            <PantFlat g={g} dims className="w-full max-w-[430px] h-[52vh] min-h-[340px]" />
-            {/* convergence bars — relative, unlabeled: honest */}
+            <PantFlat g={g} className="w-full max-w-[430px] h-[52vh] min-h-[340px]" />
+            {/* Relative comparison bars, without percentage claims. */}
             <div className="mt-4 max-w-[430px] space-y-1.5" aria-hidden="true">
               {top3.map(k => (
                 <div key={k} className="flex items-center gap-3">
@@ -158,7 +156,7 @@ export default function Fitting({ onExit, onComplete, initial = {} }) {
           <div className="lg:hidden flex items-center gap-4 rounded-2xl border border-hairline bg-white/55 p-3.5">
             <PantFlat g={g} className="w-14 h-20 shrink-0" detail={false} />
             <div>
-              <Mono className="!text-sage block mb-0.5">Current reading</Mono>
+              <Mono className="!text-sage block mb-0.5">Best match so far</Mono>
               <div className="font-mono text-[13px] font-medium tracking-[.08em]">{FIT_LABEL[leader].toUpperCase()}</div>
             </div>
           </div>

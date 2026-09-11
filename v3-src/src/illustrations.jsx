@@ -1,5 +1,5 @@
 /* ============================================================
-   FitCo — spot illustrations. Same drafting language as the
+   FitCo spot illustrations. Same drafting language as the
    pant flats: ink outlines, chalk dimension callouts, sage
    highlights. Each coordinate diagram is a cropped detail view
    of the reference garment (straight fit, 32×32).
@@ -98,7 +98,7 @@ export function CoordDiagram({ zone, className = '' }) {
   );
 }
 
-/* small line icons for the Standard rules — geometric, single weight */
+/* Small line icons for the standard rules, with a single geometric weight. */
 const RULE_ICONS = [
   /* no padded catalog: one real entry, filler struck through */
   <g key="0">
@@ -136,7 +136,7 @@ export function RuleIcon({ n, className = '' }) {
 }
 
 /* ============================================================
-   Option illustrations for the fitting — one glyph per answer,
+   Option illustrations for the fitting, with one glyph per answer,
    drawn in the same drafting language. Leg shapes reuse the
    real pant geometry (PantFlat) rather than a second drawing.
    ============================================================ */

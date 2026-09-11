@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terms &amp; Conditions — FitCo</title>
+<title>Terms &amp; Conditions | FitCo</title>
 <meta name="description" content="The terms that govern your use of FitCo.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5.5' fill='%233C6B3C'/%3E%3Cg fill='%23FFFFFF'%3E%3Crect x='5' y='5.2' width='14' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='10' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='3.7' height='9.2' rx='.9'/%3E%3C/g%3E%3C/svg%3E">
   <link rel="stylesheet" href="/fonts/fitco-fonts.css" />
@@ -22,7 +22,7 @@
     --radius-sm: 8px;
     --radius-md: 16px;
     --radius-pill: 100px;
-    --utility-bar-h: 32px;
+    --utility-bar-h: 0px;
     --nav-h: 64px;
     --header-h: calc(var(--utility-bar-h) + var(--nav-h));
   }
@@ -39,6 +39,7 @@
 
   /* Utility bar */
   .utility-bar {
+    display: none;
     position: fixed; top: 0; left: 0; right: 0; z-index: 101;
     height: var(--utility-bar-h);
     background: #EDEAE3;
@@ -163,7 +164,7 @@
   }
 
   @media (max-width: 768px) {
-    :root { --utility-bar-h: 28px; --nav-h: 56px; }
+    :root { --utility-bar-h: 0px; --nav-h: 56px; }
     .utility-bar-inner { padding: 0 16px; justify-content: center; }
     .utility-bar-item:first-child, .utility-bar-item:last-child { display: none; }
     .nav-inner { padding: 0 20px; height: 56px; }
@@ -186,27 +187,16 @@
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 
-<!-- UTILITY BAR -->
-<div class="utility-bar">
-  <div class="utility-bar-inner">
-    <span class="utility-bar-item">Real product picks, not a size chart</span>
-    <span class="utility-bar-item">We recommend. We don't sell.</span>
-    <span class="utility-bar-item">Best overall, budget, and premium options</span>
-  </div>
-</div>
-
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a href="/" class="logo"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
     <ul class="nav-center">
-      <li><a href="/#/fitting">Find My Fit</a></li>
-      <li><a href="/about/index.html#how">How It Works</a></li>
-      <li><a href="/about/index.html#fits">Fit Guide</a></li>
-      <li><a href="/about/index.html">About Us</a></li>
+      <li><a href="/about/index.html">The Method</a></li>
+      <li><a href="/shop/index.html">The Catalog</a></li>
     </ul>
     <div class="nav-right">
-      <a href="/#/fitting" class="btn">Find My Fit</a>
+      <a href="/#/fitting" class="btn">Start the fitting</a>
     </div>
   </div>
 </nav>
@@ -236,20 +226,20 @@
     <p>Our recommendations are <strong>suggestions to help you shop</strong>, based on the information you provide and our own judgment about fit. They&rsquo;re informational only and aren&rsquo;t professional, tailoring, medical, or sizing advice. You&rsquo;re responsible for your own purchasing decisions.</p>
 
     <h2 id="no-guarantee">4. No guarantee of fit</h2>
-    <p>Fit depends on many factors &mdash; your body, the accuracy of the measurements you enter, how a specific brand or style is cut, fabric, and personal preference. <strong>We can&rsquo;t and don&rsquo;t guarantee that any recommended pants will fit, be available, or meet your expectations.</strong> Always check the retailer&rsquo;s own sizing information, product details, and return policy before buying.</p>
+    <p>Fit depends on many factors, including your body, the information you provide, how a specific style is cut, its fabric, and your personal preference. <strong>We can&rsquo;t and don&rsquo;t guarantee that any recommended pants will fit, be available, or meet your expectations.</strong> Always check the retailer&rsquo;s own sizing information, product details, and return policy before buying.</p>
 
     <h2 id="no-sell">5. We don&rsquo;t sell products</h2>
     <p>FitCo doesn&rsquo;t sell, stock, ship, or handle returns for any products. Any purchase you make happens <strong>directly with a third-party retailer</strong>, under that retailer&rsquo;s own terms, pricing, and policies. We&rsquo;re not a party to that transaction.</p>
 
     <h2 id="retailers">6. Third-party retailers</h2>
-    <p>When you follow a recommendation, you may leave FitCo and visit a third-party retailer&rsquo;s website. We don&rsquo;t control those websites and aren&rsquo;t responsible for their products, prices, availability, content, terms, or privacy practices. Any issues with an order &mdash; including payment, shipping, sizing, returns, or refunds &mdash; are between you and that retailer.</p>
+    <p>When you follow a recommendation, you may leave FitCo and visit a third-party retailer&rsquo;s website. We don&rsquo;t control those websites and aren&rsquo;t responsible for their products, prices, availability, content, terms, or privacy practices. Any issues with an order, including payment, shipping, sizing, returns, or refunds, are between you and that retailer.</p>
 
     <h2 id="affiliate">7. How FitCo is paid</h2>
     <p>FitCo currently has <strong>no affiliate relationships and earns no commission</strong> on anything we recommend. The links we publish are ordinary links to the retailer, with no tracking or referral codes attached, and our rankings are produced without reference to whether anyone pays us.</p>
-    <p>If that ever changes, we will disclose it clearly on the page where the links appear &mdash; not only in this document &mdash; and before you click.</p>
+    <p>If that ever changes, we will disclose it clearly on the page where the links appear, not only in this document, and before you click.</p>
 
     <h2 id="ip">8. Intellectual property</h2>
-    <p>FitCo and its content &mdash; including the quiz, recommendation logic, text, illustrations, logos, and design &mdash; are owned by FitCo or our licensors and are protected by intellectual property laws. You may use the Service for your own personal, non-commercial use. You may not copy, reproduce, scrape, modify, distribute, or create derivative works from FitCo without our permission.</p>
+    <p>FitCo and its content, including the quiz, recommendation logic, text, illustrations, logos, and design, are owned by FitCo or our licensors and are protected by intellectual property laws. You may use the Service for your own personal, non-commercial use. You may not copy, reproduce, scrape, modify, distribute, or create derivative works from FitCo without our permission.</p>
     <p>All trademarks, product names, logos, and brand names belong to their respective owners.</p>
 
     <h2 id="conduct">9. User conduct</h2>
@@ -274,7 +264,7 @@
     <p>You agree to indemnify and hold harmless FitCo and its owners, employees, and partners from any claims, damages, losses, or expenses (including reasonable legal fees) arising out of your use of the Service, your violation of these Terms, or your violation of any law or third-party right.</p>
 
     <h2 id="termination">13. Termination</h2>
-    <p>You can stop using FitCo at any time. We may suspend or end your access to the Service at any time, with or without notice, if we believe you&rsquo;ve violated these Terms or to protect the Service. Sections that by their nature should survive termination &mdash; such as intellectual property, disclaimers, limitation of liability, and indemnification &mdash; will continue to apply.</p>
+    <p>You can stop using FitCo at any time. We may suspend or end your access to the Service at any time, with or without notice, if we believe you&rsquo;ve violated these Terms or to protect the Service. Sections that by their nature should survive termination, such as intellectual property, disclaimers, limitation of liability, and indemnification, will continue to apply.</p>
 
     <h2 id="law">14. Governing law</h2>
     <p>These Terms are governed by the laws of the <strong>State of California, United States</strong>, without regard to its conflict-of-laws rules.</p>
@@ -298,7 +288,7 @@
   <div class="footer-legal">
     <a href="/" class="logo"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
     <ul class="footer-legal-links">
-      <li><a href="/#/fitting">Find My Fit</a></li>
+      <li><a href="/#/fitting">Start the fitting</a></li>
       <li><a href="/about/index.html">About</a></li>
       <li><a href="/privacy/index.html">Privacy Policy</a></li>
       <li><a href="/terms/index.html">Terms &amp; Conditions</a></li>

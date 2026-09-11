@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FitCo — Find Pants That Fit</title>
+<title>The Catalog | FitCo</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5.5' fill='%233C6B3C'/%3E%3Cg fill='%23FFFFFF'%3E%3Crect x='5' y='5.2' width='14' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='10' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='3.7' height='9.2' rx='.9'/%3E%3C/g%3E%3C/svg%3E">
   <link rel="stylesheet" href="/fonts/fitco-fonts.css" />
   <link rel="stylesheet" href="/fitco-consent.css" />
@@ -21,7 +21,7 @@
     --radius-md: 16px;
     --radius-lg: 20px;
     --radius-pill: 100px;
-    --utility-bar-h: 32px;
+    --utility-bar-h: 0px;
     --nav-h: 64px;
     --header-h: calc(var(--utility-bar-h) + var(--nav-h));
   }
@@ -40,6 +40,7 @@
 
   /* Utility bar */
   .utility-bar {
+    display: none;
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 101;
@@ -1395,7 +1396,7 @@
 
   /* Responsive */
   @media (max-width: 768px) {
-    :root { --utility-bar-h: 28px; --nav-h: 56px; }
+    :root { --utility-bar-h: 0px; --nav-h: 56px; }
     .utility-bar-inner { padding: 0 16px; justify-content: center; }
     .utility-bar-item { font-size: 9.5px; }
     .utility-bar-item:first-child, .utility-bar-item:last-child { display: none; }
@@ -1571,26 +1572,15 @@
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- NAV -->
-<!-- UTILITY BAR -->
-<div class="utility-bar">
-  <div class="utility-bar-inner">
-    <span class="utility-bar-item">Real product picks, not a size chart</span>
-    <span class="utility-bar-item">Independent recommendations. We don't sell pants today.</span>
-    <span class="utility-bar-item">Best overall, budget, and premium options</span>
-  </div>
-</div>
-
 <nav>
   <div class="nav-inner">
     <a href="/" class="logo" style="text-decoration:none;color:inherit;"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
     <ul class="nav-center">
-      <li><a href="/shop/index.html">Your Picks</a></li>
-      <li><a href="/about/index.html#how">How It Works</a></li>
-      <li><a href="/about/index.html#fits">Fit Guide</a></li>
-      <li><a href="/about/index.html">About Us</a></li>
+      <li><a href="/about/index.html">The Method</a></li>
+      <li><a href="/shop/index.html">The Catalog</a></li>
     </ul>
     <div class="nav-right">
-      <a href="/#/fitting" class="btn btn-nav">Find My Fit</a>
+      <a href="/#/fitting" class="btn btn-nav">Start the fitting</a>
     </div>
   </div>
 </nav>
@@ -1599,31 +1589,11 @@
 <!-- SHOP GATE -->
 <section class="shop-gate" id="shopGate">
   <div class="shop-gate-inner">
-    <div class="shop-gate-icon">
-      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="12" y="28" width="40" height="28" rx="4" stroke="#111" stroke-width="2" fill="none"/>
-        <path d="M20 28V22C20 14 26 8 32 8C38 8 44 14 44 22V28" stroke="#111" stroke-width="2" fill="none"/>
-        <circle cx="32" cy="42" r="3" stroke="#111" stroke-width="2" fill="none"/>
-      </svg>
-    </div>
-    <h1>Take the quiz to see your recommendations</h1>
-    <p class="shop-gate-lead">Six questions about your build and where pants go wrong for you.</p>
-    <p class="shop-gate-sub">We match you to fits based on your build and preferences. Not just waist size.</p>
-    <a href="/#/fitting" class="btn" style="margin-top:8px;">Start Fit Quiz</a>
-    <div class="shop-gate-features">
-      <div class="shop-gate-feature">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#111" stroke-width="1.5" fill="none"/></svg>
-        <span>Matched to your build</span>
-      </div>
-      <div class="shop-gate-feature">
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#111" stroke-width="1.5" fill="none"/><path d="M12 7v5l3 3" stroke="#111" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <span>Takes under a minute</span>
-      </div>
-      <div class="shop-gate-feature">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#111" stroke-width="1.5" fill="none"/></svg>
-        <span>No email required</span>
-      </div>
-    </div>
+    <span class="fc-kicker" style="justify-content:center;">Personalized catalog</span>
+    <h1>Start with a one-minute fitting</h1>
+    <p class="shop-gate-lead">Answer six questions about your build, common fit problems, and the shape you prefer. We will sort the current catalog for you.</p>
+    <a href="/#/fitting" class="btn" style="margin-top:8px;">Start the fitting</a>
+    <p style="margin-top:22px;"><a href="/about/index.html#how" style="color:inherit;text-underline-offset:3px;">See how recommendations work</a></p>
   </div>
 </section>
 <style>
@@ -1710,7 +1680,7 @@
     </div>
 
     <p class="shop-basis-note">
-      These are our own picks for this fit from a 22-pant catalog &mdash; not a ranking of the whole market.
+      These are our picks for this fit from the current 22-pant catalog. They are not a ranking of the whole market.
       They are based on the measurements brands publish, which we have not independently verified.
       FitCo earns no commission on any of them. Prices were checked on 11 September 2026 and change
       often; the retailer&rsquo;s page is the only accurate price.
@@ -1750,7 +1720,7 @@
       </form>
       <p class="shop-waitlist-error" id="shopWaitlistError" role="alert">Please enter a valid email address.</p>
       <p class="shop-waitlist-success" id="shopWaitlistSuccess" role="status">You're on the list. We'll email you when there's something worth sending.</p>
-      <p class="shop-waitlist-unavailable" id="shopWaitlistUnavailable">The waitlist isn't open yet — no address is being collected right now.</p>
+      <p class="shop-waitlist-unavailable" id="shopWaitlistUnavailable">The waitlist is not open yet. No address is being collected right now.</p>
     </div>
   </div>
 </section>
@@ -1965,7 +1935,7 @@
     display: none;
     margin-top: 12px;
     font-size: 13px;
-    color: rgba(255,255,255,0.82);   /* dark panel — muted ink would fail AA */
+    color: rgba(255,255,255,0.82);   /* Muted ink would fail AA on this dark panel. */
   }
   .shop-waitlist-unavailable.visible { display: block; }
   .shop-waitlist-input:disabled,
@@ -2032,7 +2002,7 @@
   <p style="margin-top:10px;font-size:12px;"><a href="/privacy/index.html" style="color:inherit;text-decoration:underline;">Privacy Policy</a> &middot; <a href="/terms/index.html" style="color:inherit;text-decoration:underline;">Terms &amp; Conditions</a></p>
 </footer>
 <script>
-// Product data by fit — real products, real brands, real retailer links
+// Product data by fit, with real products, brands, and retailer links.
 // (mirrors the catalog used on the quiz results page, so the two pages agree)
 var productImages = {
   bonobos_swc_slim: '../images/products/bonobos_stretch_washed_chino.jpg',
@@ -2183,32 +2153,32 @@ function renderProducts(fitKey) {
 var waitlistMessages = {
   athleticTaper: {
     headline: 'Independent recommendations today.',
-    lead: 'Your athletic taper picks come from brands we trust. If FitCo ever makes this cut, it will follow the same fit standards.',
+    lead: 'These athletic taper picks come from the current FitCo catalog. Product details are based on published specifications.',
     sub: "Leave your email if you want updates on what we're exploring next."
   },
   athleticStraight: {
     headline: 'Independent recommendations today.',
-    lead: 'Your athletic straight picks come from brands we trust. If FitCo ever makes this cut, it will follow the same fit standards.',
+    lead: 'These athletic straight picks come from the current FitCo catalog. Product details are based on published specifications.',
     sub: "Leave your email if you want updates on what we're exploring next."
   },
   straightFit: {
     headline: 'Independent recommendations today.',
-    lead: 'Your straight fit picks come from brands we trust. If FitCo ever makes this cut, it will follow the same fit standards.',
+    lead: 'These straight fit picks come from the current FitCo catalog. Product details are based on published specifications.',
     sub: "Leave your email if you want updates on what we're exploring next."
   },
   relaxedFit: {
     headline: 'Independent recommendations today.',
-    lead: 'Your relaxed fit picks come from brands we trust. If FitCo ever makes this cut, it will follow the same fit standards.',
+    lead: 'These relaxed fit picks come from the current FitCo catalog. Product details are based on published specifications.',
     sub: "Leave your email if you want updates on what we're exploring next."
   },
   relaxedTaper: {
     headline: 'Independent recommendations today.',
-    lead: 'Your relaxed taper picks come from brands we trust. If FitCo ever makes this cut, it will follow the same fit standards.',
+    lead: 'These relaxed taper picks come from the current FitCo catalog. Product details are based on published specifications.',
     sub: "Leave your email if you want updates on what we're exploring next."
   },
   slimTaper: {
     headline: 'Independent recommendations today.',
-    lead: 'Your slim taper picks come from brands we trust. If FitCo ever makes this cut, it will follow the same fit standards.',
+    lead: 'These slim taper picks come from the current FitCo catalog. Product details are based on published specifications.',
     sub: "Leave your email if you want updates on what we're exploring next."
   }
 };
@@ -2252,7 +2222,7 @@ function handleShopWaitlistSubmit(e) {
   clearShopWaitlistError();
 
   var cfg = waitlistCfg();
-  if (!cfg.waitlistAction) {           // not configured — never fake success
+  if (!cfg.waitlistAction) {           // Do not report success when unconfigured.
     errEl.textContent = "The waitlist isn't open yet. Nothing was sent.";
     errEl.classList.add('visible');
     return;
@@ -2309,7 +2279,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="/posthog-config.js"></script>
   <script src="/fitco-consent.js"></script>
 <script>
-/* FitCo analytics (PostHog) — a no-op unless a key is set in /posthog-config.js.
+/* FitCo analytics (PostHog). This is a no-op unless a key is set in /posthog-config.js.
    Events are queued until the library loads so none are dropped. */
 (function () {
   var q = [];
@@ -2358,7 +2328,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function fitResult() { return localStorage.getItem('fitco_fit_result') || undefined; }
 
-  /* Retailer link clicks on product cards (event delegation — markup untouched) */
+  /* Retailer link clicks on product cards, using event delegation. */
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('.product-card-footer a') : null;
     if (!a) return;
@@ -2379,7 +2349,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  /* Email form viewed — once, when it actually scrolls into view */
+  /* Email form viewed once when it scrolls into view. */
   var form = document.getElementById('shopWaitlistForm');
   if (form && 'IntersectionObserver' in window) {
     var seen = false;
