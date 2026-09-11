@@ -51,11 +51,11 @@ function ReadingCard({ reduced, onStart }) {
 }
 
 const COORDS = [
-  ['01', 'Thigh', 'Flat, 1″ below the crotch seam — the point brands are least honest about.', 'thigh'],
-  ['02', 'Seat', 'Room through the hips so nothing pulls when you sit.', 'seat'],
-  ['03', 'Rise', 'Where the waistband actually sits, and whether it stays there.', 'rise'],
-  ['04', 'Knee', 'Where the taper starts, or doesn’t. Sets the silhouette.', 'knee'],
-  ['05', 'Opening', 'Hem width — stack, clean break, or swallowed shoes.', 'opening'],
+  ['01', 'Thigh', 'Width across one leg, 1″ below the crotch seam.', 'thigh'],
+  ['02', 'Seat', 'Width across the fullest part of the hips. Room to sit and move.', 'seat'],
+  ['03', 'Rise', 'Front crotch seam to the top of the waistband.', 'rise'],
+  ['04', 'Knee', 'Width across the knee. Helps define the taper.', 'knee'],
+  ['05', 'Opening', 'Width across the hem. Shapes how the leg meets your shoes.', 'opening'],
 ];
 
 const RULES = [
@@ -138,9 +138,12 @@ export default function Home({ onStart, hasReport, onReport }) {
             {COORDS.map(([n, name, d, zone], i) => (
               <motion.div key={n} className="bg-paper p-6" variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .4 }} custom={i}>
                 <Mono className="!text-chalk">{n}</Mono>
-                <CoordDiagram zone={zone} className="w-full h-[104px] mt-4 text-ink" />
+                <CoordDiagram
+                  zone={zone}
+                  className="w-full h-[196px] mt-5 mb-5 text-ink"
+                />
                 <div className="font-disp font-semibold text-xl mt-3 mb-2">{name}</div>
-                <p className="text-[13.5px] leading-relaxed text-muted">{d}</p>
+                <p className="text-base leading-relaxed text-muted">{d}</p>
               </motion.div>
             ))}
           </div>
