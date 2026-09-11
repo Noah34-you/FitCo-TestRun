@@ -6,16 +6,15 @@
 <title>Terms &amp; Conditions — FitCo</title>
 <meta name="description" content="The terms that govern your use of FitCo.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5.5' fill='%233C6B3C'/%3E%3Cg fill='%23FFFFFF'%3E%3Crect x='5' y='5.2' width='14' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='10' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='3.7' height='9.2' rx='.9'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/fonts/fitco-fonts.css" />
+  <link rel="stylesheet" href="/fitco-consent.css" />
 <link rel="stylesheet" href="../fitco-ui.css">
 <style>
   :root {
     --bg: #F5F3EE;
     --bg-white: #FFFFFF;
     --text: #111111;
-    --text-muted: #6E6E6E;
+    --text-muted: #646464;
     --text-body: #333333;
     --border: #D9D9D9;
     --border-light: #E8E6E1;
@@ -172,9 +171,20 @@
     .legal { padding: calc(var(--header-h) + 36px) 20px 32px; }
     .legal-body h2 { font-size: 20px; margin-top: 40px; }
   }
+  .skip-link {
+    position: absolute; left: 8px; top: -60px; z-index: 200;
+    background: var(--text-primary, #111); color: #fff;
+    padding: 10px 16px; border-radius: 8px;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: top .15s ease;
+  }
+  .skip-link:focus { top: 8px; }
 </style>
+  <script src="/posthog-config.js"></script>
+  <script src="/fitco-consent.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- UTILITY BAR -->
 <div class="utility-bar">
@@ -191,8 +201,8 @@
     <a href="/" class="logo"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
     <ul class="nav-center">
       <li><a href="/#/fitting">Find My Fit</a></li>
-      <li><a href="/#works">How It Works</a></li>
-      <li><a href="/#fits">Fit Guide</a></li>
+      <li><a href="/about/index.html#how">How It Works</a></li>
+      <li><a href="/about/index.html#fits">Fit Guide</a></li>
       <li><a href="/about/index.html">About Us</a></li>
     </ul>
     <div class="nav-right">
@@ -202,10 +212,10 @@
 </nav>
 
 <!-- CONTENT -->
-<main class="legal">
+<main class="legal" id="main" tabindex="-1">
   <span class="legal-kicker">Legal</span>
   <h1>Terms &amp; Conditions</h1>
-  <p class="legal-updated">Last updated: [DATE]</p>
+  <p class="legal-updated">Last updated: 11 September 2026</p>
 
   <nav class="legal-switch" aria-label="Legal documents">
     <a href="/privacy/index.html">Privacy Policy</a>
@@ -234,8 +244,9 @@
     <h2 id="retailers">6. Third-party retailers</h2>
     <p>When you follow a recommendation, you may leave FitCo and visit a third-party retailer&rsquo;s website. We don&rsquo;t control those websites and aren&rsquo;t responsible for their products, prices, availability, content, terms, or privacy practices. Any issues with an order &mdash; including payment, shipping, sizing, returns, or refunds &mdash; are between you and that retailer.</p>
 
-    <h2 id="affiliate">7. Affiliate disclosure</h2>
-    <p>Some links on FitCo are <strong>affiliate links</strong>. If you click one and make a purchase, we may earn a commission at no additional cost to you. Our goal is to recommend products we believe are a good fit based on the information you provide. Some recommendations may include affiliate links, and those relationships don&rsquo;t change the price you pay. You can read more in our <a href="/privacy/index.html">Privacy Policy</a>.</p>
+    <h2 id="affiliate">7. How FitCo is paid</h2>
+    <p>FitCo currently has <strong>no affiliate relationships and earns no commission</strong> on anything we recommend. The links we publish are ordinary links to the retailer, with no tracking or referral codes attached, and our rankings are produced without reference to whether anyone pays us.</p>
+    <p>If that ever changes, we will disclose it clearly on the page where the links appear &mdash; not only in this document &mdash; and before you click.</p>
 
     <h2 id="ip">8. Intellectual property</h2>
     <p>FitCo and its content &mdash; including the quiz, recommendation logic, text, illustrations, logos, and design &mdash; are owned by FitCo or our licensors and are protected by intellectual property laws. You may use the Service for your own personal, non-commercial use. You may not copy, reproduce, scrape, modify, distribute, or create derivative works from FitCo without our permission.</p>
@@ -266,7 +277,8 @@
     <p>You can stop using FitCo at any time. We may suspend or end your access to the Service at any time, with or without notice, if we believe you&rsquo;ve violated these Terms or to protect the Service. Sections that by their nature should survive termination &mdash; such as intellectual property, disclaimers, limitation of liability, and indemnification &mdash; will continue to apply.</p>
 
     <h2 id="law">14. Governing law</h2>
-    <p>These Terms are governed by the laws of <strong>[STATE / COUNTRY]</strong>, without regard to its conflict-of-laws rules. You agree that any dispute will be resolved in the courts located in <strong>[JURISDICTION]</strong>, unless applicable law requires otherwise.</p>
+    <p>These Terms are governed by the laws of the <strong>State of California, United States</strong>, without regard to its conflict-of-laws rules.</p>
+    <p>These Terms do not specify a court or venue for disputes. Nothing here limits any right you may have to bring a claim where you live, or any protection available to you under the mandatory consumer-protection law of your home jurisdiction.</p>
 
     <h2 id="changes">15. Changes to these terms</h2>
     <p>We may update these Terms from time to time. When we make material changes, we&rsquo;ll update the &ldquo;Last updated&rdquo; date above and, where appropriate, provide additional notice. Your continued use of FitCo after an update means you accept the revised Terms.</p>

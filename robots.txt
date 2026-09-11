@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Superseded prototypes — kept reachable by direct link, excluded from search.
+Disallow: /v2/
+Disallow: /quiz/
+
+Sitemap: https://fitco.fit/sitemap.xml

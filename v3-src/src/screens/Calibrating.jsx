@@ -1,17 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Mono } from '../ui.jsx';
 import { PantFlat, GEO } from '../geometry.jsx';
 import { computeScores, FIT_LABEL } from '../engine.js';
 
-const STEPS = ['MEASURING SEAT', 'CHECKING RISE', 'SETTING TAPER', 'MATCHING CATALOG'];
+const STEPS = ['READING YOUR ANSWERS', 'COMPARING GEOMETRIES', 'RANKING THE CATALOG', 'BUILDING YOUR REPORT'];
 
 /* Brief, honest theater: the geometry locks, a scan confirms it.
-   (The computation itself is instant — this is the reveal.) */
+   (The computation itself is instant — this is the reveal. The step labels
+   describe what the engine actually does; nothing here measures the visitor.) */
 export default function Calibrating({ answers, onDone }) {
   const reduced = useReducedMotion();
   const best = computeScores(answers).best;
   const [step, setStep] = useState(0);
+  const headingRef = useRef(null);
+  useEffect(() => { headingRef.current?.focus(); }, []);
 
   useEffect(() => {
     if (reduced) { const t = setTimeout(onDone, 350); return () => clearTimeout(t); }
@@ -21,7 +24,10 @@ export default function Calibrating({ answers, onDone }) {
   }, [reduced, onDone]);
 
   return (
-    <main className="min-h-svh grid-paper flex flex-col items-center justify-center px-6">
+    <main id="main" tabIndex={-1} className="min-h-svh grid-paper flex flex-col items-center justify-center px-6">
+      <h1 ref={headingRef} tabIndex={-1} className="sr-only">
+        Calibrating your fit — one moment
+      </h1>
       <div className="relative">
         <PantFlat g={GEO[best]} className="w-[240px] h-[300px]" />
         {!reduced && (

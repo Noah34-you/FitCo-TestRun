@@ -12,7 +12,7 @@
 :root {
   --fc-ink: #111111;
   --fc-ink-soft: #3A3A3A;
-  --fc-muted: #6E6E6E;
+  --fc-muted: #646464;
 
   --fc-cream: #F5F3EE;
   --fc-cream-deep: #EFEBE1;
@@ -24,8 +24,8 @@
   --fc-sage-tint: #F0F4EC;
   --fc-sage-line: #D4E4D4;
 
-  --fc-gold: #C4913A;
-  --fc-gold-deep: #8F6A2A;
+  --fc-gold: #A57A31;
+  --fc-gold-deep: #856227;
   --fc-gold-soft: #F4EBDB;
   --fc-gold-line: #E5D3B0;
 
