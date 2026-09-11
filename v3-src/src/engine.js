@@ -20,11 +20,11 @@ export const FIT_LABEL = {
 };
 
 export const FIT_INFO = {
-  slimTaper:        { rise: 'Mid rise',      thigh: 'Close',       leg: 'Tapered', open: 'Narrow',  desc: 'Narrower through the thigh with a clean taper to the ankle. Best for lean builds that want a sharp silhouette.' },
-  straightFit:      { rise: 'Mid rise',      thigh: 'Regular',     leg: 'Straight', open: 'Regular', desc: 'Consistent width from hip to ankle. A versatile cut across body types.' },
-  athleticTaper:    { rise: 'Mid rise',      thigh: 'Roomy',       leg: 'Tapered', open: 'Narrow',  desc: 'Roomy in the thigh with a defined taper below the knee. Cut for muscular thighs and athletic builds.' },
-  athleticStraight: { rise: 'Mid rise',      thigh: 'Generous',    leg: 'Straight', open: 'Regular', desc: 'Generous room through the seat and thigh with a straighter leg. Made for broader builds.' },
-  relaxedTaper:     { rise: 'Mid-high rise', thigh: 'Relaxed',     leg: 'Soft taper', open: 'Regular', desc: 'Comfortable room throughout with a slight taper at the ankle. A balance of comfort and shape.' },
+  slimTaper:        { rise: 'Mid rise',      thigh: 'Close',       leg: 'Tapered', open: 'Narrow',  desc: 'Narrower through the thigh with a clean taper to the ankle. A useful starting point if you prefer less fabric through the leg.' },
+  straightFit:      { rise: 'Mid rise',      thigh: 'Regular',     leg: 'Straight', open: 'Regular', desc: 'Room through the upper leg with little narrowing below the knee.' },
+  athleticTaper:    { rise: 'Mid rise',      thigh: 'Roomy',       leg: 'Tapered', open: 'Narrow',  desc: 'More room through the seat and thigh, then a cleaner taper below the knee.' },
+  athleticStraight: { rise: 'Mid rise',      thigh: 'Generous',    leg: 'Straight', open: 'Regular', desc: 'More room through the seat and thigh, with a straighter line below the knee.' },
+  relaxedTaper:     { rise: 'Mid-high rise', thigh: 'Relaxed',     leg: 'Soft taper', open: 'Regular', desc: 'Room through the seat and thigh, with a gentle taper toward the ankle.' },
   relaxedFit:       { rise: 'Mid-high rise', thigh: 'Very roomy',  leg: 'Relaxed', open: 'Wide',     desc: 'Plenty of room from hip to ankle, with a straighter and easier leg.' },
 };
 
@@ -125,7 +125,7 @@ export function diagnose(answers, bestKey) {
     if (b === 'broader') return `You need room through the seat and thigh without forcing you into an oversized waist. ${name} is the closest match because it carries that room through a straighter leg.`;
     return `Tightness through the seat and thighs is your main fit problem. ${name} adds room where you need it without making the whole pant look oversized.`;
   }
-  if (main === 'waistGap') return `A gaping waistband usually means the waist and seat are out of balance. ${name} is the closest match for the proportions and rise you described.`;
+  if (main === 'waistGap') return `You said the waistband gaps when the seat fits. ${name} is a starting shape based on your build and preferences. Check waist and seat measurements together; a leg shape alone will not solve a waist gap.`;
   if (main === 'tooMuchFabric') {
     if (b === 'slim') return `Extra fabric below the knee can overwhelm a slimmer build. ${name} stays closer to the leg without turning into a skinny fit.`;
     return `Your main issue is extra fabric below the knee. ${name} keeps the lower leg cleaner without making the thigh too tight.`;
@@ -198,14 +198,14 @@ export function rankProducts(answers, bestKey) {
 
 /* ---------------- the six questions ---------------- */
 export const QUESTIONS = [
-  { key:'productType', cat:'Problem', label:'What are you shopping for?', sub:'Jeans and chinos fit differently, so we start here.',
+  { key:'productType', cat:'Problem', label:'What are you shopping for?', sub:'Choose the kind of pants you want to find.',
     options:[
       { v:'jeans', t:'Jeans', s:'Five-pocket denim' },
       { v:'chinos', t:'Chinos', s:'Cotton twill, smart-casual' },
       { v:'technical', t:'Technical pants', s:'Stretch, performance fabrics' },
-      { v:'any', t:'Surprise me', s:'Best fit across categories' },
+      { v:'any', t:'I’m open to anything', s:'Show me all kinds of pants' },
     ] },
-  { key:'build', cat:'Body', label:'Which best describes your build?', sub:'This matters more than your waist size.',
+  { key:'build', cat:'Body', label:'Which best describes your build?', sub:'Choose the closest match. The examples are a guide, not a body assessment.',
     options:[
       { v:'slim', t:'Slim', s:'Leaner through legs and seat' },
       { v:'average', t:'Average', s:'In-between proportions' },
@@ -220,24 +220,24 @@ export const QUESTIONS = [
       { v:'lengthOff', t:'Length feels off', s:'Hems stack up or float high' },
       { v:'usuallyFine', t:'Usually fit fine', s:'No consistent problem' },
     ] },
-  { key:'height', cat:'Body', label:'How tall are you?', sub:'Height decides inseam and where the break lands.',
+  { key:'height', cat:'Body', label:'How tall are you?', sub:'This helps us consider your proportions. You’ll still need to check your inseam.',
     options:[
-      { v:'under58', t:'Under 5′8″', s:'Shorter inseams work best' },
-      { v:'58to511', t:'5′8″ – 5′11″', s:'The range most brands cut for' },
-      { v:'60to62', t:'6′0″ – 6′2″', s:'Longer inseams needed' },
-      { v:'63plus', t:'6′3″ +', s:'Length is the priority' },
+      { v:'under58', t:'Under 5′8″', s:'Under 173 cm' },
+      { v:'58to511', t:'5′8″ – 5′11″', s:'About 173–182 cm' },
+      { v:'60to62', t:'6′0″ – 6′2″', s:'About 183–190 cm' },
+      { v:'63plus', t:'6′3″ +', s:'About 191 cm and above' },
     ] },
   { key:'legShape', cat:'Fit', label:'Which leg shape looks best to you?', sub:'No wrong answer here.',
     options:[
       { v:'tapered', t:'Tapered', s:'Narrows from knee to ankle' },
       { v:'balanced', t:'Balanced', s:'Gentle taper, middle ground' },
-      { v:'straight', t:'Straight', s:'Same width top to bottom' },
+      { v:'straight', t:'Straight', s:'Little narrowing below the knee' },
       { v:'relaxed', t:'Relaxed', s:'Extra room all the way down' },
     ] },
-  { key:'priority', cat:'Style', label:'What matters most?', sub:'When two fits tie, this decides it.',
+  { key:'priority', cat:'Style', label:'What matters most?', sub:'Tell us what you want from your next pair.',
     options:[
-      { v:'cleanerSilhouette', t:'Cleaner silhouette', s:'Sharp, tailored line' },
-      { v:'balancedEveryday', t:'Balanced everyday', s:'Works across situations' },
-      { v:'maximumComfort', t:'Maximum comfort', s:'Room to move, all day' },
+      { v:'cleanerSilhouette', t:'Cleaner silhouette', s:'Less extra fabric, a more defined shape' },
+      { v:'balancedEveryday', t:'An everyday pair', s:'A comfortable shape that is easy to wear' },
+      { v:'maximumComfort', t:'Maximum comfort', s:'More space through the seat and legs' },
     ] },
 ];

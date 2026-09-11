@@ -1,213 +1,114 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { Wordmark, Btn, Mono, LegalFooter } from '../ui.jsx';
-import { PantFlat, useConvergingGeo } from '../geometry.jsx';
-import { QUESTIONS, computeScores, FIT_LABEL, FIT_KEYS } from '../engine.js';
+import { useEffect, useRef, useState } from 'react';
+import { Wordmark, Btn, LegalFooter } from '../ui.jsx';
+import { QUESTIONS } from '../engine.js';
 import { track } from '../analytics.js';
-import { OptionIllo } from '../illustrations.jsx';
+import TrouserShape from '../TrouserShape.jsx';
 
-/* The fitting updates the leading match after every answer. */
+const BUILD_PANEL = { slim: 0, average: 1, athletic: 2, broader: 3 };
+const PROBLEM_PANEL = { tightThighsSeat: 0, waistGap: 1, tooMuchFabric: 2, lengthOff: 3 };
+const LEG_FIT = { tapered: 'slimTaper', balanced: 'relaxedTaper', straight: 'straightFit', relaxed: 'relaxedFit' };
+
+function PhotoPanel({ src, panel }) {
+  return <span className="v1-photo-panel" style={{ '--panel': panel }}>
+    <img src={src} alt="" aria-hidden="true" width="1774" height="887" decoding="async" />
+  </span>;
+}
+
+function ChoiceVisual({ qkey, value }) {
+  if (qkey === 'productType' && value !== 'any')
+    return <img src={'/images/quiz-q1-' + value + '.png'} alt="" width="600" height="600" />;
+  if (qkey === 'build')
+    return <PhotoPanel src="/media/v1/builds.webp" panel={BUILD_PANEL[value]} />;
+  if (qkey === 'fitWrong' && value !== 'usuallyFine')
+    return <PhotoPanel src="/media/v1/fit-problems.webp" panel={PROBLEM_PANEL[value]} />;
+  if (qkey === 'legShape')
+    return <TrouserShape fit={LEG_FIT[value]} uniformTop decorative />;
+  return null;
+}
+
+// A no-problem answer is exclusive; real problems can be combined up to two.
+export function toggleFitProblem(current, value) {
+  if (current.includes(value)) return current.filter(v => v !== value);
+  if (value === 'usuallyFine') return [value];
+  const issues = current.filter(v => v !== 'usuallyFine');
+  return issues.length < 2 ? [...issues, value] : issues;
+}
+
 export default function Fitting({ onExit, onComplete, initial = {} }) {
-  const reduced = useReducedMotion();
-  const firstOpen = Math.max(0, QUESTIONS.findIndex(qq => !(qq.key in initial)));
-  const [qi, setQi] = useState(firstOpen);
+  const [qi, setQi] = useState(() => Math.max(0, QUESTIONS.findIndex(q => !(q.key in initial))));
   const [answers, setAnswers] = useState(initial);
-  const [multi, setMulti] = useState([]);
-  const advancing = useRef(false);
-  const q = QUESTIONS[qi];
+  const heading = useRef(null);
   const viewedAt = useRef(Date.now());
-  /* a11y: the question heading is the landing point for focus after every
-     advance, so keyboard and screen-reader users are never dropped to <body>. */
-  const firstRender = useRef(true);
-  const wantsFocus = useRef(false);
-  /* AnimatePresence mode="wait" mounts the next question only after the
-     previous one finishes exiting, so focus has to be taken at mount time
-     rather than on a timer that races the transition. */
-  const headingRef = useCallback((node) => {
-    if (node && wantsFocus.current) { wantsFocus.current = false; node.focus(); }
-  }, []);
+  const q = QUESTIONS[qi];
+  const value = answers[q.key];
+  const canContinue = q.multi ? Array.isArray(value) && value.length > 0 : q.options.some(o => o.v === value);
 
   useEffect(() => {
     viewedAt.current = Date.now();
-    track('Question Viewed', { question_number: qi + 1, question_id: QUESTIONS[qi].key });
-    /* Skip the very first render so we don't steal focus on page load. */
-    if (firstRender.current) { firstRender.current = false; return; }
-    wantsFocus.current = true;
-  }, [qi]);
+    track('Question Viewed', { question_number: qi + 1, question_id: q.key });
+    heading.current?.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+  }, [qi, q.key]);
 
-  /* advance to the next question that hasn't been answered (seeded
-     answers from the hero are skipped, not re-asked) */
-  const advanceFrom = (fromIdx, withAnswers) => {
-    const nextIdx = QUESTIONS.findIndex((qq, i) => i > fromIdx && !(qq.key in withAnswers));
-    if (nextIdx === -1) onComplete(withAnswers);
-    else setQi(nextIdx);
+  const select = (v) => setAnswers(prev => ({
+    ...prev, [q.key]: q.multi ? toggleFitProblem(prev[q.key] || [], v) : v,
+  }));
+
+  const submit = (e) => {
+    e.preventDefault();
+    if (!canContinue) return;
+    track('Question Answered', {
+      question_number: qi + 1, question_id: q.key,
+      answer: Array.isArray(value) ? value.join(',') : value,
+      elapsed_ms: Date.now() - viewedAt.current,
+    });
+    if (qi === QUESTIONS.length - 1) onComplete(answers);
+    else setQi(n => n + 1);
   };
 
-  const partial = useMemo(() => ({ ...answers, ...(q.multi && multi.length ? { [q.key]: multi } : {}) }), [answers, multi, q]);
-  const { ranked, best } = useMemo(() => computeScores(partial), [partial]);
-  const answeredMeaningful = !!(partial.build || (partial.fitWrong && partial.fitWrong.length) || partial.legShape);
-  const leader = answeredMeaningful ? best : 'straightFit';
-  const g = useConvergingGeo(leader, reduced);
+  const choices = <fieldset className={'v1-choices v1-choices-' + q.key}>
+    <legend className="sr-only">{q.label}</legend>
+    {q.options.map(opt => {
+      const wide = opt.v === 'any' || opt.v === 'usuallyFine';
+      const visual = ['productType', 'build', 'fitWrong', 'legShape'].includes(q.key) && !wide;
+      const checked = q.multi ? (value || []).includes(opt.v) : value === opt.v;
+      return <label className={'v1-choice' + (wide ? ' v1-choice-wide' : '')} key={opt.v}>
+        <input type={q.multi ? 'checkbox' : 'radio'} name={q.key} value={opt.v}
+          disabled={!!(q.multi && !checked && opt.v !== 'usuallyFine' && value?.length >= q.multi)}
+          checked={checked} onChange={() => select(opt.v)} aria-describedby={q.key + '-' + opt.v + '-description'} />
+        {visual && <span className="v1-choice-visual"><ChoiceVisual qkey={q.key} value={opt.v} /></span>}
+        <span className="v1-choice-copy"><strong>{opt.t}</strong>
+          <small id={q.key + '-' + opt.v + '-description'}>{opt.s}</small>
+        </span>
+      </label>;
+    })}
+  </fieldset>;
 
-  const pick = (opt) => {
-    if (advancing.current) return;
-    if (q.multi) {
-      setMulti(m => m.includes(opt.v) ? m.filter(x => x !== opt.v) : (m.length >= q.multi ? m : [...m, opt.v]));
-      return;
-    }
-    advancing.current = true;
-    const next = { ...answers, [q.key]: opt.v };
-    setAnswers(next);
-    track('Question Answered', { question_number: qi + 1, question_id: q.key, answer: opt.v, elapsed_ms: Date.now() - viewedAt.current });
-    setTimeout(() => {
-      advancing.current = false;
-      advanceFrom(qi, next);
-    }, 420);
-  };
-
-  const continueMulti = () => {
-    if (!multi.length) return;
-    const next = { ...answers, [q.key]: multi };
-    track('Question Answered', { question_number: qi + 1, question_id: q.key, answer: multi.join(','), elapsed_ms: Date.now() - viewedAt.current });
-    setAnswers(next); setMulti([]);
-    advanceFrom(qi, next);
-  };
-
-  const back = () => {
-    if (qi === 0) { onExit(); return; }
-    const prev = QUESTIONS[qi - 1];
-    const rest = { ...answers }; delete rest[prev.key]; delete rest[q.key];
-    setAnswers(rest); setMulti([]); setQi(qi - 1);
-  };
-
-  /* keyboard: 1-5 select, Enter continue (multi), Esc back.
-     Guarded so the shortcuts never fire while a form control or an
-     editable element has focus, and never swallow browser/OS chords. */
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.metaKey || e.ctrlKey || e.altKey) return;
-      const t = e.target;
-      if (t instanceof HTMLElement &&
-          (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
-      const n = parseInt(e.key, 10);
-      if (n >= 1 && n <= q.options.length) { e.preventDefault(); pick(q.options[n - 1]); }
-      else if (e.key === 'Enter' && q.multi) continueMulti();
-      else if (e.key === 'Escape') back();
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  });
-
-  const selected = (v) => q.multi ? multi.includes(v) : answers[q.key] === v;
-  const top3 = ranked.slice(0, 3);
-  const scores = useMemo(() => computeScores(partial).final, [partial]);
-  const maxScore = Math.max(...top3.map(k => scores[k]), 1);
-
-  return (
-    <main id="main" tabIndex={-1} className="min-h-svh grid-paper flex flex-col">
-      {/* top bar */}
-      <div className="flex items-center justify-between gap-3 h-16 px-4 sm:px-10 border-b border-hairline bg-paper/85 backdrop-blur-md">
-        <Wordmark onClick={onExit} />
-        <div className="flex items-center gap-1 sm:gap-2 shrink" role="img"
-             aria-label={`Question ${qi + 1} of ${QUESTIONS.length}`}>
-          {QUESTIONS.map((qq, i) => (
-            <span key={i} aria-hidden="true" className={`h-[3px] rounded-full transition-all duration-400 ${i === qi ? 'w-5 sm:w-9 bg-ink' : (qq.key in answers) ? 'w-3.5 sm:w-6 bg-sage' : 'w-3.5 sm:w-6 bg-line'}`} />
-          ))}
-        </div>
-        <div className="flex items-center gap-5 shrink-0">
-          <Mono className="hidden sm:block">QUESTION {String(qi + 1).padStart(2, '0')} OF 0{QUESTIONS.length}</Mono>
-          <button onClick={onExit} className="min-h-[24px] min-w-[24px] px-2 py-1 -mr-1 text-[13px] font-medium text-muted hover:text-ink transition-colors cursor-pointer">Exit</button>
-        </div>
+  return <main id="main" tabIndex={-1} className="v1-quiz">
+    <header className="v1-quiz-header">
+      <Wordmark onClick={onExit} />
+      <div className="v1-quiz-progress" role="progressbar" aria-label="Fitting progress"
+        aria-valuemin={0} aria-valuemax={QUESTIONS.length} aria-valuenow={qi + 1} aria-valuetext={'Question ' + (qi + 1) + ' of ' + QUESTIONS.length}>
+        <span style={{ width: ((qi + 1) / QUESTIONS.length * 100) + '%' }} />
       </div>
-
-      {/* a11y: the instrument is a visual read-out; this mirrors it for screen
-          readers so the convergence is perceivable without sight. */}
-      <p className="sr-only" role="status" aria-live="polite">
-        {`Question ${qi + 1} of ${QUESTIONS.length}. ` +
-         (answeredMeaningful ? `Current best match: ${FIT_LABEL[leader]}.` : 'Awaiting your first answer.')}
-      </p>
-
-      <div className="flex-1 grid lg:grid-cols-[42fr_58fr] max-w-[1400px] w-full mx-auto items-center gap-6 px-5 sm:px-10 py-8">
-        {/* visual fit preview */}
-        <div className="relative order-first lg:order-none">
-          <div className="hidden lg:block">
-            <div className="flex items-baseline justify-between mb-1 max-w-[430px]">
-              <Mono className="!text-sage">Best match so far</Mono>
-              <Mono>{answeredMeaningful ? 'UPDATED FROM YOUR ANSWERS' : 'START WITH A CATEGORY'}</Mono>
-            </div>
-            <div className="font-mono text-[14px] font-medium tracking-[.1em] mb-3">
-              {FIT_LABEL[leader].toUpperCase()}<span className="inline-block w-[7px] h-[13px] bg-sage align-[-2px] ml-1.5 animate-pulse" />
-            </div>
-            <PantFlat g={g} className="w-full max-w-[430px] h-[52vh] min-h-[340px]" />
-            {/* Relative comparison bars, without percentage claims. */}
-            <div className="mt-4 max-w-[430px] space-y-1.5" aria-hidden="true">
-              {top3.map(k => (
-                <div key={k} className="flex items-center gap-3">
-                  <span className={`font-mono text-[9.5px] tracking-[.08em] uppercase w-36 shrink-0 ${k === leader ? 'text-sage' : 'text-muted'}`}>{FIT_LABEL[k]}</span>
-                  <div className="flex-1 h-[3px] bg-line/60 rounded-full overflow-hidden">
-                    <motion.div className={`h-full rounded-full ${k === leader ? 'bg-sage' : 'bg-chalkline/70'}`}
-                      animate={{ width: `${(scores[k] / maxScore) * 100}%` }} transition={{ duration: .6, ease: 'easeOut' }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* mobile mini-reading */}
-          <div className="lg:hidden flex items-center gap-4 rounded-2xl border border-hairline bg-white/55 p-3.5">
-            <PantFlat g={g} className="w-14 h-20 shrink-0" detail={false} />
-            <div>
-              <Mono className="!text-sage block mb-0.5">Best match so far</Mono>
-              <div className="font-mono text-[13px] font-medium tracking-[.08em]">{FIT_LABEL[leader].toUpperCase()}</div>
-            </div>
-          </div>
-        </div>
-
-        {/* question */}
-        <div className="max-w-[640px] w-full lg:pl-4 pb-8 lg:pb-0">
-          <AnimatePresence mode="wait">
-            <motion.div key={qi}
-              initial={{ opacity: 0, x: 34 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -26 }}
-              transition={{ duration: .38, ease: [0.22, 0.7, 0.3, 1] }}>
-              <Mono className="!text-chalk">Question {String(qi + 1).padStart(2, '0')} · {q.cat}</Mono>
-              <h1 ref={headingRef} tabIndex={-1} className="font-disp font-semibold tracking-[-0.03em] leading-[1.05] text-[clamp(28px,3.6vw,44px)] mt-3 mb-2">{q.label}</h1>
-              <p className={`text-[15px] mb-7 ${q.multi ? 'text-sage font-medium' : 'text-muted'}`}>{q.sub}</p>
-              <div className="space-y-2.5" role={q.multi ? 'group' : 'radiogroup'} aria-label={q.label}>
-                {q.options.map((opt, i) => (
-                  <motion.button key={opt.v}
-                    initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: .05 + i * 0.05, duration: .35, ease: 'easeOut' }}
-                    onClick={() => pick(opt)}
-                    role={q.multi ? 'checkbox' : 'radio'} aria-checked={selected(opt.v)}
-                    className={`w-full flex items-center gap-4 text-left rounded-xl border px-5 py-4 transition-all duration-200 cursor-pointer group
-                      ${selected(opt.v)
-                        ? 'border-sage bg-sagesoft shadow-[inset_0_0_0_1px_var(--color-sage)]'
-                        : 'border-line bg-white/55 hover:border-ink-soft hover:-translate-y-px hover:shadow-[0_4px_16px_rgba(22,21,15,.06)]'}`}>
-                    <span className={`font-mono text-[11px] w-5 shrink-0 ${selected(opt.v) ? 'text-sage' : 'text-muted'}`}>{i + 1}</span>
-                    <span className={`w-11 h-12 shrink-0 rounded-lg border flex items-center justify-center transition-colors duration-200
-                      ${selected(opt.v) ? 'border-sage/60 bg-white/85 text-sage' : 'border-hairline bg-white/70 text-ink'}`}>
-                      <OptionIllo qkey={q.key} v={opt.v} className={q.key === 'legShape' ? 'w-7 h-10' : 'w-9 h-9'} />
-                    </span>
-                    <span className="flex-1">
-                      <span className="block font-medium text-[15.5px]">{opt.t}</span>
-                      <span className="block text-[13px] text-muted mt-0.5">{opt.s}</span>
-                    </span>
-                    <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 transition-all
-                      ${selected(opt.v) ? 'bg-sage border-sage text-white' : 'border-line group-hover:border-muted text-transparent'}`}>
-                      <svg viewBox="0 0 12 12" className="w-2.5 h-2.5" fill="none"><path d="M3 6l2.5 2.5L9 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                    </span>
-                  </motion.button>
-                ))}
-              </div>
-              <div className="flex items-center justify-between mt-7">
-                <button onClick={back} className="min-h-[24px] px-2 py-1 -ml-2 text-[13.5px] font-medium text-muted hover:text-ink transition-colors cursor-pointer">← Back</button>
-                {q.multi && <Btn onClick={continueMulti} disabled={!multi.length} className={multi.length ? '' : 'opacity-35'}>Continue</Btn>}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+      <button type="button" className="v1-quiet-button" onClick={onExit}>Exit fitting</button>
+    </header>
+    <form className="v1-quiz-body" onSubmit={submit}>
+      <div className="v1-question-head">
+        <span className="v1-question-step">Question {qi + 1} of {QUESTIONS.length}</span>
+        <h1 ref={heading} tabIndex={-1}>{q.label}</h1><p>{q.sub}</p>
       </div>
-
-      <LegalFooter note="Your answers stay on this device" />
-    </main>
-  );
+      {q.key === 'height' ? <div className="v1-height-layout">
+        <div className="v1-height-ruler" aria-hidden="true"><span>160 cm</span><span>170 cm</span><span>180 cm</span><span>190 cm</span><span>200 cm</span></div>
+        {choices}
+      </div> : choices}
+      {q.multi && <p className="v1-selection-note" role="status">{value?.length === q.multi ? 'Two selected. Deselect one to choose a different problem.' : 'You can choose one or two problems, or “Usually fit fine”.'}</p>}
+      {['build', 'fitWrong'].includes(q.key) && <p className="v1-selection-note">AI-created examples to help you compare. Real bodies and garments vary.</p>}
+      <div className="v1-quiz-actions">
+        <button type="button" className="v1-quiet-button" onClick={() => qi ? setQi(n => n - 1) : onExit()}>← Back</button>
+        <Btn type="submit" disabled={!canContinue}>{qi === QUESTIONS.length - 1 ? 'See my fit' : 'Continue'}</Btn>
+      </div>
+    </form>
+    <LegalFooter note="Your results are saved on this device." />
+  </main>;
 }

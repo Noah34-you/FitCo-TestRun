@@ -1,0 +1,71 @@
+/* Shared V1 finish for the existing method, catalog and legal pages. */
+:root {
+  --bg: #FAF9F6; --bg-white: #FAF9F6; --text: #222522; --text-body: #4E534F;
+  --text-muted: #666B65; --border: #C9CCC4; --border-light: #E0E2DB;
+  --success: #385C48; --radius-sm: 5px; --radius-md: 5px; --radius-lg: 5px;
+  --fc-cream: #FAF9F6; --fc-cream-deep: #EFEDE7; --fc-cream-panel: #F0F0EA;
+  --fc-sage: #385C48; --fc-sage-deep: #385C48; --fc-sage-soft: #E9EFEA;
+  --fc-ink: #222522; --fc-muted: #666B65;
+  --fc-display: 'Inter'; --fc-mono: 'Inter';
+}
+body { background-image: none; }
+body::before, body::after, .about-hero::before, .about-hero::after, .shop-gate::before, .shop-gate::after { display: none; }
+body > nav { background: var(--bg); backdrop-filter: none; }
+.nav-inner { min-height: 80px; height: auto; }
+.logo { font-size: 24px; font-weight: 600; letter-spacing: -.06em; min-height: 44px; }
+.logo .logo-mark { width: 24px; height: 24px; }
+.nav-center a { padding-block: 12px; }
+.btn { border-radius: 5px; font-size: 14px; min-height: 46px; }
+.btn:hover, .product-card:hover { transform: none; box-shadow: none; }
+.btn:hover { background: #385C48; opacity: 1; }
+.about-hero h1, .shop-gate h1, .legal h1, #shopFitName { font-family: 'Inter', sans-serif; font-weight: 600; letter-spacing: -.045em; }
+.about-hero { padding-top: 140px; padding-bottom: 64px; }
+.about-hero h1 { font-size: clamp(38px, 5vw, 64px); }
+.about-hero p { font-size: 18px; line-height: 1.65; }
+.about-section { padding-block: 64px; }
+.about-section h2 { font-size: clamp(30px, 3.2vw, 42px); letter-spacing: -.04em; }
+.about-card, .solution-card, .fifteen-stat, .fc-panel, .fc-callout {
+  background: #F0F0EA; border-radius: 5px; box-shadow: none;
+}
+.about-card:hover, .solution-card:hover { transform: none; box-shadow: none; }
+.about-card p, .solution-card p { font-size: 16px; line-height: 1.65; }
+.about-cta { background: #EFEDE7; }
+.about-cta h2, .about-cta p { color: var(--text); }
+.waist-cut, .waist-size, .fifteen-cap, .fifteen-lbl, .legal-updated, .footer-legal-meta,
+.product-cat, .product-card-body .product-cat, .product-price, .fit-tag, .shop-waitlist-label {
+  font-family: 'Inter', sans-serif; text-transform: none; letter-spacing: 0; font-size: 14px;
+}
+.step-num { background: none; border: 0; color: var(--text-muted); border-radius: 0; font-size: 18px; }
+.product-card { border: 0; border-radius: 0; background: transparent; }
+.product-card-img { height: 300px; object-fit: contain; object-position: center; background: #EFEDE7; }
+.product-card-body { padding: 20px 0; }
+.product-card-body p { font-size: 16px; }
+.product-card-body h4 { font-size: 18px; font-weight: 600; line-height: 1.4; }
+.product-card-footer { flex-wrap: wrap; gap: 16px; }
+.product-price { font-size: 18px; }
+.fit-profile-summary { background: transparent; border: 0; box-shadow: none; padding-inline: 0; }
+.fit-tag { background: transparent; border: 0; border-radius: 0; padding: 0; }
+.fit-profile-tags { gap: 20px; }
+.shop-gate h1 { max-width: 650px; margin-inline: auto; }
+.shop-waitlist { background: #EFEDE7; color: var(--text); border-radius: 5px; }
+.shop-waitlist h3, #shopWaitlistLead, .shop-waitlist-label { color: var(--text); }
+.shop-waitlist-unavailable { color: var(--text-muted); }
+.shop-waitlist-input { border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+.shop-waitlist-input::placeholder { color: var(--text-muted); }
+.shop-waitlist-btn { background: var(--text); color: var(--bg); border-radius: 5px; }
+.legal { padding-top: 132px; }
+.legal-body { font-size: 16px; line-height: 1.75; }
+.image-credits { font-size: 14px; line-height: 1.7; color: var(--text-muted); }
+.image-credits a { color: inherit; text-underline-offset: 3px; }
+:focus-visible { outline: 3px solid #385C48; outline-offset: 4px; }
+@media (max-width: 700px) {
+  .nav-inner { min-height: 68px; padding-inline: 20px; }
+  .about-hero { padding-top: 116px; padding-bottom: 40px; }
+  .about-hero p { font-size: 16px; }
+  .about-section { padding-block: 40px; }
+  .product-grid { grid-template-columns: 1fr; }
+  .product-card-img { height: 360px; }
+  .shop-waitlist { padding: 32px 20px; }
+  .legal { padding-top: 108px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

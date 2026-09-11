@@ -1,0 +1,45 @@
+{
+  "mode": "built-in image_gen",
+  "sheets": [
+    {
+      "file": "build-sheet.png",
+      "panel_order": [
+        "Slim",
+        "Average",
+        "Athletic",
+        "Broader"
+      ],
+      "prompt": "Use case: photorealistic-natural.\nAsset type: photographic image sheet for the FitCo men's pants sizing quiz, to be cropped into four independent example photographs in a website.\nCreate ONE wide 2:1 landscape image with EXACTLY FOUR equal-width vertical photographic panels left to right. Each panel fills exactly 25 percent of the total width, straight edge-to-edge adjoining cells, no gutters, no borders, no padding. Every panel has the same seamless warm off-white studio background, consistent soft diffuse studio lighting and natural camera treatment.\nSubject: the SAME adult man, about 30, same short dark hair, same natural face and medium skin tone across all four panels. Identical neutral upright FRONT view, arms resting naturally by sides, feet comfortably apart. Identical fitted off-white crew-neck t-shirt, charcoal straight-leg pants, simple neutral gray low-top shoes. Full body visible head to shoes in every panel, same height, camera distance, lens, scale, pose, expression, and floor level. Keep all of each figure within its own quarter cell.\nONLY alter the natural body proportions between the panels, in THIS exact left-to-right order:\n1. Slim build, naturally lean legs and seat.\n2. Average build, moderately proportioned waist, thighs, and seat.\n3. Athletic build, recognizably larger thighs and seat, still natural and understated.\n4. Broader fuller build with a visibly fuller waist and seat, natural adult proportions.\nMake the four proportion differences clear enough to help someone identify their pants fit, while remaining realistic and respectful. Clothing should reveal the body silhouette without being skin-tight. Athletic thighs should not resemble a bodybuilder.\nStyle: clean contemporary clothing-service editorial studio photography, real fabric and skin texture, calm masculine sensibility, subtle natural shadows.\nAbsolutely NO typography, no letters, labels, numbers, body-judgment messaging, watermarks, logos, arrows, markers, diagrams, UI controls, decorative lines, or borders. No shirtless figures. No face, hair, skin-tone or clothing-color changes. No exaggerated musculature, glamour posing, futuristic styling or glows. Illustrative quiz examples, not specific product photography. Produce only the requested four-panel sheet."
+    },
+    {
+      "file": "fit-problems-sheet.png",
+      "panel_order": [
+        "Tight thighs and seat",
+        "Rear waistband gap",
+        "Loose lower legs and bunching",
+        "Too short"
+      ],
+      "prompt": "Use case: photorealistic-natural.\nAsset type: photographic image sheet for a men's pants fit-problem quiz, to be cropped into four independent example photographs in a website.\nCreate ONE wide 2:1 landscape image with EXACTLY FOUR equal-width vertical photographic panels left to right. Each panel fills exactly 25 percent of the total width, straight edge-to-edge adjoining cells, no gutters, no borders, no padding. Each panel is an independent close-up photograph; keep every example completely inside its own quarter cell. Use the same tan cotton twill chino color and style, same adult male medium skin tone, same simple neutral gray low-top sneakers where visible, same warm-white seamless studio background and soft diffuse studio light throughout.\nShow these FOUR recognizable pants fit problems in precisely this left-to-right order:\n1. THIGHS AND SEAT TOO TIGHT: crop from waist to knee, front slight three-quarter view. Natural diagonal pulling and tension folds stretching across the upper thighs and crotch/seat area of tan chinos, clearly too tight around thighs and seat. A small amount of plain off-white t-shirt may be visible at the waist.\n2. REAR WAISTBAND GAP: rear three-quarter close-up from lower back to upper thighs. The tan chinos waistband stands visibly away from the lower back leaving a pronounced, believable open gap. Plain off-white t-shirt tucked in or ending above the waistband so the gap is fully visible. No hands or belt needed.\n3. LOWER LEGS TOO LOOSE: crop knee to shoes, show both pant legs and neutral gray low-top sneakers. Excess tan fabric gives wide, loose, slightly flared openings and noticeable fabric bunching over the shoes. The pants length reaches the shoes; do not show a sock gap here.\n4. TOO SHORT: crop knee to shoes, show both pant legs and matching neutral gray low-top sneakers. Tan pant hems end clearly too high, leaving an obvious several-inch vertical strip of plain neutral socks visible between each hem and shoe; hems should have no bunching. The pants are recognizably too short.\nStyle: natural clean studio clothing photography with fine real cotton texture; restrained, contemporary, calm masculine clothing service.\nThe fit problems must be visually legible through the fabric and silhouette alone. Absolutely NO text, letters, numbers, typography, labels, red lines, arrows, circles, diagrams, UI controls, watermarks, logos, decorative borders, gradients or glows. No futuristic styling. No extra panels. Illustrative quiz examples, not specific product photography. Produce only the requested four-panel sheet."
+    }
+  ],
+  "limitations": [
+    "Original waist-gap sheet had an insufficient gap; corrected in final targeted edit.",
+    "Build differences slim/average are subtle.",
+    "Edited guide is not pixel-exact. Retain CC BY-SA4.0 attribution and changes notice."
+  ],
+  "final_assets": [
+    "v3-src/public/media/v1/builds.webp",
+    "v3-src/public/media/v1/fit-problems.webp",
+    "v3-src/public/media/v1/fit-guide.webp"
+  ],
+  "additional_edits": [
+    {
+      "asset": "fit-problems.webp",
+      "prompt": "Use case: precise-object-edit. Edit target: supplied four-panel fit-problems photo sheet. Make ONE precise correction in ONLY THE SECOND VERTICAL PANEL from the left: the adult man seen from behind wearing khaki chinos must have a CLEAR VISIBLE ACTUAL WAIST GAP. The rear waistband bows out away from his lower back, creating a deep curved crescent of empty shadow space, clearly separated from skin across the center rear waist; show visible inner waistband so this cannot read as merely exposed skin above snug pants. Lift the white shirt hem just enough to expose lower back and this opening, without a hand or extra body part. Believable anatomy and realistic fabric tension. Keep the man and trousers otherwise consistent. Preserve panels 1, 3, and 4 UNCHANGED, identical scene, crop, clothing, shadows, colors and composition. Preserve all four equal-width panels in their existing order and the full wide 2:1 sheet composition. No text, overlays, arrows, markers, or new props. This is a diagnostic pants-fit photo, the gap must be unambiguously visible at thumbnail size."
+    },
+    {
+      "asset": "fit-guide.webp",
+      "prompt": "Use case: compositing / precise background replacement. Input image 1 is an EDIT TARGET: front view photograph of dark indigo 501XX denim jeans on wood floor. Input image 2 is an EDIT TARGET: rear view photograph of the SAME jeans on wood floor. Produce ONE two-panel diptych product photograph, overall landscape 4:3 aspect ratio. Front view occupies the LEFT equal-width half, rear view occupies the RIGHT equal-width half. Each full garment completely visible from waistband to bottom hems, with comfortable margin and no garment cropping. Primary change: replace ONLY the wood floor with clean seamless warm-neutral off-white studio background in both panels, including the space between the legs. Preserve the original jeans' actual shapes, dark indigo wash and fading, wrinkles, seams, edges, stitching, front open button fly, pockets, back-pocket stitching and red tab; preserve each original front/rear view and natural asymmetry. Proportionally scale and position as needed to compose both full photographs side by side; do not reshape or straighten the jeans. Preserve texture instead of inventing stylized new jeans. Soft natural contact shadow on offwhite backdrop. No text, labels, measurements, markers, graphic overlays, frames or added props."
+    }
+  ]
+}

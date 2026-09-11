@@ -1580,7 +1580,7 @@
       <li><a href="/shop/index.html">The Catalog</a></li>
     </ul>
     <div class="nav-right">
-      <a href="/#/fitting" class="btn btn-nav">Start the fitting</a>
+      <a href="/#/fitting" class="btn btn-nav">Find my fit</a>
     </div>
   </div>
 </nav>
@@ -1589,10 +1589,9 @@
 <!-- SHOP GATE -->
 <section class="shop-gate" id="shopGate">
   <div class="shop-gate-inner">
-    <span class="fc-kicker" style="justify-content:center;">Personalized catalog</span>
-    <h1>Start with a one-minute fitting</h1>
+    <h1>Find a shape that works for you</h1>
     <p class="shop-gate-lead">Answer six questions about your build, common fit problems, and the shape you prefer. We will sort the current catalog for you.</p>
-    <a href="/#/fitting" class="btn" style="margin-top:8px;">Start the fitting</a>
+    <a href="/#/fitting" class="btn" style="margin-top:8px;">Find my fit</a>
     <p style="margin-top:22px;"><a href="/about/index.html#how" style="color:inherit;text-underline-offset:3px;">See how recommendations work</a></p>
   </div>
 </section>
@@ -1670,7 +1669,6 @@
   <div class="shop-results-inner">
     <!-- Fit Profile Summary -->
     <div class="fit-profile-summary">
-      <span class="fit-section-badge" style="margin-bottom:16px;">Recommended for Your Fit</span>
       <h2 id="shopFitName">Athletic Taper</h2>
       <p id="shopFitDesc">More room in the thigh with a gradual taper below the knee.</p>
       <div class="fit-profile-tags" id="shopFitTags">
@@ -1707,7 +1705,6 @@
 
     <!-- PERSONALIZED WAITLIST -->
     <div class="shop-waitlist" id="shopWaitlist">
-      <span class="shop-waitlist-badge">Updates</span>
       <h3 id="shopWaitlistHeadline">Independent recommendations today.</h3>
       <p id="shopWaitlistLead">We point you to pants that match your fit. If FitCo ever creates its own, they'll be held to the same standards.</p>
       <p id="shopWaitlistSub">Leave your email if you want updates on what we're exploring next.</p>
@@ -1716,7 +1713,7 @@
         <input type="email" class="shop-waitlist-input" placeholder="you@example.com" required
                id="shopWaitlistEmail" name="email" autocomplete="email"
                aria-describedby="shopWaitlistError" oninput="clearShopWaitlistError()">
-        <button type="submit" class="shop-waitlist-btn" id="shopWaitlistBtn">Join the Waitlist</button>
+        <button type="submit" class="shop-waitlist-btn" id="shopWaitlistBtn">Join the waitlist</button>
       </form>
       <p class="shop-waitlist-error" id="shopWaitlistError" role="alert">Please enter a valid email address.</p>
       <p class="shop-waitlist-success" id="shopWaitlistSuccess" role="status">You're on the list. We'll email you when there's something worth sending.</p>
@@ -2363,5 +2360,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 })();
 </script>
+<link rel="stylesheet" href="/fitco-v1.css">
 </body>
 </html>
