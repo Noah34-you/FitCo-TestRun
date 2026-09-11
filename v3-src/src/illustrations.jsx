@@ -1,99 +1,121 @@
-/* ============================================================
-   FitCo — spot illustrations. Same drafting language as the
-   pant flats: ink outlines, chalk dimension callouts, sage
-   highlights. Each coordinate diagram is a cropped detail view
-   of the reference garment (straight fit, 32×32).
-   ============================================================ */
-import { GEO, PantFlat, outlinePath, bandPath, detailPaths, C, WA, BAND_T, BAND_B, Y_T, Y_K, Y_H } from './geometry.jsx';
-
+/* FitCo spot illustrations. Measurement cards share a complete flat-lay
+   garment; only the green measurement changes between cards. */
+import { useId } from 'react';
+import { GEO, PantFlat, Garment } from './geometry.jsx';
+import {
+  C,
+  BAND_T,
+  Y_SEAT,
+  Y_CROTCH,
+  Y_T,
+  Y_K,
+  Y_H,
+  landmarks,
+  outlinePath,
+} from './garment-paths.js';
 const g = GEO.straightFit;
-const HIP = Math.max(WA, g.wt) + 7;
-
+const p = landmarks(g);
 const SAGE = 'var(--color-sage)';
-const CHALK = 'var(--color-chalkline)';
-const BAND_FILL = 'rgba(60,107,60,.10)';
-
-/* chalk dimension line with end ticks */
-function Dim({ x1, x2, y, color = CHALK }) {
-  return (
-    <g stroke={color} strokeWidth="2">
-      <line x1={x1} y1={y} x2={x2} y2={y} />
-      <line x1={x1} y1={y - 7} x2={x1} y2={y + 7} />
-      <line x1={x2} y1={y - 7} x2={x2} y2={y + 7} />
-    </g>
-  );
-}
-
-/* the reference garment, drawn once; crops select the detail */
-function Garment() {
-  return (
-    <g>
-      <path d={outlinePath(g)} fill="rgba(255,255,255,.4)" stroke="currentColor" strokeWidth="2.4" strokeLinejoin="round" strokeLinecap="round" opacity=".55" />
-      <path d={bandPath} fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" opacity=".45" />
-      <circle cx={C} cy={BAND_B + 9} r="3.6" fill="none" stroke="currentColor" strokeWidth="1.4" opacity=".45" />
-      <path d={detailPaths()} fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" opacity=".45" />
-    </g>
-  );
-}
-
+const BAND_FILL = 'rgba(60,107,60,.13)';
 const ZONES = {
   thigh: {
-    view: '128 138 204 168',
-    overlay: (
-      <g>
-        <rect x={C - g.wt} y={Y_T - 15} width={g.wt - 14} height="30" fill={BAND_FILL} />
-        <Dim x1={C - g.wt} x2={C - 14} y={Y_T} color={SAGE} />
-      </g>
-    ),
+    x1: p.thighOuter,
+    x2: p.thighInner,
+    y: Y_T,
+    label: 'Thigh width',
+    description: 'Measure across one leg, one inch below the crotch seam.',
   },
   seat: {
-    view: '128 34 204 190',
-    overlay: (
-      <g fill="none" stroke={SAGE} strokeWidth="2.5" strokeLinecap="round">
-        <path d={`M${C - WA},${BAND_B + 4} C${C - HIP},96 ${C - HIP},148 ${C - g.wt},${Y_T - 4}`} />
-        <path d={`M${C - WA - 6},${BAND_B + 14} l6,-10 l6,10`} strokeWidth="2" />
-        <path d={`M${C - g.wt - 8},${Y_T - 16} l8,12 l8,-12`} strokeWidth="2" transform={`translate(0,-2)`} />
-      </g>
-    ),
+    x1: C - p.hip,
+    x2: C + p.hip,
+    y: Y_SEAT,
+    label: 'Seat width',
+    description: 'Measure horizontally across the fullest part of the hips.',
   },
   rise: {
-    view: '150 28 160 252',
-    overlay: (
-      <g stroke={SAGE} strokeWidth="2">
-        <line x1={C - 1} y1={BAND_T + 4} x2={C - 1} y2={238} strokeDasharray="7 6" />
-        <line x1={C - 11} y1={BAND_T + 4} x2={C + 9} y2={BAND_T + 4} />
-        <line x1={C - 11} y1={238} x2={C + 9} y2={238} />
-      </g>
-    ),
+    label: 'Front rise',
+    description: 'Measure along the front seam from the crotch to the top of the waistband.',
   },
   knee: {
-    view: '128 262 204 160',
-    overlay: (
-      <g>
-        <rect x={C - g.wk} y={Y_K - 15} width={g.wk - 14} height="30" fill={BAND_FILL} />
-        <Dim x1={C - g.wk} x2={C - 14} y={Y_K} color={SAGE} />
-      </g>
-    ),
+    x1: p.kneeOuter,
+    x2: p.kneeInner,
+    y: Y_K,
+    label: 'Knee width',
+    description: 'Measure across one leg at the knee.',
   },
   opening: {
-    view: '128 402 204 152',
-    overlay: (
-      <g>
-        <rect x={C - g.wh} y={Y_H - 32} width={g.wh - 14} height="32" fill={BAND_FILL} />
-        <Dim x1={C - g.wh} x2={C - 14} y={Y_H - 14} color={SAGE} />
-        <line x1={C - g.wh - 18} y1={Y_H + 12} x2={C + g.wh + 18} y2={Y_H + 12} stroke={CHALK} strokeWidth="1.5" strokeDasharray="3 6" opacity=".8" />
-      </g>
-    ),
+    x1: p.hemOuter,
+    x2: p.hemInner,
+    y: Y_H,
+    label: 'Leg opening width',
+    description: 'Measure straight across the bottom hem of one leg.',
   },
 };
-
 export function CoordDiagram({ zone, className = '' }) {
+  const id = useId();
   const z = ZONES[zone];
   if (!z) return null;
+  const titleId = `${id}-title`;
+  const descId = `${id}-desc`;
+  const clipId = `${id}-clip`;
   return (
-    <svg viewBox={z.view} className={className} aria-hidden="true" preserveAspectRatio="xMidYMid meet">
-      <Garment />
-      {z.overlay}
+    <svg
+      viewBox="102 20 256 508"
+      className={className}
+      role="img"
+      aria-labelledby={`${titleId} ${descId}`}
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <title id={titleId}>{z.label}</title>
+      <desc id={descId}>{z.description}</desc>
+      <defs>
+        <clipPath id={clipId}>
+          <path d={outlinePath(g)} />
+        </clipPath>
+      </defs>
+      <Garment
+        g={g}
+        stroke="var(--color-ink-soft)"
+        fill="rgba(255,255,255,.55)"
+      />
+      {zone === 'rise' ? (
+        <g fill="none" stroke={SAGE} strokeLinecap="round">
+          <path
+            d={`M${C + 2},${BAND_T} V144 Q${C + 2},162 ${C},${Y_CROTCH}`}
+            strokeWidth="12"
+            opacity=".12"
+          />
+          <path
+            d={`M${C + 2},${BAND_T} V144 Q${C + 2},162 ${C},${Y_CROTCH}`}
+            strokeWidth="3.4"
+          />
+          <path
+            d={`M${C - 6},${BAND_T} H${C + 10} M${C - 8},${Y_CROTCH} H${C + 8}`}
+            strokeWidth="3"
+          />
+        </g>
+      ) : (
+        <g>
+          <rect
+            x={z.x1 - 2}
+            y={z.y - 12}
+            width={z.x2 - z.x1 + 4}
+            height="24"
+            fill={BAND_FILL}
+            clipPath={`url(#${clipId})`}
+          />
+          <g
+            fill="none"
+            stroke={SAGE}
+            strokeWidth="3.4"
+            strokeLinecap="round"
+          >
+            <path
+              d={`M${z.x1},${z.y} H${z.x2} M${z.x1},${z.y - 7} V${z.y + 7} M${z.x2},${z.y - 7} V${z.y + 7}`}
+            />
+          </g>
+        </g>
+      )}
     </svg>
   );
 }
@@ -265,7 +287,7 @@ const OPTION_ILLOS = {
     balancedEveryday: (
       <g>
         <path d="M24,10.5 V36 M12,14 H36" />
-        <circle cx="24" cy="8.5" r="1.8" />
+        <circle cx="24" cy="8" r="1.8" />
         <path d="M12,14 L8,24 M12,14 L16,24 M7.5,24 C9,29 15,29 16.5,24" />
         <path d="M36,14 L32,24 M36,14 L40,24 M31.5,24 C33,29 39,29 40.5,24" />
         <path d="M17,40 H31 M24,36 V40" />
