@@ -3,8 +3,42 @@
    One drawing system renders every fit; a smooth-converge hook
    makes the silhouette physically move toward the leading fit
    as the user answers. Reference geometry, 32×32 flat.
+
+   Drafting geometry now lives in garment-paths.js and is shared
+   verbatim with the measurement illustrations. Coordinates describe
+   an illustrative flat, not verified product measurements.
    ============================================================ */
 import { useEffect, useRef, useState } from 'react';
+import {
+  C,
+  BAND_T,
+  BAND_B,
+  outlinePath,
+  bandPath,
+  detailPaths,
+  hemPath,
+  dimensionRows,
+} from './garment-paths.js';
+
+/* Compatibility re-exports: older imports of the garment constants and
+   path builders from this module keep working against the shared geometry. */
+export {
+  C,
+  WA,
+  BAND_T,
+  BAND_B,
+  Y_SEAT,
+  Y_CROTCH,
+  Y_T,
+  Y_K,
+  Y_H,
+  landmarks,
+  outlinePath,
+  bandPath,
+  detailPaths,
+  hemPath,
+  dimensionRows,
+} from './garment-paths.js';
 
 export const GEO = {
   slimTaper:        { wt: 70, wk: 52, wh: 42, thigh: 11.75, knee: 8.9,  open: 6.75 },
@@ -14,42 +48,6 @@ export const GEO = {
   relaxedTaper:     { wt: 86, wk: 72, wh: 60, thigh: 14.0,  knee: 10.4, open: 7.75 },
   relaxedFit:       { wt: 92, wk: 82, wh: 74, thigh: 14.5,  knee: 11.2, open: 8.25 },
 };
-
-export const C = 230, WA = 84, BAND_T = 36, BAND_B = 62;
-export const Y_T = 210, Y_K = 340, Y_H = 508;
-
-export function outlinePath(g) {
-  const hip = Math.max(WA, g.wt) + 7;
-  const oLT = C - g.wt, oLK = C - g.wk, oLH = C - g.wh;
-  const oRT = C + g.wt + 1.5, oRK = C + g.wk + 1.5, oRH = C + g.wh + 1.5;
-  const inL = C - 14, inR = C + 14;
-  return `M${C - WA},${BAND_B}
-    C${C - hip},96 ${C - hip},148 ${oLT},${Y_T}
-    C${oLT},262 ${oLK},298 ${oLK},${Y_K}
-    C${oLK},402 ${oLH},452 ${oLH},${Y_H}
-    L${inL},${Y_H}
-    C${inL + 2},430 ${C - 5},308 ${C - 3.5},242
-    Q${C},226 ${C + 3.5},242
-    C${C + 5},308 ${inR - 2},430 ${inR},${Y_H}
-    L${oRH},${Y_H}
-    C${oRH},452 ${oRK},402 ${oRK},${Y_K}
-    C${oRK},298 ${oRT},262 ${oRT},${Y_T}
-    C${C + hip + 1.5},148 ${C + hip + 1.5},96 ${C + WA},${BAND_B} Z`;
-}
-export const bandPath = `M${C - WA},${BAND_B} V${BAND_T + 8} Q${C - WA},${BAND_T} ${C - WA + 8},${BAND_T} H${C + WA - 8} Q${C + WA},${BAND_T} ${C + WA},${BAND_T + 8} V${BAND_B}`;
-export function detailPaths() {
-  const loops = [C - WA + 12, C - WA * 0.5, C - 2, C + WA * 0.5 - 4, C + WA - 16]
-    .map(x => `M${x},${BAND_T - 3} v${BAND_B - BAND_T - 8}`).join(' ');
-  return `M${C - WA + 2},${BAND_B + 0.5} H${C + WA - 2} ${loops}
-    M${C - 2},${BAND_B + 8} C${C - 8},120 ${C - 8},176 ${C - 4},214 C${C - 3},224 ${C + 4},227 ${C + 10},225
-    M${C - WA + 38},${BAND_B + 2} C${C - WA + 18},82 ${C - WA + 8},102 ${C - WA + 4},136
-    M${C + WA - 38},${BAND_B + 2} C${C + WA - 18},82 ${C + WA - 8},102 ${C + WA - 4},136
-    M${C + WA - 34},${BAND_B + 14} c6,7 16,7 21,1`;
-}
-function hemPath(g) {
-  const oLH = C - g.wh, oRH = C + g.wh + 1.5;
-  return `M${oLH},${Y_H - 16} H${C - 14} M${C + 14},${Y_H - 16} H${oRH}`;
-}
 
 /* Exponential smoothing toward a target geometry — the convergence. */
 export function useConvergingGeo(targetKey, reduced) {
@@ -86,33 +84,126 @@ export function useConvergingGeo(targetKey, reduced) {
   return g;
 }
 
-export function PantFlat({ g, dims = false, highlight = null, className = '', stroke = 'var(--color-ink)', fill = 'rgba(255,255,255,.5)', detail = true }) {
-  const dimRows = [
-    { y: Y_T, x1: C - g.wt, label: 'THIGH', val: g.thigh },
-    { y: Y_K, x1: C - g.wk, label: 'KNEE', val: g.knee },
-    { y: Y_H - 2, x1: C - g.wh, label: 'OPEN', val: g.open },
-  ];
+/* The full garment: outline, waistband, and construction details.
+   Shared by the fit silhouettes and the measurement cards. */
+export function Garment({
+  g,
+  stroke = 'currentColor',
+  fill = 'rgba(255,255,255,.5)',
+  detail = true,
+}) {
   return (
-    <svg viewBox="0 -18 460 596" className={className} aria-hidden="true" style={{ overflow: 'visible' }}>
-      <line x1={C} y1={20} x2={C} y2={545} stroke={stroke} strokeWidth="1" strokeDasharray="3 7" opacity=".22" />
-      <path d={outlinePath(g)} fill={fill} stroke={stroke} strokeWidth="2.6" strokeLinejoin="round" strokeLinecap="round" />
+    <g strokeLinecap="round" strokeLinejoin="round">
+      <path
+        d={outlinePath(g)}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="2.6"
+      />
+      <path
+        d={bandPath}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth="2.2"
+      />
       {detail && <>
-        <path d={bandPath} fill="none" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" opacity=".85" />
-        <circle cx={C} cy={BAND_B + 9} r="3.6" fill="none" stroke={stroke} strokeWidth="1.5" opacity=".85" />
-        <path d={detailPaths()} fill="none" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity=".85" />
-        <path d={hemPath(g)} fill="none" stroke={stroke} strokeWidth="1.1" strokeLinecap="round" opacity=".6" />
+        <path
+          d={detailPaths()}
+          fill="none"
+          stroke={stroke}
+          strokeWidth="1.45"
+          opacity=".72"
+        />
+        <circle
+          cx={C + 8}
+          cy={(BAND_T + BAND_B) / 2}
+          r="2.8"
+          fill="none"
+          stroke={stroke}
+          strokeWidth="1.45"
+        />
+        <path
+          d={hemPath(g)}
+          fill="none"
+          stroke={stroke}
+          strokeWidth="1.35"
+          opacity=".65"
+        />
       </>}
+    </g>
+  );
+}
+
+export function PantFlat({
+  g,
+  dims = false,
+  highlight = null,
+  className = '',
+  stroke = 'var(--color-ink)',
+  fill = 'rgba(255,255,255,.5)',
+  detail = true,
+}) {
+  const dimRows = dimensionRows(g);
+  return (
+    <svg
+      viewBox="0 -18 460 596"
+      className={className}
+      aria-hidden="true"
+      style={{ overflow: 'visible' }}
+    >
+      <Garment g={g} stroke={stroke} fill={fill} detail={detail} />
       {dims && dimRows.map(d => {
         const active = highlight === d.label;
-        const line = active ? 'var(--color-sage)' : 'var(--color-chalkline)';
+        const line = active
+          ? 'var(--color-sage)'
+          : 'var(--color-chalkline)';
         const lw = active ? 2.4 : 1.5;
         return (
-          <g key={d.label} opacity={highlight && !active ? .3 : 1} style={{ transition: 'opacity .25s' }}>
-            <line x1={d.x1 + 4} y1={d.y} x2={C - 5} y2={d.y} stroke={line} strokeWidth={lw} />
-            <line x1={d.x1 + 4} y1={d.y - 6} x2={d.x1 + 4} y2={d.y + 6} stroke={line} strokeWidth={lw} />
-            <line x1={C - 5} y1={d.y - 6} x2={C - 5} y2={d.y + 6} stroke={line} strokeWidth={lw} />
-            <text x={d.x1 - 14} y={d.y + 4.5} textAnchor="end" fontFamily="var(--font-mono)" fontSize="12.5" fill={active ? 'var(--color-sage)' : 'var(--color-chalk)'} letterSpacing=".06em">
-              {d.label} <tspan fill={active ? 'var(--color-sage)' : 'var(--color-ink)'} fontWeight="500">{d.val.toFixed(2)}″</tspan>
+          <g
+            key={d.label}
+            opacity={highlight && !active ? .3 : 1}
+            style={{ transition: 'opacity .25s' }}
+          >
+            <line
+              x1={d.x1}
+              y1={d.y}
+              x2={d.x2}
+              y2={d.y}
+              stroke={line}
+              strokeWidth={lw}
+            />
+            <line
+              x1={d.x1}
+              y1={d.y - 6}
+              x2={d.x1}
+              y2={d.y + 6}
+              stroke={line}
+              strokeWidth={lw}
+            />
+            <line
+              x1={d.x2}
+              y1={d.y - 6}
+              x2={d.x2}
+              y2={d.y + 6}
+              stroke={line}
+              strokeWidth={lw}
+            />
+            <text
+              x={d.x1 - 14}
+              y={d.y + 4.5}
+              textAnchor="end"
+              fontFamily="var(--font-mono)"
+              fontSize="12.5"
+              fill={active ? 'var(--color-sage)' : 'var(--color-chalk)'}
+              letterSpacing=".06em"
+            >
+              {d.label}{' '}
+              <tspan
+                fill={active ? 'var(--color-sage)' : 'var(--color-ink)'}
+                fontWeight="500"
+              >
+                {d.val.toFixed(2)}″
+              </tspan>
             </text>
           </g>
         );
