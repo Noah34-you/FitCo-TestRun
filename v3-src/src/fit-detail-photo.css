@@ -1,0 +1,43 @@
+.fit-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fit-detail-photo {
+  position: relative;
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 1148 / 1371;
+  margin-inline: auto;
+  /* The photo has real alpha; the site's paper color shows through. */
+  background: transparent;
+}
+
+.fit-detail-photo__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fit-detail-photo__overlay {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.fit-detail-photo__highlight {
+  fill: #c3e4a9;
+  fill-opacity: .56;
+  stroke: #e0f5c7;
+  stroke-opacity: .95;
+  stroke-width: 7;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 359px) {
+  .fit-detail-grid { grid-template-columns: 1fr; }
+  .fit-detail-photo { max-width: 220px; }
+}
