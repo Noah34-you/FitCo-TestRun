@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Wordmark, Btn, Kicker, Mono, Scanline, rise } from '../ui.jsx';
 import { PantFlat, useConvergingGeo } from '../geometry.jsx';
-import { CoordDiagram, RuleIcon } from '../illustrations.jsx';
+import { RuleIcon } from '../illustrations.jsx';
+import FitDetailPhoto from '../FitDetailPhoto.jsx';
 import { FIT_KEYS, FIT_LABEL } from '../engine.js';
 
 const heroImg = `${import.meta.env.BASE_URL}media/hero-fabric.jpg`;
@@ -47,12 +48,11 @@ function ReadingCard({ reduced, onStart }) {
   );
 }
 
-const COORDS = [
-  ['01', 'Thigh', 'Room above the knee helps explain pulling and pinching.', 'thigh'],
-  ['02', 'Seat', 'Room through the hips so nothing pulls when you sit.', 'seat'],
-  ['03', 'Rise', 'Where the waistband sits and whether it stays there.', 'rise'],
-  ['04', 'Knee', 'The shape below the knee changes the whole silhouette.', 'knee'],
-  ['05', 'Opening', 'Hem width affects whether pants stack, break cleanly, or cover your shoes.', 'opening'],
+const FIT_DETAILS = [
+  ['01', 'Waist', 'How snugly the waistband sits.', 'waist'],
+  ['02', 'Rise', 'From the crotch seam to the top of the waistband.', 'rise'],
+  ['03', 'Thigh', 'Room through the upper leg.', 'thigh'],
+  ['04', 'Leg opening', 'The hem width changes how pants sit over your shoes.', 'opening'],
 ];
 
 const RULES = [
@@ -124,21 +124,21 @@ export default function Home({ onStart, hasReport, onReport }) {
         </div>
       </section>
 
-      {/* FIVE COORDINATES */}
-      <section className="grid-paper border-y border-hairline">
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-10 py-24">
+      {/* FOUR FIT DETAILS — ONE REUSABLE PHOTO */}
+      <section className="grid-paper border-y border-hairline" aria-labelledby="fit-details-heading">
+        <div className="max-w-[1120px] mx-auto px-5 sm:px-10 py-16 sm:py-24">
           <motion.div variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .4 }}>
             <Kicker className="mb-4">Where fit is won or lost</Kicker>
-            <h2 className="font-disp font-semibold tracking-[-0.03em] text-[clamp(28px,3.4vw,48px)] mb-12">What changes the way pants fit</h2>
+            <h2 id="fit-details-heading" className="font-disp font-semibold tracking-[-0.03em] text-[clamp(28px,3.4vw,48px)] mb-8 sm:mb-12">What changes the way pants fit</h2>
           </motion.div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-px bg-hairline border border-hairline">
-            {COORDS.map(([n, name, d, zone], i) => (
-              <motion.div key={n} className="bg-paper p-6" variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .4 }} custom={i}>
-                <Mono className="!text-chalk">{n}</Mono>
-                <CoordDiagram zone={zone} className="w-full h-[104px] mt-4 text-ink" />
-                <div className="font-disp font-semibold text-xl mt-3 mb-2">{name}</div>
-                <p className="text-[13.5px] leading-relaxed text-muted">{d}</p>
-              </motion.div>
+          <div className="fit-detail-grid gap-px bg-hairline border border-hairline">
+            {FIT_DETAILS.map(([n, name, d, zone], i) => (
+              <motion.article key={zone} className="bg-paper min-w-0 p-4 sm:p-7" variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .25 }} custom={i}>
+                <Mono className="!text-chalk !text-xs">{n}</Mono>
+                <FitDetailPhoto zone={zone} className="mt-3 mb-5" />
+                <h3 className="font-disp font-semibold text-lg sm:text-2xl mb-2">{name}</h3>
+                <p className="text-sm sm:text-base leading-relaxed text-muted max-w-[32ch]">{d}</p>
+              </motion.article>
             ))}
           </div>
         </div>
