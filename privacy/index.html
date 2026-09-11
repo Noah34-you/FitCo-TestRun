@@ -6,16 +6,15 @@
 <title>Privacy Policy — FitCo</title>
 <meta name="description" content="How FitCo collects, uses, and protects your information.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5.5' fill='%233C6B3C'/%3E%3Cg fill='%23FFFFFF'%3E%3Crect x='5' y='5.2' width='14' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='10' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='3.7' height='9.2' rx='.9'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/fonts/fitco-fonts.css" />
+  <link rel="stylesheet" href="/fitco-consent.css" />
 <link rel="stylesheet" href="../fitco-ui.css">
 <style>
   :root {
     --bg: #F5F3EE;
     --bg-white: #FFFFFF;
     --text: #111111;
-    --text-muted: #6E6E6E;
+    --text-muted: #646464;
     --text-body: #333333;
     --border: #D9D9D9;
     --border-light: #E8E6E1;
@@ -172,9 +171,20 @@
     .legal { padding: calc(var(--header-h) + 36px) 20px 32px; }
     .legal-body h2 { font-size: 20px; margin-top: 40px; }
   }
+  .skip-link {
+    position: absolute; left: 8px; top: -60px; z-index: 200;
+    background: var(--text-primary, #111); color: #fff;
+    padding: 10px 16px; border-radius: 8px;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: top .15s ease;
+  }
+  .skip-link:focus { top: 8px; }
 </style>
+  <script src="/posthog-config.js"></script>
+  <script src="/fitco-consent.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- UTILITY BAR -->
 <div class="utility-bar">
@@ -191,8 +201,8 @@
     <a href="/" class="logo"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
     <ul class="nav-center">
       <li><a href="/#/fitting">Find My Fit</a></li>
-      <li><a href="/#works">How It Works</a></li>
-      <li><a href="/#fits">Fit Guide</a></li>
+      <li><a href="/about/index.html#how">How It Works</a></li>
+      <li><a href="/about/index.html#fits">Fit Guide</a></li>
       <li><a href="/about/index.html">About Us</a></li>
     </ul>
     <div class="nav-right">
@@ -202,10 +212,10 @@
 </nav>
 
 <!-- CONTENT -->
-<main class="legal">
+<main class="legal" id="main" tabindex="-1">
   <span class="legal-kicker">Legal</span>
   <h1>Privacy Policy</h1>
-  <p class="legal-updated">Last updated: [DATE]</p>
+  <p class="legal-updated">Last updated: 11 September 2026</p>
 
   <nav class="legal-switch" aria-label="Legal documents">
     <a href="/privacy/index.html" aria-current="page">Privacy Policy</a>
@@ -219,34 +229,34 @@
 
     <p>FitCo doesn&rsquo;t require you to create an account. If you don&rsquo;t voluntarily provide identifying information (like your email), we generally can&rsquo;t identify you personally from your quiz responses alone.</p>
 
-    <p>A quick note on what FitCo is <strong>not</strong>: we&rsquo;re not an online store, a marketplace, or a manufacturer. We don&rsquo;t process payments and we don&rsquo;t sell products directly. Some recommendations link to third-party retailers through affiliate links (more on that below).</p>
+    <p>A quick note on what FitCo is <strong>not</strong>: we&rsquo;re not an online store, a marketplace, or a manufacturer. We don&rsquo;t process payments, we don&rsquo;t sell products, and we don&rsquo;t have accounts or logins. Recommendations link out to third-party retailers using ordinary links &mdash; we currently earn no commission on them.</p>
 
     <h2 id="collect">1. Information we collect</h2>
 
     <h3>Information you give us</h3>
-    <p>When you take the quiz or contact us, you may voluntarily provide:</p>
+    <p>The fitting asks six questions. That is the entire list of what you can tell us:</p>
     <ul>
-      <li>Height</li>
-      <li>Weight (optional)</li>
-      <li>Waist size</li>
-      <li>Inseam</li>
-      <li>Body type / build</li>
-      <li>Fit preferences and common fit problems</li>
-      <li>Your quiz responses</li>
-      <li>Your email address, if you contact us or subscribe to updates</li>
+      <li>What you&rsquo;re shopping for (jeans, chinos, technical, or no preference)</li>
+      <li>Which of four broad builds best describes you</li>
+      <li>Where pants usually fit wrong for you (up to two options)</li>
+      <li>Your height, as one of four broad ranges &mdash; not an exact figure</li>
+      <li>Which leg shape you prefer</li>
+      <li>What matters most to you in a pair of pants</li>
     </ul>
-    <p>You don&rsquo;t have to give us any of this. If you skip a field, we simply have less to base a recommendation on. We ask for body measurements only to generate fit recommendations &mdash; not to identify you.</p>
+    <p><strong>We do not ask for your weight, your waist size, or your inseam</strong>, and there is nowhere on the site to enter them. We don&rsquo;t ask for your name, your address, your phone number, or your date of birth, and we never handle payment details.</p>
+    <p>Your answers are saved <strong>in your own browser</strong> (see &ldquo;Where your answers live&rdquo; below). You don&rsquo;t have to answer anything; if you skip a question we simply have less to base a recommendation on.</p>
+    <p>Separately, you may give us your <strong>email address</strong> if you choose to join the updates list.</p>
 
     <h3>Information we collect automatically</h3>
-    <p>Like most websites, we collect some standard technical information when you visit, such as:</p>
+    <p><strong>With analytics switched off, we collect nothing automatically.</strong> FitCo sets no cookies, loads no third-party scripts, and makes no requests to anyone else when you visit. Our fonts are served from our own domain rather than a font network, so no third party is told that you visited.</p>
+    <p>If you agree to analytics (see below), our analytics provider would then receive:</p>
     <ul>
-      <li>Browser type</li>
-      <li>Device type</li>
-      <li>Pages you visit and how you interact with them</li>
-      <li>Approximate location (if provided by our analytics tools &mdash; usually city or region level from your IP address)</li>
-      <li>IP address</li>
-      <li>Cookies and similar technologies</li>
+      <li>Which pages and steps you viewed, and which options you chose</li>
+      <li>Your browser and device type</li>
+      <li>Your IP address, from which an approximate city or region is derived</li>
+      <li>An identifier stored in a cookie and in your browser&rsquo;s local storage, so repeat visits can be recognised</li>
     </ul>
+    <p>Your fitting answers are included in that analytics data as the shape of the answer (for example, &ldquo;athletic build&rdquo;), so we can tell which recommendations the engine is producing. Your email address is <strong>never</strong> sent to analytics.</p>
 
     <h2 id="use">2. How we use your information</h2>
     <p>We use the information above to:</p>
@@ -261,24 +271,40 @@
     </ul>
     <p>We do <strong>not</strong> sell your personal information, and we don&rsquo;t use your measurements to serve you third-party advertising.</p>
 
-    <h2 id="cookies">3. Cookies and similar technologies</h2>
-    <p>We use cookies and similar technologies to help the site function and to understand how it&rsquo;s used. You can control cookies through your browser settings &mdash; blocking some cookies may affect how parts of the site work. Where required by law, we&rsquo;ll ask for your consent before setting non-essential cookies.</p>
+    <h2 id="cookies">3. Cookies, local storage, and your browser</h2>
+    <p><strong>FitCo currently sets no cookies at all.</strong> We use no advertising cookies, no third-party cookies, and no session-recording or session-replay software of any kind.</p>
+    <p>What we do use is your browser&rsquo;s <strong>local storage</strong>, which keeps data on your own device and is never transmitted to us. These are the only keys we write:</p>
+    <ul>
+      <li><code>fitco_v3_answers</code> &mdash; your six fitting answers, so your report survives a refresh</li>
+      <li><code>fitco_fit_result</code> &mdash; which fit you matched</li>
+      <li><code>fitco_quiz_completed</code> &mdash; whether you&rsquo;ve finished the fitting</li>
+      <li><code>fitco_consent</code> &mdash; your analytics choice, so we don&rsquo;t ask again</li>
+    </ul>
+    <p>You can erase all of it at any time by clearing site data for this site in your browser, which is the equivalent of deleting your FitCo profile. Because it never leaves your device, we hold no copy and have nothing to look up about you.</p>
+    <p>If analytics is ever enabled, our provider would set one first-party cookie holding a random identifier. <strong>We ask before that happens</strong> and nothing loads until you agree.</p>
+
+    <h3>Do Not Track and Global Privacy Control</h3>
+    <p>We honour both. If your browser or an extension sends a <strong>Global Privacy Control (GPC)</strong> signal or a <strong>Do Not Track (DNT)</strong> header, we treat it as a standing opt-out: we won&rsquo;t load analytics, we won&rsquo;t ask you to, and no identifier is created. You don&rsquo;t need to do anything else.</p>
 
     <h2 id="analytics">4. Analytics</h2>
-    <p>We use analytics tools to understand how visitors use FitCo so we can improve it. These tools may collect information like the pages you view, your device and browser, and approximate location. Depending on our current setup, we may use services such as <strong>Google Analytics or PostHog</strong> and <strong>Vercel Analytics</strong>. These providers process data on our behalf and have their own privacy policies.</p>
+    <p><strong>Analytics is currently switched off.</strong> No analytics provider receives anything about your visit today.</p>
+    <p>The only analytics tool FitCo is built to use is <strong>PostHog</strong> (PostHog, Inc., United States). We do not use Google Analytics, Google Tag Manager, Vercel Analytics, Meta Pixel, TikTok Pixel, Hotjar, or any advertising network, and none of their code is present on this site.</p>
+    <p>If we turn PostHog on, we will ask for your consent first, and it will be configured to capture only named events we write deliberately &mdash; with <strong>automatic capture off</strong>, <strong>session recording off</strong>, and <strong>surveys off</strong>. You can decline, and you can change your mind by clearing site data.</p>
 
-    <h2 id="affiliate">5. Affiliate links</h2>
-    <p>Some recommendations include <strong>affiliate links</strong> to third-party retailers. If you click one and make a purchase, we may earn a small commission at no extra cost to you. To do this, affiliate networks may set cookies or use tracking to attribute a purchase to FitCo. We don&rsquo;t receive your payment details or order information beyond what an affiliate network shares with us for attribution and reporting.</p>
+    <h2 id="affiliate">5. Links to retailers</h2>
+    <p>FitCo has <strong>no affiliate relationships and earns no commission</strong>. The links we publish are ordinary links to the retailer, carrying no referral codes, no tracking parameters and no affiliate tags, and no affiliate network is involved in your visit.</p>
+    <p>When you follow one, you leave FitCo and the retailer&rsquo;s own privacy policy takes over. As with any link on the web, your browser tells the retailer which page you came from. We receive nothing back about what you view or buy.</p>
+    <p>If we ever introduce affiliate links, we will disclose it on the page where the links appear, before you click, and update this policy.</p>
 
     <h2 id="third-parties">6. Third-party services</h2>
-    <p>We rely on a handful of third-party providers to run FitCo. Depending on our current setup, these may include, as examples:</p>
+    <p><strong>As the site is configured today, no third party receives anything about your visit.</strong> Fonts are served from our own domain, analytics is switched off, and there are no advertising, chat, embed, or affiliate scripts anywhere on the site.</p>
+    <p>These are the only providers that can ever be involved, and what each would receive:</p>
     <ul>
-      <li><strong>Analytics</strong> &mdash; e.g., Google Analytics or PostHog, Vercel Analytics</li>
-      <li><strong>Fonts</strong> &mdash; e.g., Google Fonts (which may receive your IP address to serve fonts)</li>
-      <li><strong>Email provider</strong> &mdash; to send updates or respond to your messages</li>
-      <li><strong>Affiliate networks</strong> &mdash; to power affiliate links and commissions</li>
+      <li><strong>Our web host</strong> &mdash; serves the pages, and like any web server processes your IP address to do so.</li>
+      <li><strong>PostHog</strong> (analytics) &mdash; only if you agree. Would receive the events described in section 1.</li>
+      <li><strong>Our email provider</strong> &mdash; only if you join the updates list, and only your email address. The list is not open yet; while it is closed no address is collected.</li>
     </ul>
-    <p>These providers only receive the information they need to perform their service, and they&rsquo;re expected to handle it according to their own privacy policies.</p>
+    <p>Providers receive only what they need to perform their service and are expected to handle it under their own privacy policies. We will update this list before adding anyone to it.</p>
 
     <h2 id="share">7. How we share information</h2>
     <p>We don&rsquo;t sell your personal information. We share it only:</p>
@@ -290,7 +316,9 @@
     </ul>
 
     <h2 id="retention">8. Data retention</h2>
-    <p>We keep information only as long as we need it for the purposes described in this policy, or as required by law. When we no longer need information, we delete it or de-identify it where we&rsquo;re able to. You can email us to request deletion of information we hold about you (see <a href="#rights">Your rights</a> below).</p>
+    <p><strong>Your fitting answers are kept on your device, not ours, and stay until you clear your browser&rsquo;s site data.</strong> We hold no server-side copy, which means there is nothing for us to retain, search, or hand over.</p>
+    <p>If you join the updates list, we keep your email address until you unsubscribe or ask us to delete it. If analytics is enabled, event data is retained for the period set in our analytics account.</p>
+    <p>You can email us to request deletion of anything we hold (see <a href="#rights">Your rights</a>). <em>The exact retention period for the updates list and for analytics is being finalised and will be stated here before either is switched on.</em></p>
 
     <h2 id="rights">9. Your rights and choices</h2>
     <p>Depending on where you live, you may have some or all of the following rights:</p>
@@ -312,7 +340,10 @@
       <li>Correct inaccurate personal information</li>
       <li>Not be discriminated against for exercising your rights</li>
     </ul>
-    <p><strong>We do not sell or &ldquo;share&rdquo; your personal information</strong> as those terms are defined under California law, and we do not use sensitive personal information to infer characteristics about you for advertising. To make a request, email <a href="mailto:support@fitco.fit">support@fitco.fit</a>. You may also designate an authorized agent to make a request on your behalf.</p>
+    <p><strong>We do not sell or &ldquo;share&rdquo; your personal information</strong> as those terms are defined under California law. &ldquo;Share&rdquo; in the CPRA sense means disclosing it for cross-context behavioural advertising &mdash; we do none of that, we run no advertising, and we use no advertising identifiers. We also do not use sensitive personal information to infer characteristics about you.</p>
+    <p>Because we do not sell or share personal information, there is no &ldquo;Do Not Sell or Share My Personal Information&rdquo; link to offer. If that ever changes we will add one. As described in section 3, we honour <strong>Global Privacy Control</strong> regardless.</p>
+    <p>To make a request, email <a href="mailto:support@fitco.fit">support@fitco.fit</a>. You may also designate an authorized agent to make a request on your behalf. We will not discriminate against you for exercising any of these rights.</p>
+    <p>Note that most of what FitCo &ldquo;knows&rdquo; about you never reaches us at all &mdash; it is held in your own browser. For that data, clearing your browser&rsquo;s site data is an immediate and complete deletion that does not require asking us.</p>
 
     <h2 id="gdpr">11. EU / UK visitors (GDPR)</h2>
     <p>If you&rsquo;re in the European Economic Area or the United Kingdom, you have rights under the GDPR (and UK GDPR), including the right to access, correct, delete, restrict, or object to our processing of your personal data, and the right to data portability.</p>
@@ -334,7 +365,7 @@
     <p>We may update this Privacy Policy from time to time. When we make material changes, we&rsquo;ll update the &ldquo;Last updated&rdquo; date above and, where appropriate, provide additional notice. Your continued use of FitCo after an update means you accept the revised policy.</p>
 
     <h2 id="contact">15. Contact us</h2>
-    <p>Questions about this policy or your information? Email us at <a href="mailto:support@fitco.fit">support@fitco.fit</a>.</p>
+    <p>Questions about this policy or your information? Email us at <a href="mailto:support@fitco.fit">support@fitco.fit</a>. FitCo is operated from California, United States.</p>
 
     <p>See also our <a href="/terms/index.html">Terms &amp; Conditions</a>.</p>
 
