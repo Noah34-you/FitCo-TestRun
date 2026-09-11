@@ -287,7 +287,7 @@ const OPTION_ILLOS = {
     balancedEveryday: (
       <g>
         <path d="M24,10.5 V36 M12,14 H36" />
-        <circle cx="24" cy="8" r="1.8" />
+        <circle cx="24" cy="8.5" r="1.8" />
         <path d="M12,14 L8,24 M12,14 L16,24 M7.5,24 C9,29 15,29 16.5,24" />
         <path d="M36,14 L32,24 M36,14 L40,24 M31.5,24 C33,29 39,29 40.5,24" />
         <path d="M17,40 H31 M24,36 V40" />
