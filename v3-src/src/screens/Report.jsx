@@ -4,16 +4,13 @@ import { Wordmark, Btn, Kicker, Mono, rise, LegalFooter } from '../ui.jsx';
 import { PantFlat, GEO, useConvergingGeo } from '../geometry.jsx';
 import { computeScores, diagnose, rankProducts, FIT_LABEL, FIT_INFO, PRICES_AS_OF } from '../engine.js';
 import { track, retailerOf } from '../analytics.js';
-import Heightfield from '../heightfield.jsx';
 
-/* THE FIT REPORT — a dated document, not a sales page.
-   Tiers and reasons; caveats in plain sight. */
+/* The report shows ranked cuts, product picks, and their limitations. */
 export default function Report({ answers, onRetake, onHome }) {
   const { best, alt1, alt2, final } = useMemo(() => computeScores(answers), [answers]);
   const reduced = useReducedMotion();
 
-  /* interactive instrument: preview any of the top three fits on the
-     drawing. The verdict never changes — this is a comparison view. */
+  /* Preview any of the top three fits on the same drawing. */
   const [preview, setPreview] = useState(best);
   const [highlight, setHighlight] = useState(null);
   const flatRef = useRef(null);
@@ -24,7 +21,7 @@ export default function Report({ answers, onRetake, onHome }) {
     if (k !== best) track('Alternate Previewed', { fit_archetype: k, source });
     if (source === 'alternates' && flatRef.current) flatRef.current.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
   };
-  const SPEC_DIM = { RISE: null, THIGH: 'THIGH', KNEE: 'KNEE', OPENING: 'OPEN' };
+  const SPEC_DIM = { RISE: null, THIGH: 'THIGH', LEG: 'KNEE', OPENING: 'OPEN' };
   const why = useMemo(() => diagnose(answers, best), [answers, best]);
   const { results, notice } = useMemo(() => rankProducts(answers, best), [answers, best]);
   const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -47,13 +44,12 @@ export default function Report({ answers, onRetake, onHome }) {
     <main id="main" tabIndex={-1} className="min-h-svh">
       <div className="flex items-center justify-between h-16 px-5 sm:px-10 border-b border-hairline bg-paper/85 backdrop-blur-md sticky top-0 z-40">
         <Wordmark onClick={onHome} />
-        <Mono className="hidden sm:block">FIT REPORT — {date}</Mono>
+        <Mono className="hidden sm:block">FIT REPORT · {date}</Mono>
         <button onClick={onRetake} className="text-[13.5px] font-medium text-muted hover:text-ink transition-colors cursor-pointer">Retake</button>
       </div>
 
-      {/* verdict — over the measured terrain */}
+      {/* recommended fit */}
       <section className="grid-paper border-b border-hairline relative overflow-hidden">
-        <Heightfield className="absolute inset-0 w-full h-full text-ink pointer-events-none" />
         <div className="relative z-10 max-w-[1400px] mx-auto px-5 sm:px-10 py-14 grid lg:grid-cols-[46fr_54fr] gap-10 items-center">
           <motion.div variants={rise} initial="hidden" animate="show" custom={0} className="order-last lg:order-first">
             <div className="flex items-center gap-2 max-w-[440px] mx-auto lg:mx-0 mb-3" role="group" aria-label="Preview a fit on the drawing">
@@ -66,21 +62,15 @@ export default function Report({ answers, onRetake, onHome }) {
               ))}
             </div>
             <div ref={flatRef} className="relative max-w-[440px] mx-auto lg:mx-0">
-              <PantFlat g={g} dims highlight={highlight} className="w-full h-[54vh] min-h-[380px]" />
-              {!reduced && (
-                <motion.div key={preview} className="absolute top-0 bottom-6 w-px pointer-events-none"
-                  style={{ background: 'linear-gradient(180deg, transparent, var(--color-chalkline) 18%, var(--color-chalkline) 82%, transparent)', boxShadow: '0 0 14px rgba(195,154,69,.5)' }}
-                  initial={{ left: '12%', opacity: 0 }} animate={{ left: ['12%', '88%'], opacity: [0, .75, .75, 0] }}
-                  transition={{ duration: 1.1, times: [0, .15, .85, 1], ease: 'easeInOut' }} />
-              )}
+              <PantFlat g={g} highlight={highlight} className="w-full h-[54vh] min-h-[380px]" />
             </div>
             <div className="flex justify-between max-w-[440px] mt-1 mx-auto lg:mx-0">
-              <Mono>{preview === best ? 'FIG. 02 — Your geometry' : `FIG. 02 — ${FIT_LABEL[preview]} · comparison`}</Mono>
-              <Mono>REF 32×32</Mono>
+              <Mono>{preview === best ? 'Your fit shape' : `${FIT_LABEL[preview]} · comparison`}</Mono>
+              <Mono>Typical proportions</Mono>
             </div>
             <div className="max-w-[440px] mx-auto lg:mx-0 h-5 mt-1.5" aria-live="polite">
               {preview !== best && (
-                <Mono className="!text-sage">Comparison view — your verdict is still {FIT_LABEL[best]}</Mono>
+                <Mono className="!text-sage">Previewing an alternative. Your result is still {FIT_LABEL[best]}.</Mono>
               )}
             </div>
           </motion.div>
@@ -95,7 +85,7 @@ export default function Report({ answers, onRetake, onHome }) {
             <motion.p variants={rise} initial="hidden" animate="show" custom={2} className="text-[16.5px] leading-relaxed text-ink-soft max-w-[520px] mb-7">{why}</motion.p>
             <motion.div variants={rise} initial="hidden" animate="show" custom={3}
               className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-hairline border border-hairline max-w-[520px] mb-8">
-              {[['RISE', info.rise], ['THIGH', `${g.thigh.toFixed(2)}″`], ['KNEE', `${g.knee.toFixed(2)}″`], ['OPENING', `${g.open.toFixed(2)}″`]].map(([k, v]) => (
+              {[['RISE', info.rise], ['THIGH', info.thigh], ['LEG', info.leg], ['OPENING', info.open]].map(([k, v]) => (
                 <button key={k} type="button"
                   onMouseEnter={() => setHighlight(SPEC_DIM[k])} onMouseLeave={() => setHighlight(null)}
                   onClick={() => setHighlight(h => h === SPEC_DIM[k] ? null : SPEC_DIM[k])}
@@ -106,7 +96,7 @@ export default function Report({ answers, onRetake, onHome }) {
               ))}
             </motion.div>
             <motion.div variants={rise} initial="hidden" animate="show" custom={4}>
-              <Mono className="!text-muted">Reference geometry · not garment-specific</Mono>
+              <Mono className="!text-muted">Typical shape for this cut. Specific pants vary.</Mono>
             </motion.div>
           </div>
         </div>
@@ -115,7 +105,7 @@ export default function Report({ answers, onRetake, onHome }) {
       {/* products */}
       <section className="max-w-[1400px] mx-auto px-5 sm:px-10 py-16">
         <motion.div variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .4 }} className="flex items-end justify-between flex-wrap gap-3 mb-3">
-          <h2 className="font-disp font-semibold tracking-[-0.03em] text-[clamp(26px,3vw,40px)]">Pants that agree with it</h2>
+          <h2 className="font-disp font-semibold tracking-[-0.03em] text-[clamp(26px,3vw,40px)]">Pants sold in this fit</h2>
           <Mono>Independent picks · links go to the retailer</Mono>
         </motion.div>
         {notice && (
@@ -131,7 +121,7 @@ export default function Report({ answers, onRetake, onHome }) {
               variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .2 }} custom={i}
               className="group rounded-2xl border border-hairline bg-white/60 overflow-hidden hover:-translate-y-1 hover:shadow-[0_18px_48px_rgba(22,21,15,.12)] transition-all duration-300">
               <div className="relative aspect-[4/5] overflow-hidden bg-paper-deep">
-                {/* drafting placeholder — shown when there's no verified photo,
+                {/* Drafting placeholder shown when there is no verified photo,
                     or if a photo URL fails to load */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-5" aria-hidden="true">
                   <PantFlat g={GEO[p.primaryFit]} detail={false} className="h-[68%]" fill="rgba(255,255,255,.65)" />
@@ -189,7 +179,7 @@ export default function Report({ answers, onRetake, onHome }) {
           </div>
           <motion.p variants={rise} initial="hidden" whileInView="show" viewport={{ once: true }}
             className="text-[13px] text-muted mt-10 max-w-[560px] leading-relaxed">
-            FitCo doesn't sell these products — links go straight to the retailer. We have no affiliate relationships and earn no commission, so nothing here is a paid placement. Product data is based on the specs brands publish; we haven't hand-measured these. Prices were checked on {PRICES_AS_OF} and change often — the retailer's page is the only accurate price.
+            Links go directly to the retailer. FitCo has no affiliate relationships and earns no commission today. Product details come from published brand and retailer specifications; we have not hand-measured these pairs. Prices were checked on {PRICES_AS_OF}. Check the retailer for the current price.
           </motion.p>
           <div className="flex gap-3.5 mt-8 flex-wrap">
             <Btn onClick={onRetake}>Retake the fitting</Btn>
@@ -198,7 +188,7 @@ export default function Report({ answers, onRetake, onHome }) {
         </div>
       </section>
     
-      <LegalFooter note="We recommend. We don't sell." />
+      <LegalFooter note="Independent recommendations" />
     </main>
   );
 }

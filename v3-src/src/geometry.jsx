@@ -1,8 +1,8 @@
 /* ============================================================
-   FitCo V3 — parametric pant geometry (the instrument).
+   FitCo V3 parametric pant geometry.
    One drawing system renders every fit; a smooth-converge hook
    makes the silhouette physically move toward the leading fit
-   as the user answers. Reference geometry, 32×32 flat.
+   as the user answers. Coordinates describe a typical flat shape.
    ============================================================ */
 import { useEffect, useRef, useState } from 'react';
 
@@ -51,7 +51,7 @@ function hemPath(g) {
   return `M${oLH},${Y_H - 16} H${C - 14} M${C + 14},${Y_H - 16} H${oRH}`;
 }
 
-/* Exponential smoothing toward a target geometry — the convergence. */
+/* Exponential smoothing toward a target geometry. */
 export function useConvergingGeo(targetKey, reduced) {
   const [g, setG] = useState({ ...GEO[targetKey] });
   const target = useRef(GEO[targetKey]);

@@ -1,9 +1,9 @@
 /* ============================================================
-   FitCo V3 — the recommendation engine (the actual product).
+   FitCo V3 recommendation engine.
    Faithful port of the production scoring: two layers
    (objective 80% / preference 20%), minimum-based multi-issue
    scoring, hard elimination guardrails. No fake percentages
-   ever leave this module — the UI receives ranks and tiers.
+   ever leave this module. The UI receives ranks and tiers.
    ============================================================ */
 
 /* Catalog prices are a snapshot taken by hand on this date, not a live feed.
@@ -20,12 +20,12 @@ export const FIT_LABEL = {
 };
 
 export const FIT_INFO = {
-  slimTaper:        { rise: 'Mid rise',      desc: 'Narrower through the thigh with a clean taper to the ankle. Best for lean builds that want a sharp silhouette.' },
-  straightFit:      { rise: 'Mid rise',      desc: 'Consistent width from hip to ankle. The most versatile cut across body types.' },
-  athleticTaper:    { rise: 'Mid rise',      desc: 'Roomy in the thigh with a defined taper below the knee. Cut for muscular thighs and athletic builds.' },
-  athleticStraight: { rise: 'Mid rise',      desc: 'Generous room through seat and thigh with a straighter leg. For broader builds.' },
-  relaxedTaper:     { rise: 'Mid-high rise', desc: 'Comfortable room throughout with a slight taper at the ankle. The balance of comfort and shape.' },
-  relaxedFit:       { rise: 'Mid-high rise', desc: 'Maximum room from hip to ankle. The most comfortable cut with a straighter, easier leg.' },
+  slimTaper:        { rise: 'Mid rise',      thigh: 'Close',       leg: 'Tapered', open: 'Narrow',  desc: 'Narrower through the thigh with a clean taper to the ankle. Best for lean builds that want a sharp silhouette.' },
+  straightFit:      { rise: 'Mid rise',      thigh: 'Regular',     leg: 'Straight', open: 'Regular', desc: 'Consistent width from hip to ankle. A versatile cut across body types.' },
+  athleticTaper:    { rise: 'Mid rise',      thigh: 'Roomy',       leg: 'Tapered', open: 'Narrow',  desc: 'Roomy in the thigh with a defined taper below the knee. Cut for muscular thighs and athletic builds.' },
+  athleticStraight: { rise: 'Mid rise',      thigh: 'Generous',    leg: 'Straight', open: 'Regular', desc: 'Generous room through the seat and thigh with a straighter leg. Made for broader builds.' },
+  relaxedTaper:     { rise: 'Mid-high rise', thigh: 'Relaxed',     leg: 'Soft taper', open: 'Regular', desc: 'Comfortable room throughout with a slight taper at the ankle. A balance of comfort and shape.' },
+  relaxedFit:       { rise: 'Mid-high rise', thigh: 'Very roomy',  leg: 'Relaxed', open: 'Wide',     desc: 'Plenty of room from hip to ankle, with a straighter and easier leg.' },
 };
 
 /* ---------------- scoring maps (ported verbatim) ---------------- */
@@ -60,7 +60,7 @@ const priorityMap = {
   maximumComfort:    { slimTaper: 10, straightFit: 40, athleticTaper: 35, athleticStraight: 65, relaxedTaper: 85, relaxedFit: 95 },
 };
 
-/* Works with PARTIAL answers — this powers the live convergence
+/* Works with partial answers. This powers the live update
    in the Fitting. Unanswered layers simply don't move the needle. */
 export function computeScores(answers) {
   const obj = {}; const pref = {};
@@ -120,20 +120,20 @@ export function diagnose(answers, bestKey) {
   const b = answers.build || 'average';
   const p = answers.priority || 'balancedEveryday';
   if (main === 'tightThighsSeat') {
-    if (b === 'slim') return `You told us pants usually feel too tight through the thighs and seat. Most slim-cut pants are made for narrower legs, so the waist fits but everything above the knee doesn't. That's why ${name} is likely your strongest match. It gives you more room through the thigh while keeping a clean, tapered shape below the knee.`;
-    if (b === 'athletic') return `You told us pants usually feel too tight through the thighs and seat. Standard cuts aren't cut for muscular legs, which is why the waist fits but the thighs pinch. That's why ${name} is likely your strongest match. It's cut with extra room through the seat and thigh, then tapers cleanly below the knee.`;
-    if (b === 'broader') return `You told us pants usually feel too tight through the thighs and seat. Most brands cut for average proportions, so broader builds end up with pants that bind in all the wrong places. That's why ${name} is likely your strongest match. It gives you generous room through the seat and thigh with a straighter leg that balances your frame.`;
-    return `You told us pants usually feel too tight through the thighs and seat, so you end up sizing up and living with a loose waist. That's why ${name} is likely your strongest match. It's cut with extra room exactly where you need it.`;
+    if (b === 'slim') return `Tightness through the seat and thighs is your main fit problem. ${name} gives you more room above the knee while keeping the lower leg clean and tapered.`;
+    if (b === 'athletic') return `Your waist may fit while the seat and thighs pinch. ${name} makes more room for muscular legs, then narrows below the knee so the whole leg does not look baggy.`;
+    if (b === 'broader') return `You need room through the seat and thigh without forcing you into an oversized waist. ${name} is the closest match because it carries that room through a straighter leg.`;
+    return `Tightness through the seat and thighs is your main fit problem. ${name} adds room where you need it without making the whole pant look oversized.`;
   }
-  if (main === 'waistGap') return `You told us pants usually gap at the waist — a waistband cut for wider hips, or a rise that won't stay put. That's why ${name} is likely your strongest match. It's cut with a more structured waist and proper rise so it stays put without digging in.`;
+  if (main === 'waistGap') return `A gaping waistband usually means the waist and seat are out of balance. ${name} is the closest match for the proportions and rise you described.`;
   if (main === 'tooMuchFabric') {
-    if (b === 'slim') return `You told us pants usually have too much fabric below the knee — slim builds end up swimming in cuts drawn for average proportions. That's why ${name} is likely your strongest match. It's cut closer to the leg without being skinny.`;
-    return `You told us pants usually have too much fabric below the knee. That's why ${name} is likely your strongest match. It keeps the leg line cleaner without going too slim.`;
+    if (b === 'slim') return `Extra fabric below the knee can overwhelm a slimmer build. ${name} stays closer to the leg without turning into a skinny fit.`;
+    return `Your main issue is extra fabric below the knee. ${name} keeps the lower leg cleaner without making the thigh too tight.`;
   }
-  if (main === 'lengthOff') return `You told us the length usually feels off. Inseam varies wildly by brand, which is why the same size can look cropped in one pair and drag in another. ${name} works with most standard inseams, and we'll point you toward brands with reliable length options.`;
-  if (p === 'cleanerSilhouette') return `You told us pants usually fit fine, and you want a cleaner silhouette. That's why ${name} is likely your strongest match — a sharp, tailored line that's still comfortable all day.`;
-  if (p === 'maximumComfort') return `You told us pants usually fit fine, and comfort matters most. That's why ${name} is likely your strongest match — easy through the leg with a shape that still looks intentional.`;
-  return `Based on what you told us, ${name} is likely your strongest match. It's cut for your proportions and should handle your fit needs better than a standard cut.`;
+  if (main === 'lengthOff') return `Length is your main problem, and inseams vary a lot between brands. ${name} is your closest shape match. Check the listed inseam before buying any specific pair.`;
+  if (p === 'cleanerSilhouette') return `${name} best matches the cleaner line you prefer while leaving enough room to move.`;
+  if (p === 'maximumComfort') return `${name} best matches your preference for more room through the leg.`;
+  return `${name} is the closest match for the build, fit problems, and shape you selected.`;
 }
 
 /* ---------------- catalog (the real 15) ---------------- */
@@ -152,7 +152,7 @@ export const CATALOG = [
   { id:'levis_550', brand:"Levi's", name:'550 Relaxed Fit Tapered', variant:'', price:60, category:'jeans', primaryFit:'relaxedTaper', secondaryFits:['relaxedFit'], img:'/images/products/levis_550.jpg', link:'https://www.levi.com/US/en_US/clothing/men/jeans/550TM/550TM-relaxed-fit-tapered-mens-jeans/p/550501845', benefit:'Relaxed through the thigh with a modern tapered leg. Easy, comfortable fit.' },
   { id:'duer_nosweat_relaxed_taper', brand:'DUER', name:'No Sweat Pant', variant:'Relaxed Taper', price:129, category:'technical', primaryFit:'relaxedTaper', secondaryFits:['relaxedFit'], img:'/images/products/duer_nosweat_relaxed_taper.webp', link:'https://shopduer.com/products/mens-dress-sweatpant-relaxed', benefit:"DUER's signature stretch fabric. Dress pant look with full mobility." },
   { id:'jcrew_giant', brand:'J.Crew', name:'Giant-Fit Chino Pant', variant:'', price:118, category:'chinos', primaryFit:'relaxedFit', secondaryFits:['relaxedTaper'], img:'/images/products/jcrew_giant.jpg', link:'https://www.jcrew.com/p/mens/categories/clothing/pants-and-chinos/chino/giant-fit-chino-pant/BI521', benefit:"The roomiest cut in J.Crew's chino range, without going shapeless." },
-  { id:'levis_555', brand:"Levi's", name:'555 Relaxed Straight Jeans', variant:'', price:80, category:'jeans', primaryFit:'relaxedFit', secondaryFits:[], img:'/images/products/levis_555.jpg', link:'https://www.levi.com/US/en_US/clothing/men/jeans/relaxed/555TM-relaxed-straight-mens-jeans/p/000LO0001', benefit:"Levi's relaxed straight fit — the most leg room in their straight range." },
+  { id:'levis_555', brand:"Levi's", name:'555 Relaxed Straight Jeans', variant:'', price:80, category:'jeans', primaryFit:'relaxedFit', secondaryFits:[], img:'/images/products/levis_555.jpg', link:'https://www.levi.com/US/en_US/clothing/men/jeans/relaxed/555TM-relaxed-straight-mens-jeans/p/000LO0001', benefit:"Levi's relaxed straight fit has the most leg room in their straight range." },
   /* Stage-1 additions (July 2026 research pass). img:null = no official
      image was publicly retrievable; the report renders its drafting
      placeholder instead. */
@@ -165,7 +165,7 @@ export const CATALOG = [
   { id:'carhartt_rigby_relaxed', brand:'Carhartt', name:'Rigby Relaxed Straight Pants', variant:'Canvas', price:60, category:'technical', primaryFit:'relaxedFit', secondaryFits:[], img:null, link:'https://www.carhartt.com/product/102291/relaxed-straight-rigby-dungaree', benefit:'Heavy cotton duck canvas in a roomy straight cut. The cheapest pair in the catalog.' },
 ];
 
-/* Tiered, explained product ranking. Tiers — never percentages. */
+/* Tiered, explained product ranking. Tiers replace fake percentages. */
 export function rankProducts(answers, bestKey) {
   const cat = answers.productType && answers.productType !== 'any' ? answers.productType : null;
   const scored = [];
@@ -176,12 +176,12 @@ export function rankProducts(answers, bestKey) {
     const inCat = !cat || p.category === cat;
     const reasons = [];
     reasons.push(primary
-      ? `Cut specifically as ${FIT_LABEL[bestKey]} — your recommended fit.`
+      ? `One of the closest catalog matches for ${FIT_LABEL[bestKey]}.`
       : `Not a dedicated ${FIT_LABEL[bestKey]}, but its geometry overlaps it.`);
     reasons.push(p.benefit);
     const flags = [];
-    if (!inCat) flags.push(`Outside your ${cat} pick — the geometry is right, the category isn't.`);
-    flags.push("Spec-based data — we haven't hand-verified this one yet.");
+    if (!inCat) flags.push(`This is outside your ${cat} category, but the cut still matches.`);
+    flags.push("Based on published specs. We have not hand-verified this pair yet.");
     scored.push({
       ...p, reasons, flags,
       order: (primary ? 0 : 2) + (inCat ? 0 : 1),
@@ -191,7 +191,7 @@ export function rankProducts(answers, bestKey) {
   scored.sort((a, b) => a.order - b.order || a.price - b.price);
   const inCategory = scored.filter(r => r.order % 2 === 0);
   const notice = cat && inCategory.length === 0
-    ? `We haven't verified a great ${FIT_LABEL[bestKey]} ${cat} yet — these match your fit geometry in other categories.`
+    ? `We have not found a strong ${FIT_LABEL[bestKey]} option in ${cat} yet. These have a similar shape in other categories.`
     : null;
   return { results: scored.slice(0, 4), notice };
 }

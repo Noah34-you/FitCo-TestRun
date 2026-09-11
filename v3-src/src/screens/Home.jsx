@@ -16,8 +16,7 @@ function useCycler(interval = 2600) {
   return FIT_KEYS[i];
 }
 
-/* Floating instrument card — not a teaser, the actual first question.
-   Tap your build and you're already inside the fitting, seeded. */
+/* The first fitting question can be answered from the homepage. */
 const BUILDS = [['slim', 'Slim'], ['average', 'Average'], ['athletic', 'Athletic'], ['broader', 'Broader']];
 
 function ReadingCard({ reduced, onStart }) {
@@ -27,16 +26,14 @@ function ReadingCard({ reduced, onStart }) {
   return (
     <div className="relative rounded-2xl border border-hairline bg-paper/78 backdrop-blur-md shadow-[0_24px_70px_rgba(22,21,15,.16)] p-5 w-[250px] sm:w-[286px]">
       <div className="flex items-baseline justify-between mb-1">
-        <Mono className="!text-sage">Live reading</Mono>
-        <Mono>{String(FIT_KEYS.indexOf(shown) + 1).padStart(2, '0')}/06</Mono>
+        <Mono className="!text-sage">Fit preview</Mono>
+        <Mono>Six common cuts</Mono>
       </div>
       <div className="font-mono text-[13px] font-medium tracking-[.1em] text-ink mb-2">{FIT_LABEL[shown].toUpperCase()}<span className="inline-block w-[7px] h-[13px] bg-sage align-[-2px] ml-1 animate-pulse" /></div>
       <PantFlat g={g} className="w-full h-[196px]" />
-      <div className="font-mono text-[10px] tracking-[.08em] text-muted mt-2 flex justify-between">
-        <span>THIGH {g.thigh.toFixed(2)}″</span><span>KNEE {g.knee.toFixed(2)}″</span><span>OPEN {g.open.toFixed(2)}″</span>
-      </div>
+      <p className="text-[12px] leading-relaxed text-muted mt-2">The drawing changes as your answers narrow the match.</p>
       <div className="border-t border-hairline mt-3.5 pt-3">
-        <Mono className="!text-[9.5px] !text-sage block mb-2">Tap your build — the fitting starts here</Mono>
+        <Mono className="!text-[9.5px] !text-sage block mb-2">Choose your build to start</Mono>
         <div className="grid grid-cols-2 gap-1.5">
           {BUILDS.map(([v, t]) => (
             <button key={v} onClick={() => onStart({ build: v })}
@@ -51,18 +48,18 @@ function ReadingCard({ reduced, onStart }) {
 }
 
 const COORDS = [
-  ['01', 'Thigh', 'Flat, 1″ below the crotch seam — the measurement brands publish least often.', 'thigh'],
+  ['01', 'Thigh', 'Room above the knee helps explain pulling and pinching.', 'thigh'],
   ['02', 'Seat', 'Room through the hips so nothing pulls when you sit.', 'seat'],
-  ['03', 'Rise', 'Where the waistband actually sits, and whether it stays there.', 'rise'],
-  ['04', 'Knee', 'Where the taper starts, or doesn’t. Sets the silhouette.', 'knee'],
-  ['05', 'Opening', 'Hem width — stack, clean break, or swallowed shoes.', 'opening'],
+  ['03', 'Rise', 'Where the waistband sits and whether it stays there.', 'rise'],
+  ['04', 'Knee', 'The shape below the knee changes the whole silhouette.', 'knee'],
+  ['05', 'Opening', 'Hem width affects whether pants stack, break cleanly, or cover your shoes.', 'opening'],
 ];
 
 const RULES = [
-  ['No padded catalog', '22 pants we have actually looked at beats 1,500 copied from marketing.'],
-  ['No commission rankings', 'If the best pant pays us nothing, it’s still the recommendation.'],
-  ['No invented precision', 'You’ll never see a “96% match” here. Tiers, with reasons.'],
-  ['No hidden gaps', 'Where our data is spec-based rather than hand-checked, we say so on the pick.'],
+  ['A focused catalog', 'The current catalog has 22 pants. Each one is included for a clear fit reason.'],
+  ['Independent picks', 'FitCo has no affiliate relationships or paid placements today.'],
+  ['Plain-language results', 'You get a recommended cut, alternatives, and the reason behind each pick.'],
+  ['Visible data limits', 'Product specs come from brands and retailers. Hand verification is still in progress.'],
 ];
 
 export default function Home({ onStart, hasReport, onReport }) {
@@ -96,7 +93,7 @@ export default function Home({ onStart, hasReport, onReport }) {
         <div className="relative z-10 w-full px-5 sm:px-10 pt-24 pb-16 grid lg:grid-cols-[54fr_46fr] items-center gap-10 max-w-[1400px] mx-auto">
           <div className="max-w-[620px]">
             <motion.div variants={rise} initial="hidden" animate="show" custom={0}>
-              <Kicker className="mb-7">Fit intelligence · Men's pants</Kicker>
+              <Kicker className="mb-7">Men's pants, matched by build</Kicker>
             </motion.div>
             <h1 className="font-disp font-semibold tracking-[-0.035em] leading-[0.98] text-[clamp(46px,7vw,96px)] mb-7">
               {['Never guess', 'pants again.'].map((line, i) => (
@@ -104,14 +101,14 @@ export default function Home({ onStart, hasReport, onReport }) {
               ))}
             </h1>
             <motion.p variants={rise} initial="hidden" animate="show" custom={3} className="text-[clamp(16px,1.35vw,19px)] leading-relaxed text-ink-soft max-w-[460px] mb-9">
-              Brands sell you one number. FitCo works from the five points that actually decide fit, and maps your build to the one cut that works — then shows its work.
+              Answer six questions about your build, common fit problems, and the shape you like. FitCo suggests a cut and shows you pants sold in that fit.
             </motion.p>
             <motion.div variants={rise} initial="hidden" animate="show" custom={4} className="flex items-center gap-3.5 flex-wrap mb-11">
               <Btn big onClick={onStart}>Find your fit</Btn>
               <Btn ghost href="/about/index.html">How it works</Btn>
             </motion.div>
             <motion.div variants={rise} initial="hidden" animate="show" custom={5} className="flex gap-6 flex-wrap">
-              {['60-second fitting', '22-pant catalog', 'No sponsored rankings'].map(f => (
+              {['Six questions', 'No account required'].map(f => (
                 <Mono key={f} className="flex items-center gap-2"><i className="w-[5px] h-[5px] rounded-full bg-chalkline inline-block" />{f}</Mono>
               ))}
             </motion.div>
@@ -122,8 +119,8 @@ export default function Home({ onStart, hasReport, onReport }) {
         </div>
 
         <div className="absolute bottom-5 inset-x-0 flex justify-between px-5 sm:px-10 z-10">
-          <Mono>FIG. 01 — Twill, contour-mapped</Mono>
-          <Mono className="hidden sm:inline-block bg-paper/75 backdrop-blur-sm rounded-full px-3 py-1">Reference geometry · 32×32</Mono>
+          <Mono>How pants are shaped</Mono>
+          <Mono className="hidden sm:inline-block bg-paper/75 backdrop-blur-sm rounded-full px-3 py-1">Six fit profiles</Mono>
         </div>
       </section>
 
@@ -132,7 +129,7 @@ export default function Home({ onStart, hasReport, onReport }) {
         <div className="max-w-[1400px] mx-auto px-5 sm:px-10 py-24">
           <motion.div variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .4 }}>
             <Kicker className="mb-4">Where fit is won or lost</Kicker>
-            <h2 className="font-disp font-semibold tracking-[-0.03em] text-[clamp(28px,3.4vw,48px)] mb-12">Five coordinates. One fit.</h2>
+            <h2 className="font-disp font-semibold tracking-[-0.03em] text-[clamp(28px,3.4vw,48px)] mb-12">What changes the way pants fit</h2>
           </motion.div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-px bg-hairline border border-hairline">
             {COORDS.map(([n, name, d, zone], i) => (
@@ -151,8 +148,8 @@ export default function Home({ onStart, hasReport, onReport }) {
       <section className="bg-ink text-paper">
         <div className="max-w-[1400px] mx-auto px-5 sm:px-10 py-24">
           <motion.div variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .4 }}>
-            <Kicker className="mb-4 !text-chalkline">The standard</Kicker>
-            <h2 className="font-disp font-semibold tracking-[-0.03em] text-[clamp(28px,3.4vw,48px)] mb-12 max-w-[720px]">We judge the pants. Not the marketing.</h2>
+            <Kicker className="mb-4 !text-chalkline">How recommendations work</Kicker>
+            <h2 className="font-disp font-semibold tracking-[-0.03em] text-[clamp(28px,3.4vw,48px)] mb-12 max-w-[720px]">Clear picks, with the limits shown</h2>
           </motion.div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-paper/15 border border-paper/15">
             {RULES.map(([t, d], i) => (
@@ -174,9 +171,9 @@ export default function Home({ onStart, hasReport, onReport }) {
         <div className="max-w-[900px] mx-auto px-5 sm:px-10 py-28 text-center">
           <motion.div variants={rise} initial="hidden" whileInView="show" viewport={{ once: true, amount: .5 }}>
             <Mono className="!text-sage">The fitting · 60 seconds</Mono>
-            <h2 className="font-disp font-semibold tracking-[-0.035em] leading-[1.0] text-[clamp(36px,5.4vw,76px)] my-6 text-balance">Find the cut your body already chose.</h2>
+            <h2 className="font-disp font-semibold tracking-[-0.035em] leading-[1.0] text-[clamp(36px,5.4vw,76px)] my-6 text-balance">See which cuts fit your build.</h2>
             <Btn big onClick={onStart} className="mt-2">Start the fitting</Btn>
-            <div className="mt-10"><Mono>Free · No account · We recommend. We don't sell.</Mono></div>
+            <div className="mt-10"><Mono>Free · No account required</Mono></div>
           </motion.div>
         </div>
       </section>
@@ -190,7 +187,7 @@ export default function Home({ onStart, hasReport, onReport }) {
           <a className="inline-flex items-center min-h-[24px] py-1 hover:text-ink transition-colors" href="/privacy/index.html">Privacy</a>
           <a className="inline-flex items-center min-h-[24px] py-1 hover:text-ink transition-colors" href="/terms/index.html">Terms</a>
         </nav>
-        <Mono>Fit first. Always.</Mono>
+        <Mono>Independent recommendations</Mono>
       </footer>
     </main>
   );

@@ -1,9 +1,9 @@
 /* ============================================================
-   FitCo analytics — one PostHog init for the whole app.
+   FitCo analytics, with one PostHog init for the whole app.
    Explicit events only: no autocapture, no session recording,
    no PII. Every call is a safe no-op when no key is configured
    (key comes from VITE_PUBLIC_POSTHOG_KEY at build time, or
-   /posthog-config.js at runtime — the key is publishable).
+   /posthog-config.js at runtime. The key is publishable).
 
    Nothing initialises until the visitor has granted consent via
    window.FitCoConsent (/fitco-consent.js), which also treats
@@ -34,7 +34,7 @@ export function initAnalytics() {
   }
   posthog.init(key, {
     api_host: host,
-    capture_pageview: false,        // hash-routed SPA — views are explicit events
+    capture_pageview: false,        // Hash-routed SPA; views are explicit events.
     autocapture: false,             // autocapture can pick up on-screen text; we send named events only
     disable_session_recording: true,
     person_profiles: 'identified_only',

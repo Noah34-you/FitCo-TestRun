@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About — FitCo</title>
+<title>About | FitCo</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5.5' fill='%233C6B3C'/%3E%3Cg fill='%23FFFFFF'%3E%3Crect x='5' y='5.2' width='14' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='10' height='2.9' rx='.9'/%3E%3Crect x='5' y='9.8' width='3.7' height='9.2' rx='.9'/%3E%3C/g%3E%3C/svg%3E">
   <link rel="stylesheet" href="/fonts/fitco-fonts.css" />
   <link rel="stylesheet" href="/fitco-consent.css" />
@@ -22,7 +22,7 @@
     --radius-md: 16px;
     --radius-lg: 20px;
     --radius-pill: 100px;
-    --utility-bar-h: 32px;
+    --utility-bar-h: 0px;
     --nav-h: 64px;
     --header-h: calc(var(--utility-bar-h) + var(--nav-h));
   }
@@ -41,6 +41,7 @@
 
   /* Utility bar */
   .utility-bar {
+    display: none;
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 101;
@@ -512,7 +513,7 @@
 
   /* Responsive */
   @media (max-width: 768px) {
-    :root { --utility-bar-h: 28px; --nav-h: 56px; }
+    :root { --utility-bar-h: 0px; --nav-h: 56px; }
     .utility-bar-inner { padding: 0 16px; justify-content: center; }
     .utility-bar-item { font-size: 9.5px; }
     .utility-bar-item:first-child, .utility-bar-item:last-child { display: none; }
@@ -568,26 +569,15 @@
 <script src="../fitco-ui.js"></script>
 
 <!-- NAV -->
-<!-- UTILITY BAR -->
-<div class="utility-bar">
-  <div class="utility-bar-inner">
-    <span class="utility-bar-item">Real product picks, not a size chart</span>
-    <span class="utility-bar-item">Independent recommendations. We don't sell pants today.</span>
-    <span class="utility-bar-item">Best overall, budget, and premium options</span>
-  </div>
-</div>
-
 <nav>
   <div class="nav-inner">
     <a href="/" class="logo"><svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="12" height="3.4" rx="1"/><rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1"/></svg>FitCo</a>
     <ul class="nav-center">
-      <li><a href="/#/fitting">Find My Fit</a></li>
-      <li><a href="/about/index.html#how">How It Works</a></li>
-      <li><a href="/about/index.html#fits">Fit Guide</a></li>
-      <li><a href="/about/index.html">About Us</a></li>
+      <li><a href="/about/index.html">The Method</a></li>
+      <li><a href="/shop/index.html">The Catalog</a></li>
     </ul>
     <div class="nav-right">
-      <a href="/#/fitting" class="btn btn-nav">Find My Fit</a>
+      <a href="/#/fitting" class="btn btn-nav">Start the fitting</a>
     </div>
   </div>
 </nav>
@@ -598,39 +588,11 @@
 <section class="about-hero">
   <span class="fc-kicker">Our story</span>
   <h1>Why FitCo Exists</h1>
-  <p>Your body isn't hard to fit. Most pants just weren't cut for it.</p>
+  <p>A waist size tells only part of the story. The cut changes everything else.</p>
   <div class="about-hero-stats">
     <span class="fc-pill"><i class="fc-dot"></i>6 fits</span>
     <span class="fc-pill"><i class="fc-dot"></i>22 pants</span>
     <span class="fc-pill"><i class="fc-dot"></i>11 brands</span>
-  </div>
-</section>
-
-<div class="divider"><div class="divider-inner"></div></div>
-
-<!-- FOUNDER STORY -->
-<section class="about-section">
-  <div class="founder-block fc-card">
-    <div class="founder-head">
-      <span class="fc-avatar">F</span>
-      <div>
-        <strong>From the founder</strong>
-        <span>Why I started FitCo</span>
-      </div>
-    </div>
-    <p class="founder-lead">I used to buy pants by waist size, because that's what everyone does. They fit my waist, but everything else looked off.</p>
-    <div class="founder-issues">
-      <div class="founder-issue"><span class="fc-icon-tile fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-thigh"/></svg></span><span>Some squeezed my thighs</span></div>
-      <div class="founder-issue"><span class="fc-icon-tile fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-seat"/></svg></span><span>Some had too much room in the seat</span></div>
-      <div class="founder-issue"><span class="fc-icon-tile fc-tile-sage"><svg aria-hidden="true"><use href="#fc-ic-length"/></svg></span><span>Others made my legs look shorter</span></div>
-    </div>
-    <div class="fc-callout fc-callout-sage founder-quote">
-      <span class="fc-callout-icon"><svg aria-hidden="true"><use href="#fc-ic-tape"/></svg></span>
-      <div class="fc-callout-body">
-        <p>I stopped asking "What size am I?" and started asking "What cut was this pair actually made for?"</p>
-      </div>
-    </div>
-    <p class="founder-close">That changed how I bought pants. FitCo is my way of making it easier for everyone else.</p>
   </div>
 </section>
 
@@ -704,7 +666,7 @@
   <div class="about-section-header">
     <span class="fc-kicker">How it works</span>
     <h2>A better way to find pants that fit</h2>
-    <p>We look past waist size at the things that actually change how pants fit.</p>
+    <p>We use your build, common fit problems, height, and preferred leg shape.</p>
   </div>
   <div class="solution-cards">
     <div class="solution-card">
@@ -719,7 +681,7 @@
     </div>
     <div class="solution-card">
       <div class="step-num">3</div>
-      <h3>Your Picks</h3>
+      <h3>Product Picks</h3>
       <p>Specific pants ranked for your fit, with the reasons and the caveats shown on each one.</p>
     </div>
   </div>
@@ -737,14 +699,14 @@
     <div class="fifteen-stat">
       <span class="fifteen-num">22</span>
       <span class="fifteen-cap">pants in the whole catalog</span>
-      <strong>This is a strength, not a limit.</strong>
+      <strong>A smaller list keeps the reasons visible.</strong>
     </div>
     <div class="fifteen-body">
-      <p style="font-size:16px;color:var(--text-muted);line-height:1.6;margin:0;">There are thousands of pants online. We would rather publish a short list we can explain than a long one we can't.</p>
+      <p style="font-size:16px;color:var(--text-muted);line-height:1.6;margin:0;">We publish a shorter list because every recommendation should have a clear fit reason. Product details currently come from brand and retailer specifications. Hand verification is still in progress.</p>
       <div class="fifteen-compare">
         <div class="fc-panel fc-panel-sage">
           <span class="fifteen-big">22 pairs</span>
-          <span class="fifteen-lbl">we have looked at</span>
+          <span class="fifteen-lbl">in the current catalog</span>
         </div>
         <div class="fc-panel">
           <span class="fifteen-big">Thousands more</span>
@@ -757,30 +719,12 @@
 
 <div class="divider"><div class="divider-inner"></div></div>
 
-<!-- WHAT HAPPENS NEXT -->
-<section class="about-section" style="text-align:center;">
-  <div class="about-section-header" style="max-width:640px;margin:0 auto 32px;">
-    <span class="fc-kicker" style="justify-content:center;">What happens next</span>
-    <h2>Independent recommendations today.</h2>
-    <p>We point you to the best fits from brands we trust. If FitCo ever creates its own pants, they'll be held to the same measurement standards.</p>
-  </div>
-  <div class="roadmap">
-    <span class="fc-pill fc-pill-sage"><i class="fc-dot"></i>Fit quiz &middot; live</span>
-    <span class="roadmap-arrow">&rarr;</span>
-    <span class="fc-pill fc-pill-sage"><i class="fc-dot"></i>Product picks &middot; live</span>
-    <span class="roadmap-arrow">&rarr;</span>
-    <span class="fc-pill fc-pill-gold"><i class="fc-dot"></i>Possible FitCo line &middot; exploring</span>
-  </div>
-</section>
-
-<div class="divider"><div class="divider-inner"></div></div>
-
 <!-- CTA -->
 <section class="about-cta">
   <div class="about-cta-inner">
-    <h2>Find My Fit</h2>
-    <p>Get matched to pants that actually fit your build.</p>
-    <a href="/#/fitting" class="btn">Start Fit Quiz</a>
+    <h2>See which cuts fit your build</h2>
+    <p>Answer six questions and get a recommendation with the reasoning shown.</p>
+    <a href="/#/fitting" class="btn">Start the fitting</a>
   </div>
 </section>
 

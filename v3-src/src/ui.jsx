@@ -1,4 +1,4 @@
-/* FitCo V3 — design-system atoms */
+/* FitCo V3 design-system atoms. */
 import { motion } from 'framer-motion';
 
 export function LogoMark({ className = 'w-5 h-5' }) {
@@ -63,7 +63,7 @@ export function Scanline({ duration = 7, className = '' }) {
 }
 
 /* Legal footer. Every screen that collects or displays personal data must
-   put the privacy notice within reach — not only the homepage. */
+   put the privacy notice within reach on every screen. */
 export function LegalFooter({ note }) {
   return (
     <footer className="border-t border-hairline px-5 sm:px-10 py-6 flex items-center justify-between gap-4 flex-wrap">
