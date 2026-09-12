@@ -1,5 +1,6 @@
 import { SiteHeader, SiteFooter, Btn } from '../ui.jsx';
 import FitDetailPhoto from '../FitDetailPhoto.jsx';
+import HeroExplorer from '../HeroExplorer.jsx';
 
 const DETAILS = [
   ['thigh', 'Thigh', 'Determines how much room you have through the upper leg.'],
@@ -11,24 +12,21 @@ const DETAILS = [
 
 export default function Home({ onStart, hasReport, onReport }) {
   return (
-    <main id="main" tabIndex={-1}>
+    <main id="main" tabIndex={-1} className="fit-home">
       <SiteHeader onHome={() => window.scrollTo({ top: 0 })} onStart={onStart} onReport={hasReport ? onReport : undefined} />
-      <section className="v1-hero v1-container" aria-labelledby="home-heading">
-        <div className="v1-hero-copy">
-          <h1 id="home-heading">Pants that complement your build.</h1>
-          <p>Answer six questions about your build and preferences. Find the cuts and pants most likely to work with your proportions.</p>
-          <Btn big onClick={onStart}>Find my fit</Btn>
+      <HeroExplorer />
+      <section className="fit-hero-cta v1-container" aria-labelledby="hero-cta-heading">
+        <h2 id="hero-cta-heading">Find pants that complement your build.</h2>
+        <div className="fit-hero-cta-actions">
+          <Btn big onClick={onStart}>Find my fit <span aria-hidden="true">↗</span></Btn>
           <p className="v1-reassurance">6 questions <span aria-hidden="true">·</span> No account required</p>
           {hasReport && <button type="button" className="v1-text-link" onClick={onReport}>Return to your results</button>}
         </div>
-        <figure className="v1-hero-photo">
-          <img src="/media/v1/hero.webp" alt="A man wearing tan trousers with a simple black knit top" width="1000" height="1250" fetchpriority="high" />
-        </figure>
       </section>
       <section className="v1-education" aria-labelledby="fit-details-heading">
         <div className="v1-container">
           <div className="v1-section-heading">
-            <h2 id="fit-details-heading">What changes the way pants fit?</h2>
+            <h2 id="fit-details-heading">Small details. Better fit.</h2>
             <p>There’s more to a good fit than the number on the waistband.</p>
           </div>
           <div className="fit-detail-grid">

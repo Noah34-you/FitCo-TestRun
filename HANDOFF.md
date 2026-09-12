@@ -1,3 +1,57 @@
+# Current task: interactive video hero (September 12, 2026)
+
+This section supersedes the historical handoff below.
+
+## Objective and state
+
+Implement Noah's approved interactive homepage mockup using his supplied animated street photograph for Straight. Leave Slim and Relaxed media empty for later supplied assets. Deliver a tested GitHub branch and PR using the existing GitHub/Vercel workflow.
+
+- Base: main `4d0e6053589d4f932edf83a9f7d56467b547b4cb`, which merged PR #17. Do not replay that PR.
+- Branch: `codex/fitco-interactive-video-hero`, created remotely.
+- Checkout: `/workspace/scratch/45b1c549dcc0/fitco`.
+- Implementation and production build complete and published in PR #18: https://github.com/Noah34-you/FitCo-TestRun/pull/18 . Open, not merged.
+- Implementation commit: `fa9f9b5d31c4f7d733750e855121ae0f2fdc929d`. Verified local and remote tree: `4078c297739ad706cf74d14149a0d19766b2edb0` before this documentation update.
+
+## Changes / decisions
+
+- `v3-src/src/HeroExplorer.jsx`: Straight selected by default, silent looping inline video, pause control, two tappable fit details, cut tabs with arrow/Home/End keyboard navigation.
+- Detail inspection pauses video and displays its first-frame poster so fixed markers remain aligned. Closing respects manual pause preference.
+- Reduced-motion preferences, offscreen/hidden-tab pausing, rejected autoplay and video failure handled.
+- `HERO_CUTS` holds future media configuration. Slim and Relaxed are intentionally `media: null`, showing “Preview coming soon”. Later supply `{ poster, alt }` plus optional `video`.
+- `hero-explorer.css`: mobile photographic hero, forest-green desktop layout, overlay headline and ivory CTA area.
+- `screens/Home.jsx`: new hero, CTA area, “Small details. Better fit.” heading. Existing header CTA, quiz, five guide crops, methodology, footer and saved-results link retained.
+- `ASSETS.md`: provenance. Straight classification is the user's illustrative choice, not a verified SKU claim.
+- Supplied video optimized to H.264/fast-start, silent, 510 × 682, approximately five seconds and 416 KB versus 2.4 MB original. `straight-poster.webp` is the first frame.
+- Assets saved in both `v3-src/public/media/v1/` and root `media/v1/`; production bundles copied to root, older hashes retained for cached pages.
+
+## Validation
+
+- Existing-lockfile `npm ci`, `npm run build`, and `git diff --check` passed.
+- `node scripts/check-v1.cjs` passed: 8,448 answer combinations preserve scores/rankings, stored-answer validation, six quiz surfaces, guide regions and static-page wiring.
+- Existing build warnings remain for root-served font/consent files and bundle size. Required files exist in the served repository root.
+- Supported browser connected, but local `http://127.0.0.1:4173` rejected with `net::ERR_BLOCKED_BY_CLIENT`.
+- Vercel status succeeded and PR bot reports Ready. Its preview redirects this browser to “Log in to Vercel”, so interactive/visual browser QA could not be completed. No protection settings were changed.
+- Final startup correction initializes video paused until motion preference is read. Production build rerun and matching root bundle published.
+
+## Next action / unfinished work
+
+Publication is complete. Review PR #18's Vercel preview in an authorized browser, especially desktop/mobile cropping, hotspot callouts, cut tabs, play/pause and the quiz CTA. Slim and Relaxed await Noah's media. Do not repeat uploads or create another PR for this same implementation.
+
+Preview supplied by Vercel bot: https://fit-co-test-run-git-codex-fitco-interactive-video-hero-fitco2.vercel.app . It requires Vercel sign-in in the available browser.
+
+## Constraints / sources
+
+- Preserve recommendation engine, catalog, consent-gated analytics, fonts, quiz and legal pages.
+- Do not generate Slim or Relaxed images; Noah will supply them later.
+- Do not migrate hosting or create another Sites project. No merge/deployment performed; deliver PR for review per existing workflow.
+- User asset: `/workspace/scratch/45b1c549dcc0/upload/The-man-continues-walking-forward-at-a-s.mp4`.
+- Repository: https://github.com/Noah34-you/FitCo-TestRun ; hosting: https://fit-co-test-run.vercel.app/
+- Use GitHub connector for authenticated writes; shell clone has no push credentials.
+
+---
+
+# Historical handoff: prior V1 redesign
+
 # Objective
 
 Implement Noah's FitCo V1 creative specification in `Noah34-you/FitCo-TestRun`. The brand is fit-first, intelligent, and masculine. Help men choose pants that complement their proportions through an approachable six-question fitting. Deliver a tested branch and pull request. Do not merge or deploy without a further request.
