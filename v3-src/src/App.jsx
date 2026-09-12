@@ -6,6 +6,7 @@ import Calibrating from './screens/Calibrating.jsx';
 import Report from './screens/Report.jsx';
 import { QUESTIONS, computeScores } from './engine.js';
 import { track } from './analytics.js';
+import { completeAnswers, readSavedAnswers, saveLocally } from './answer-state.js';
 
 const TITLES = {
   home: 'FitCo | Never guess pants again',
@@ -19,14 +20,12 @@ const TITLES = {
 export default function App() {
   const initial = () => {
     const h = window.location.hash;
-    if (h === '#/report' && localStorage.getItem('fitco_v3_answers')) return 'report';
+    if (h === '#/report') return completeAnswers(readSavedAnswers()) ? 'report' : 'fitting';
     if (h === '#/fitting') return 'fitting';
     return 'home';
   };
   const [view, setView] = useState(initial);
-  const [answers, setAnswers] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('fitco_v3_answers') || '{}'); } catch { return {}; }
-  });
+  const [answers, setAnswers] = useState(readSavedAnswers);
   const [seed, setSeed] = useState({});
   const [session, setSession] = useState(0);
   const quizStartedAt = useRef(0);
@@ -73,15 +72,16 @@ export default function App() {
       const h = window.location.hash;
       if (h === '#/' || h === '') setView('home');
       else if (h === '#/fitting') setView(v => (v === 'fitting' || v === 'calibrating') ? v : 'fitting');
-      else if (h === '#/report') setView('report');
+      else if (h === '#/report') setView(completeAnswers(answers) ? 'report' : 'fitting');
     };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
-  }, []);
+  }, [answers]);
 
   const onFittingComplete = (a) => {
+    if (!completeAnswers(a)) return;
     setAnswers(a);
-    localStorage.setItem('fitco_v3_answers', JSON.stringify(a));
+    saveLocally('fitco_v3_answers', JSON.stringify(a));
     track('Quiz Completed', {
       fit_archetype: computeScores(a).best,
       duration_s: quizStartedAt.current ? Math.round((Date.now() - quizStartedAt.current) / 1000) : undefined,
@@ -97,11 +97,11 @@ export default function App() {
   };
 
   return (
-    <div className="grain min-h-screen">
+    <div className="min-h-screen">
       <a className="skip-link" href="#main">Skip to main content</a>
       <AnimatePresence mode="wait">
         {view === 'home' && (
-          <motion.div key="home" {...fade}><Home onStart={startFitting} hasReport={!!answers.build} onReport={() => go('report')} /></motion.div>
+          <motion.div key="home" {...fade}><Home onStart={startFitting} hasReport={completeAnswers(answers)} onReport={() => go('report')} /></motion.div>
         )}
         {view === 'fitting' && (
           <motion.div key={`fitting-${session}`} {...fade}><Fitting initial={seed} onExit={() => go('home')} onComplete={onFittingComplete} /></motion.div>
