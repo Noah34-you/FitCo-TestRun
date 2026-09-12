@@ -8,7 +8,8 @@ Implement Noah's FitCo V1 creative specification in `Noah34-you/FitCo-TestRun`. 
 - Starting commit on main: `9e0dd51` (merge of PR #16, photo highlights).
 - Prior voice cleanup PR #15 is merged. GitHub write access has been restored and worked for PR #15.
 - Current checkout: `/workspace/scratch/b8c810deb810/fitco-audit`.
-- V1 implementation complete locally, validated and production output promoted. Remote branch `codex/fitco-v1-direction` created at the starting commit. Upload/PR publication is the only remaining delivery step.
+- V1 implementation complete, validated, committed and published in PR #17: https://github.com/Noah34-you/FitCo-TestRun/pull/17 . PR is open and unmerged.
+- Remote implementation commit: `4972d244a48df8bd830496680e93fe7b7eb905d9`. Tested tree: `976c1f344833eae582811a875319087720ef1865`. Local implementation commit `100a516` has the identical tree; connector-created commits have distinct authorship metadata and SHAs.
 
 # Decisions Made
 
@@ -72,12 +73,12 @@ Implement Noah's FitCo V1 creative specification in `Noah34-you/FitCo-TestRun`. 
 
 # Unfinished Work
 
-- Commit local work, upload validated tree using authenticated GitHub tools, advance the new branch without force, open PR against main and record its link.
-- Optional next user-requested step: interactive desktop/mobile review of the PR preview, especially image cropping, quiz Back/Continue and saved report behavior. Do not merge automatically.
+- Implementation/publication is finished. Await the user's review of PR #17.
+- Next user-requested step: interactive desktop/mobile review of the PR preview, especially image cropping, keyboard focus, quiz Back/Continue and saved report behavior. Do not merge automatically.
 
 # Next Action
 
-Publish the prepared local tree to `codex/fitco-v1-direction` through GitHub blob/tree/commit/ref tools, then create the PR targeting main. Base commit 9e0dd51c194d1b0a739d3d647b6aebd3d961cf23; base tree 209a824a29472fae91e33c17eedd5b6ce8a17590. GitHub create-branch succeeded. Do not merge or deploy.
+Open PR #17 and review its current head/status before making any new changes. If requested, perform desktop/mobile browser QA. The implementation is already published; do not re-upload it or create a duplicate PR. Do not merge or deploy without the user's instruction.
 
 # Risks / Uncertainties
 
