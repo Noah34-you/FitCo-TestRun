@@ -9,7 +9,8 @@ Implement Noah's approved interactive homepage mockup using his supplied animate
 - Base: main `4d0e6053589d4f932edf83a9f7d56467b547b4cb`, which merged PR #17. Do not replay that PR.
 - Branch: `codex/fitco-interactive-video-hero`, created remotely.
 - Checkout: `/workspace/scratch/45b1c549dcc0/fitco`.
-- Implementation and production build complete; publication in progress.
+- Implementation and production build complete and published in PR #18: https://github.com/Noah34-you/FitCo-TestRun/pull/18 . Open, not merged.
+- Implementation commit: `fa9f9b5d31c4f7d733750e855121ae0f2fdc929d`. Verified local and remote tree: `4078c297739ad706cf74d14149a0d19766b2edb0` before this documentation update.
 
 ## Changes / decisions
 
@@ -28,11 +29,15 @@ Implement Noah's approved interactive homepage mockup using his supplied animate
 - Existing-lockfile `npm ci`, `npm run build`, and `git diff --check` passed.
 - `node scripts/check-v1.cjs` passed: 8,448 answer combinations preserve scores/rankings, stored-answer validation, six quiz surfaces, guide regions and static-page wiring.
 - Existing build warnings remain for root-served font/consent files and bundle size. Required files exist in the served repository root.
-- Supported browser connected, but local `http://127.0.0.1:4173` rejected with `net::ERR_BLOCKED_BY_CLIENT`. Local interactive/visual QA is not complete. Check a Vercel preview after PR publication; do not claim browser tests that did not run.
+- Supported browser connected, but local `http://127.0.0.1:4173` rejected with `net::ERR_BLOCKED_BY_CLIENT`.
+- Vercel status succeeded and PR bot reports Ready. Its preview redirects this browser to “Log in to Vercel”, so interactive/visual browser QA could not be completed. No protection settings were changed.
+- Final startup correction initializes video paused until motion preference is read. Production build rerun and matching root bundle published.
 
 ## Next action / unfinished work
 
-Upload changed files/media to the created branch, create PR, then check whether Vercel provides a hosted preview for browser QA. Update this section with final PR status and validation limitations.
+Publication is complete. Review PR #18's Vercel preview in an authorized browser, especially desktop/mobile cropping, hotspot callouts, cut tabs, play/pause and the quiz CTA. Slim and Relaxed await Noah's media. Do not repeat uploads or create another PR for this same implementation.
+
+Preview supplied by Vercel bot: https://fit-co-test-run-git-codex-fitco-interactive-video-hero-fitco2.vercel.app . It requires Vercel sign-in in the available browser.
 
 ## Constraints / sources
 
