@@ -5,6 +5,7 @@
 .fit-explorer-intro { margin-top: 28px; max-width: 290px; font-size: 19px; line-height: 1.6; color: #e0e6de; }
 .fit-explorer-panel { position: absolute; inset: 0 0 0 auto; width: auto; height: 100%; aspect-ratio: 510 / 682; }
 .fit-explorer-media { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.fit-explorer-media { animation: fit-media-swap .28s ease-out; }
 .fit-explorer-media > img, .fit-explorer-media > video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .fit-explorer-media > video.is-inspecting { visibility: hidden; }
 .fit-explorer-shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, #26352f 0%, transparent 22%), linear-gradient(0deg, #17211d88, transparent 25%, transparent 65%, #17211d44); }
@@ -38,6 +39,7 @@
 .fit-hero-cta .v1-text-link { margin-top: 6px; font-size: 14px; }
 .fit-home .v1-education { border-top: 1px solid var(--color-hairline); background: #f5f4ee; }
 @keyframes fit-reveal { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fit-media-swap { from { opacity: .72; } to { opacity: 1; } }
 @media (max-width: 900px) and (min-width: 701px) {
   .fit-explorer-heading { left: 24px; width: 45%; }
   .fit-explorer-heading h1 { font-size: 56px; }
