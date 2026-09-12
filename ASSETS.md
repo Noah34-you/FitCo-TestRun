@@ -22,3 +22,9 @@ Created with the built-in image_gen tool, not an external API. Prompts are prese
 The education card crops reference a single 1448 by 1086 diptych: front in the left half, back in the right half. Each measurement marker shares the image's coordinate system. Build and problem sheets each have four equal panels (1774 by 887); CSS isolates each quarter without raster distortion.
 
 Existing category and retailer product photography was retained. This pass does not newly verify those products, current prices, source rights, or inventory. Prices remain a dated catalog snapshot.
+# Interactive hero, September 12, 2026
+
+- `media/v1/straight-walk.mp4` and its source mirror in `v3-src/public/media/v1/`: user-supplied animated street photograph, uploaded as `The-man-continues-walking-forward-at-a-s.mp4`. Re-encoded to H.264 with fast-start, no audio; original motion and duration retained. 510 × 682, approximately five seconds.
+- `straight-poster.webp`: first frame extracted from that supplied video. Used before playback, for reduced-motion preferences, and while inspecting fit markers.
+- Straight is the user's chosen cut classification for this illustrative media; this is not verified product measurement evidence. Hotspot copy explains what to look for, rather than claiming measured garment properties.
+- Slim and Relaxed intentionally have no images. Add future supplied media through `HERO_CUTS` in `v3-src/src/HeroExplorer.jsx`. Do not substitute the Straight photo for another cut.
