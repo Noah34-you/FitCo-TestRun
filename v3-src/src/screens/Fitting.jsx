@@ -20,7 +20,7 @@ function PhotoPanel({ src, panel }) {
 
 function ChoiceVisual({ qkey, value }) {
   if (qkey === 'productType' && value !== 'any')
-    return <img src={'/images/quiz-q1-' + value + '.png'} alt="" width="600" height="600" />;
+    return <img src={'/images/quiz-categories/' + value + '.webp'} alt="" width="900" height="900" />;
   if (qkey === 'build')
     return <PhotoPanel src="/media/v1/builds.webp" panel={BUILD_PANEL[value]} />;
   if (qkey === 'fitWrong' && value !== 'usuallyFine')

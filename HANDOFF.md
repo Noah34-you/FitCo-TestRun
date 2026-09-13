@@ -1,4 +1,51 @@
-# Current task: interactive video hero (September 12, 2026)
+# Current task: targeted homepage, quiz, and results polish (September 13, 2026)
+
+This section supersedes the historical handoffs below.
+
+## Objective and state
+
+Implement Noah's focused polish list without renovating the full homepage: make the circled method section interactive, give the main hero CTA a subtle metallic glint, remove blue arrow emoji, replace quiz imagery, make Questions 5 and 6 more concrete, and make results more interactive. Publish and merge through the existing GitHub/Vercel workflow.
+
+- Base: current `main` at `1db484301228ef6739ed2e2d1b8a364858a41dc3` (merge of PR #22).
+- Local branch: `codex/targeted-polish-results`.
+- Checkout: `/workspace/scratch/a65e330da2d2/fitco`.
+- Source implementation, generated assets, production build, and tests are complete. Published in PR #23: https://github.com/Noah34-you/FitCo-TestRun/pull/23 .
+- Remote implementation commit: `cad12dbcc7065ba4cc936a253b3ae44c4691113a`; its tree `8ef1e533d189c63585bfe4a005cb779fc4338e1e` exactly matches the tested local implementation tree before this documentation update.
+
+## Changes and decisions
+
+- `v3-src/src/screens/Home.jsx` and `v1.css`: the existing hero remains intact. The large `Find my fit` CTA now has a restrained green metallic treatment and periodic glint, with motion disabled for reduced-motion preferences. The circled method section is now a two-tab `Your proportions` / `Your matches` explainer using two user-supplied Higgsfield images and a small in-view reveal.
+- `v3-src/src/ui.jsx`: replaced blue arrow emoji with a consistent inline SVG arrow in active homepage and results links.
+- Question 1 now uses a coordinated set of three Higgsfield-generated product-only flat lays for Jeans, Chinos, and Technical pants. Optimized production WebPs are mirrored in root and `v3-src/public`.
+- Question 5 copy is exactly `Which leg shape do you prefer?` and retains the user-approved newer trouser illustration set.
+- Question 6 is now `How much room do you prefer through the seat and thighs?`, with concrete `Close to the body`, `Some room`, and `Plenty of room` answers. `engine.js` scoring now combines leg-shape preference (65%) with this upper-leg-room preference (35%).
+- `answer-state.js` migrates previously saved abstract-priority answers to the closest new room preference, preserving on-device result continuity.
+- `Report.jsx` adds accessible interactive reasoning tabs, an illustration focus region, and richer alternative-fit comparison with thigh, lower-leg, and opening attributes. It uses the approved trouser illustrations rather than the old generated SVG shapes.
+- `about/index.html` uses the new illustration language in its fit comparison, and About/Shop method copy reflects the new upper-leg-room question.
+- `ASSETS.md` documents generation, user-supplied imagery, usage limits, and production mirrors.
+
+## Validation
+
+- `npm ci`, `npm run build`, production promotion via `v3-src/scripts/promote.sh`, `git diff --check`, and `node v3-src/scripts/check-v1.cjs` pass.
+- Regression checks enumerate all 8,448 valid answer combinations, validate result/product rankings, exercise the new preference sensitivity, test legacy saved-answer migration, render all six question surfaces and the interactive report, and verify required assets/static-page wiring.
+- Generated Question 1 images and supplied method images were inspected before optimization. Question 1 assets are 900 × 900 WebP files; method images are 750 × 1000 and 1200 × 800 WebPs.
+- Existing Vite warnings remain for root-served font/consent files at build time and the main bundle exceeding 500 KB. These are pre-existing and required root files remain present.
+- The supported cloud browser cannot open the local server (`ERR_BLOCKED_BY_CLIENT`), so interactive local-browser screenshots are unavailable. Do not switch to a different automation stack; inspect the public deployment after merge.
+
+## Next action
+
+Wait for PR #23 repository checks, merge it, then confirm the public deployment.
+
+## Constraints
+
+- Keep the video/explore hero and the remainder of the homepage structure intact.
+- Do not add broad site-wide animation or generate more imagery unless Noah requests it.
+- Generated/category illustrations are explanatory examples, not measured catalog products or fit guarantees.
+- Current deployment is GitHub/Vercel. Do not migrate to Sites. Use the GitHub connector for authenticated writes; shell git has no push credentials.
+
+---
+
+# Historical handoff: interactive video hero (September 12, 2026)
 
 This section supersedes the historical handoff below.
 

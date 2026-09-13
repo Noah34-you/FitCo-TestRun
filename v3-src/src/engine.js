@@ -1,6 +1,6 @@
 /* ============================================================
    FitCo V3 recommendation engine.
-   Faithful port of the production scoring: two layers
+   Recommendation scoring uses two layers
    (objective 80% / preference 20%), minimum-based multi-issue
    scoring, hard elimination guardrails. No fake percentages
    ever leave this module. The UI receives ranks and tiers.
@@ -28,7 +28,7 @@ export const FIT_INFO = {
   relaxedFit:       { rise: 'Mid-high rise', thigh: 'Very roomy',  leg: 'Relaxed', open: 'Wide',     desc: 'Plenty of room from hip to ankle, with a straighter and easier leg.' },
 };
 
-/* ---------------- scoring maps (ported verbatim) ---------------- */
+/* ---------------- scoring maps ---------------- */
 const buildMap = {
   slim:      { slimTaper: 80, straightFit: 65, athleticTaper: 50, athleticStraight: 30, relaxedTaper: 20, relaxedFit: 10 },
   average:   { slimTaper: 55, straightFit: 75, athleticTaper: 65, athleticStraight: 50, relaxedTaper: 40, relaxedFit: 30 },
@@ -54,10 +54,10 @@ const legMap = {
   straight:{ slimTaper: 30, straightFit: 90, athleticTaper: 35, athleticStraight: 85, relaxedTaper: 55, relaxedFit: 80 },
   relaxed: { slimTaper: 15, straightFit: 45, athleticTaper: 30, athleticStraight: 60, relaxedTaper: 90, relaxedFit: 95 },
 };
-const priorityMap = {
-  cleanerSilhouette: { slimTaper: 90, straightFit: 50, athleticTaper: 80, athleticStraight: 30, relaxedTaper: 50, relaxedFit: 10 },
-  balancedEveryday:  { slimTaper: 45, straightFit: 90, athleticTaper: 60, athleticStraight: 70, relaxedTaper: 45, relaxedFit: 30 },
-  maximumComfort:    { slimTaper: 10, straightFit: 40, athleticTaper: 35, athleticStraight: 65, relaxedTaper: 85, relaxedFit: 95 },
+const thighRoomMap = {
+  close:  { slimTaper: 95, straightFit: 68, athleticTaper: 45, athleticStraight: 28, relaxedTaper: 20, relaxedFit: 10 },
+  some:   { slimTaper: 60, straightFit: 88, athleticTaper: 82, athleticStraight: 72, relaxedTaper: 58, relaxedFit: 40 },
+  plenty: { slimTaper: 10, straightFit: 42, athleticTaper: 70, athleticStraight: 90, relaxedTaper: 92, relaxedFit: 98 },
 };
 
 /* Works with partial answers. This powers the live update
@@ -99,11 +99,11 @@ export function computeScores(answers) {
   }
 
   const leg = legMap[answers.legShape];
-  const pri = priorityMap[answers.priority];
-  if (leg || pri) {
+  const room = thighRoomMap[answers.thighRoom];
+  if (leg || room) {
     FIT_KEYS.forEach(f => {
-      const l = leg ? leg[f] : 50, p = pri ? pri[f] : 50;
-      pref[f] = Math.round(l * 0.7 + p * 0.3);
+      const l = leg ? leg[f] : 50, r = room ? room[f] : 50;
+      pref[f] = Math.round(l * 0.65 + r * 0.35);
     });
   }
   const final = {};
@@ -118,7 +118,7 @@ export function diagnose(answers, bestKey) {
   const issues = answers.fitWrong || [];
   const main = issues[0] || 'usuallyFine';
   const b = answers.build || 'average';
-  const p = answers.priority || 'balancedEveryday';
+  const room = answers.thighRoom || 'some';
   if (main === 'tightThighsSeat') {
     if (b === 'slim') return `Tightness through the seat and thighs is your main fit problem. ${name} gives you more room above the knee while keeping the lower leg clean and tapered.`;
     if (b === 'athletic') return `Your waist may fit while the seat and thighs pinch. ${name} makes more room for muscular legs, then narrows below the knee so the whole leg does not look baggy.`;
@@ -131,8 +131,8 @@ export function diagnose(answers, bestKey) {
     return `Your main issue is extra fabric below the knee. ${name} keeps the lower leg cleaner without making the thigh too tight.`;
   }
   if (main === 'lengthOff') return `Length is your main problem, and inseams vary a lot between brands. ${name} is your closest shape match. Check the listed inseam before buying any specific pair.`;
-  if (p === 'cleanerSilhouette') return `${name} best matches the cleaner line you prefer while leaving enough room to move.`;
-  if (p === 'maximumComfort') return `${name} best matches your preference for more room through the leg.`;
+  if (room === 'close') return `${name} best matches the closer seat and thigh fit you prefer while respecting your chosen lower-leg shape.`;
+  if (room === 'plenty') return `${name} best matches your preference for more room through the seat and thighs.`;
   return `${name} is the closest match for the build, fit problems, and shape you selected.`;
 }
 
@@ -227,17 +227,17 @@ export const QUESTIONS = [
       { v:'60to62', t:'6′0″ – 6′2″', s:'About 183–190 cm' },
       { v:'63plus', t:'6′3″ +', s:'About 191 cm and above' },
     ] },
-  { key:'legShape', cat:'Fit', label:'Which leg shape looks best to you?', sub:'No wrong answer here.',
+  { key:'legShape', cat:'Fit', label:'Which leg shape do you prefer?', sub:'No wrong answer here.',
     options:[
       { v:'tapered', t:'Tapered', s:'Narrows from knee to ankle' },
       { v:'balanced', t:'Balanced', s:'Gentle taper, middle ground' },
       { v:'straight', t:'Straight', s:'Little narrowing below the knee' },
       { v:'relaxed', t:'Relaxed', s:'Extra room all the way down' },
     ] },
-  { key:'priority', cat:'Style', label:'What matters most?', sub:'Tell us what you want from your next pair.',
+  { key:'thighRoom', cat:'Fit', label:'How much room do you prefer through the seat and thighs?', sub:'Choose how you want the upper half of your pants to feel.',
     options:[
-      { v:'cleanerSilhouette', t:'Cleaner silhouette', s:'Less extra fabric, a more defined shape' },
-      { v:'balancedEveryday', t:'An everyday pair', s:'A comfortable shape that is easy to wear' },
-      { v:'maximumComfort', t:'Maximum comfort', s:'More space through the seat and legs' },
+      { v:'close', t:'Close to the body', s:'Follows your shape without feeling skin-tight' },
+      { v:'some', t:'Some room', s:'Comfortable with a little definition' },
+      { v:'plenty', t:'Plenty of room', s:'Loose and easy through the seat and thighs' },
     ] },
 ];

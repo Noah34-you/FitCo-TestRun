@@ -15,6 +15,14 @@ export function completeAnswers(value) {
 export function readSavedAnswers() {
   try {
     const value = JSON.parse(localStorage.getItem('fitco_v3_answers') || '{}');
+    // Migrate the former abstract priority question into the closest concrete
+    // upper-leg-room preference so existing on-device reports remain usable.
+    if (!value.thighRoom && value.priority) {
+      value.thighRoom = {
+        cleanerSilhouette: 'close', balancedEveryday: 'some', maximumComfort: 'plenty',
+      }[value.priority];
+      delete value.priority;
+    }
     return completeAnswers(value) ? value : {};
   } catch { return {}; }
 }
