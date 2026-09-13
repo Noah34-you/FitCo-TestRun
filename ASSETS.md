@@ -27,4 +27,12 @@ Existing category and retailer product photography was retained. This pass does 
 - `media/v1/straight-walk.mp4` and its source mirror in `v3-src/public/media/v1/`: user-supplied animated street photograph, uploaded as `The-man-continues-walking-forward-at-a-s.mp4`. Re-encoded to H.264 with fast-start, no audio; original motion and duration retained. 510 × 682, approximately five seconds.
 - `straight-poster.webp`: first frame extracted from that supplied video. Used before playback, for reduced-motion preferences, and while inspecting fit markers.
 - Straight is the user's chosen cut classification for this illustrative media; this is not verified product measurement evidence. Hotspot copy explains what to look for, rather than claiming measured garment properties.
-- Slim and Relaxed intentionally have no images. Add future supplied media through `HERO_CUTS` in `v3-src/src/HeroExplorer.jsx`. Do not substitute the Straight photo for another cut.
+- Slim and Relaxed now use their own supplied still/video pairs in `media/slim.*` and `media/relaxed.*`; neither reuses the Straight media.
+
+# Targeted polish assets, September 13, 2026
+
+- `images/quiz-categories/{jeans,chinos,technical}.webp` and their `v3-src/public` mirrors: generated in Higgsfield as a coordinated, product-only flat-lay set. They are category examples, not photos of catalog SKUs. The source outputs were inspected before web optimization; each production file is a 900 × 900 WebP.
+- `media/v1/method-proportions.webp`: optimized from the user-supplied Higgsfield image `IMG_1774.jpeg`. Used only to illustrate how upper-leg room affects fit.
+- `media/v1/method-matches.webp`: optimized from the user-supplied Higgsfield image `IMG_1771.jpeg`. Used only to illustrate comparison between trouser shapes.
+- `images/quiz-leg-shapes/*.jpg` and their `v3-src/public` mirrors: the user-approved Question 5 illustration set from September 13. The same visual language now carries into active recommendation and comparison surfaces.
+- All generated or illustrative garments explain categories and shapes. They are not measured products, customer photos, endorsements, or evidence that a particular retailer item will fit.

@@ -5,6 +5,11 @@ export function LogoMark({ className = 'w-5 h-5' }) {
     <rect x="3.5" y="9.4" width="4.4" height="11.1" rx="1" />
   </svg>;
 }
+export function ArrowUpRight({ className = 'v1-arrow-icon' }) {
+  return <svg viewBox="0 0 20 20" className={className} fill="none" aria-hidden="true" focusable="false">
+    <path d="M5 15 15 5M7 5h8v8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>;
+}
 export function Wordmark({ onClick }) {
   return <button type="button" onClick={onClick} className="v1-wordmark" aria-label="FitCo home"><LogoMark />FitCo</button>;
 }
