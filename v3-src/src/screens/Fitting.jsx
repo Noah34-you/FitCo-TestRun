@@ -2,11 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import { Wordmark, Btn, LegalFooter } from '../ui.jsx';
 import { QUESTIONS } from '../engine.js';
 import { track } from '../analytics.js';
-import TrouserShape from '../TrouserShape.jsx';
 
 const BUILD_PANEL = { slim: 0, average: 1, athletic: 2, broader: 3 };
 const PROBLEM_PANEL = { tightThighsSeat: 0, waistGap: 1, tooMuchFabric: 2, lengthOff: 3 };
-const LEG_FIT = { tapered: 'slimTaper', balanced: 'relaxedTaper', straight: 'straightFit', relaxed: 'relaxedFit' };
+const LEG_SHAPE_IMAGES = {
+  tapered: '/images/quiz-leg-shapes/tapered.jpg',
+  balanced: '/images/quiz-leg-shapes/balanced.jpg',
+  straight: '/images/quiz-leg-shapes/straight.jpg',
+  relaxed: '/images/quiz-leg-shapes/relaxed.jpg',
+};
 
 function PhotoPanel({ src, panel }) {
   return <span className="v1-photo-panel" style={{ '--panel': panel }}>
@@ -22,7 +26,7 @@ function ChoiceVisual({ qkey, value }) {
   if (qkey === 'fitWrong' && value !== 'usuallyFine')
     return <PhotoPanel src="/media/v1/fit-problems.webp" panel={PROBLEM_PANEL[value]} />;
   if (qkey === 'legShape')
-    return <TrouserShape fit={LEG_FIT[value]} uniformTop decorative />;
+    return <img src={LEG_SHAPE_IMAGES[value]} alt="" width="600" height="469" aria-hidden="true" />;
   return null;
 }
 
