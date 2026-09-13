@@ -9,7 +9,8 @@ Implement Noah's focused polish list without renovating the full homepage: make 
 - Base: current `main` at `1db484301228ef6739ed2e2d1b8a364858a41dc3` (merge of PR #22).
 - Local branch: `codex/targeted-polish-results`.
 - Checkout: `/workspace/scratch/a65e330da2d2/fitco`.
-- Source implementation, generated assets, production build, and tests are complete locally. Remote publication is the next action.
+- Source implementation, generated assets, production build, and tests are complete. Published in PR #23: https://github.com/Noah34-you/FitCo-TestRun/pull/23 .
+- Remote implementation commit: `cad12dbcc7065ba4cc936a253b3ae44c4691113a`; its tree `8ef1e533d189c63585bfe4a005cb779fc4338e1e` exactly matches the tested local implementation tree before this documentation update.
 
 ## Changes and decisions
 
@@ -33,7 +34,7 @@ Implement Noah's focused polish list without renovating the full homepage: make 
 
 ## Next action
 
-Publish the branch with the GitHub connector, open a PR, wait for repository checks, merge it, then confirm the public deployment. Update this section with the PR, merge commit, and deployment result.
+Wait for PR #23 repository checks, merge it, then confirm the public deployment.
 
 ## Constraints
 
